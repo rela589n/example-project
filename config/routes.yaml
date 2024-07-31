@@ -1,5 +1,2 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+auth_routes:
+    resource: '@AppAuthBundle/Resources/config/routes.yaml'
