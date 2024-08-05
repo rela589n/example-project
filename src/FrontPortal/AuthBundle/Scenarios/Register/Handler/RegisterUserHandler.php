@@ -10,6 +10,7 @@ use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Email;
 use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Password;
 use App\FrontPortal\AuthBundle\Scenarios\Register\Handler\Exception\EmailAlreadyTakenException;
 use App\FrontPortal\AuthBundle\Scenarios\Register\RegisterUserCommand;
+use Closure;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -31,8 +32,8 @@ final readonly class RegisterUserHandler
 
     public function __invoke(RegisterUserCommand $command): void
     {
-        $event = new UserRegisteredEvent(
-            new User(),
+        $event = UserRegisteredEvent::unwrap(
+            static fn () => new User(),
             $this->getEmail($command->getEmail()),
             $this->getPassword($command->getPassword()),
         );
@@ -47,14 +48,14 @@ final readonly class RegisterUserHandler
         $this->entityManager->persist($event->getUser());
     }
 
-    private function getEmail(string $email): Email
+    private function getEmail(string $email): Closure
     {
-        return Email::fromUserInput($this->validator, $email);
+        return static fn () => Email::fromUserInput($this->validator, $email);
     }
 
-    private function getPassword(string $password): Password
+    private function getPassword(string $password): Closure
     {
-        return Password::fromUserInput($this->validator, $this->passwordHasher, $password);
+        return static fn () => Password::fromUserInput($this->validator, $this->passwordHasher, $password);
     }
 
     private function isEmailFree(Email $email): bool

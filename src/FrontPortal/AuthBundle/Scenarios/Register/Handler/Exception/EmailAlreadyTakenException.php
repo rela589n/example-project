@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\FrontPortal\AuthBundle\Scenarios\Register\Handler\Exception;
 
 use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Email;
-use App\FrontPortal\AuthBundle\Scenarios\Registration\Handler\Exception\InvalidValueException;
+use PhPhD\ExceptionalValidation\Model\Condition\Exception\InvalidValueException;
 use RuntimeException;
 
 final class EmailAlreadyTakenException extends RuntimeException implements InvalidValueException

@@ -17,7 +17,15 @@ final readonly class Email
 
     public static function fromUserInput(ValidatorInterface $validator, string $email): self
     {
-        $validate = Validation::createCallable($validator, new Assert\NotBlank(), new Assert\Email());
+        // Value-object must cover the basic validation constraints to be easily unit-tested.
+        // Additional validation logic (like uniqueness) must be implemented in the service (Handler)
+        // and tested with integration test.
+
+        $validate = Validation::createCallable(
+            $validator,
+            new Assert\NotBlank(),
+            new Assert\Email(),
+        );
 
         $validate($email);
 

@@ -26,9 +26,11 @@ final readonly class Password
     ): self {
         $validate = Validation::createCallable(
             $validator,
-            new Assert\NotBlank(),
-            new Assert\Length(min: 8),
-            new Assert\PasswordStrength(minScore: PasswordStrength::STRENGTH_VERY_STRONG),
+            new Assert\Sequentially([
+                new Assert\NotBlank(),
+                new Assert\Length(min: 8, max: 31),
+                new Assert\PasswordStrength(minScore: PasswordStrength::STRENGTH_MEDIUM),
+            ]),
         );
 
         $validate($password);

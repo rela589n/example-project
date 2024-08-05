@@ -14,17 +14,12 @@ final readonly class RegisterUserCommand
 {
     public function __construct(
         #[Capture(ValidationFailedException::class, 'Invalid email', when: [self::class, 'isEmailError'])]
-        #[Capture(EmailAlreadyTakenException::class, 'auth.registration.email_already_taken', [self::class, 'isThisEmailTaken'])]
+        #[Capture(EmailAlreadyTakenException::class, 'auth.registration.email_already_taken')]
         private string $email,
 
         #[Capture(ValidationFailedException::class, 'Weak password', when: [self::class, 'isPasswordError'])]
         private string $password,
     ) {
-    }
-
-    public function isThisEmailTaken(EmailAlreadyTakenException $exception): bool
-    {
-        return $exception->getEmail()->getEmail() === $this->email;
     }
 
     public function getEmail(): string

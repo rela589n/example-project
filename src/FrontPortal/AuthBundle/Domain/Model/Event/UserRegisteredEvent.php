@@ -7,6 +7,7 @@ namespace App\FrontPortal\AuthBundle\Domain\Model\Event;
 use App\FrontPortal\AuthBundle\Domain\Model\User;
 use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Email;
 use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Password;
+use App\Support\Functional\Operation\ThunkList;
 use Closure;
 use Exception;
 
@@ -20,12 +21,14 @@ final readonly class UserRegisteredEvent implements UserEvent
     }
 
     /**
-     * @param Closure(): User $user
-     * @param Closure(): Email $email
-     * @param Closure(): Password $password
+     * @param Closure(): User $userFn
+     * @param Closure(): Email $emailFn
+     * @param Closure(): Password $passwordFn
      */
-    public static function wrap(Closure $user, Closure $email, Closure $password): self
+    public static function unwrap(Closure $userFn, Closure $emailFn, Closure $passwordFn): self
     {
+        [$user, $email, $password] = ThunkList::of($userFn, $emailFn, $passwordFn)->__invoke();
+
         // In order to collect all validation errors at once, it's necessary to call these closures
         // one by one, collecting thrown exceptions into the list.
 
@@ -39,13 +42,13 @@ final readonly class UserRegisteredEvent implements UserEvent
 
                 return null;
             }
-        }, [$user, $email, $password]);
+        }, [$userFn, $emailFn, $passwordFn]);
 
         if ([] !== $exceptions) {
-            throw $exceptions;
+            throw new CompositeException($exceptions);
         }
 
-        return new self(...$params);
+        return new self($user, $email, $password);
     }
 
     public function getUser(): User
