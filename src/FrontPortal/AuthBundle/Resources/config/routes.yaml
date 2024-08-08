@@ -1,5 +1,5 @@
 api_frontend_auth:
-    resource: '../../Scenarios/**/{*FrontendAction.php}'
+    resource: '../../Domain/**/{*FrontendAction.php}'
     type: attribute
     prefix: /api/frontend/auth
     host: "%api_host%"

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Scenarios\Register\Handler;
+namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Handler;
 
-use App\FrontPortal\AuthBundle\Domain\Model\Event\UserRegisteredEvent;
-use App\FrontPortal\AuthBundle\Domain\Model\User;
-use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Email;
-use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Password;
-use App\FrontPortal\AuthBundle\Scenarios\Register\Handler\Exception\EmailAlreadyTakenException;
-use App\FrontPortal\AuthBundle\Scenarios\Register\RegisterUserCommand;
+use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Handler\Exception\EmailAlreadyTakenException;
+use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\RegisterUserCommand;
+use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\UserRegisteredEvent;
+use App\FrontPortal\AuthBundle\Domain\User\User;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
 use Closure;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;

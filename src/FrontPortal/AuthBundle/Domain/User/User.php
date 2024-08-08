@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\Model;
+namespace App\FrontPortal\AuthBundle\Domain\User;
 
-use App\FrontPortal\AuthBundle\Domain\Model\Event\UserRegisteredEvent;
-use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Email;
-use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Password;
+use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\UserRegisteredEvent;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
 use Symfony\Component\Uid\Uuid;
 
 class User

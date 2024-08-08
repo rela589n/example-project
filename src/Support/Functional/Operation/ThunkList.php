@@ -23,6 +23,32 @@ final readonly class ThunkList
     }
 
     /**
+     * @template T1
+     * @template T2
+     * @template T3
+     * @param Closure(): T1 $t1
+     * @param ?Closure(): T2 $t2
+     * @param ?Closure(): T3 $t3
+     *
+     * @return array{T1, T2, T3}
+     */
+    public static function unwrap(Closure $t1, ?Closure $t2 = null, ?Closure $t3 = null): array
+    {
+        $res = [];
+
+        $res[] = $t1();
+
+        if (null !== $t2) {
+            $res[] = $t2();
+        }
+        if (null !== $t3) {
+            $res[] = $t3();
+        }
+
+        return $res;
+    }
+
+    /**
      * @return array<key-of<T>
      */
     public function __invoke(): array

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\Tests;
+namespace App\FrontPortal\AuthBundle\Domain\ValueObject\Tests;
 
-use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Password;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;

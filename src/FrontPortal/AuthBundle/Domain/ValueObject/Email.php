@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\Model\ValueObject;
+namespace App\FrontPortal\AuthBundle\Domain\ValueObject;
 
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Exception\EmailValidationException;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final readonly class Email
@@ -21,13 +21,14 @@ final readonly class Email
         // Additional validation logic (like uniqueness) must be implemented in the service (Handler)
         // and tested with integration test.
 
-        $validate = Validation::createCallable(
-            $validator,
+        $violationList = $validator->validate($email, [
             new Assert\NotBlank(),
             new Assert\Email(),
-        );
+        ]);
 
-        $validate($email);
+        if (0 !== $violationList->count()) {
+            throw new EmailValidationException($email, $violationList);
+        }
 
         return new self($email);
     }

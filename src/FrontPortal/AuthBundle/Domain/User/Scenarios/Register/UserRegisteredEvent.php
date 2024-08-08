@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\Model\Event;
+namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register;
 
-use App\FrontPortal\AuthBundle\Domain\Model\User;
-use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Email;
-use App\FrontPortal\AuthBundle\Domain\Model\ValueObject\Password;
+use App\FrontPortal\AuthBundle\Domain\User\User;
+use App\FrontPortal\AuthBundle\Domain\User\UserEvent;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
 use App\Support\Functional\Operation\ThunkList;
 use Closure;
 use Exception;

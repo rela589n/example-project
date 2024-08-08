@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\Model\Event;
+namespace App\FrontPortal\AuthBundle\Domain;
 
-interface Event
+interface AuthEvent
 {
     public function process(): void;
 }

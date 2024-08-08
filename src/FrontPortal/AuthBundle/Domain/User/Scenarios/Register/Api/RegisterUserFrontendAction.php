@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Scenarios\Register\Http;
+namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Api;
 
-use App\FrontPortal\AuthBundle\Scenarios\Register\RegisterUserCommand;
+use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\RegisterUserCommand;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;

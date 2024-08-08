@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "89c1fafc99a860a52277cdfd18da4601",
+    "content-hash": "c3d1ac6363d73e0d4a7980eef3ca7c3f",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -1234,12 +1234,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phphd/exceptional-validation-bundle.git",
-                "reference": "4c22ad89c55c48aa4ec48ef54801126f8d5c834a"
+                "reference": "25b4ef22e5d2e23e049351ee3228c7193c978732"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phphd/exceptional-validation-bundle/zipball/4c22ad89c55c48aa4ec48ef54801126f8d5c834a",
-                "reference": "4c22ad89c55c48aa4ec48ef54801126f8d5c834a",
+                "url": "https://api.github.com/repos/phphd/exceptional-validation-bundle/zipball/25b4ef22e5d2e23e049351ee3228c7193c978732",
+                "reference": "25b4ef22e5d2e23e049351ee3228c7193c978732",
                 "shasum": ""
             },
             "require": {
@@ -1289,7 +1289,7 @@
                 "issues": "https://github.com/phphd/exceptional-validation-bundle/issues",
                 "source": "https://github.com/phphd/exceptional-validation-bundle/tree/1.4.0"
             },
-            "time": "2024-08-05T19:17:59+00:00"
+            "time": "2024-08-06T18:46:49+00:00"
         },
         {
             "name": "psr/cache",
