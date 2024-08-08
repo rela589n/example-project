@@ -17,7 +17,6 @@ final readonly class RegisterUserCommand
         #[Capture(EmailValidationException::class, condition: 'invalid_value', formatter: 'violation_list')]
         #[Capture(EmailAlreadyTakenException::class, condition: 'invalid_value')]
         private string $email,
-
         #[Capture(PasswordValidationException::class, condition: 'invalid_value', formatter: 'violation_list')]
         private string $password,
     ) {

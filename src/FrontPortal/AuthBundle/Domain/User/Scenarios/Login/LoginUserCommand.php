@@ -8,6 +8,7 @@ use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\Exception\PasswordMismatchException;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Exception\EmailValidationException;
 use PhPhD\ExceptionalValidation\Capture;
+use SensitiveParameter;
 
 final readonly class LoginUserCommand
 {
@@ -16,6 +17,7 @@ final readonly class LoginUserCommand
         #[Capture(UserNotFoundException::class, condition: 'invalid_value')]
         private string $email,
         #[Capture(PasswordMismatchException::class, condition: 'invalid_value')]
+        #[SensitiveParameter]
         private string $password,
     ) {
     }

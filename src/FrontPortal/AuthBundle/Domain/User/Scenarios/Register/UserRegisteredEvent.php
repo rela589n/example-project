@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register;
 
+use Amp\Future;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserEvent;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
-use App\Support\Functional\Operation\ThunkList;
-use Closure;
-use Exception;
 
 final readonly class UserRegisteredEvent implements UserEvent
 {
-    public function __construct(
+    private function __construct(
         private User $user,
         private Email $email,
         private Password $password,
@@ -22,34 +20,17 @@ final readonly class UserRegisteredEvent implements UserEvent
     }
 
     /**
-     * @param Closure(): User $userFn
-     * @param Closure(): Email $emailFn
-     * @param Closure(): Password $passwordFn
+     * @param User $user
+     * @param Future<Email> $email
+     * @param Future<Password> $password
      */
-    public static function unwrap(Closure $userFn, Closure $emailFn, Closure $passwordFn): self
+    public static function of(User $user, Future $email, Future $password): self
     {
-        [$user, $email, $password] = ThunkList::of($userFn, $emailFn, $passwordFn)->__invoke();
+        $futures = [$email, $password];
 
-        // In order to collect all validation errors at once, it's necessary to call these closures
-        // one by one, collecting thrown exceptions into the list.
+        $results = Future\awaitAnyN(count($futures), $futures);
 
-        $exceptions = [];
-
-        $params = array_map(static function (Closure $closure) use (&$exceptions) {
-            try {
-                return $closure();
-            } catch (Exception $e) {
-                $exceptions[] = $e;
-
-                return null;
-            }
-        }, [$userFn, $emailFn, $passwordFn]);
-
-        if ([] !== $exceptions) {
-            throw new CompositeException($exceptions);
-        }
-
-        return new self($user, $email, $password);
+        return new self($user, ...$results);
     }
 
     public function getUser(): User

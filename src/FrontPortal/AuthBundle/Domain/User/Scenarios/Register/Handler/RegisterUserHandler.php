@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Handler;
 
+use Amp\Future;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Exception\EmailAlreadyTakenException;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\RegisterUserCommand;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\UserRegisteredEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
-use Closure;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+use function Amp\async;
 
 #[AsMessageHandler(bus: 'command.bus')]
 final readonly class RegisterUserHandler
@@ -32,8 +34,8 @@ final readonly class RegisterUserHandler
 
     public function __invoke(RegisterUserCommand $command): void
     {
-        $event = UserRegisteredEvent::unwrap(
-            static fn () => new User(),
+        $event = UserRegisteredEvent::of(
+            new User(),
             $this->getEmail($command->getEmail()),
             $this->getPassword($command->getPassword()),
         );
@@ -48,14 +50,14 @@ final readonly class RegisterUserHandler
         $this->entityManager->persist($event->getUser());
     }
 
-    private function getEmail(string $email): Closure
+    private function getEmail(string $email): Future
     {
-        return static fn () => Email::fromUserInput($email, $this->validator);
+        return async(fn (): Email => Email::fromUserInput($email, $this->validator));
     }
 
-    private function getPassword(string $password): Closure
+    private function getPassword(string $password): Future
     {
-        return static fn () => Password::fromUserInput($password, $this->validator, $this->passwordHasher);
+        return async(fn (): Password => Password::fromUserInput($password, $this->validator, $this->passwordHasher));
     }
 
     private function isEmailFree(Email $email): bool

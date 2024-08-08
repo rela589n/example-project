@@ -6,26 +6,27 @@ namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login;
 
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserEvent;
+use Closure;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 final readonly class UserLoggedInEvent implements UserEvent
 {
-    public function __construct(
+    private function __construct(
         private User $user,
     ) {
     }
 
-    public function getUser(): User
+    public static function of(Closure $user, string $plainPassword, PasswordHasherInterface $passwordHasher): UserLoggedInEvent
     {
-        return $this->user;
+        $event = new self($user());
+
+        $event->user->verifyPassword($plainPassword, $passwordHasher);
+
+        return $event;
     }
 
     public function process(): void
     {
         $this->user->processLoggedInEvent($this);
-    }
-
-    public function verifyPassword()
-    {
-        
     }
 }
