@@ -31,7 +31,7 @@ final class EmailUnitTest extends TestCase
             'This value should not be blank. (code c1051bb4-d103-4f74-8988-acbcafc7fdc3)'
         );
 
-        Email::fromUserInput($this->validator, '');
+        Email::fromUserInput('', $this->validator);
     }
 
     #[DataProvider('untrimmedEmailsProvider')]
@@ -42,7 +42,7 @@ final class EmailUnitTest extends TestCase
             'This value is not a valid email address. (code bd79c0ab-ddba-46cc-a703-a7a4b08de310)'
         );
 
-        Email::fromUserInput($this->validator, $untrimmedEmail);
+        Email::fromUserInput($untrimmedEmail, $this->validator);
     }
 
     #[DataProvider('invalidEmailsProvider')]
@@ -53,12 +53,12 @@ final class EmailUnitTest extends TestCase
             'This value is not a valid email address. (code bd79c0ab-ddba-46cc-a703-a7a4b08de310)'
         );
 
-        Email::fromUserInput($this->validator, $invalidEmail);
+        Email::fromUserInput($invalidEmail, $this->validator);
     }
 
     public function testValidEmail(): void
     {
-        $email = Email::fromUserInput($this->validator, 'example@test.com');
+        $email = Email::fromUserInput('example@test.com', $this->validator);
 
         self::assertSame('example@test.com', $email->getEmail());
     }

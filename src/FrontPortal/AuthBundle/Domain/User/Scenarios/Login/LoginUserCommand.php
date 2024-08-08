@@ -2,23 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register;
+namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login;
 
-use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Exception\EmailAlreadyTakenException;
+use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
+use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\Exception\PasswordMismatchException;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Exception\EmailValidationException;
-use App\FrontPortal\AuthBundle\Domain\ValueObject\Exception\PasswordValidationException;
-use PhPhD\ExceptionalValidation;
 use PhPhD\ExceptionalValidation\Capture;
 
-#[ExceptionalValidation]
-final readonly class RegisterUserCommand
+final readonly class LoginUserCommand
 {
     public function __construct(
         #[Capture(EmailValidationException::class, condition: 'invalid_value', formatter: 'violation_list')]
-        #[Capture(EmailAlreadyTakenException::class, condition: 'invalid_value')]
+        #[Capture(UserNotFoundException::class, condition: 'invalid_value')]
         private string $email,
-
-        #[Capture(PasswordValidationException::class, condition: 'invalid_value', formatter: 'violation_list')]
+        #[Capture(PasswordMismatchException::class, condition: 'invalid_value')]
         private string $password,
     ) {
     }

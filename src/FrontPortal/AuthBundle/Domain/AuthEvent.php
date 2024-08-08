@@ -6,5 +6,4 @@ namespace App\FrontPortal\AuthBundle\Domain;
 
 interface AuthEvent
 {
-    public function process(): void;
 }

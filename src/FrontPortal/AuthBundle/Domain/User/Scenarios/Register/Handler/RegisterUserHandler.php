@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Handler;
 
-use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Handler\Exception\EmailAlreadyTakenException;
+use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Exception\EmailAlreadyTakenException;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\RegisterUserCommand;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\UserRegisteredEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
@@ -50,12 +50,12 @@ final readonly class RegisterUserHandler
 
     private function getEmail(string $email): Closure
     {
-        return static fn () => Email::fromUserInput($this->validator, $email);
+        return static fn () => Email::fromUserInput($email, $this->validator);
     }
 
     private function getPassword(string $password): Closure
     {
-        return static fn () => Password::fromUserInput($this->validator, $this->passwordHasher, $password);
+        return static fn () => Password::fromUserInput($password, $this->validator, $this->passwordHasher);
     }
 
     private function isEmailFree(Email $email): bool

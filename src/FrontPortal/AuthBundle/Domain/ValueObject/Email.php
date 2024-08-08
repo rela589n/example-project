@@ -15,7 +15,7 @@ final readonly class Email
     ) {
     }
 
-    public static function fromUserInput(ValidatorInterface $validator, string $email): self
+    public static function fromUserInput(string $email, ValidatorInterface $validator): self
     {
         // Value-object must cover the basic validation constraints to be easily unit-tested.
         // Additional validation logic (like uniqueness) must be implemented in the service (Handler)

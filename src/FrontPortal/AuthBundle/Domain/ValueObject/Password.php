@@ -19,10 +19,10 @@ final readonly class Password
     }
 
     public static function fromUserInput(
-        ValidatorInterface $validator,
-        PasswordHasherInterface $passwordHasher,
         #[SensitiveParameter]
         string $password,
+        ValidatorInterface $validator,
+        PasswordHasherInterface $passwordHasher,
     ): self {
         $violationList = $validator->validate($password, new Assert\Sequentially([
             new Assert\NotBlank(),

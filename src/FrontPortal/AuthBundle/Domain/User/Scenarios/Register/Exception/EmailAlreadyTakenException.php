@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Handler\Exception;
+namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Exception;
 
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
 use DomainException;
