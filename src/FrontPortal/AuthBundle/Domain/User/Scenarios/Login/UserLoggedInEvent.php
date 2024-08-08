@@ -6,28 +6,26 @@ namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login;
 
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserEvent;
-use SensitiveParameter;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 final readonly class UserLoggedInEvent implements UserEvent
 {
     public function __construct(
         private User $user,
-        #[SensitiveParameter]
-        private string $password,
     ) {
     }
 
-    public function process(
-        #[Autowire('some-password-hasher')]
-        PasswordHasherInterface $passwordHasher,
-    ): void {
-        $this->user->processLoggedInEvent($this, $passwordHasher);
+    public function getUser(): User
+    {
+        return $this->user;
     }
 
-    public function getPassword(): string
+    public function process(): void
     {
-        return $this->password;
+        $this->user->processLoggedInEvent($this);
+    }
+
+    public function verifyPassword()
+    {
+        
     }
 }

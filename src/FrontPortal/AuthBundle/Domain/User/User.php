@@ -35,12 +35,15 @@ class User
         $this->events[] = $event;
     }
 
-    public function processLoggedInEvent(UserLoggedInEvent $event, PasswordHasherInterface $passwordHasher): void
+    public function processLoggedInEvent(UserLoggedInEvent $event): void
     {
-        if (!$passwordHasher->verify($this->password->getHash(), $event->getPassword())) {
-            throw new PasswordMismatchException($event->getPassword());
-        }
-
         $this->events[] = $event;
+    }
+
+    public function verifyPassword(string $plainPassword, PasswordHasherInterface $passwordHasher): void
+    {
+        if (!$passwordHasher->verify($this->password->getHash(), $plainPassword)) {
+            throw new PasswordMismatchException($plainPassword);
+        }
     }
 }
