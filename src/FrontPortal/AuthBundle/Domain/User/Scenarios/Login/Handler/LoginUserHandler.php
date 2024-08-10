@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\Handler;
 
+use Amp\Future;
 use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
-use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\Exception\PasswordMismatchException;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\LoginUserCommand;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\UserLoggedInEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
@@ -17,6 +17,8 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+use function Amp\async;
 
 #[AsMessageHandler(bus: 'command.bus')]
 final readonly class LoginUserHandler
@@ -41,18 +43,18 @@ final readonly class LoginUserHandler
         $this->eventBus->dispatch($event);
     }
 
-    private function findUser(Closure $email): Closure
+    private function findUser(Future $email): Future
     {
-        return function () use ($email) {
-            $emailValue = $email();
+        return async(function () use ($email) {
+            $emailValue = $email->await();
 
             return $this->entityManager->getRepository(User::class)
-                ->findOneBy(['email.email' => $emailValue]) ?? throw new UserNotFoundException($email);
-        };
+                ->findOneBy(['email.email' => $emailValue]) ?? throw new UserNotFoundException($emailValue);
+        });
     }
 
-    private function getEmail(LoginUserCommand $command): Closure
+    private function getEmail(LoginUserCommand $command): Future
     {
-        return fn () => Email::fromUserInput($command->getEmail(), $this->validator);
+        return async(fn () => Email::fromUserInput($command->getEmail(), $this->validator));
     }
 }
