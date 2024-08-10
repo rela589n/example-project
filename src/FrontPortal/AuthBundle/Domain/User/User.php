@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User;
 
+use App\FrontPortal\AuthBundle\Domain\User\Exception\AccessDeniedException;
+use App\FrontPortal\AuthBundle\Domain\User\Exception\ExpiredPasswordResetRequestException;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\Exception\PasswordMismatchException;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\UserLoggedInEvent;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\UserRegisteredEvent;
@@ -53,9 +55,16 @@ class User
 
     public function processPasswordResetEvent(UserPasswordResetEvent $event): void
     {
-        $request->
+        $timestamp = $event->getTimestamp();
+        $request = $event->getPasswordResetRequest();
 
-//        $request = $event->getPasswordResetRequest();
+        if (!$request->isForUser($this)) {
+            throw new AccessDeniedException($this);
+        }
+
+        if ($request->isExpired($timestamp)) {
+            throw new ExpiredPasswordResetRequestException($request);
+        }
 
         $this->events[] = $event;
     }
