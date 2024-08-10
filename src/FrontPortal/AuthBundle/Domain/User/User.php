@@ -7,11 +7,14 @@ namespace App\FrontPortal\AuthBundle\Domain\User;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\Exception\PasswordMismatchException;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\UserLoggedInEvent;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\UserRegisteredEvent;
+use App\FrontPortal\AuthBundle\Domain\User\Scenarios\ResetPassword\UserPasswordResetEvent;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
 
+#[ORM\Entity]
 class User
 {
     private Uuid $id;
@@ -21,6 +24,7 @@ class User
     private Password $password;
 
     /** @var UserEvent[] */
+    #[ORM\OneToMany(targetEntity: UserEvent::class, mappedBy: 'user')]
     private array $events = [];
 
     public function __construct()
@@ -45,5 +49,14 @@ class User
         if (!$passwordHasher->verify($this->password->getHash(), $plainPassword)) {
             throw new PasswordMismatchException($plainPassword);
         }
+    }
+
+    public function processPasswordResetEvent(UserPasswordResetEvent $event): void
+    {
+        $request->
+
+//        $request = $event->getPasswordResetRequest();
+
+        $this->events[] = $event;
     }
 }

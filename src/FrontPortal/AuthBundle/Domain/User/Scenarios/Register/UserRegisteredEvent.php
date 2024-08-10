@@ -9,10 +9,13 @@ use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserEvent;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
 final readonly class UserRegisteredEvent implements UserEvent
 {
     private function __construct(
+        #[ORM\ManyToOne(inversedBy: 'events')]
         private User $user,
         private Email $email,
         private Password $password,

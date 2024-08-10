@@ -3,8 +3,8 @@ services:
         autowire: true
         autoconfigure: true
 
-    App\FrontPortal\AuthBundle\:
-        resource: '../../{**/*Action.php,**/*Handler.php}'
+    App\FrontPortal\AuthBundle\Domain\:
+        resource: '../../Domain/{**/*Action.php,**/*Handler.php}'
 
 imports:
-    - { resource: '../../Scenarios/**/config/services.yaml' }
+    - { resource: '../../Domain/**/config/services.yaml' }

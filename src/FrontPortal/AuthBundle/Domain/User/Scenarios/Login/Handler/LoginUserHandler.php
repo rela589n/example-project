@@ -10,7 +10,6 @@ use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\LoginUserCommand;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\UserLoggedInEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
-use Closure;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -41,6 +40,8 @@ final readonly class LoginUserHandler
         );
 
         $this->eventBus->dispatch($event);
+
+        $this->entityManager->persist($event);
     }
 
     private function findUser(Future $email): Future
@@ -49,7 +50,7 @@ final readonly class LoginUserHandler
             $emailValue = $email->await();
 
             return $this->entityManager->getRepository(User::class)
-                ->findOneBy(['email.email' => $emailValue]) ?? throw new UserNotFoundException($emailValue);
+                ->findOneBy(['email.email' => $emailValue]) ?? throw new UserNotFoundException(email: $emailValue);
         });
     }
 
