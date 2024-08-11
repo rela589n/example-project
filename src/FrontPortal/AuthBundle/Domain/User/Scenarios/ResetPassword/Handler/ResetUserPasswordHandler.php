@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\ResetPassword\Handler;
 
-use Amp\Future;
 use App\FrontPortal\AuthBundle\Domain\User\Entity\PasswordResetRequest;
 use App\FrontPortal\AuthBundle\Domain\User\Exception\PasswordResetRequestNotFoundException;
 use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\ResetPassword\ResetUserPasswordCommand;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\ResetPassword\UserPasswordResetEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
+use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 
 use function Amp\async;
+use function Amp\Future\awaitAnyN;
 
 #[AsMessageHandler(bus: 'command.bus')]
 final readonly class ResetUserPasswordHandler
@@ -26,15 +28,13 @@ final readonly class ResetUserPasswordHandler
         private EntityManagerInterface $entityManager,
         #[Autowire('@event.bus')]
         private MessageBusInterface $eventBus,
+        private ClockInterface $clock,
     ) {
     }
 
     public function __invoke(ResetUserPasswordCommand $command): void
     {
-        $event = UserPasswordResetEvent::of(
-            $this->getUser($command),
-            $this->getPasswordResetRequest($command),
-        );
+        $event = $this->createEvent($command);
 
         // event.process() is called within event.bus middleware
         $this->eventBus->dispatch($event);
@@ -42,14 +42,18 @@ final readonly class ResetUserPasswordHandler
         $this->entityManager->persist($event);
     }
 
-    private function getUser(ResetUserPasswordCommand $command): Future
+    private function createEvent(ResetUserPasswordCommand $command): UserPasswordResetEvent
     {
-        return async(fn (): User => $this->findUser($command));
-    }
+        [$user, $passwordResetRequest] = awaitAnyN(2, [
+            async(fn (): User => $this->findUser($command)),
+            async(fn (): PasswordResetRequest => $this->findPasswordResetRequest($command)),
+        ]);
 
-    private function getPasswordResetRequest(ResetUserPasswordCommand $command): Future
-    {
-        return async(fn (): PasswordResetRequest => $this->findPasswordResetRequest($command));
+        return new UserPasswordResetEvent(
+            $user,
+            $passwordResetRequest,
+            CarbonImmutable::instance($this->clock->now()),
+        );
     }
 
     private function findUser(ResetUserPasswordCommand $command): User

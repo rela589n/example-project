@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 final readonly class UserPasswordResetEvent implements UserEvent
 {
-    private function __construct(
+    public function __construct(
         #[ORM\ManyToOne(inversedBy: 'events')]
         private User $user,
         #[ORM\ManyToOne]
@@ -22,13 +22,6 @@ final readonly class UserPasswordResetEvent implements UserEvent
         #[ORM\Column(type: 'carbon_immutable')]
         private CarbonImmutable $timestamp,
     ) {
-    }
-
-    public static function of(Future $user, Future $passwordResetRequest): self
-    {
-        [$user, $passwordResetRequest] = Future\awaitAnyN(2, [$user, $passwordResetRequest]);
-
-        return new self($user, $passwordResetRequest, CarbonImmutable::now());
     }
 
     public function getUser(): User

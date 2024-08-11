@@ -33,29 +33,33 @@ final readonly class LoginUserHandler
 
     public function __invoke(LoginUserCommand $command): void
     {
-        $event = UserLoggedInEvent::of(
-            $this->findUser($this->getEmail($command)),
-            $command->getPassword(),
-            $this->passwordHasher,
-        );
+        $event = $this->createEvent($command);
 
         $this->eventBus->dispatch($event);
 
         $this->entityManager->persist($event);
     }
 
-    private function findUser(Future $email): Future
+    private function createEvent(LoginUserCommand $command): UserLoggedInEvent
     {
-        return async(function () use ($email) {
-            $emailValue = $email->await();
+        $email = $this->getEmail($command);
+        $user = $this->findUser($email);
 
-            return $this->entityManager->getRepository(User::class)
-                ->findOneBy(['email.email' => $emailValue]) ?? throw new UserNotFoundException(email: $emailValue);
-        });
+        return UserLoggedInEvent::of(
+            $user,
+            $command->getPassword(),
+            $this->passwordHasher,
+        );
     }
 
-    private function getEmail(LoginUserCommand $command): Future
+    private function getEmail(LoginUserCommand $command): Email
     {
-        return async(fn () => Email::fromUserInput($command->getEmail(), $this->validator));
+        return Email::fromUserInput($command->getEmail(), $this->validator);
+    }
+
+    private function findUser(Email $email): User
+    {
+        return $this->entityManager->getRepository(User::class)
+            ->findOneBy(['email.email' => $email]) ?? throw new UserNotFoundException(email: $email);
     }
 }

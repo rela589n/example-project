@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Handler;
 
-use Amp\Future;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\Exception\EmailAlreadyTakenException;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\RegisterUserCommand;
 use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\UserRegisteredEvent;
@@ -19,6 +18,7 @@ use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use function Amp\async;
+use function Amp\Future\awaitAnyN;
 
 #[AsMessageHandler(bus: 'command.bus')]
 final readonly class RegisterUserHandler
@@ -34,11 +34,7 @@ final readonly class RegisterUserHandler
 
     public function __invoke(RegisterUserCommand $command): void
     {
-        $event = UserRegisteredEvent::of(
-            new User(),
-            $this->getEmail($command->getEmail()),
-            $this->getPassword($command->getPassword()),
-        );
+        $event = $this->createEvent($command);
 
         if (!$this->isEmailFree($event->getEmail())) {
             throw new EmailAlreadyTakenException($event->getEmail());
@@ -50,14 +46,24 @@ final readonly class RegisterUserHandler
         $this->entityManager->persist($event->getUser());
     }
 
-    private function getEmail(string $email): Future
+    private function createEvent(RegisterUserCommand $command): UserRegisteredEvent
     {
-        return async(fn (): Email => Email::fromUserInput($email, $this->validator));
+        [$email, $password] = awaitAnyN(2, [
+            async(fn (): Email => $this->getEmail($command->getEmail())),
+            async(fn (): Password => $this->getPassword($command->getPassword())),
+        ]);
+
+        return new UserRegisteredEvent(new User(), $email, $password);
     }
 
-    private function getPassword(string $password): Future
+    private function getEmail(string $email): Email
     {
-        return async(fn (): Password => Password::fromUserInput($password, $this->validator, $this->passwordHasher));
+        return Email::fromUserInput($email, $this->validator);
+    }
+
+    private function getPassword(string $password): Password
+    {
+        return Password::fromUserInput($password, $this->validator, $this->passwordHasher);
     }
 
     private function isEmailFree(Email $email): bool
