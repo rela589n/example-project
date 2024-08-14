@@ -21,6 +21,11 @@ final readonly class UserRegisteredEvent implements UserEvent
     ) {
     }
 
+    public function process(): void
+    {
+        $this->user->register($this);
+    }
+
     public function getUser(): User
     {
         return $this->user;
@@ -34,10 +39,5 @@ final readonly class UserRegisteredEvent implements UserEvent
     public function getPassword(): Password
     {
         return $this->password;
-    }
-
-    public function process(): void
-    {
-        $this->user->register($this);
     }
 }

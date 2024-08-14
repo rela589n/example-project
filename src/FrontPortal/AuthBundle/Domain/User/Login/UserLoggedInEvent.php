@@ -31,4 +31,9 @@ final readonly class UserLoggedInEvent implements UserEvent
     {
         $this->user->logIn($this);
     }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
 }

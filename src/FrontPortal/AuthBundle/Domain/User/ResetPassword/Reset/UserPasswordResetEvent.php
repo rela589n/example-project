@@ -23,6 +23,11 @@ final readonly class UserPasswordResetEvent implements UserEvent
     ) {
     }
 
+    public function process(): void
+    {
+        $this->user->resetPassword($this);
+    }
+
     public function getUser(): User
     {
         return $this->user;
@@ -36,10 +41,5 @@ final readonly class UserPasswordResetEvent implements UserEvent
     public function getTimestamp(): CarbonImmutable
     {
         return $this->timestamp;
-    }
-
-    public function process(): void
-    {
-        $this->user->resetPassword($this);
     }
 }
