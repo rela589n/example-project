@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\FrontPortal\AuthBundle\Domain\User\Exception;
 
 use App\FrontPortal\AuthBundle\Domain\AuthException;
-use App\FrontPortal\AuthBundle\Domain\User\Entity\PasswordResetRequest;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\PasswordResetRequest;
 use DomainException;
-use PhPhD\ExceptionalValidation\Model\Condition\Exception\InvalidValueException;
+use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
 
-final class ExpiredPasswordResetRequestException extends DomainException implements AuthException, InvalidValueException
+final class ExpiredPasswordResetRequestException extends DomainException implements AuthException, ValueException
 {
     public function __construct(
         private readonly PasswordResetRequest $request,
@@ -17,7 +17,7 @@ final class ExpiredPasswordResetRequestException extends DomainException impleme
         parent::__construct('auth.user.password_reset_request.expired');
     }
 
-    public function getInvalidValue(): string
+    public function getValue(): string
     {
         return $this->request->getId()->toRfc4122();
     }

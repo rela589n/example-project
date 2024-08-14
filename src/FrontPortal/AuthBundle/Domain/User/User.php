@@ -6,12 +6,12 @@ namespace App\FrontPortal\AuthBundle\Domain\User;
 
 use App\FrontPortal\AuthBundle\Domain\User\Exception\AccessDeniedException;
 use App\FrontPortal\AuthBundle\Domain\User\Exception\ExpiredPasswordResetRequestException;
-use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\Exception\PasswordMismatchException;
-use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Login\UserLoggedInEvent;
-use App\FrontPortal\AuthBundle\Domain\User\Scenarios\Register\UserRegisteredEvent;
-use App\FrontPortal\AuthBundle\Domain\User\Scenarios\ResetPassword\UserPasswordResetEvent;
-use App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
-use App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
+use App\FrontPortal\AuthBundle\Domain\User\Login\Exception\PasswordMismatchException;
+use App\FrontPortal\AuthBundle\Domain\User\Login\UserLoggedInEvent;
+use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\Password;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
