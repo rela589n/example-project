@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\FrontPortal\AuthBundle\Domain\User;
 
 use App\FrontPortal\AuthBundle\Domain\User\Exception\AccessDeniedException;
-use App\FrontPortal\AuthBundle\Domain\User\Exception\ExpiredPasswordResetRequestException;
 use App\FrontPortal\AuthBundle\Domain\User\Login\Exception\PasswordMismatchException;
 use App\FrontPortal\AuthBundle\Domain\User\Login\UserLoggedInEvent;
 use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\Exception\ExpiredPasswordResetRequestException;
 use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\Password;
@@ -34,26 +34,19 @@ class User
         $this->id = Uuid::v7();
     }
 
-    public function processRegisteredEvent(UserRegisteredEvent $event): void
+    public function register(UserRegisteredEvent $event): void
     {
         $this->email = $event->getEmail();
         $this->password = $event->getPassword();
         $this->events[] = $event;
     }
 
-    public function processLoggedInEvent(UserLoggedInEvent $event): void
+    public function logIn(UserLoggedInEvent $event): void
     {
         $this->events[] = $event;
     }
 
-    public function verifyPassword(string $plainPassword, PasswordHasherInterface $passwordHasher): void
-    {
-        if (!$passwordHasher->verify($this->password->getHash(), $plainPassword)) {
-            throw new PasswordMismatchException($plainPassword);
-        }
-    }
-
-    public function processPasswordResetEvent(UserPasswordResetEvent $event): void
+    public function resetPassword(UserPasswordResetEvent $event): void
     {
         $timestamp = $event->getTimestamp();
         $request = $event->getPasswordResetRequest();
@@ -67,5 +60,12 @@ class User
         }
 
         $this->events[] = $event;
+    }
+
+    public function verifyPassword(string $plainPassword, PasswordHasherInterface $passwordHasher): void
+    {
+        if (!$passwordHasher->verify($this->password->getHash(), $plainPassword)) {
+            throw new PasswordMismatchException($plainPassword);
+        }
     }
 }

@@ -38,6 +38,6 @@ final readonly class UserRegisteredEvent implements UserEvent
 
     public function process(): void
     {
-        $this->user->processRegisteredEvent($this);
+        $this->user->register($this);
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\Handler;
 
-use App\FrontPortal\AuthBundle\Domain\User\Exception\PasswordResetRequestNotFoundException;
 use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Exception\PasswordResetRequestNotFoundException;
 use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\PasswordResetRequest;
 use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\ResetUserPasswordCommand;
 use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;

@@ -29,6 +29,6 @@ final readonly class UserLoggedInEvent implements UserEvent
 
     public function process(): void
     {
-        $this->user->processLoggedInEvent($this);
+        $this->user->logIn($this);
     }
 }

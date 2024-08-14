@@ -40,6 +40,6 @@ final readonly class UserPasswordResetEvent implements UserEvent
 
     public function process(): void
     {
-        $this->user->processPasswordResetEvent($this);
+        $this->user->resetPassword($this);
     }
 }

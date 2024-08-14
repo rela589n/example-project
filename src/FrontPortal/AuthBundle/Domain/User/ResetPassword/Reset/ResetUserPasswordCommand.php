@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset;
 
-use App\FrontPortal\AuthBundle\Domain\User\Exception\ExpiredPasswordResetRequestException;
-use App\FrontPortal\AuthBundle\Domain\User\Exception\PasswordResetRequestNotFoundException;
 use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Exception\PasswordResetRequestNotFoundException;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\Exception\ExpiredPasswordResetRequestException;
 use PhPhD\ExceptionalValidation;
 use PhPhD\ExceptionalValidation\Capture;
 use Symfony\Component\Validator\Constraints as Assert;
