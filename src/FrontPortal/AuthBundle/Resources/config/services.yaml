@@ -4,7 +4,7 @@ services:
         autoconfigure: true
 
     App\FrontPortal\AuthBundle\Domain\:
-        resource: '../../Domain/{**/*Action.php,**/*Handler.php}'
+        resource: '../../Domain/**/{*Action.php,*Handler.php}'
 
 imports:
     - { resource: '../../Domain/**/config/services.yaml' }

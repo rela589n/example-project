@@ -10,13 +10,13 @@ use DomainException;
 use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-final class EmailValidationException extends DomainException implements AuthException, ValueException, ViolationListException
+final class EmailValidationException extends DomainException implements AuthException, ValueException
 {
     public function __construct(
         private readonly string $email,
         private readonly ConstraintViolationListInterface $violationList,
     ) {
-        parent::__construct();
+        parent::__construct((string)$this->violationList);
     }
 
     public function getValue(): string

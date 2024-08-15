@@ -40,8 +40,7 @@ final readonly class RegisterUserHandler
             throw new EmailAlreadyTakenException($event->getEmail());
         }
 
-        // $event.process() is called by the first handler
-        $this->eventBus->dispatch($event);
+        $this->eventBus->dispatch($event());
 
         $this->entityManager->persist($event->getUser());
     }
@@ -58,7 +57,7 @@ final readonly class RegisterUserHandler
 
     private function getEmail(string $email): Email
     {
-        return Email::fromUserInput($email, $this->validator);
+        return Email::fromString($email, $this->validator);
     }
 
     private function getPassword(string $password): Password

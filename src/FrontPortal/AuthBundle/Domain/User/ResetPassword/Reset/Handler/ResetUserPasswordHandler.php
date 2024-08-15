@@ -36,8 +36,7 @@ final readonly class ResetUserPasswordHandler
     {
         $event = $this->createEvent($command);
 
-        // event.process() is called within event.bus middleware
-        $this->eventBus->dispatch($event);
+        $this->eventBus->dispatch($event());
 
         $this->entityManager->persist($event);
     }

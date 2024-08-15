@@ -32,7 +32,7 @@ final readonly class LoginUserHandler
     {
         $event = $this->createEvent($command);
 
-        $this->eventBus->dispatch($event);
+        $this->eventBus->dispatch($event());
 
         $this->entityManager->persist($event);
     }
@@ -51,7 +51,7 @@ final readonly class LoginUserHandler
 
     private function getEmail(LoginUserCommand $command): Email
     {
-        return Email::fromUserInput($command->getEmail(), $this->validator);
+        return Email::fromString($command->getEmail(), $this->validator);
     }
 
     private function findUser(Email $email): User

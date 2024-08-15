@@ -27,9 +27,11 @@ final readonly class UserLoggedInEvent implements UserEvent
         return $event;
     }
 
-    public function process(): void
+    public function __invoke(): self
     {
         $this->user->logIn($this);
+
+        return $this;
     }
 
     public function getUser(): User

@@ -8,5 +8,4 @@ use App\FrontPortal\AuthBundle\Domain\AuthEvent;
 
 interface UserEvent extends AuthEvent
 {
-    public function process(): void;
 }

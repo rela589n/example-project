@@ -21,9 +21,11 @@ final readonly class UserRegisteredEvent implements UserEvent
     ) {
     }
 
-    public function process(): void
+    public function __invoke(): self
     {
         $this->user->register($this);
+
+        return $this;
     }
 
     public function getUser(): User

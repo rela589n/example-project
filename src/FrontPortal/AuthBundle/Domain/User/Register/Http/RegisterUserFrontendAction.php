@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\BusNameStamp;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[AsController]
 final readonly class RegisterUserFrontendAction
@@ -22,7 +23,8 @@ final readonly class RegisterUserFrontendAction
     ) {
     }
 
-    public function __invoke(
+    #[Route('/register')]
+    public function run(
         #[MapRequestPayload]
         RegisterUserCommand $command,
     ): mixed {

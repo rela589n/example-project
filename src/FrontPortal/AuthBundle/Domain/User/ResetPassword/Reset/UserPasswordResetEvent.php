@@ -23,9 +23,11 @@ final readonly class UserPasswordResetEvent implements UserEvent
     ) {
     }
 
-    public function process(): void
+    public function __invoke(): self
     {
         $this->user->resetPassword($this);
+
+        return $this;
     }
 
     public function getUser(): User
