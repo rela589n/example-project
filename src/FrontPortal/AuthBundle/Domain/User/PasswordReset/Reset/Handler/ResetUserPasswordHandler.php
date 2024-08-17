@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\Handler;
+namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\Handler;
 
 use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
-use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Exception\PasswordResetRequestNotFoundException;
-use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\PasswordResetRequest;
-use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\ResetUserPasswordCommand;
-use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;
+use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Exception\PasswordResetRequestNotFoundException;
+use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\PasswordResetRequest;
+use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\ResetUserPasswordCommand;
+use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\UserPasswordResetEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;

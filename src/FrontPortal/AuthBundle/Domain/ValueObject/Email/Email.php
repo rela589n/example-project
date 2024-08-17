@@ -27,7 +27,7 @@ final readonly class Email
         ]);
 
         if (0 !== $violationList->count()) {
-            throw new EmailValidationException($email, $violationList);
+            throw new EmailValidationFailedException($email, $violationList);
         }
 
         return new self($email);

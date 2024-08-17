@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\Http;
+namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\Http;
 
-use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\ResetUserPasswordCommand;
+use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\ResetUserPasswordCommand;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;

@@ -6,14 +6,14 @@ namespace App\FrontPortal\AuthBundle\Domain\User\Login;
 
 use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
 use App\FrontPortal\AuthBundle\Domain\User\Login\Exception\PasswordMismatchException;
-use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\EmailValidationException;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\EmailValidationFailedException;
 use PhPhD\ExceptionalValidation\Capture;
 use SensitiveParameter;
 
 final readonly class LoginUserCommand
 {
     public function __construct(
-        #[Capture(EmailValidationException::class, condition: 'value', formatter: 'violation_list')]
+        #[Capture(EmailValidationFailedException::class, condition: 'value', formatter: 'violation_list')]
         #[Capture(UserNotFoundException::class, condition: 'value')]
         private string $email,
         #[Capture(PasswordMismatchException::class, condition: 'value')]

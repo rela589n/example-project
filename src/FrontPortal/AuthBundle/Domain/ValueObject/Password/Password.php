@@ -30,7 +30,7 @@ final readonly class Password
         ]));
 
         if (0 !== $violationList->count()) {
-            throw new PasswordValidationException($password, $violationList);
+            throw new PasswordValidationFailedException($password, $violationList);
         }
 
         return new self($passwordHasher->hash($password));

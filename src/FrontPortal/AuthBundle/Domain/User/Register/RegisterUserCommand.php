@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\FrontPortal\AuthBundle\Domain\User\Register;
 
 use App\FrontPortal\AuthBundle\Domain\User\Register\Exception\EmailAlreadyTakenException;
-use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\EmailValidationException;
-use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\PasswordValidationException;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\EmailValidationFailedException;
+use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\PasswordValidationFailedException;
 use PhPhD\ExceptionalValidation;
 use PhPhD\ExceptionalValidation\Capture;
 
@@ -14,10 +14,10 @@ use PhPhD\ExceptionalValidation\Capture;
 final readonly class RegisterUserCommand
 {
     public function __construct(
-        #[Capture(EmailValidationException::class, condition: 'value', formatter: 'violation_list')]
+        #[Capture(EmailValidationFailedException::class, condition: 'value', formatter: 'violation_list')]
         #[Capture(EmailAlreadyTakenException::class, condition: 'value')]
         private string $email,
-        #[Capture(PasswordValidationException::class, condition: 'value', formatter: 'violation_list')]
+        #[Capture(PasswordValidationFailedException::class, condition: 'value', formatter: 'violation_list')]
         private string $password,
     ) {
     }

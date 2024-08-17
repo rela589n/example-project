@@ -10,7 +10,7 @@ use DomainException;
 use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-final class EmailValidationException extends DomainException implements AuthException, ValueException
+final class EmailValidationFailedException extends DomainException implements AuthException, ValueException, ViolationListException
 {
     public function __construct(
         private readonly string $email,

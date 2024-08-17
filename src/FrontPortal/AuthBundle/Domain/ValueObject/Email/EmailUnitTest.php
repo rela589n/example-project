@@ -24,7 +24,7 @@ final class EmailUnitTest extends TestCase
 
     public function testEmailMustNotBeBlank(): void
     {
-        $this->expectException(EmailValidationException::class);
+        $this->expectException(EmailValidationFailedException::class);
         $this->expectExceptionMessage(
             'This value should not be blank. (code c1051bb4-d103-4f74-8988-acbcafc7fdc3)'
         );
@@ -35,7 +35,7 @@ final class EmailUnitTest extends TestCase
     #[DataProvider('untrimmedEmailsProvider')]
     public function testEmailMustBeTrimmedBeforeHand(string $untrimmedEmail): void
     {
-        $this->expectException(EmailValidationException::class);
+        $this->expectException(EmailValidationFailedException::class);
         $this->expectExceptionMessage(
             'This value is not a valid email address. (code bd79c0ab-ddba-46cc-a703-a7a4b08de310)'
         );
@@ -46,7 +46,7 @@ final class EmailUnitTest extends TestCase
     #[DataProvider('invalidEmailsProvider')]
     public function testEmailMustBeValid(string $invalidEmail): void
     {
-        $this->expectException(EmailValidationException::class);
+        $this->expectException(EmailValidationFailedException::class);
         $this->expectExceptionMessage(
             'This value is not a valid email address. (code bd79c0ab-ddba-46cc-a703-a7a4b08de310)'
         );

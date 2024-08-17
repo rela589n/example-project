@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Exception;
+namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Exception;
 
 use App\FrontPortal\AuthBundle\Domain\AuthException;
 use DomainException;

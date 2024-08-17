@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword;
+namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset;
 
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use Carbon\CarbonImmutable;

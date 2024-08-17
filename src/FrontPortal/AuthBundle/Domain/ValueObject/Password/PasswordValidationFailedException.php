@@ -10,7 +10,7 @@ use DomainException;
 use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-final class PasswordValidationException extends DomainException implements AuthException, ValueException, ViolationListException
+final class PasswordValidationFailedException extends DomainException implements AuthException, ValueException, ViolationListException
 {
     public function __construct(
         private readonly string $password,
