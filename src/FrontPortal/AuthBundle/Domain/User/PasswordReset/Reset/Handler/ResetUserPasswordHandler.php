@@ -43,6 +43,10 @@ final readonly class ResetUserPasswordHandler
 
     private function createEvent(ResetUserPasswordCommand $command): UserPasswordResetEvent
     {
+        /**
+         * @var User $user
+         * @var PasswordResetRequest $passwordResetRequest
+         */
         [$user, $passwordResetRequest] = awaitAnyN(2, [
             async(fn (): User => $this->findUser($command)),
             async(fn (): PasswordResetRequest => $this->findPasswordResetRequest($command)),
