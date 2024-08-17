@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final readonly class Email
@@ -15,8 +14,10 @@ final readonly class Email
     ) {
     }
 
-    public static function fromString(string $email, ValidatorInterface $validator): self
-    {
+    public static function fromString(
+        string $email,
+        ValidatorInterface $validator,
+    ): self {
         // Value-object must cover the basic validation constraints to be easily unit-tested.
         // Additional validation logic (like uniqueness) must be implemented in the service (Handler)
         // and tested with integration test.

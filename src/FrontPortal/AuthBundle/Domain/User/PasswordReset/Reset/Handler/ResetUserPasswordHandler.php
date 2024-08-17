@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\Handler;
 
-use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
-use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Exception\PasswordResetRequestNotFoundException;
 use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\PasswordResetRequest;
-use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\ResetUserPasswordCommand;
+use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\PasswordResetRequestRepository;
 use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\UserPasswordResetEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
-use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -34,44 +31,41 @@ final readonly class ResetUserPasswordHandler
 
     public function __invoke(ResetUserPasswordCommand $command): void
     {
-        $event = $this->createEvent($command);
-
-        $this->eventBus->dispatch($event());
+        $event = $this->processEvent($command);
 
         $this->entityManager->persist($event);
+        $this->entityManager->flush();
+
+        $this->eventBus->dispatch($event);
     }
 
-    private function createEvent(ResetUserPasswordCommand $command): UserPasswordResetEvent
+    private function processEvent(ResetUserPasswordCommand $command): UserPasswordResetEvent
     {
         /**
          * @var User $user
-         * @var PasswordResetRequest $passwordResetRequest
+         * @var PasswordResetRequestRepository $passwordResetRequest
          */
         [$user, $passwordResetRequest] = awaitAnyN(2, [
             async(fn (): User => $this->findUser($command)),
-            async(fn (): PasswordResetRequest => $this->findPasswordResetRequest($command)),
+            async(fn (): PasswordResetRequestRepository => $this->findPasswordResetRequest($command)),
         ]);
 
-        return new UserPasswordResetEvent(
+        return UserPasswordResetEvent::process(
             $user,
             $passwordResetRequest,
-            CarbonImmutable::instance($this->clock->now()),
+            $this->clock->now(),
         );
     }
 
     private function findUser(ResetUserPasswordCommand $command): User
     {
-        $id = Uuid::fromString($command->getUserId());
-
-        return $this->entityManager->find(User::class, $id)
-            ?? throw new UserNotFoundException(id: $id);
+        return $this->entityManager->getRepository(User::class)
+            ->findById($command->getUserId());
     }
 
-    private function findPasswordResetRequest(ResetUserPasswordCommand $command): PasswordResetRequest
+    private function findPasswordResetRequest(ResetUserPasswordCommand $command): PasswordResetRequestRepository
     {
-        $id = Uuid::fromString($command->getPasswordResetRequestId());
-
-        return $this->entityManager->find(PasswordResetRequest::class, $id)
-            ?? throw new PasswordResetRequestNotFoundException($id);
+        return $this->entityManager->getRepository(PasswordResetRequest::class)
+            ->findById($command->getPasswordResetRequestId());
     }
 }

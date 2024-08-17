@@ -24,7 +24,7 @@ final readonly class RegisterUserFrontendAction
     }
 
     #[Route('/register')]
-    public function run(
+    public function __invoke(
         #[MapRequestPayload]
         RegisterUserCommand $command,
     ): mixed {

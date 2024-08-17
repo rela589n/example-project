@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\User\Login;
+namespace App\FrontPortal\AuthBundle\Domain\User\Login\Handler;
 
 use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
 use App\FrontPortal\AuthBundle\Domain\User\Login\Exception\PasswordMismatchException;

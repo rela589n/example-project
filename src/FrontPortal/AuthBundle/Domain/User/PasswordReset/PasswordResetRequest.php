@@ -6,8 +6,10 @@ namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset;
 
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use Carbon\CarbonImmutable;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
+#[ORM\Entity(repositoryClass: PasswordResetRequestRepository::class)]
 final readonly class PasswordResetRequest
 {
     private Uuid $id;

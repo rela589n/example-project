@@ -46,8 +46,8 @@ final readonly class RegisterUserHandler
          * @var Password $password
          */
         [$email, $password] = awaitAnyN(2, [
-            async(fn (): Email => $command->getEmail($this->validator)),
-            async(fn (): Password => $command->getPassword($this->validator, $this->passwordHasher)),
+            async(fn (): Email => $this->getEmail($command)),
+            async(fn (): Password => $this->getPassword($command)),
         ]);
 
         return UserRegisteredEvent::process(
@@ -55,6 +55,16 @@ final readonly class RegisterUserHandler
             $password,
             $this->entityManager->getRepository(User::class),
         );
+    }
+
+    private function getEmail(RegisterUserCommand $command): Email
+    {
+        return Email::fromString($command->getEmail(), $this->validator);
+    }
+
+    private function getPassword(RegisterUserCommand $command): Password
+    {
+        return Password::fromString($command->getPassword(), $this->validator, $this->passwordHasher);
     }
 
 }

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Login\Handler;
 
-use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
-use App\FrontPortal\AuthBundle\Domain\User\Login\LoginUserCommand;
 use App\FrontPortal\AuthBundle\Domain\User\Login\UserLoggedInEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
+use App\FrontPortal\AuthBundle\Domain\User\UserRepository;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -20,6 +19,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final readonly class LoginUserHandler
 {
     public function __construct(
+        private UserRepository $userRepository,
         private EntityManagerInterface $entityManager,
         private ValidatorInterface $validator,
         private PasswordHasherInterface $passwordHasher,
@@ -30,33 +30,26 @@ final readonly class LoginUserHandler
 
     public function __invoke(LoginUserCommand $command): void
     {
-        $event = $this->createEvent($command);
+        $event = $this->processEvent($command);
 
-        $this->eventBus->dispatch($event());
+        $this->eventBus->dispatch($event);
 
         $this->entityManager->persist($event);
     }
 
-    private function createEvent(LoginUserCommand $command): UserLoggedInEvent
+    private function processEvent(LoginUserCommand $command): UserLoggedInEvent
     {
-        $email = $this->getEmail($command);
-        $user = $this->findUser($email);
-
-        return UserLoggedInEvent::of(
-            $user,
+        return UserLoggedInEvent::process(
+            $this->getUser($command),
             $command->getPassword(),
             $this->passwordHasher,
         );
     }
 
-    private function getEmail(LoginUserCommand $command): Email
+    private function getUser(LoginUserCommand $command): User
     {
-        return Email::fromString($command->getEmail(), $this->validator);
-    }
+        $email = Email::fromString($command->getEmail(), $this->validator);
 
-    private function findUser(Email $email): User
-    {
-        return $this->entityManager->getRepository(User::class)
-            ->findOneBy(['email.email' => $email]) ?? throw new UserNotFoundException(email: $email);
+        return $this->userRepository->findByEmail($email);
     }
 }

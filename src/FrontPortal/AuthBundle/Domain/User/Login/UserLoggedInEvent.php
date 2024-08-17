@@ -18,20 +18,19 @@ final readonly class UserLoggedInEvent implements UserEvent
     ) {
     }
 
-    public static function of(User $user, string $plainPassword, PasswordHasherInterface $passwordHasher): UserLoggedInEvent
+    public static function process(User $user, string $plainPassword, PasswordHasherInterface $passwordHasher): UserLoggedInEvent
     {
         $event = new self($user);
 
         $event->user->verifyPassword($plainPassword, $passwordHasher);
+        $event->apply();
 
         return $event;
     }
 
-    public function __invoke(): self
+    private function apply(): void
     {
         $this->user->logIn($this);
-
-        return $this;
     }
 
     public function getUser(): User

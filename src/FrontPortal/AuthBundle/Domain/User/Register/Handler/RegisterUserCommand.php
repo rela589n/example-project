@@ -28,13 +28,13 @@ final readonly class RegisterUserCommand
     ) {
     }
 
-    public function getEmail(ValidatorInterface $validator): Email
+    public function getEmail(): string
     {
-        return Email::fromString($this->email, $validator);
+        return $this->email;
     }
 
-    public function getPassword(ValidatorInterface $validator, PasswordHasherInterface $passwordHasher): Password
+    public function getPassword(): string
     {
-        return Password::fromString($this->password, $validator, $passwordHasher);
+        return $this->password;
     }
 }
