@@ -10,6 +10,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * Note that in fact if client code has instance of Password, it means that:
+ * - at the moment when password has been created (it could've been a year ago), it has been valid
+ *
+ * The fact that object could not be created in the invalid state completely removes temporal coupling (https://www.pluralsight.com/tech-blog/forms-of-temporal-coupling/)
+ */
 final readonly class Password
 {
     private function __construct(
@@ -17,7 +23,7 @@ final readonly class Password
     ) {
     }
 
-    public static function fromUserInput(
+    public static function fromString(
         #[SensitiveParameter]
         string $password,
         ValidatorInterface $validator,

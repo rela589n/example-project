@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Register\Http;
 
-use App\FrontPortal\AuthBundle\Domain\User\Register\RegisterUserCommand;
+use App\FrontPortal\AuthBundle\Domain\User\Register\Handler\RegisterUserCommand;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;

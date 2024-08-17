@@ -7,9 +7,9 @@ namespace App\FrontPortal\AuthBundle\Domain\User;
 use App\FrontPortal\AuthBundle\Domain\User\Exception\AccessDeniedException;
 use App\FrontPortal\AuthBundle\Domain\User\Login\Exception\PasswordMismatchException;
 use App\FrontPortal\AuthBundle\Domain\User\Login\UserLoggedInEvent;
-use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
 use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\Exception\ExpiredPasswordResetRequestException;
 use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\UserPasswordResetEvent;
+use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\Password;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,9 +29,9 @@ class User
     #[ORM\OneToMany(targetEntity: UserEvent::class, mappedBy: 'user')]
     private array $events = [];
 
-    public function __construct()
+    public function __construct(Uuid $id)
     {
-        $this->id = Uuid::v7();
+        $this->id = $id;
     }
 
     public function register(UserRegisteredEvent $event): void

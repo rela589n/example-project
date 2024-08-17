@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Register\Handler;
 
-use App\FrontPortal\AuthBundle\Domain\User\Register\Exception\EmailAlreadyTakenException;
-use App\FrontPortal\AuthBundle\Domain\User\Register\RegisterUserCommand;
 use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
@@ -26,50 +24,37 @@ final readonly class RegisterUserHandler
     public function __construct(
         private ValidatorInterface $validator,
         private PasswordHasherInterface $passwordHasher,
+        private EntityManagerInterface $entityManager,
         #[Autowire('@event.bus')]
         private MessageBusInterface $eventBus,
-        private EntityManagerInterface $entityManager,
     ) {
     }
 
     public function __invoke(RegisterUserCommand $command): void
     {
-        $event = $this->createEvent($command);
-
-        if (!$this->isEmailFree($event->getEmail())) {
-            throw new EmailAlreadyTakenException($event->getEmail());
-        }
-
-        $this->eventBus->dispatch($event());
+        $event = $this->processEvent($command);
 
         $this->entityManager->persist($event->getUser());
+
+        $this->eventBus->dispatch($event);
     }
 
-    private function createEvent(RegisterUserCommand $command): UserRegisteredEvent
+    private function processEvent(RegisterUserCommand $command): UserRegisteredEvent
     {
+        /**
+         * @var Email $email
+         * @var Password $password
+         */
         [$email, $password] = awaitAnyN(2, [
-            async(fn (): Email => $this->getEmail($command->getEmail())),
-            async(fn (): Password => $this->getPassword($command->getPassword())),
+            async(fn (): Email => $command->getEmail($this->validator)),
+            async(fn (): Password => $command->getPassword($this->validator, $this->passwordHasher)),
         ]);
 
-        return new UserRegisteredEvent(new User(), $email, $password);
+        return UserRegisteredEvent::process(
+            $email,
+            $password,
+            $this->entityManager->getRepository(User::class),
+        );
     }
 
-    private function getEmail(string $email): Email
-    {
-        return Email::fromString($email, $this->validator);
-    }
-
-    private function getPassword(string $password): Password
-    {
-        return Password::fromUserInput($password, $this->validator, $this->passwordHasher);
-    }
-
-    private function isEmailFree(Email $email): bool
-    {
-        $existingUser = $this->entityManager->getRepository(User::class)
-            ->findOneBy(['email.email' => $email->getEmail()]);
-
-        return null === $existingUser;
-    }
 }

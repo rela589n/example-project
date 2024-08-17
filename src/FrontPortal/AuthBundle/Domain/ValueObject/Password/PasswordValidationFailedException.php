@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
 
 use App\FrontPortal\AuthBundle\Domain\AuthException;
-use App\FrontPortal\AuthBundle\Domain\ValueObject\Exception\ViolationListException;
 use DomainException;
+use PhPhD\ExceptionalValidation\Formatter\ViolationListException;
 use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -16,7 +16,7 @@ final class PasswordValidationFailedException extends DomainException implements
         private readonly string $password,
         private readonly ConstraintViolationListInterface $violationList,
     ) {
-        parent::__construct();
+        parent::__construct((string)$this->violationList);
     }
 
     public function getValue(): string
