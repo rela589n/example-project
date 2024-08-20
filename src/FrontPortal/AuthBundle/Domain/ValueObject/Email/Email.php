@@ -18,8 +18,8 @@ final readonly class Email
         string $email,
         ValidatorInterface $validator,
     ): self {
-        // Value-object must cover the basic validation constraints to be easily unit-tested.
-        // Additional validation logic (like uniqueness) must be implemented in the service (Handler)
+        // Value-object must convey the basic validation rules in order to enforce invariants and be easily unit-tested.
+        // Additional validation logic (like email uniqueness) should be implemented in the service (Handler)
         // and tested with integration test.
 
         $violationList = $validator->validate($email, [

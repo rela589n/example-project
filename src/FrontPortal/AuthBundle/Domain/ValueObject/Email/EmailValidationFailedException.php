@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
 
 use App\FrontPortal\AuthBundle\Domain\AuthException;
-use App\FrontPortal\AuthBundle\Domain\ValueObject\Exception\ViolationListException;
 use DomainException;
+use PhPhD\ExceptionalValidation\Formatter\ViolationListException;
 use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 

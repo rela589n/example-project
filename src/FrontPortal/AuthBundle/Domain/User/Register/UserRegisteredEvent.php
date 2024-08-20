@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Register;
 
-use App\FrontPortal\AuthBundle\Domain\User\Register\Exception\EmailAlreadyTakenException;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserEvent;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\Password;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Persistence\ObjectRepository;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -30,29 +28,13 @@ final readonly class UserRegisteredEvent implements UserEvent
     ) {
     }
 
-    public static function process(Email $email, Password $password, ObjectRepository $userRepository): self
+    public static function process(Email $email, Password $password): self
     {
-        if (!self::isEmailFree($email, $userRepository)) {
-            throw new EmailAlreadyTakenException($email);
-        }
-
         $event = new self(new User(Uuid::v7()), $email, $password);
 
         $event->apply();
 
         return $event;
-    }
-
-    private static function isEmailFree(Email $email, ObjectRepository $userRepository): bool
-    {
-        $existingUser = $userRepository->findOneBy(['email.email' => $email->getEmail()]);
-
-        return null === $existingUser;
-    }
-
-    public function apply(): void
-    {
-        $this->user->register($this);
     }
 
     public function getUser(): User
@@ -68,5 +50,10 @@ final readonly class UserRegisteredEvent implements UserEvent
     public function getPassword(): Password
     {
         return $this->password;
+    }
+
+    private function apply(): void
+    {
+        $this->user->register($this);
     }
 }
