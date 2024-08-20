@@ -1380,16 +1380,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "3.7.0",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "cb4374784c87d0a0294e8513a52eb63c0aff3139"
+                "reference": "bbd3eef89af8ba66a3aa7952b5439168fbcc529f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/cb4374784c87d0a0294e8513a52eb63c0aff3139",
-                "reference": "cb4374784c87d0a0294e8513a52eb63c0aff3139",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bbd3eef89af8ba66a3aa7952b5439168fbcc529f",
+                "reference": "bbd3eef89af8ba66a3aa7952b5439168fbcc529f",
                 "shasum": ""
             },
             "require": {
@@ -1482,7 +1482,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-16T22:29:20+00:00"
+            "time": "2024-08-19T06:22:39+00:00"
         },
         {
             "name": "phphd/exceptional-validation-bundle",
@@ -1490,12 +1490,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phphd/exceptional-validation-bundle.git",
-                "reference": "23e02b69b79467093b0d0925316e825934048f8c"
+                "reference": "633e3865b5f34bfd809638239b70acdef8ed64e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phphd/exceptional-validation-bundle/zipball/23e02b69b79467093b0d0925316e825934048f8c",
-                "reference": "23e02b69b79467093b0d0925316e825934048f8c",
+                "url": "https://api.github.com/repos/phphd/exceptional-validation-bundle/zipball/633e3865b5f34bfd809638239b70acdef8ed64e3",
+                "reference": "633e3865b5f34bfd809638239b70acdef8ed64e3",
                 "shasum": ""
             },
             "require": {
@@ -1546,7 +1546,7 @@
                 "issues": "https://github.com/phphd/exceptional-validation-bundle/issues",
                 "source": "https://github.com/phphd/exceptional-validation-bundle/tree/main"
             },
-            "time": "2024-08-17T12:29:40+00:00"
+            "time": "2024-08-20T05:50:23+00:00"
         },
         {
             "name": "psr/cache",

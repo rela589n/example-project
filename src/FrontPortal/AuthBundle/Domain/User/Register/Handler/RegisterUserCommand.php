@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace App\FrontPortal\AuthBundle\Domain\User\Register\Handler;
 
 use App\FrontPortal\AuthBundle\Domain\User\Register\Exception\EmailAlreadyTakenException;
-use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\EmailValidationFailedException;
-use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\Password;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\PasswordValidationFailedException;
 use PhPhD\ExceptionalValidation;
 use PhPhD\ExceptionalValidation\Capture;
 use PhPhD\ExceptionalValidation\Formatter\ViolationListExceptionFormatter;
 use PhPhD\ExceptionalValidation\Model\Condition\ValueExceptionMatchCondition;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[ExceptionalValidation]
 final readonly class RegisterUserCommand
