@@ -16,10 +16,21 @@ use PhPhD\ExceptionalValidation\Model\Condition\ValueExceptionMatchCondition;
 final readonly class RegisterUserCommand
 {
     public function __construct(
-        #[Capture(EmailValidationFailedException::class, condition: ValueExceptionMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
-        #[Capture(EmailAlreadyTakenException::class, condition: ValueExceptionMatchCondition::class)]
+        #[Capture(
+            exception: EmailValidationFailedException::class,
+            condition: ValueExceptionMatchCondition::class,
+            formatter: ViolationListExceptionFormatter::class,
+        )]
+        #[Capture(
+            exception: EmailAlreadyTakenException::class,
+            condition: ValueExceptionMatchCondition::class,
+        )]
         private string $email,
-        #[Capture(PasswordValidationFailedException::class, condition: ValueExceptionMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
+        #[Capture(
+            exception: PasswordValidationFailedException::class,
+            condition: ValueExceptionMatchCondition::class,
+            formatter: ViolationListExceptionFormatter::class
+        )]
         private string $password,
     ) {
     }

@@ -17,17 +17,17 @@ use SensitiveParameter;
 final readonly class LoginUserCommand
 {
     public function __construct(
-        #[ExceptionalValidation\Capture(
+        #[Capture(
             exception: EmailValidationFailedException::class,
             condition: ValueExceptionMatchCondition::class,
             formatter: ViolationListExceptionFormatter::class,
         )]
-        #[ExceptionalValidation\Capture(
+        #[Capture(
             exception: UserNotFoundException::class,
             condition: ValueExceptionMatchCondition::class,
         )]
         private string $email,
-        #[ExceptionalValidation\Capture(
+        #[Capture(
             exception: PasswordMismatchException::class,
             condition: ValueExceptionMatchCondition::class,
         )]
