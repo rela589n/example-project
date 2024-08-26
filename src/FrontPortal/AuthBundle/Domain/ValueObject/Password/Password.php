@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
 
+use App\FrontPortal\AuthBundle\Domain\User\Login\Exception\PasswordMismatchException;
 use SensitiveParameter;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -40,6 +41,13 @@ final readonly class Password
         }
 
         return new self($passwordHasher->hash($password));
+    }
+
+    public function verify(string $plainPassword, PasswordHasherInterface $passwordHasher): void
+    {
+        if (!$passwordHasher->verify($this->getHash(), $plainPassword)) {
+            throw new PasswordMismatchException($plainPassword);
+        }
     }
 
     public function getHash(): string

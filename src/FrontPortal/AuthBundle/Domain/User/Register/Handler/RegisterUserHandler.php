@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Register\Handler;
 
-use App\FrontPortal\AuthBundle\Domain\User\Register\Exception\EmailAlreadyTakenException;
 use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
-use App\FrontPortal\AuthBundle\Domain\User\User;
+use App\FrontPortal\AuthBundle\Domain\User\UserRepository;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\Password;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectRepository;
+use Psr\Clock\ClockInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -27,6 +26,8 @@ final readonly class RegisterUserHandler
         private ValidatorInterface $validator,
         private PasswordHasherInterface $passwordHasher,
         private EntityManagerInterface $entityManager,
+        private ClockInterface $clock,
+        private UserRepository $userRepository,
         #[Autowire('@event.bus')]
         private MessageBusInterface $eventBus,
     ) {
@@ -52,20 +53,7 @@ final readonly class RegisterUserHandler
             async(fn (): Password => $this->getPassword($command)),
         ]);
 
-        if (!$this->isEmailFree($email)) {
-            throw new EmailAlreadyTakenException($email);
-        }
-
-        return UserRegisteredEvent::process($email, $password);
-    }
-
-    private function isEmailFree(Email $email): bool
-    {
-        $userRepository = $this->entityManager->getRepository(User::class);
-
-        $existingUser = $userRepository->findOneBy(['email.email' => $email->getEmail()]);
-
-        return null === $existingUser;
+        return UserRegisteredEvent::process($email, $password, $this->clock, $this->userRepository);
     }
 
     private function getEmail(RegisterUserCommand $command): Email
@@ -77,5 +65,4 @@ final readonly class RegisterUserHandler
     {
         return Password::fromString($command->getPassword(), $this->validator, $this->passwordHasher);
     }
-
 }

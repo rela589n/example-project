@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace App\FrontPortal\AuthBundle\Domain\User;
 
 use App\FrontPortal\AuthBundle\Domain\User\Exception\AccessDeniedException;
-use App\FrontPortal\AuthBundle\Domain\User\Login\Exception\PasswordMismatchException;
 use App\FrontPortal\AuthBundle\Domain\User\Login\UserLoggedInEvent;
 use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\Exception\ExpiredPasswordResetRequestException;
 use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\UserPasswordResetEvent;
 use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\Password;
+use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -24,6 +23,8 @@ class User
     private Email $email;
 
     private Password $password;
+
+    private CarbonImmutable $createdAt;
 
     /** @var UserEvent[] */
     #[ORM\OneToMany(targetEntity: UserEvent::class, mappedBy: 'user')]
@@ -38,6 +39,7 @@ class User
     {
         $this->email = $event->getEmail();
         $this->password = $event->getPassword();
+        $this->createdAt = $event->getTimestamp();
         $this->events[] = $event;
     }
 
@@ -62,10 +64,23 @@ class User
         $this->events[] = $event;
     }
 
-    public function verifyPassword(string $plainPassword, PasswordHasherInterface $passwordHasher): void
+    public function getId(): Uuid
     {
-        if (!$passwordHasher->verify($this->password->getHash(), $plainPassword)) {
-            throw new PasswordMismatchException($plainPassword);
-        }
+        return $this->id;
+    }
+
+    public function getEmail(): Email
+    {
+        return $this->email;
+    }
+
+    public function getPassword(): Password
+    {
+        return $this->password;
+    }
+
+    public function getCreatedAt(): CarbonImmutable
+    {
+        return $this->createdAt;
     }
 }

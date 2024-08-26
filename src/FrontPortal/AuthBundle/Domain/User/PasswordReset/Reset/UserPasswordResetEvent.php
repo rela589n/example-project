@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset;
 
-use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\PasswordResetRequestRepository;
+use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\PasswordResetRequest;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserEvent;
 use Carbon\CarbonImmutable;
@@ -18,7 +18,7 @@ final readonly class UserPasswordResetEvent implements UserEvent
         #[ORM\ManyToOne(inversedBy: 'events')]
         private User $user,
         #[ORM\ManyToOne]
-        private PasswordResetRequestRepository $passwordResetRequest,
+        private PasswordResetRequest $passwordResetRequest,
         #[ORM\Column(type: 'carbon_immutable')]
         private CarbonImmutable $timestamp,
     ) {
@@ -26,7 +26,7 @@ final readonly class UserPasswordResetEvent implements UserEvent
 
     public static function process(
         User $user,
-        PasswordResetRequestRepository $passwordResetRequest,
+        PasswordResetRequest $passwordResetRequest,
         DateTimeInterface $timestamp,
     ): self {
         $event = new self($user, $passwordResetRequest, CarbonImmutable::instance($timestamp));
@@ -46,7 +46,7 @@ final readonly class UserPasswordResetEvent implements UserEvent
         return $this->user;
     }
 
-    public function getPasswordResetRequest(): PasswordResetRequestRepository
+    public function getPasswordResetRequest(): PasswordResetRequest
     {
         return $this->passwordResetRequest;
     }

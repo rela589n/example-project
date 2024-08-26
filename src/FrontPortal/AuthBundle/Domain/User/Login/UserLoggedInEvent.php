@@ -22,7 +22,7 @@ final readonly class UserLoggedInEvent implements UserEvent
     {
         $event = new self($user);
 
-        $event->user->verifyPassword($plainPassword, $passwordHasher);
+        $event->user->getPassword()->verify($plainPassword, $passwordHasher);
         $event->apply();
 
         return $event;
