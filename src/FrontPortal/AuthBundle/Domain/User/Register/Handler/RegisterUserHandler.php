@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Register\Handler;
 
+use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
+use App\FrontPortal\AuthBundle\Domain\User\Register\Exception\EmailAlreadyTakenException;
 use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
 use App\FrontPortal\AuthBundle\Domain\User\UserRepository;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
@@ -14,6 +16,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use function Amp\async;
@@ -25,9 +28,9 @@ final readonly class RegisterUserHandler
     public function __construct(
         private ValidatorInterface $validator,
         private PasswordHasherInterface $passwordHasher,
-        private EntityManagerInterface $entityManager,
-        private ClockInterface $clock,
         private UserRepository $userRepository,
+        private ClockInterface $clock,
+        private EntityManagerInterface $entityManager,
         #[Autowire('@event.bus')]
         private MessageBusInterface $eventBus,
     ) {
@@ -53,7 +56,11 @@ final readonly class RegisterUserHandler
             async(fn (): Password => $this->getPassword($command)),
         ]);
 
-        return UserRegisteredEvent::process($email, $password, $this->clock, $this->userRepository);
+        if (!$this->emailIsFree($email)) {
+            throw new EmailAlreadyTakenException($email);
+        }
+
+        return UserRegisteredEvent::process(Uuid::v7(), $email, $password, $this->clock->now());
     }
 
     private function getEmail(RegisterUserCommand $command): Email
@@ -64,5 +71,16 @@ final readonly class RegisterUserHandler
     private function getPassword(RegisterUserCommand $command): Password
     {
         return Password::fromString($command->getPassword(), $this->validator, $this->passwordHasher);
+    }
+
+    private function emailIsFree(Email $email): bool
+    {
+        try {
+            $this->userRepository->findByEmail($email);
+
+            return false;
+        } catch (UserNotFoundException) {
+            return true;
+        }
     }
 }
