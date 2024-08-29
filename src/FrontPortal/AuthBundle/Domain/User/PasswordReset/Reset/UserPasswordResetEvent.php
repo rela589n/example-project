@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset;
 
+use App\FrontPortal\AuthBundle\Domain\User\Exception\AccessDeniedException;
 use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\PasswordResetRequest;
+use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\Exception\ExpiredPasswordResetRequestException;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserEvent;
 use Carbon\CarbonImmutable;
+use Closure;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Psr\Clock\ClockInterface;
 
 #[ORM\Entity]
 final readonly class UserPasswordResetEvent implements UserEvent
@@ -24,22 +28,17 @@ final readonly class UserPasswordResetEvent implements UserEvent
     ) {
     }
 
-    public static function process(
-        User $user,
-        PasswordResetRequest $passwordResetRequest,
-        DateTimeInterface $timestamp,
-    ): self {
-        $event = new self($user, $passwordResetRequest, CarbonImmutable::instance($timestamp));
-
-        $event->apply();
-
-        return $event;
-    }
-
-    private function apply(): void
+    public static function process(ClockInterface $clock): Closure
     {
-        $this->user->resetPassword($this);
+        return static function (User $user, PasswordResetRequest $passwordResetRequest) use ($clock) {
+            $event = new self($user, $passwordResetRequest, CarbonImmutable::instance($clock->now()));
+
+            $event->run();
+
+            return $event;
+        };
     }
+
 
     public function getUser(): User
     {
@@ -54,5 +53,18 @@ final readonly class UserPasswordResetEvent implements UserEvent
     public function getTimestamp(): CarbonImmutable
     {
         return $this->timestamp;
+    }
+
+    private function run(): void
+    {
+        if (!$this->passwordResetRequest->isForUser($this->user)) {
+            throw new AccessDeniedException($this->user);
+        }
+
+        if ($this->passwordResetRequest->isExpired($this->timestamp)) {
+            throw new ExpiredPasswordResetRequestException($this->passwordResetRequest);
+        }
+
+        $this->user->resetPassword($this);
     }
 }

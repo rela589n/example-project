@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User;
 
-use App\FrontPortal\AuthBundle\Domain\User\Exception\AccessDeniedException;
 use App\FrontPortal\AuthBundle\Domain\User\Login\UserLoggedInEvent;
-use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\Exception\ExpiredPasswordResetRequestException;
 use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\UserPasswordResetEvent;
 use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
@@ -25,6 +23,8 @@ class User
     private Password $password;
 
     private CarbonImmutable $createdAt;
+
+    private CarbonImmutable $updatedAt;
 
     /** @var UserEvent[] */
     #[ORM\OneToMany(targetEntity: UserEvent::class, mappedBy: 'user')]
@@ -45,21 +45,14 @@ class User
 
     public function logIn(UserLoggedInEvent $event): void
     {
+        $this->updatedAt = $event->getTimestamp();
+
         $this->events[] = $event;
     }
 
     public function resetPassword(UserPasswordResetEvent $event): void
     {
-        $timestamp = $event->getTimestamp();
-        $request = $event->getPasswordResetRequest();
-
-        if (!$request->isForUser($this)) {
-            throw new AccessDeniedException($this);
-        }
-
-        if ($request->isExpired($timestamp)) {
-            throw new ExpiredPasswordResetRequestException($request);
-        }
+        $this->updatedAt = $event->getTimestamp();
 
         $this->events[] = $event;
     }

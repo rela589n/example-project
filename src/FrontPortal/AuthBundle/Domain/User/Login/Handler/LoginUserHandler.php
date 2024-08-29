@@ -9,6 +9,7 @@ use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserRepository;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -22,6 +23,7 @@ final readonly class LoginUserHandler
         private UserRepository $userRepository,
         private EntityManagerInterface $entityManager,
         private ValidatorInterface $validator,
+        private ClockInterface $clock,
         private PasswordHasherInterface $passwordHasher,
         #[Autowire('@event.bus')]
         private MessageBusInterface $eventBus,
@@ -30,25 +32,18 @@ final readonly class LoginUserHandler
 
     public function __invoke(LoginUserCommand $command): void
     {
-        $event = $this->processEvent($command);
+        $logInUser = UserLoggedInEvent::process($this->clock, $this->passwordHasher);
 
-        $this->eventBus->dispatch($event);
+        $event = $logInUser($this->getUser($command), $command->getPassword());
 
         $this->entityManager->persist($event);
-    }
 
-    private function processEvent(LoginUserCommand $command): UserLoggedInEvent
-    {
-        return UserLoggedInEvent::process(
-            $this->getUser($command),
-            $command->getPassword(),
-            $this->passwordHasher,
-        );
+        $this->eventBus->dispatch($event);
     }
 
     private function getUser(LoginUserCommand $command): User
     {
-        $email = Email::fromString($command->getEmail(), $this->validator);
+        $email = Email::fromString($this->validator)($command->getEmail());
 
         return $this->userRepository->findByEmail($email);
     }

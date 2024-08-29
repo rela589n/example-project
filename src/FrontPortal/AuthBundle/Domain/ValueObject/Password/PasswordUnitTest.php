@@ -4,27 +4,24 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\ValueObject\Password;
 
+use Closure;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PasswordHasher\Hasher\Pbkdf2PasswordHasher;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[CoversClass(Password::class)]
 final class PasswordUnitTest extends TestCase
 {
-    private ValidatorInterface $validator;
-
-    private PasswordHasherInterface $passwordHasher;
+    /** @var Closure(string $password): Password */
+    private Closure $createPassword;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->validator = Validation::createValidator();
-        $this->passwordHasher = new Pbkdf2PasswordHasher();
+        $this->createPassword = Password::fromString(Validation::createValidator(), new Pbkdf2PasswordHasher());
     }
 
     public function testPasswordMustNotBeBlank(): void
@@ -34,7 +31,7 @@ final class PasswordUnitTest extends TestCase
             'This value should not be blank. (code c1051bb4-d103-4f74-8988-acbcafc7fdc3)'
         );
 
-        Password::fromString('', $this->validator, $this->passwordHasher);
+        ($this->createPassword)('');
     }
 
     public function testPasswordMustBeAtLeast8CharactersLong(): void
@@ -44,7 +41,7 @@ final class PasswordUnitTest extends TestCase
             'This value is too short. It should have 8 characters or more. (code 9ff3fdc4-b214-49db-8718-39c315e33d45)'
         );
 
-        Password::fromString('1234567', $this->validator, $this->passwordHasher);
+        ($this->createPassword)('1234567');
     }
 
     public function testPasswordMustNotBeLongerThan31CharactersLong(): void
@@ -54,7 +51,7 @@ final class PasswordUnitTest extends TestCase
             'This value is too long. It should have 31 characters or less. (code d94b19cc-114f-4f44-9cc4-4138e80a87b9)'
         );
 
-        Password::fromString(str_repeat('@', 32), $this->validator, $this->passwordHasher);
+        ($this->createPassword)(str_repeat('@', 32));
     }
 
     #[DataProvider('weakPasswordsProvider')]
@@ -65,12 +62,12 @@ final class PasswordUnitTest extends TestCase
             'The password strength is too low. Please use a stronger password. (code 4234df00-45dd-49a4-b303-a75dbf8b10d8)'
         );
 
-        Password::fromString($weakPassword, $this->validator, $this->passwordHasher);
+        ($this->createPassword)($weakPassword);
     }
 
     public function testValidPassword(): void
     {
-        $password = Password::fromString('58Ez%;7g_cQ\Gj', $this->validator, $this->passwordHasher);
+        $password = ($this->createPassword)('58Ez%;7g_cQ\Gj');
 
         self::assertSame('LoxjdBDi5g63XQ/XdnFYsPjgPHpq7W5z3J861pecrCAGJspDK4ddwA==', $password->getHash());
     }

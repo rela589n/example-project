@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\Handler;
 
-use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\PasswordResetRequest;
 use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\PasswordResetRequestRepository;
 use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\UserPasswordResetEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
+use App\FrontPortal\AuthBundle\Domain\User\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Uid\Uuid;
 
 use function Amp\async;
 use function Amp\Future\awaitAnyN;
@@ -23,6 +22,8 @@ final readonly class ResetUserPasswordHandler
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
+        private UserRepository $userRepository,
+        private PasswordResetRequestRepository $passwordResetRequestRepository,
         #[Autowire('@event.bus')]
         private MessageBusInterface $eventBus,
         private ClockInterface $clock,
@@ -50,22 +51,16 @@ final readonly class ResetUserPasswordHandler
             async(fn (): PasswordResetRequestRepository => $this->findPasswordResetRequest($command)),
         ]);
 
-        return UserPasswordResetEvent::process(
-            $user,
-            $passwordResetRequest,
-            $this->clock->now(),
-        );
+        return UserPasswordResetEvent::process($this->clock)($user, $passwordResetRequest);
     }
 
     private function findUser(ResetUserPasswordCommand $command): User
     {
-        return $this->entityManager->getRepository(User::class)
-            ->findById($command->getUserId());
+        return $this->userRepository->findById($command->getUserId());
     }
 
     private function findPasswordResetRequest(ResetUserPasswordCommand $command): PasswordResetRequestRepository
     {
-        return $this->entityManager->getRepository(PasswordResetRequest::class)
-            ->findById($command->getPasswordResetRequestId());
+        return $this->passwordResetRequestRepository->findById($command->getPasswordResetRequestId());
     }
 }

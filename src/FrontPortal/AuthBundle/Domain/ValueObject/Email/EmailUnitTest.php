@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\ValueObject\Email;
 
+use Closure;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[CoversClass(Email::class)]
 final class EmailUnitTest extends TestCase
 {
-    private ValidatorInterface $validator;
+    /** @var Closure(string $email): Email */
+    private Closure $createEmail;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->validator = Validation::createValidator();
+        $this->createEmail = Email::fromString(Validation::createValidator());
     }
 
     public function testEmailMustNotBeBlank(): void
@@ -29,7 +30,7 @@ final class EmailUnitTest extends TestCase
             'This value should not be blank. (code c1051bb4-d103-4f74-8988-acbcafc7fdc3)'
         );
 
-        Email::fromString('', $this->validator);
+        ($this->createEmail)('');
     }
 
     #[DataProvider('untrimmedEmailsProvider')]
@@ -40,7 +41,7 @@ final class EmailUnitTest extends TestCase
             'This value is not a valid email address. (code bd79c0ab-ddba-46cc-a703-a7a4b08de310)'
         );
 
-        Email::fromString($untrimmedEmail, $this->validator);
+        ($this->createEmail)($untrimmedEmail);
     }
 
     #[DataProvider('invalidEmailsProvider')]
@@ -51,12 +52,12 @@ final class EmailUnitTest extends TestCase
             'This value is not a valid email address. (code bd79c0ab-ddba-46cc-a703-a7a4b08de310)'
         );
 
-        Email::fromString($invalidEmail, $this->validator);
+        ($this->createEmail)($invalidEmail);
     }
 
     public function testValidEmail(): void
     {
-        $email = Email::fromString('example@test.com', $this->validator);
+        $email = ($this->createEmail)('example@test.com');
 
         self::assertSame('example@test.com', $email->getEmail());
     }
