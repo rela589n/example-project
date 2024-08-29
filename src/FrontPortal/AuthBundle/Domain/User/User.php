@@ -40,6 +40,7 @@ class User
         $this->email = $event->getEmail();
         $this->password = $event->getPassword();
         $this->createdAt = $event->getTimestamp();
+        $this->updatedAt = $event->getTimestamp();
         $this->events[] = $event;
     }
 

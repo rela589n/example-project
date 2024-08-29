@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Register;
 
-use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
 use App\FrontPortal\AuthBundle\Domain\User\Register\Exception\EmailAlreadyTakenException;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserEvent;
@@ -69,21 +68,10 @@ final readonly class UserRegisteredEvent implements UserEvent
 
     private function run(UserRepository $userRepository): void
     {
-        if (!$this->emailIsFree($userRepository)) {
+        if (!$userRepository->isEmailFree($this->email)) {
             throw new EmailAlreadyTakenException($this->email);
         }
 
         $this->user->register($this);
-    }
-
-    private function emailIsFree(UserRepository $userRepository): bool
-    {
-        try {
-            $userRepository->findByEmail($this->email);
-        } catch (UserNotFoundException) {
-            return true;
-        }
-
-        return false;
     }
 }

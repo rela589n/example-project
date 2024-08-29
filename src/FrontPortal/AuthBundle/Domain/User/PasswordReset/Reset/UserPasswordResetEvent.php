@@ -39,7 +39,6 @@ final readonly class UserPasswordResetEvent implements UserEvent
         };
     }
 
-
     public function getUser(): User
     {
         return $this->user;

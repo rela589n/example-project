@@ -26,4 +26,15 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this->findOneBy(['email.email' => $email]) ?? throw new UserNotFoundException(email: $email);
     }
+
+    public function isEmailFree(Email $email): bool
+    {
+        try {
+            $this->findByEmail($email);
+        } catch (UserNotFoundException) {
+            return true;
+        }
+
+        return false;
+    }
 }
