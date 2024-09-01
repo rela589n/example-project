@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Request;
+namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Create;
 
 use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\PasswordResetRequest;
 use App\FrontPortal\AuthBundle\Domain\User\User;

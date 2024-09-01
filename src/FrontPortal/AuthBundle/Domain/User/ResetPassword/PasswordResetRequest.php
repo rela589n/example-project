@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword;
 
-use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Request\UserPasswordResetRequestCreatedEvent;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Create\UserPasswordResetRequestCreatedEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;

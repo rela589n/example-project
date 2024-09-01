@@ -6,7 +6,6 @@ namespace App\FrontPortal\AuthBundle\Domain\User;
 
 use App\FrontPortal\AuthBundle\Domain\User\Login\UserLoggedInEvent;
 use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
-use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\PasswordResetRequest;
 use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\Password;
