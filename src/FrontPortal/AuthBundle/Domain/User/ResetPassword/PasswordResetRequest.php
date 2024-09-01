@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset;
+namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword;
 
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Request\UserPasswordResetRequestCreatedEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,12 +17,20 @@ final readonly class PasswordResetRequest
 
     private User $user;
 
+    private CarbonImmutable $createdAt;
+
     private CarbonImmutable $validUntil;
 
-    public function __construct(User $user)
+    public function __construct(Uuid $id)
     {
-        $this->id = Uuid::v7();
-        $this->user = $user;
+        $this->id = $id;
+    }
+
+    public function create(UserPasswordResetRequestCreatedEvent $event): void
+    {
+        $this->user = $event->getUser();
+        $this->createdAt = $event->getTimestamp();
+        $this->validUntil = $event->getTimestamp()->addMinutes(10);
     }
 
     public function getId(): Uuid

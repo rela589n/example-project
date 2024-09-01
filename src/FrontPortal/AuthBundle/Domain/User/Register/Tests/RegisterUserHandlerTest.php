@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\FrontPortal\AuthBundle\Domain\User\Register\Tests;
 
-use App\FrontPortal\AuthBundle\Domain\User\Exception\UserNotFoundException;
 use App\FrontPortal\AuthBundle\Domain\User\Register\Exception\EmailAlreadyTakenException;
 use App\FrontPortal\AuthBundle\Domain\User\Register\Handler\RegisterUserCommand;
 use App\FrontPortal\AuthBundle\Domain\User\Register\Handler\RegisterUserHandler;
 use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserRepository;
-use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -23,9 +22,12 @@ use Symfony\Component\PasswordHasher\Hasher\Pbkdf2PasswordHasher;
 use Symfony\Component\Validator\Validation;
 
 /**
- * @covers \App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent
- * @covers \App\FrontPortal\AuthBundle\Domain\User\User
+ * Handlers are full of infrastructure code, - therefore they are hard to unit test.
+ * This is just an example of what is better not to do.
+ * @see RegisterUserUnitTest as a better alternative
  */
+#[CoversClass(UserRegisteredEvent::class)]
+#[CoversClass(User::class)]
 final class RegisterUserHandlerTest extends TestCase
 {
     private UserRepository&Stub $userRepository;
@@ -42,21 +44,21 @@ final class RegisterUserHandlerTest extends TestCase
         $this->eventBus = $this->createMock(MessageBusInterface::class);
 
         $this->registerUserHandler = new RegisterUserHandler(
+            $this->entityManager,
+            $this->eventBus,
             Validation::createValidator(),
             new Pbkdf2PasswordHasher(),
             $this->userRepository,
             new MockClock('2024-08-26 22:01:13'),
-            $this->entityManager,
-            $this->eventBus,
         );
     }
 
     public function testEmailMustBeUnique(): void
     {
-        $command = new RegisterUserCommand('test@email.com', 'jG\Qc_g7;%zE85');
-
         $this->userRepository->method('findByEmail')
             ->willReturn($this->createMock(User::class));
+
+        $command = new RegisterUserCommand('test@email.com', 'jG\Qc_g7;%zE85');
 
         $this->expectException(EmailAlreadyTakenException::class);
 
@@ -67,8 +69,8 @@ final class RegisterUserHandlerTest extends TestCase
     {
         $command = new RegisterUserCommand('test@email.com', 'jG\Qc_g7;%zE85');
 
-        $this->userRepository->method('findByEmail')
-            ->willReturnCallback(static fn (Email $email) => throw new UserNotFoundException(email: $email));
+        $this->userRepository->method('isEmailFree')
+            ->willReturn(true);
 
         $this->entityManager
             ->expects($this->once())
@@ -77,6 +79,7 @@ final class RegisterUserHandlerTest extends TestCase
                 self::assertSame('test@email.com', $user->getEmail()->getEmail());
                 self::assertSame('UiRp8M0HR2fedmHmsJEX4elDj8Ry3PoPAaBtLZcJe37IzB+L0ISMYg==', $user->getPassword()->getHash());
                 self::assertSame('2024-08-26T22:01:13+00:00', $user->getCreatedAt()->toIso8601String());
+                self::assertSame('2024-08-26T22:01:13+00:00', $user->getUpdatedAt()->toIso8601String());
             });
 
         $this->eventBus->expects($this->once())

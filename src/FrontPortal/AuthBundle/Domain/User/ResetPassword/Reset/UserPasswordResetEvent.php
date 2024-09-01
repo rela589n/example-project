@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset;
+namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset;
 
 use App\FrontPortal\AuthBundle\Domain\User\Exception\AccessDeniedException;
-use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\PasswordResetRequest;
-use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\Exception\ExpiredPasswordResetRequestException;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\PasswordResetRequest;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\Exception\ExpiredPasswordResetRequestException;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserEvent;
 use Carbon\CarbonImmutable;
 use Closure;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Psr\Clock\ClockInterface;
 
@@ -28,6 +27,7 @@ final readonly class UserPasswordResetEvent implements UserEvent
     ) {
     }
 
+    /** @return Closure(User $user, PasswordResetRequest $passwordResetRequest): self */
     public static function process(ClockInterface $clock): Closure
     {
         return static function (User $user, PasswordResetRequest $passwordResetRequest) use ($clock) {

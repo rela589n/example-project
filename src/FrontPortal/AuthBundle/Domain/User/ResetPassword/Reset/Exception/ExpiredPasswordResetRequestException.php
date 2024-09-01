@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\Exception;
+namespace App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\Exception;
 
 use App\FrontPortal\AuthBundle\Domain\AuthException;
-use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\PasswordResetRequest;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\PasswordResetRequest;
 use DomainException;
 use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
 

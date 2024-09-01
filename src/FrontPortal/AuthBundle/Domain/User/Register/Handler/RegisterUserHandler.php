@@ -41,6 +41,9 @@ final readonly class RegisterUserHandler
         $registerUser = UserRegisteredEvent::process($this->clock, $this->userRepository);
 
         /**
+         * Usage of awaitAnyN() allows us to show all the validation errors at once instead of showing them one by one.
+         * This is achieved by exception unwrapper integrated into exceptional validation component.
+         *
          * @var Email $email
          * @var Password $password
          */
@@ -50,6 +53,10 @@ final readonly class RegisterUserHandler
         ]);
 
         $event = $registerUser(Uuid::v7(), $email, $password);
+
+        // usually command.bus has transactional middleware, hence flush() is not needed
+        // also this could be useful for fixtures, when one fixture could register multiple
+        // users and then flush them all in one go
 
         $this->entityManager->persist($event->getUser());
 

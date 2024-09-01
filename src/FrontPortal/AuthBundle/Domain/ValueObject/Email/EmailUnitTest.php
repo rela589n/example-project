@@ -34,7 +34,7 @@ final class EmailUnitTest extends TestCase
     }
 
     #[DataProvider('untrimmedEmailsProvider')]
-    public function testEmailMustBeTrimmedBeforeHand(string $untrimmedEmail): void
+    public function testEmailMustBeTrimmedBeforehand(string $untrimmedEmail): void
     {
         $this->expectException(EmailValidationFailedException::class);
         $this->expectExceptionMessage(
@@ -45,7 +45,7 @@ final class EmailUnitTest extends TestCase
     }
 
     #[DataProvider('invalidEmailsProvider')]
-    public function testEmailMustBeValid(string $invalidEmail): void
+    public function testEmailMustBeValidEmail(string $invalidEmail): void
     {
         $this->expectException(EmailValidationFailedException::class);
         $this->expectExceptionMessage(

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\FrontPortal\AuthBundle\Domain\User;
 
 use App\FrontPortal\AuthBundle\Domain\User\Login\UserLoggedInEvent;
-use App\FrontPortal\AuthBundle\Domain\User\PasswordReset\Reset\UserPasswordResetEvent;
 use App\FrontPortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\PasswordResetRequest;
+use App\FrontPortal\AuthBundle\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Password\Password;
 use Carbon\CarbonImmutable;
@@ -35,6 +36,10 @@ class User
         $this->id = $id;
     }
 
+    /**
+     * It is a lot much easier to update the entity from the event object in one call (e.g. user.register())
+     * rather than in a bunch of anemic setters called (e.g. user.setEmail, user.setPassword)
+     */
     public function register(UserRegisteredEvent $event): void
     {
         $this->email = $event->getEmail();
@@ -76,5 +81,10 @@ class User
     public function getCreatedAt(): CarbonImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): CarbonImmutable
+    {
+        return $this->updatedAt;
     }
 }

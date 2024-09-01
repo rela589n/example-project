@@ -66,6 +66,10 @@ final readonly class UserRegisteredEvent implements UserEvent
         return $this->timestamp;
     }
 
+    /**
+     * The key business logic of user registration should be placed in run() method of the event.
+     * It is completely responsible for implementation of all the necessary checks that business scenario defines.
+     */
     private function run(UserRepository $userRepository): void
     {
         if (!$userRepository->isEmailFree($this->email)) {

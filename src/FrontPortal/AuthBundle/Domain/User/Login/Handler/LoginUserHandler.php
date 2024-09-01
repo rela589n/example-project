@@ -8,7 +8,6 @@ use App\FrontPortal\AuthBundle\Domain\User\Login\UserLoggedInEvent;
 use App\FrontPortal\AuthBundle\Domain\User\User;
 use App\FrontPortal\AuthBundle\Domain\User\UserRepository;
 use App\FrontPortal\AuthBundle\Domain\ValueObject\Email\Email;
-use Doctrine\ORM\EntityManagerInterface;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -21,7 +20,6 @@ final readonly class LoginUserHandler
 {
     public function __construct(
         private UserRepository $userRepository,
-        private EntityManagerInterface $entityManager,
         private ValidatorInterface $validator,
         private ClockInterface $clock,
         private PasswordHasherInterface $passwordHasher,
@@ -35,8 +33,6 @@ final readonly class LoginUserHandler
         $logInUser = UserLoggedInEvent::process($this->clock, $this->passwordHasher);
 
         $event = $logInUser($this->getUser($command), $command->getPassword());
-
-        $this->entityManager->persist($event);
 
         $this->eventBus->dispatch($event);
     }
