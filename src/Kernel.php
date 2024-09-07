@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\FrontPortal\AuthBundle\AppAuthBundle;
+use App\EmployeePortal\AuthBundle\AppAuthBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
