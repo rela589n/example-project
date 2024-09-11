@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\AuthBundle\Domain\User\ResetPassword\Reset;
 
+use App\EmployeePortal\AuthBundle\Domain\User\Event\UserEvent;
+use App\EmployeePortal\AuthBundle\Domain\User\Event\UserEventVisitor;
 use App\EmployeePortal\AuthBundle\Domain\User\Exception\AccessDeniedException;
 use App\EmployeePortal\AuthBundle\Domain\User\ResetPassword\PasswordResetRequest;
 use App\EmployeePortal\AuthBundle\Domain\User\ResetPassword\Reset\Exception\ExpiredPasswordResetRequestException;
 use App\EmployeePortal\AuthBundle\Domain\User\User;
-use App\EmployeePortal\AuthBundle\Domain\User\UserEvent;
 use Carbon\CarbonImmutable;
 use Closure;
 use Doctrine\ORM\Mapping as ORM;
@@ -65,5 +66,10 @@ final readonly class UserPasswordResetEvent implements UserEvent
         }
 
         $this->user->resetPassword($this);
+    }
+
+    public function acceptVisitor(UserEventVisitor $visitor, mixed $data = null): mixed
+    {
+        return $visitor->visitUserPasswordResetEvent($this, $data);
     }
 }

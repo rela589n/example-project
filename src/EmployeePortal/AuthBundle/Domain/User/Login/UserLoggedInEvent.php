@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\AuthBundle\Domain\User\Login;
 
+use App\EmployeePortal\AuthBundle\Domain\User\Event\UserEvent;
+use App\EmployeePortal\AuthBundle\Domain\User\Event\UserEventVisitor;
 use App\EmployeePortal\AuthBundle\Domain\User\User;
-use App\EmployeePortal\AuthBundle\Domain\User\UserEvent;
 use Carbon\CarbonImmutable;
 use Closure;
 use Doctrine\ORM\Mapping as ORM;
@@ -49,5 +50,10 @@ final readonly class UserLoggedInEvent implements UserEvent
         $this->user->getPassword()->verify($passwordHasher, $plainPassword);
 
         $this->user->logIn($this);
+    }
+
+    public function acceptVisitor(UserEventVisitor $visitor, mixed $data = null): mixed
+    {
+        return $visitor->visitUserLoggedInEvent($this, $data);
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\AuthBundle\Domain\User\ResetPassword\Create;
 
+use App\EmployeePortal\AuthBundle\Domain\User\Event\UserEvent;
+use App\EmployeePortal\AuthBundle\Domain\User\Event\UserEventVisitor;
 use App\EmployeePortal\AuthBundle\Domain\User\ResetPassword\PasswordResetRequest;
 use App\EmployeePortal\AuthBundle\Domain\User\User;
 use Carbon\CarbonImmutable;
@@ -13,7 +15,7 @@ use Psr\Clock\ClockInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
-class UserPasswordResetRequestCreatedEvent
+class UserPasswordResetRequestCreatedEvent implements UserEvent
 {
     private function __construct(
         #[ORM\ManyToOne(inversedBy: 'events')]
@@ -54,5 +56,10 @@ class UserPasswordResetRequestCreatedEvent
     private function run(): void
     {
         $this->passwordResetRequest->create($this);
+    }
+
+    public function acceptVisitor(UserEventVisitor $visitor, mixed $data = null): mixed
+    {
+        return $visitor->visitUserPasswordResetRequestCreatedEvent($this, $data);
     }
 }

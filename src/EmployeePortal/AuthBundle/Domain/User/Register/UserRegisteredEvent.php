@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\AuthBundle\Domain\User\Register;
 
+use App\EmployeePortal\AuthBundle\Domain\User\Event\UserEvent;
+use App\EmployeePortal\AuthBundle\Domain\User\Event\UserEventVisitor;
 use App\EmployeePortal\AuthBundle\Domain\User\Register\Exception\EmailAlreadyTakenException;
 use App\EmployeePortal\AuthBundle\Domain\User\User;
-use App\EmployeePortal\AuthBundle\Domain\User\UserEvent;
 use App\EmployeePortal\AuthBundle\Domain\User\UserRepository;
 use App\EmployeePortal\AuthBundle\Domain\ValueObject\Email\Email;
 use App\EmployeePortal\AuthBundle\Domain\ValueObject\Password\Password;
@@ -26,6 +27,8 @@ use Symfony\Component\Uid\Uuid;
 final readonly class UserRegisteredEvent implements UserEvent
 {
     private function __construct(
+        /** Event ID */
+        private Uuid $id,
         #[ORM\ManyToOne(inversedBy: 'events')]
         private User $user,
         private Email $email,
@@ -38,12 +41,17 @@ final readonly class UserRegisteredEvent implements UserEvent
     public static function process(ClockInterface $clock, UserRepository $userRepository): Closure
     {
         return static function (Uuid $id, Email $email, Password $password) use ($clock, $userRepository): self {
-            $event = new self(new User($id), $email, $password, CarbonImmutable::instance($clock->now()));
+            $event = new self($id, new User($id), $email, $password, CarbonImmutable::instance($clock->now()));
 
             $event->run($userRepository);
 
             return $event;
         };
+    }
+
+    public function getId(): Uuid
+    {
+        return $this->id;
     }
 
     public function getUser(): User
@@ -77,5 +85,10 @@ final readonly class UserRegisteredEvent implements UserEvent
         }
 
         $this->user->register($this);
+    }
+
+    public function acceptVisitor(UserEventVisitor $visitor, mixed $data = null): mixed
+    {
+        return $visitor->visitUserRegisteredEvent($this, $data);
     }
 }

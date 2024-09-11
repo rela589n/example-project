@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\AuthBundle\Domain\User;
 
+use App\EmployeePortal\AuthBundle\Domain\User\Event\UserEvent;
 use App\EmployeePortal\AuthBundle\Domain\User\Login\UserLoggedInEvent;
 use App\EmployeePortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
 use App\EmployeePortal\AuthBundle\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;

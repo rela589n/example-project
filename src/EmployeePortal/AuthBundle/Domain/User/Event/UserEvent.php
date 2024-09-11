@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\AuthBundle\Domain\User;
+namespace App\EmployeePortal\AuthBundle\Domain\User\Event;
 
 use App\EmployeePortal\AuthBundle\Domain\AuthEvent;
 
@@ -16,4 +16,14 @@ use App\EmployeePortal\AuthBundle\Domain\AuthEvent;
  */
 interface UserEvent extends AuthEvent
 {
+    /**
+     * @template TResult
+     * @template TData
+     *
+     * @param UserEventVisitor<TResult,TData> $visitor
+     * @param null|TData $data
+     *
+     * @return TResult
+     */
+    public function acceptVisitor(UserEventVisitor $visitor, mixed $data = null): mixed;
 }
