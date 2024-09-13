@@ -16,6 +16,7 @@ final class Kernel extends BaseKernel
         yield from $this->registerThirdPartyBundles();
 
         yield new Support\MessageBusBundle\AppMessageBusBundle();
+        yield new Support\CycleBridgeBundle\AppCycleBridgeBundle();
 
         yield new EmployeePortal\AuthBundle\AppAuthBundle();
     }

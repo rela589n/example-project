@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Support\CycleBridgeBundle\DBAL\CheckConnectionConsoleCommand: ~
+
+    app_cycle_bridge.dbal:
+        class: Cycle\Database\DatabaseManager
+        factory: [ '@app_cycle_bridge.dbal.factory', 'createDatabaseManager' ]
+
+    app_cycle_bridge.dbal.factory:
+        class: App\Support\CycleBridgeBundle\DBAL\DatabaseManagerFactory
