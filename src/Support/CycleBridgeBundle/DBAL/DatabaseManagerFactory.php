@@ -23,11 +23,11 @@ final readonly class DatabaseManagerFactory
             'connections' => [
                 'postgres' => new PostgresDriverConfig(
                     connection: new TcpConnectionConfig(
-                        database: 'spiral',
+                        database: 'project_db',
                         host: '127.0.0.1',
-                        port: 5432,
-                        user: 'spiral',
-                        password: '',
+                        port: 15432,
+                        user: 'postgres',
+                        password: 'qwerty',
                     ),
                     schema: 'public',
                     queryCache: true,

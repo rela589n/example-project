@@ -7,6 +7,7 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-pgsql": "*",
         "amphp/amp": "^3.0",
         "cycle/annotated": "^4.2",
         "cycle/orm": "^2.9",
