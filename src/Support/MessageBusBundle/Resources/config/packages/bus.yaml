@@ -1,0 +1,26 @@
+framework:
+    messenger:
+        default_bus: default.bus
+
+        buses:
+            default.bus:
+                default_middleware: false
+                middleware:
+                    - handle_message
+
+            api.bus:
+                default_middleware: false
+                middleware:
+                    - handle_message
+
+            command.bus:
+                default_middleware: false
+                middleware:
+                    - validation
+                    - doctrine_transaction
+                    - handle_message
+
+            event.bus:
+                default_middleware: false
+                middleware:
+                    - handle_message

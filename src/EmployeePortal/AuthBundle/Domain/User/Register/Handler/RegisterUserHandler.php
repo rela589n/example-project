@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\AuthBundle\Domain\User\Register\Handler;
 
 use App\EmployeePortal\AuthBundle\Domain\User\Register\UserRegisteredEvent;
+use App\EmployeePortal\AuthBundle\Domain\User\User;
 use App\EmployeePortal\AuthBundle\Domain\User\UserRepository;
 use App\EmployeePortal\AuthBundle\Domain\ValueObject\Email\Email;
 use App\EmployeePortal\AuthBundle\Domain\ValueObject\Password\Password;
@@ -28,6 +29,7 @@ final readonly class RegisterUserHandler
         #[Autowire('@event.bus')]
         private MessageBusInterface $eventBus,
         private ValidatorInterface $validator,
+        #[Autowire('@=service("security.password_hasher_factory").getPasswordHasher("'.User::class.'")')]
         private PasswordHasherInterface $passwordHasher,
         private UserRepository $userRepository,
         private ClockInterface $clock,

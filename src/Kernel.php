@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\EmployeePortal\AuthBundle\AppAuthBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
@@ -16,6 +15,8 @@ final class Kernel extends BaseKernel
     {
         yield from $this->registerThirdPartyBundles();
 
-        yield new AppAuthBundle();
+        yield new Support\MessageBusBundle\AppMessageBusBundle();
+
+        yield new EmployeePortal\AuthBundle\AppAuthBundle();
     }
 }

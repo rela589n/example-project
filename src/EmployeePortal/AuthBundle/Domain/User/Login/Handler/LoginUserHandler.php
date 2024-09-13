@@ -22,6 +22,7 @@ final readonly class LoginUserHandler
         private UserRepository $userRepository,
         private ValidatorInterface $validator,
         private ClockInterface $clock,
+        #[Autowire('@=service("security.password_hasher_factory").getPasswordHasher("'.User::class.'")')]
         private PasswordHasherInterface $passwordHasher,
         #[Autowire('@event.bus')]
         private MessageBusInterface $eventBus,
