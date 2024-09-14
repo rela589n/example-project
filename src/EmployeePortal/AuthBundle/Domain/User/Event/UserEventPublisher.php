@@ -17,7 +17,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 /** @implements UserEventVisitor<?object, null> */
 #[AsMessageHandler(bus: 'event.bus')]
-final readonly class UserEventSource implements UserEventVisitor
+final readonly class UserEventPublisher implements UserEventVisitor
 {
     public function __construct(
         #[Autowire('@service.event.bus')]

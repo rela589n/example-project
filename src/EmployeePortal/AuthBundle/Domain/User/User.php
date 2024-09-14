@@ -11,12 +11,15 @@ use App\EmployeePortal\AuthBundle\Domain\User\ResetPassword\Reset\UserPasswordRe
 use App\EmployeePortal\AuthBundle\Domain\ValueObject\Email\Email;
 use App\EmployeePortal\AuthBundle\Domain\ValueObject\Password\Password;
 use Carbon\CarbonImmutable;
+use Cycle\Annotated\Annotation as Cycle;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[Cycle\Entity]
 class User
 {
+    #[Cycle\Column('uuid')]
     private Uuid $id;
 
     private Email $email;
