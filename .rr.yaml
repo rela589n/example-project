@@ -9,6 +9,7 @@ http:
     address: 0.0.0.0:8080
     pool:
         debug: false
+    max_request_size: 64
     middleware: [ "static", "gzip" ]
     uploads:
         forbid: [ ".php", ".exe", ".bat" ]

@@ -1,4 +1,17 @@
 services:
+    backend:
+        image: example_project.backend:v1.0
+        build:
+            context: docker-configs/backend
+        working_dir: /app
+        command: [ "rr", "serve", "-c", ".rr.dev.yaml" ]
+        ports:
+            - 127.0.0.1:8080:8080
+        volumes:
+            - .:/app:cached
+        depends_on:
+            - postgresql
+
     postgresql:
         image: postgres:17rc1
         healthcheck:
