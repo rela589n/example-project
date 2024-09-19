@@ -14,3 +14,7 @@
 .phpunit.cache
 /phpunit.xml.dist
 ###< symfony/phpunit-bridge ###
+
+###> baldinof/roadrunner-bundle ###
+/bin/rr
+###< baldinof/roadrunner-bundle ###

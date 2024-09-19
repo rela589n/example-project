@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "ext-pgsql": "*",
         "amphp/amp": "^3.0",
+        "baldinof/roadrunner-bundle": "^3.1",
         "cycle/annotated": "^4.2",
         "cycle/orm": "^2.9",
         "doctrine/dbal": "^3",
