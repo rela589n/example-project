@@ -11,6 +11,11 @@ http:
     middleware: [ "static", "gzip" ]
     pool:
         debug: true
+    ssl:
+        address: 0.0.0.0:8083
+        redirect: true
+        cert: /etc/ssl/certificate.crt
+        key: /etc/ssl/privateKey.key
     uploads:
         forbid: [ ".php", ".exe", ".bat" ]
     static:

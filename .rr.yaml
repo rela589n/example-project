@@ -20,6 +20,11 @@ http:
         allocate_timeout: 8s
         supervisor:
             max_worker_memory: 64
+    ssl:
+        address: 0.0.0.0:8083
+        redirect: true # redirect from http to https
+        cert: /etc/ssl/certificate.crt
+        key: /etc/ssl/privateKey.key
     max_request_size: 64
     middleware: [ "static", "gzip" ]
     uploads:

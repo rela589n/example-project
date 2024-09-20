@@ -7,7 +7,9 @@ services:
         command: [ "rr", "serve", "-c", ".rr.dev.yaml" ]
         ports:
             - 127.0.0.1:8080:8080
+            - 127.0.0.1:8083:8083
         volumes:
+            - ./docker-configs/backend/ssl/:/etc/ssl/
             - .:/app:cached
         depends_on:
             - postgresql
