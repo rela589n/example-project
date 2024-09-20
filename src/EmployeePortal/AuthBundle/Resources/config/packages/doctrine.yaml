@@ -1,7 +1,0 @@
-doctrine:
-    orm:
-        mappings:
-            AppAuthBundle:
-                type: attribute
-                dir: Domain
-                prefix: App\EmployeePortal\AuthBundle\Domain

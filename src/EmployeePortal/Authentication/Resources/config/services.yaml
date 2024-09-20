@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\EmployeePortal\Authentication\Domain\:
+        resource: '../../Domain/**/{*Action.php,*Handler.php,*Repository.php}'
+
+imports:
+    - { resource: '../../Domain/**/config/services.yaml' }
