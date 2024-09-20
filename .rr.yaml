@@ -9,11 +9,17 @@ http:
     address: 0.0.0.0:8080
     pool:
         debug: false
+
+        # In the peak load periods:
+        # - for the p75 response time under 0.5s - client response time under 3 seconds
+        # - for median (p50) response time under 0.3s - client response time under 1.8 seconds
         num_workers: 8
-        max_jobs: 2000
-        # p75 client response time under 3 seconds
-        # in high load periods for the given server response time under 0.5s
         max_queue_size: 48
+
+        # Latency hard-limit
+        allocate_timeout: 8s
+        supervisor:
+            max_worker_memory: 64
     max_request_size: 64
     middleware: [ "static", "gzip" ]
     uploads:
