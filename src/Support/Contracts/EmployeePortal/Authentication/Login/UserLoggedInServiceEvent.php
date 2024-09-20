@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Contracts\Auth\Login;
+namespace App\Support\Contracts\EmployeePortal\Authentication\Login;
 
 use Symfony\Component\Uid\Uuid;
 

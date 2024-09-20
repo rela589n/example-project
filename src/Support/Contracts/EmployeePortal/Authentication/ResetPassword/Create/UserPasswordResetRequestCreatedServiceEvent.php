@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Contracts\Auth\ResetPassword\Create;
+namespace App\Support\Contracts\EmployeePortal\Authentication\ResetPassword\Create;
 
 use Symfony\Component\Uid\Uuid;
 
