@@ -4,6 +4,7 @@ server:
     command: "php public/index.php"
     env:
         -   APP_RUNTIME: Baldinof\RoadRunnerBundle\Runtime\Runtime
+            VAR_DUMPER_FORMAT: server
 
 http:
     address: 0.0.0.0:8080

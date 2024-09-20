@@ -1,2 +1,5 @@
+playground_routes:
+    resource: '@AppPlaygroundBundle/Resources/config/routes.yaml'
+
 auth_routes:
     resource: '@AppAuthBundle/Resources/config/routes.yaml'

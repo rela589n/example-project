@@ -1,6 +1,6 @@
-api_frontend_auth:
+api_frontend_playground:
     resource: '../../Domain/**/{*FrontendAction.php}'
     type: attribute
-    prefix: /api/employee-portal/auth
+    prefix: /api/common/playground
     host: "%api_host%"
     schemes: "%api_scheme%"
