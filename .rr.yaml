@@ -11,15 +11,17 @@ http:
         debug: false
 
         # In the peak load periods:
-        # - for the p75 response time under 0.5s - client response time under 3 seconds
-        # - for median (p50) response time under 0.3s - client response time under 1.8 seconds
+        # - for p75 server response time under 0.5s
+        #         - client response time is under 3 seconds
+        # - for median (p50) server response time under 0.3s
+        #                  - client response time is under 1.8 seconds
         num_workers: 8
         max_queue_size: 48
 
         # Latency hard-limit
         allocate_timeout: 8s
         supervisor:
-            max_worker_memory: 64
+            max_worker_memory: 96
     ssl:
         address: 0.0.0.0:8083
         redirect: true # redirect from http to https
