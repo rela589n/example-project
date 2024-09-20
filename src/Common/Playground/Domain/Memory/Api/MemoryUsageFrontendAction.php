@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Common\PlaygroundBundle\Domain\Memory\Api;
+namespace App\Common\Playground\Domain\Memory\Api;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;

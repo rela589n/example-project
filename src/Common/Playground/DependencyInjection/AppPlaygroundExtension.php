@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Common\PlaygroundBundle\DependencyInjection;
+namespace App\Common\Playground\DependencyInjection;
 
 use Exception;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

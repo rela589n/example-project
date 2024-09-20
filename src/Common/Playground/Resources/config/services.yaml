@@ -3,7 +3,7 @@ services:
         autowire: true
         autoconfigure: true
 
-    App\Common\PlaygroundBundle\Domain\:
+    App\Common\Playground\Domain\:
         resource: '../../Domain/**/{*Action.php,*Handler.php,*Repository.php}'
 
 imports:
