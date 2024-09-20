@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\AuthBundle\Domain\User\ResetPassword\Reset\Http;
+namespace App\EmployeePortal\AuthBundle\Domain\User\ResetPassword\Reset\Api;
 
 use App\EmployeePortal\AuthBundle\Domain\User\ResetPassword\Reset\Handler\ResetUserPasswordCommand;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\AuthBundle\Domain\User\Register\Http;
+namespace App\EmployeePortal\AuthBundle\Domain\User\Register\Api;
 
 use App\EmployeePortal\AuthBundle\Domain\User\Register\Exception\EmailAlreadyTakenException;
 use App\EmployeePortal\AuthBundle\Domain\User\Register\Handler\RegisterUserCommand;
