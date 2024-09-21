@@ -3,6 +3,9 @@ FROM composer:2.7 AS composer
 FROM php:8.3-cli-bookworm
 
 RUN apt-get update
+RUN apt-get install -y libpq-dev \
+ && docker-php-ext-install pgsql
+RUN docker-php-ext-install sockets
 RUN apt-get install -y htop
 RUN rm -rf /var/lib/apt/lists/*
 
