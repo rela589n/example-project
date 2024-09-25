@@ -2,5 +2,5 @@ api_frontend_playground:
     resource: '../../Domain/**/{*FrontendAction.php}'
     type: attribute
     prefix: /api/common/playground
-    host: "%api_host%"
-    schemes: "%api_scheme%"
+    host: '%api_host%'
+    schemes: '%api_scheme%'

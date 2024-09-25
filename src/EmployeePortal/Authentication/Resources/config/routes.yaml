@@ -2,8 +2,8 @@ api_frontend_auth:
     resource: '../../Domain/**/{*FrontendAction.php}'
     type: attribute
     prefix: /api/employee-portal/auth
-    host: "%api_host%"
-    schemes: "%api_scheme%"
+    host: '%api_host%'
+    schemes: '%api_scheme%'
 
 when@dev: &api_doc
     app.employee_portal_auth.swagger_ui:
