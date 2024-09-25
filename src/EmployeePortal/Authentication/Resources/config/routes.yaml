@@ -4,3 +4,11 @@ api_frontend_auth:
     prefix: /api/employee-portal/auth
     host: "%api_host%"
     schemes: "%api_scheme%"
+
+when@dev: &api_doc
+    app.employee_portal_auth.swagger_ui:
+        path: /api/employee-portal/auth/index.html
+        methods: GET
+        defaults: { _controller: nelmio_api_doc.controller.swagger_ui, area: 'employee_portal_auth' }
+
+when@stage: *api_doc

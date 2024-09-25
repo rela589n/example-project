@@ -27,7 +27,10 @@ final readonly class ResetUserPasswordFrontendAction
     ) {
     }
 
-    #[Route('/reset-password')]
+    #[Route(
+        path: '/reset-password',
+        methods: ['POST'],
+    )]
     public function __invoke(
         #[CurrentUser]
         UserInterface $user,

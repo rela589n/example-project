@@ -1,0 +1,10 @@
+nelmio_api_doc:
+    areas:
+        employee_portal_auth:
+            path_patterns:
+                - ^/api/employee-portal/auth/(?!/doc$)
+            documentation:
+                info:
+                    title: EmployeePortal Authentication
+                    description: This is an awesome <b>Module</b>!
+                    version: 1.0.0

@@ -27,7 +27,10 @@ final readonly class RegisterUserFrontendAction
     ) {
     }
 
-    #[Route('/register')]
+    #[Route(
+        path: '/register',
+        methods: ['POST'],
+    )]
     public function __invoke(
         #[MapRequestPayload]
         RegisterUserCommand $command,
