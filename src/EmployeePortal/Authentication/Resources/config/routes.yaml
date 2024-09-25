@@ -7,8 +7,13 @@ api_frontend_auth:
 
 when@dev: &api_doc
     app.employee_portal_auth.swagger_ui:
-        path: /api/employee-portal/auth/index.html
+        path: /api/employee-portal/auth/doc.html
         methods: GET
-        defaults: { _controller: nelmio_api_doc.controller.swagger_ui, area: 'employee_portal_auth' }
+        defaults: { _controller: nelmio_api_doc.controller.swagger_ui, area: employee_portal_auth }
+
+    app.employee_portal_auth.swagger:
+        path: /api/employee-portal/auth/doc.json
+        methods: GET
+        defaults: { _controller: nelmio_api_doc.controller.swagger, area: employee_portal_auth }
 
 when@stage: *api_doc
