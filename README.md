@@ -23,3 +23,6 @@ docker compose up -d
 
 Open `https://api.example-project.work:8083` to check that everything is up and working.
 
+Api documentation:
+
+- https://api.example-project.work:8083/api/employee-portal/auth/doc.html
