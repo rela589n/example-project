@@ -6,16 +6,16 @@ api_frontend_auth:
     schemes: '%api_scheme%'
 
 when@dev:
-    app.employee_portal_auth.redocly: &api_redocly
+    api_doc.employee_portal_auth.redocly: &api_doc_redocly
         path: /api/employee-portal/auth/doc.html
         methods: GET
         defaults: { _controller: nelmio_api_doc.controller.redocly, area: employee_portal_auth }
 
-    app.employee_portal_auth.swagger: &api_json
+    api_doc.employee_portal_auth.swagger: &api_doc_json
         path: /api/employee-portal/auth/doc.json
         methods: GET
         defaults: { _controller: nelmio_api_doc.controller.swagger, area: employee_portal_auth }
 
 when@stage:
-    app.employee_portal_auth.redocly: *api_redocly
-    app.employee_portal_auth.swagger: *api_json
+    api_doc.employee_portal_auth.redocly: *api_doc_redocly
+    api_doc.employee_portal_auth.swagger: *api_doc_json
