@@ -6,51 +6,43 @@ namespace App\EmployeePortal\Authentication\Domain\User\Register\Api;
 
 use App\EmployeePortal\Authentication\Domain\User\Register\Exception\EmailAlreadyTakenException;
 use App\EmployeePortal\Authentication\Domain\User\Register\Handler\RegisterUserCommand;
+use OpenApi\Attributes as OA;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[OA\Post(
+    summary: 'Register user'
+)]
+#[OA\Response(
+    response: 201,
+    description: 'Registered',
+)]
 #[AsController]
 final readonly class RegisterUserFrontendAction
 {
     public function __construct(
         #[Autowire('@api.bus')]
         private MessageBusInterface $apiBus,
-        #[Autowire('@command.bus')]
-        private MessageBusInterface $commandBus,
     ) {
     }
 
     #[Route(
         path: '/register',
+        name: 'employee_portal_auth_user_register',
         methods: ['POST'],
     )]
     public function __invoke(
         #[MapRequestPayload]
         RegisterUserCommand $command,
     ): Response {
-        $envelope = $this->apiBus->dispatch($command);
-
-        /** @var HandledStamp $handled */
-        $handled = $envelope->last(HandledStamp::class);
-
-        /** @var Response $result */
-        $result = $handled->getResult();
-
-        return $result;
-    }
-
-    #[AsMessageHandler(bus: 'api.bus')]
-    public function handle(RegisterUserCommand $command): Response
-    {
         try {
-            $this->commandBus->dispatch($command);
+            $envelope = $this->apiBus->dispatch($command, [/*new BusNameStamp('command.bus')*/]);
         } catch (EmailAlreadyTakenException) {
             // Some domain exceptions (scoped to this particular scenario) could be caught and formatted into the response:
 
@@ -60,6 +52,12 @@ final readonly class RegisterUserFrontendAction
             ], 400);
         }
 
-        return new Response(status: 201);
+        /** @var HandledStamp $handled */
+        $handled = $envelope->last(HandledStamp::class);
+
+        /** @var ?Response $result */
+        $result = $handled->getResult();
+
+        return $result ?? new Response(status: 201);
     }
 }

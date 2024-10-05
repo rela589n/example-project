@@ -15,13 +15,19 @@ use Symfony\Component\Uid\Uuid;
 #[ExceptionalValidation]
 final readonly class ResetUserPasswordCommand
 {
+    #[Capture(UserNotFoundException::class, condition: ValueExceptionMatchCondition::class)]
+    private string $userId;
+
+    #[Capture(PasswordResetRequestNotFoundException::class, condition: ValueExceptionMatchCondition::class)]
+    #[Capture(ExpiredPasswordResetRequestException::class, condition: ValueExceptionMatchCondition::class)]
+    private string $passwordResetRequestId;
+
     public function __construct(
-        #[Capture(UserNotFoundException::class, condition: ValueExceptionMatchCondition::class)]
-        private string $userId,
-        #[Capture(PasswordResetRequestNotFoundException::class, condition: ValueExceptionMatchCondition::class)]
-        #[Capture(ExpiredPasswordResetRequestException::class, condition: ValueExceptionMatchCondition::class)]
-        private string $passwordResetRequestId,
+        string $userId,
+        string $passwordResetRequestId,
     ) {
+        $this->userId = $userId;
+        $this->passwordResetRequestId = $passwordResetRequestId;
     }
 
     public function getUserId(): Uuid
