@@ -26,3 +26,10 @@ Open `https://api.example-project.work:8083` to check that everything is up and 
 Api documentation:
 
 - https://api.example-project.work:8083/api/employee-portal/auth/doc.html
+
+Build docker image (grpc):
+
+```shell
+cd docker-configs/backend/
+docker build -t example_project.backend.grpc:v1.0 -f grpc.Dockerfile ./
+```
