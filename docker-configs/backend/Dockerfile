@@ -4,9 +4,17 @@ FROM mlocati/php-extension-installer AS ext
 FROM composer:2.7 AS composer
 FROM php:8.3-cli-bookworm
 
+ARG USER_NAME=app
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
 COPY --from=ext /usr/bin/install-php-extensions /usr/local/bin/install-php-extensions
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
+
+RUN install-php-extensions pgsql
+RUN install-php-extensions sockets
+RUN install-php-extensions zip
 
 # Copy grpc-extension binary
 COPY --from=grpc \
@@ -24,13 +32,15 @@ COPY --from=grpc \
 # Create docker-php-ext-protobuf.ini configuration file
 RUN docker-php-ext-enable protobuf
 
-RUN install-php-extensions pgsql
-RUN install-php-extensions sockets
-RUN install-php-extensions zip
-
 RUN apt-get update
 RUN apt-get install -y htop
 RUN apt-get install -y git zip
 RUN rm -rf /var/lib/apt/lists/*
+
+RUN groupadd --gid $GROUP_ID $USER_NAME
+RUN useradd --uid $USER_ID --gid $GROUP_ID $USER_NAME
+
+WORKDIR /app
+USER $USER_NAME
 
 CMD ["rr", "serve", "-c", ".rr.yaml"]
