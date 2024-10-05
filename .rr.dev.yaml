@@ -22,6 +22,10 @@ http:
         dir: "public"
         forbid: [ ".php", ".htaccess" ]
 
+grpc:
+    listen: tcp://127.0.0.1:9001
+    proto: []
+
 logs:
     mode: development
     channels:

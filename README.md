@@ -15,6 +15,13 @@ Place following domain there:
 127.0.0.1       api.example-project.work
 ```
 
+Build docker image (grpc):
+
+```shell
+cd docker-configs/backend/
+docker build -t example_project.backend.grpc:v1.0 -f grpc.Dockerfile ./
+```
+
 Start the server:
 
 ```shell
@@ -27,9 +34,14 @@ Api documentation:
 
 - https://api.example-project.work:8083/api/employee-portal/auth/doc.html
 
-Build docker image (grpc):
+
+### gRPC
+
+Generate library:
 
 ```shell
-cd docker-configs/backend/
-docker build -t example_project.backend.grpc:v1.0 -f grpc.Dockerfile ./
+#bin/protoc \
+#    --plugin=./bin/protoc-gen-php-grpc \
+#    --php_out=./src/Support/Contracts/Common/Playground/HelloWorld/ \
+#    ./src/Support/Contracts/Common/Playground/HelloWorld/hello-world.proto
 ```
