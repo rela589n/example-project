@@ -15,6 +15,7 @@ COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 RUN install-php-extensions pgsql
 RUN install-php-extensions sockets
 RUN install-php-extensions zip
+RUN install-php-extensions amqp
 
 # Copy grpc-extension binary
 COPY --from=grpc \
