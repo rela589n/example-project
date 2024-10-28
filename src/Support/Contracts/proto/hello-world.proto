@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option php_namespace = "GRPC\\Greeter";
+option php_metadata_namespace = "GRPC\\GPBMetadata";
+
+package Greeter;
+
+message Name {
+  string firstName = 1;
+  string lastName = 2;
+}
+
+message Hello {
+  string response = 1;
+}
+
+service HelloWorld {
+  rpc sayHello(Name) returns (Hello);
+}
