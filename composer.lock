@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6f8dae3658188e46e7a67fbcbe0cf96",
+    "content-hash": "98acdd348b2d4ffcf768c0a037d941d5",
     "packages": [
         {
             "name": "amphp/amp",
@@ -8955,6 +8955,45 @@
             "time": "2024-09-15T16:40:33+00:00"
         },
         {
+            "name": "openswoole/ide-helper",
+            "version": "22.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/openswoole/ide-helper.git",
+                "reference": "43fc13f3cc3212784822103efeec82829f6f22f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/openswoole/ide-helper/zipball/43fc13f3cc3212784822103efeec82829f6f22f5",
+                "reference": "43fc13f3cc3212784822103efeec82829f6f22f5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openswoole": ">=22.0",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.6"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "OpenSwoole Group",
+                    "email": "hello@openswoole.com"
+                }
+            ],
+            "description": "IDE helper for OpenSwoole.",
+            "support": {
+                "issues": "https://github.com/openswoole/ide-helper/issues",
+                "source": "https://github.com/openswoole/ide-helper/tree/22.0.1"
+            },
+            "time": "2023-02-05T22:27:37+00:00"
+        },
+        {
             "name": "phar-io/manifest",
             "version": "2.0.4",
             "source": {
@@ -10760,7 +10799,8 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "ext-pgsql": "*"
+        "ext-pgsql": "*",
+        "ext-openswoole": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"

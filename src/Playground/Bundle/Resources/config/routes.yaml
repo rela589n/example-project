@@ -1,5 +1,5 @@
 api_frontend_playground:
-    resource: '../../Domain/**/{*FrontendAction.php}'
+    resource: '../../../**/{*FrontendAction.php}'
     type: attribute
     prefix: /api/common/playground
     host: '%api_host%'

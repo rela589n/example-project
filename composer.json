@@ -91,6 +91,7 @@
         }
     },
     "require-dev": {
+        "openswoole/ide-helper": "~22.0.1",
         "phpunit/phpunit": "^11.3",
         "symfony/browser-kit": "7.1.*",
         "symfony/css-selector": "7.1.*",

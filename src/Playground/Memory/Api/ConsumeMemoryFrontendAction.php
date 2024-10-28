@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Common\Playground\Domain\Sleep\Api;
+namespace App\Playground\Memory\Api;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -10,15 +10,15 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[AsController]
-final readonly class SleepFrontendAction
+final readonly class ConsumeMemoryFrontendAction
 {
-    #[Route('/sleep')]
+    #[Route('/consume-memory')]
     public function __invoke(
-        #[MapQueryParameter('time')]
-        int $sleepTime = 0,
+        #[MapQueryParameter('bytes')]
+        int $bytesLength = 1,
     ): Response {
-        sleep($sleepTime);
+        $bytes = random_bytes($bytesLength);
 
-        return new Response('Yawn');
+        return new Response('Consumed '.strlen($bytes).' bytes');
     }
 }

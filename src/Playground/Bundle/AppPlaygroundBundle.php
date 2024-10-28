@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Common\Playground;
+namespace App\Playground\Bundle;
 
-use App\Common\Playground\DependencyInjection\AppPlaygroundExtension;
+use App\Playground\Bundle\DependencyInjection\AppPlaygroundExtension;
 use Override;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

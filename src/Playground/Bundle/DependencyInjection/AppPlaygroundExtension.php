@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Common\Playground\DependencyInjection;
+namespace App\Playground\Bundle\DependencyInjection;
 
 use Exception;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,7 +20,7 @@ final class AppPlaygroundExtension extends AbstractExtension
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        $container->import(__DIR__.'/../Resources/config/services.yaml');
+        $container->import(__DIR__.'/../Resources/config/main_services.yaml');
     }
 
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
