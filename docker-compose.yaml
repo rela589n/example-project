@@ -8,6 +8,7 @@ services:
         ports:
             - 127.0.0.1:8080:8080
             - 127.0.0.1:8083:8083
+            - 127.0.0.1:9501:9501 # open swoole
         volumes:
             - ./docker-configs/backend/ssl/:/etc/ssl/backend/
             - .:/app:cached

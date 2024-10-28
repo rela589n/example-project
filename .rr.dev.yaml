@@ -23,6 +23,7 @@ http:
         forbid: [ ".php", ".htaccess" ]
 
 grpc:
+    # Shall we use 0.0.0.0 ?
     listen: tcp://127.0.0.1:9001
     proto: []
 
