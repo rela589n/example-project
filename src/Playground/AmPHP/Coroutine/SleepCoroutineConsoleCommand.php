@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Playground\AmPHP\Coroutine;
 
+use Exception;
+use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -42,6 +44,13 @@ final  class SleepCoroutineConsoleCommand extends Command
             return 2;
         });
 
+        // function is queued for the event loop
+        $future3 = async(function () use ($output) {
+            $output->writeln('||The exception is thrown, yet it doesn\'t mess up the rest of futures||');
+
+            throw new RuntimeException();
+        });
+
         $output->writeln('Start');
 
         // Event Loop gets the control on the first await
@@ -53,6 +62,12 @@ final  class SleepCoroutineConsoleCommand extends Command
         // yet, it is necessary to await it in order "to be sure" it has completed (or to get the result)
         $two = $future2->await();
         $output->writeln('Second completed: '.$two);
+
+        try {
+            $future3->await();
+        } catch (Exception) {
+            $output->writeln('The exception could be caught on the await');
+        }
 
         return 0;
     }
