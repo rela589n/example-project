@@ -16,7 +16,7 @@ RUN install-php-extensions pgsql
 RUN install-php-extensions sockets
 RUN install-php-extensions zip
 RUN install-php-extensions amqp
-RUN install-php-extensions openswoole
+RUN install-php-extensions swoole
 
 # Copy grpc-extension binary
 COPY --from=grpc \

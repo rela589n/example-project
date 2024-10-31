@@ -1,6 +1,7 @@
 Run the server with:
 
 ```shell
+cd src/Playground/Swoole/HelloWolrd/
 php server.php
 ```
 

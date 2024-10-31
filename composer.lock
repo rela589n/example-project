@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70043993821de3d511a5a908aabe8829",
+    "content-hash": "2ebe386e88766704f66fb1d75e9c3232",
     "packages": [
         {
             "name": "amphp/amp",
@@ -10103,45 +10103,6 @@
             "time": "2024-10-08T18:51:32+00:00"
         },
         {
-            "name": "openswoole/ide-helper",
-            "version": "22.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/openswoole/ide-helper.git",
-                "reference": "43fc13f3cc3212784822103efeec82829f6f22f5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/openswoole/ide-helper/zipball/43fc13f3cc3212784822103efeec82829f6f22f5",
-                "reference": "43fc13f3cc3212784822103efeec82829f6f22f5",
-                "shasum": ""
-            },
-            "require": {
-                "ext-openswoole": ">=22.0",
-                "php": ">=7.4"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.6"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "OpenSwoole Group",
-                    "email": "hello@openswoole.com"
-                }
-            ],
-            "description": "IDE helper for OpenSwoole.",
-            "support": {
-                "issues": "https://github.com/openswoole/ide-helper/issues",
-                "source": "https://github.com/openswoole/ide-helper/tree/22.0.1"
-            },
-            "time": "2023-02-05T22:27:37+00:00"
-        },
-        {
             "name": "phar-io/manifest",
             "version": "2.0.4",
             "source": {
@@ -11606,6 +11567,38 @@
             "time": "2024-10-09T05:16:32+00:00"
         },
         {
+            "name": "swoole/ide-helper",
+            "version": "5.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swoole/ide-helper.git",
+                "reference": "e63299f488bf8332404ce4f80142a2ed1397edde"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swoole/ide-helper/zipball/e63299f488bf8332404ce4f80142a2ed1397edde",
+                "reference": "e63299f488bf8332404ce4f80142a2ed1397edde",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Team Swoole",
+                    "email": "team@swoole.com"
+                }
+            ],
+            "description": "IDE help files for Swoole.",
+            "support": {
+                "issues": "https://github.com/swoole/ide-helper/issues",
+                "source": "https://github.com/swoole/ide-helper/tree/5.1.4"
+            },
+            "time": "2024-09-03T04:39:02+00:00"
+        },
+        {
             "name": "symfony/browser-kit",
             "version": "v7.1.6",
             "source": {
@@ -11947,7 +11940,6 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "ext-openswoole": "^22.1",
         "ext-pgsql": "*"
     },
     "platform-dev": [],

@@ -1,9 +1,10 @@
 <?php
-use OpenSwoole\Http\Server;
-use OpenSwoole\Http\Request;
-use OpenSwoole\Http\Response;
 
-$server = new OpenSwoole\HTTP\Server('0.0.0.0', 9501);
+use Swoole\Http\Request;
+use Swoole\Http\Response;
+use Swoole\Http\Server;
+
+$server = new Swoole\HTTP\Server('0.0.0.0', 9501);
 
 $server->on("start", function (Server $server) {
     echo "OpenSwoole http server is started at $server->host:$server->port\n";
