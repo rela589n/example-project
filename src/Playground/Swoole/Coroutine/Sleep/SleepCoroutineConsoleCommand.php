@@ -19,6 +19,7 @@ final class SleepCoroutineConsoleCommand extends Command
             Coroutine::create(static function () use ($output) {
                 $output->write('Hello ');
 
+                // note that this is the native php function that is usually blocking
                 usleep(1_000_000);
 
                 $output->write('from ');
