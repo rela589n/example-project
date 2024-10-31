@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand('app:swoole:sleep-coroutine')]
-final class SleepCoroutineConsoleCommand extends Command
+final class SwooleSleepCoroutineConsoleCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
