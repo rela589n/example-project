@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\Domain\User\Register\Service;
 
-use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegisteredEvent;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegistration;
 use App\EmployeePortal\Authentication\Domain\User\User;
 use App\EmployeePortal\Authentication\Domain\User\UserRepository;
 use App\EmployeePortal\Authentication\Domain\ValueObject\Email\Email;
 use App\EmployeePortal\Authentication\Domain\ValueObject\Password\Password;
+use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -22,7 +23,7 @@ use function Amp\async;
 use function Amp\Future\awaitAnyN;
 
 #[AsMessageHandler(bus: 'command.bus')]
-final readonly class RegisterUserHandler
+final readonly class RegisterUserService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -38,10 +39,6 @@ final readonly class RegisterUserHandler
 
     public function __invoke(RegisterUserCommand $command): void
     {
-        $createEmail = Email::fromString($this->validator);
-        $createPassword = Password::fromString($this->validator, $this->passwordHasher);
-        $registerUser = UserRegisteredEvent::process($this->clock, $this->userRepository);
-
         /**
          * Usage of awaitAnyN() allows us to show all the validation errors at once instead of showing them one by one.
          * This is achieved by exception unwrapper integrated into exceptional validation component.
@@ -50,18 +47,37 @@ final readonly class RegisterUserHandler
          * @var Password $password
          */
         [$email, $password] = awaitAnyN(2, [
-            async(fn (): Email => $createEmail($command->getEmail())),
-            async(fn (): Password => $createPassword($command->getPassword())),
+            async($this->email(...), $command),
+            async($this->password(...), $command),
         ]);
 
-        $event = $registerUser(Uuid::v7(), $email, $password);
+        $registration = new UserRegistration(
+            $id = Uuid::v7(),
+            new User($id),
+            $email,
+            $password,
+            CarbonImmutable::instance($this->clock->now()),
+        );
 
-        // usually command.bus has transactional middleware, hence flush() is not needed
-        // also this could be useful for fixtures, when one fixture could register multiple
-        // users and then flush them all in one go
+        $registration->process($this->userRepository);
 
-        $this->entityManager->persist($event->getUser());
+        // usually command.bus has transactional middleware, hence flush() is not necessarily required
+        // (this could be useful for fixtures, when one fixture could register multiple
+        // users and then flush them all in one go)
 
-        $this->eventBus->dispatch($event);
+        $this->entityManager->persist($registration);
+        $this->entityManager->flush();
+
+        $this->eventBus->dispatch($registration);
+    }
+
+    private function email(RegisterUserCommand $command): Email
+    {
+        return Email::fromString($this->validator, $command->getEmail());
+    }
+
+    private function password(RegisterUserCommand $command): Password
+    {
+        return Password::fromString($this->validator, $this->passwordHasher, $command->getPassword());
     }
 }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\Domain\ValueObject\Password;
 
 use App\EmployeePortal\Authentication\Domain\User\Login\Exception\PasswordMismatchException;
-use Closure;
 use SensitiveParameter;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,22 +24,22 @@ final readonly class Password
     ) {
     }
 
-    /** @return Closure(string $password): self */
-    public static function fromString(ValidatorInterface $validator, PasswordHasherInterface $passwordHasher): Closure
-    {
-        return static function (#[SensitiveParameter] string $password) use ($validator, $passwordHasher): self {
-            $violationList = $validator->validate($password, new Assert\Sequentially([
-                new Assert\NotBlank(),
-                new Assert\Length(min: 8, max: 31),
-                new Assert\PasswordStrength(minScore: PasswordStrength::STRENGTH_MEDIUM),
-            ]));
+    public static function fromString(
+        ValidatorInterface $validator,
+        PasswordHasherInterface $passwordHasher,
+        #[SensitiveParameter] string $password,
+    ): self {
+        $violationList = $validator->validate($password, new Assert\Sequentially([
+            new Assert\NotBlank(),
+            new Assert\Length(min: 8, max: 31),
+            new Assert\PasswordStrength(minScore: PasswordStrength::STRENGTH_MEDIUM),
+        ]));
 
-            if (0 !== $violationList->count()) {
-                throw new PasswordValidationFailedException($password, $violationList);
-            }
+        if (0 !== $violationList->count()) {
+            throw new PasswordValidationFailedException($password, $violationList);
+        }
 
-            return new self($passwordHasher->hash($password));
-        };
+        return new self($passwordHasher->hash($password));
     }
 
     public function verify(PasswordHasherInterface $passwordHasher, string $plainPassword): void

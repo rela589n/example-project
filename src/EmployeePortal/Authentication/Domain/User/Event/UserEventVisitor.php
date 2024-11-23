@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\Domain\User\Event;
 
 use App\EmployeePortal\Authentication\Domain\User\Login\UserLoggedInEvent;
-use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegisteredEvent;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegistration;
 use App\EmployeePortal\Authentication\Domain\User\ResetPassword\Create\UserPasswordResetRequestCreatedEvent;
 use App\EmployeePortal\Authentication\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;
 
@@ -20,7 +20,7 @@ interface UserEventVisitor
      *
      * @return TResult
      */
-    public function visitUserRegisteredEvent(UserRegisteredEvent $event, mixed $data = null): mixed;
+    public function visitUserRegisteredEvent(UserRegistration $event, mixed $data = null): mixed;
 
     /**
      * @param null|TData $data

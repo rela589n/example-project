@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Authentication\Domain\User\Register\Tests;
+namespace App\EmployeePortal\Authentication\Domain\User\Register\Service;
 
 use App\EmployeePortal\Authentication\Domain\User\Register\Model\Exception\EmailAlreadyTakenException;
-use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegisteredEvent;
-use App\EmployeePortal\Authentication\Domain\User\Register\Service\RegisterUserCommand;
-use App\EmployeePortal\Authentication\Domain\User\Register\Service\RegisterUserHandler;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegistration;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegistrationUnitTest;
 use App\EmployeePortal\Authentication\Domain\User\User;
 use App\EmployeePortal\Authentication\Domain\User\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,16 +23,16 @@ use Symfony\Component\Validator\Validation;
 /**
  * Handlers are full of infrastructure code, - therefore they are hard to unit test.
  * This is just an example of what is better not to do.
- * @see RegisterUserUnitTest as a better alternative
+ * @see UserRegistrationUnitTest as a better alternative
  */
-#[CoversClass(UserRegisteredEvent::class)]
+#[CoversClass(UserRegistration::class)]
 #[CoversClass(User::class)]
-final class RegisterUserHandlerTest extends TestCase
+final class RegisterUserServiceTest extends TestCase
 {
     private UserRepository&Stub $userRepository;
     private EntityManagerInterface&MockObject $entityManager;
     private MessageBusInterface&MockObject $eventBus;
-    private RegisterUserHandler $registerUserHandler;
+    private RegisterUserService $registerUserHandler;
 
     protected function setUp(): void
     {
@@ -43,7 +42,7 @@ final class RegisterUserHandlerTest extends TestCase
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
         $this->eventBus = $this->createMock(MessageBusInterface::class);
 
-        $this->registerUserHandler = new RegisterUserHandler(
+        $this->registerUserHandler = new RegisterUserService(
             $this->entityManager,
             $this->eventBus,
             Validation::createValidator(),
@@ -85,7 +84,7 @@ final class RegisterUserHandlerTest extends TestCase
         $this->eventBus->expects($this->once())
             ->method('dispatch')
             ->willReturnCallback(function (object $event) {
-                self::assertInstanceOf(UserRegisteredEvent::class, $event);
+                self::assertInstanceOf(UserRegistration::class, $event);
 
                 return Envelope::wrap($event);
             });

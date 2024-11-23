@@ -40,8 +40,11 @@ final readonly class LoginUserHandler
 
     private function getUser(LoginUserCommand $command): User
     {
-        $email = Email::fromString($this->validator)($command->getEmail());
+        return $this->userRepository->findByEmail($this->getEmail($command));
+    }
 
-        return $this->userRepository->findByEmail($email);
+    private function getEmail(LoginUserCommand $command): Email
+    {
+        return Email::fromString($this->validator, $command->getEmail());
     }
 }

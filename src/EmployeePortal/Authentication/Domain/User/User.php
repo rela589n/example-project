@@ -6,7 +6,7 @@ namespace App\EmployeePortal\Authentication\Domain\User;
 
 use App\EmployeePortal\Authentication\Domain\User\Event\UserEvent;
 use App\EmployeePortal\Authentication\Domain\User\Login\UserLoggedInEvent;
-use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegisteredEvent;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegistration;
 use App\EmployeePortal\Authentication\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;
 use App\EmployeePortal\Authentication\Domain\ValueObject\Email\Email;
 use App\EmployeePortal\Authentication\Domain\ValueObject\Password\Password;
@@ -43,7 +43,7 @@ class User
      * It is a lot much easier to update the entity from the event object in one call (e.g. user.register())
      * rather than in a bunch of anemic setters called (e.g. user.setEmail, user.setPassword)
      */
-    public function register(UserRegisteredEvent $event): void
+    public function register(UserRegistration $event): void
     {
         $this->email = $event->getEmail();
         $this->password = $event->getPassword();
