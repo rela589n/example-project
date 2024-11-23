@@ -21,9 +21,9 @@ use Symfony\Component\Validator\Validation;
  * The best way to cover business logic with unit test is to cover it starting from event::process() method.
  * This way it's not necessary to overreach with mocking for entity manager and event bus that are in fact infrastructural.
  */
-#[CoversClass(UserRegistration::class)]
+#[CoversClass(UserRegistrationEvent::class)]
 #[CoversClass(User::class)]
-final class UserRegistrationUnitTest extends TestCase
+final class UserRegistrationEventTest extends TestCase
 {
     private UserRepository&Stub $userRepository;
 
@@ -59,7 +59,7 @@ final class UserRegistrationUnitTest extends TestCase
 
     private function registerUser(): User
     {
-        $registration = new UserRegistration(
+        $registration = new UserRegistrationEvent(
             $id = Uuid::v7(),
             new User($id),
             $this->email(),
@@ -67,7 +67,7 @@ final class UserRegistrationUnitTest extends TestCase
             CarbonImmutable::parse('2024-08-26 22:01:13'),
         );
 
-        $registration->process($this->userRepository);
+        $registration->run($this->userRepository);
 
         return $registration->getUser();
     }

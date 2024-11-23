@@ -22,7 +22,7 @@ use Symfony\Component\Uid\Uuid;
  * - the business logic has successfully completed
  */
 #[ORM\Entity]
-final readonly class UserRegistration implements UserEvent
+final readonly class UserRegistrationEvent implements UserEvent
 {
     public function __construct(
         /** Event ID */
@@ -39,7 +39,7 @@ final readonly class UserRegistration implements UserEvent
      * The key business logic of user registration should be placed in process() method of the domain event.
      * It is completely responsible for implementation of all the necessary checks that business scenario defines.
      */
-    public function process(UserRepository $userRepository): void
+    public function run(UserRepository $userRepository): void
     {
         if (!$userRepository->isEmailFree($this->email)) {
             throw new EmailAlreadyTakenException($this->email);

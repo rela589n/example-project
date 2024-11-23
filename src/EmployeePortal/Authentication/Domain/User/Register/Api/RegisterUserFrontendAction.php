@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\Domain\User\Register\Api;
 
 use App\EmployeePortal\Authentication\Domain\User\Register\Model\Exception\EmailAlreadyTakenException;
-use App\EmployeePortal\Authentication\Domain\User\Register\Service\RegisterUserCommand;
+use App\EmployeePortal\Authentication\Domain\User\Register\UseCase\UserRegistrationUseCase;
 use OpenApi\Attributes as OA;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,7 +39,7 @@ final readonly class RegisterUserFrontendAction
     )]
     public function __invoke(
         #[MapRequestPayload]
-        RegisterUserCommand $command,
+        UserRegistrationUseCase $command,
     ): Response {
         try {
             $envelope = $this->apiBus->dispatch($command, [/*new BusNameStamp('command.bus')*/]);

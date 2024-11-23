@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\Domain\User\Event;
 
 use App\EmployeePortal\Authentication\Domain\User\Login\UserLoggedInEvent;
-use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegistration;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegistrationEvent;
 use App\EmployeePortal\Authentication\Domain\User\ResetPassword\Create\UserPasswordResetRequestCreatedEvent;
 use App\EmployeePortal\Authentication\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;
 use App\Support\Contracts\EmployeePortal\Authentication\Login\UserLoggedInServiceEvent;
@@ -36,7 +36,7 @@ final readonly class UserEventPublisher implements UserEventVisitor
         $this->serviceEventBus->dispatch($serviceEvent);
     }
 
-    public function visitUserRegisteredEvent(UserRegistration $event, mixed $data = null): UserRegisteredServiceEvent
+    public function visitUserRegisteredEvent(UserRegistrationEvent $event, mixed $data = null): UserRegisteredServiceEvent
     {
         return new UserRegisteredServiceEvent($event->getUser()->getId(), $event->getEmail()->getEmail());
     }
