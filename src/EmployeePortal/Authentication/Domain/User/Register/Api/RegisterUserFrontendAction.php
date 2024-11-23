@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\Domain\User\Register\Api;
 
-use App\EmployeePortal\Authentication\Domain\User\Register\Exception\EmailAlreadyTakenException;
-use App\EmployeePortal\Authentication\Domain\User\Register\Handler\RegisterUserCommand;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\Exception\EmailAlreadyTakenException;
+use App\EmployeePortal\Authentication\Domain\User\Register\Service\RegisterUserCommand;
 use OpenApi\Attributes as OA;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Authentication\Domain\User\Register\Handler;
+namespace App\EmployeePortal\Authentication\Domain\User\Register\Service;
 
-use App\EmployeePortal\Authentication\Domain\User\Register\Exception\EmailAlreadyTakenException;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\Exception\EmailAlreadyTakenException;
 use App\EmployeePortal\Authentication\Domain\ValueObject\Email\EmailValidationFailedException;
 use App\EmployeePortal\Authentication\Domain\ValueObject\Password\PasswordValidationFailedException;
 use OpenApi\Attributes\Property;

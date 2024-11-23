@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Authentication\Domain\User\Register;
+namespace App\EmployeePortal\Authentication\Domain\User\Register\Model;
 
 use App\EmployeePortal\Authentication\Domain\User\Event\UserEvent;
 use App\EmployeePortal\Authentication\Domain\User\Event\UserEventVisitor;
-use App\EmployeePortal\Authentication\Domain\User\Register\Exception\EmailAlreadyTakenException;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\Exception\EmailAlreadyTakenException;
 use App\EmployeePortal\Authentication\Domain\User\User;
 use App\EmployeePortal\Authentication\Domain\User\UserRepository;
 use App\EmployeePortal\Authentication\Domain\ValueObject\Email\Email;

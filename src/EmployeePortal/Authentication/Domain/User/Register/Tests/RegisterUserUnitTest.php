@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\Domain\User\Register\Tests;
 
-use App\EmployeePortal\Authentication\Domain\User\Register\Exception\EmailAlreadyTakenException;
-use App\EmployeePortal\Authentication\Domain\User\Register\UserRegisteredEvent;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\Exception\EmailAlreadyTakenException;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegisteredEvent;
 use App\EmployeePortal\Authentication\Domain\User\User;
 use App\EmployeePortal\Authentication\Domain\User\UserRepository;
 use App\EmployeePortal\Authentication\Domain\ValueObject\Email\Email;

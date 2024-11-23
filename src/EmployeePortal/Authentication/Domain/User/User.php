@@ -6,7 +6,7 @@ namespace App\EmployeePortal\Authentication\Domain\User;
 
 use App\EmployeePortal\Authentication\Domain\User\Event\UserEvent;
 use App\EmployeePortal\Authentication\Domain\User\Login\UserLoggedInEvent;
-use App\EmployeePortal\Authentication\Domain\User\Register\UserRegisteredEvent;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegisteredEvent;
 use App\EmployeePortal\Authentication\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;
 use App\EmployeePortal\Authentication\Domain\ValueObject\Email\Email;
 use App\EmployeePortal\Authentication\Domain\ValueObject\Password\Password;

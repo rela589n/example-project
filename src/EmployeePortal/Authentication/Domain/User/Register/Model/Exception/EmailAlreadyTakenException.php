@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Authentication\Domain\User\Register\Exception;
+namespace App\EmployeePortal\Authentication\Domain\User\Register\Model\Exception;
 
 use App\EmployeePortal\Authentication\Domain\ValueObject\Email\Email;
 use DomainException;

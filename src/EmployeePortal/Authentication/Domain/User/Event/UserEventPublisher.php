@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\Domain\User\Event;
 
 use App\EmployeePortal\Authentication\Domain\User\Login\UserLoggedInEvent;
-use App\EmployeePortal\Authentication\Domain\User\Register\UserRegisteredEvent;
+use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegisteredEvent;
 use App\EmployeePortal\Authentication\Domain\User\ResetPassword\Create\UserPasswordResetRequestCreatedEvent;
 use App\EmployeePortal\Authentication\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;
 use App\Support\Contracts\EmployeePortal\Authentication\Login\UserLoggedInServiceEvent;
