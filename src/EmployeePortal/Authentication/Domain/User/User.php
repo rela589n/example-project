@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\Domain\User;
 
-use App\EmployeePortal\Authentication\Domain\User\Event\UserEvent;
-use App\EmployeePortal\Authentication\Domain\User\Login\UserLoggedInEvent;
-use App\EmployeePortal\Authentication\Domain\User\Register\Model\UserRegistrationEvent;
-use App\EmployeePortal\Authentication\Domain\User\ResetPassword\Reset\UserPasswordResetEvent;
-use App\EmployeePortal\Authentication\Domain\ValueObject\Email\Email;
-use App\EmployeePortal\Authentication\Domain\ValueObject\Password\Password;
+use App\EmployeePortal\Authentication\Domain\PasswordReset\Action\Reset\Model\UserPasswordResetEvent;
+use App\EmployeePortal\Authentication\Domain\User\Email\Email;
+use App\EmployeePortal\Authentication\Domain\User\Password\Password;
+use App\EmployeePortal\Authentication\Domain\User\User\Action\Login\UserLoggedInEvent;
+use App\EmployeePortal\Authentication\Domain\User\User\Action\Register\UserRegistrationEvent;
+use App\EmployeePortal\Authentication\Domain\User\User\Event\UserEvent;
+use App\EmployeePortal\Authentication\Domain\User\User\Repository\UserRepository;
 use Carbon\CarbonImmutable;
 use Cycle\Annotated\Annotation as Cycle;
 use Doctrine\ORM\Mapping as ORM;
