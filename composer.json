@@ -18,6 +18,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.2",
         "grpc/grpc": "^1.57",
+        "loophp/collection": "^7.6",
         "nelmio/api-doc-bundle": "^4.31",
         "nesbot/carbon": "^3.7",
         "phphd/exceptional-validation": "^1.5",

@@ -9,6 +9,7 @@ use App\EmployeePortal\Authentication\Domain\PasswordReset\Repository\PasswordRe
 use App\EmployeePortal\Authentication\Domain\User\PasswordReset\PasswordResetRequest;
 use App\EmployeePortal\Authentication\Domain\User\User;
 use App\EmployeePortal\Authentication\Domain\User\User\Repository\UserRepository;
+use Doctrine\Common\Collections\Criteria;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
