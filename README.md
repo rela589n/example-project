@@ -52,7 +52,7 @@ ConsoleCommandTest - class that is responsible for testing the ConsoleCommand us
 
 ### Service
 
-ServiceContext - a class that represents scoped set of services related to the Command.
+Service - a class that represents scoped set of services that is given to Command as a method parameter.
 
 Command - a class that represents action carried out by the application.
 

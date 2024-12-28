@@ -20,6 +20,6 @@ final class Kernel extends BaseKernel
 
         yield new Playground\Bundle\AppPlaygroundBundle();
 
-        yield new EmployeePortal\Authentication\AppAuthBundle();
+        yield new EmployeePortal\Authentication\Bundle\AppAuthBundle();
     }
 }
