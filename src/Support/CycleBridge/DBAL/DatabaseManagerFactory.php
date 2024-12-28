@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\CycleBridgeBundle\DBAL;
+namespace App\Support\CycleBridge\DBAL;
 
 use Cycle\Database\Config\DatabaseConfig;
 use Cycle\Database\Config\Postgres\TcpConnectionConfig;

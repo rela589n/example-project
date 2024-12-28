@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\CycleBridgeBundle;
+namespace App\Support\CycleBridge\Bundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

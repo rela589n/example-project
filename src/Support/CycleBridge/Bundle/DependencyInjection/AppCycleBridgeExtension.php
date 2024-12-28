@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\CycleBridgeBundle\DependencyInjection;
+namespace App\Support\CycleBridge\Bundle\DependencyInjection;
 
 use Exception;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

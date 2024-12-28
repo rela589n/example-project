@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\MessageBusBundle\DependencyInjection;
+namespace App\Support\MessageBus\Bunde\DependencyInjection;
 
 use Exception;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

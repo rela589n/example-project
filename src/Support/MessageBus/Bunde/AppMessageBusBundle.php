@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\MessageBusBundle;
+namespace App\Support\MessageBus\Bunde;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
