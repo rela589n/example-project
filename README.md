@@ -34,6 +34,38 @@ Api documentation:
 
 - https://api.example-project.work:8083/api/employee-portal/auth/doc.html
 
+## Terms
+
+### Api
+
+ApiPoint - an entry point to the application from the API. It is a class that is responsible for retrieving the request,
+sending command to the application service, and returning the response.
+
+ApiPointTest - a class that is responsible for testing the ApiPoint using http client.
+
+### Console
+
+ConsoleCommand - an entry point to the application from the console. It is a class that is responsible for retrieving
+console input, sending command to the application service, and writing the outputs.
+
+ConsoleCommandTest - class that is responsible for testing the ConsoleCommand using console api.
+
+### Service
+
+ServiceContext - a class that represents scoped set of services related to the Command.
+
+Command - a class that represents action carried out by the application.
+
+### Outbox
+
+Outbox namespace represents set of inner actions that come after the main action has fulfilled its responsibility.
+
+### Model
+
+Event - a class that is responsible for the inherent business logic of the application. Once the logic has been
+processed, the event could be dispatched to the event.bus.
+
+EventTest - a class that is responsible for testing the core business logic.
 
 ### gRPC
 

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace EmployeePortal\Blog\Domain\User;
 
-use EmployeePortal\Blog\Domain\User\Post\Actions\Create\PostCreatedEvent;
-use EmployeePortal\Blog\Domain\User\Post\Actions\Edit\PostEditedEvent;
-use EmployeePortal\Blog\Domain\User\Post\Actions\TransferOwnership\PostOwnershipTransferredEvent;
-use EmployeePortal\Blog\Domain\User\Post\Comment\Actions\Create\PostCommentCreatedEvent;
-use EmployeePortal\Blog\Domain\User\Post\Comment\Actions\Edit\PostCommentEditedEvent;
-use EmployeePortal\Blog\Domain\User\Post\Comment\CommentCollection;
-use EmployeePortal\Blog\Domain\User\Post\PostCollection;
+use EmployeePortal\Blog\Domain\Post\Actions\Create\PostCreatedEvent;
+use EmployeePortal\Blog\Domain\Post\Actions\Edit\PostEditedEvent;
+use EmployeePortal\Blog\Domain\Post\Actions\TransferOwnership\PostOwnershipTransferredEvent;
+use EmployeePortal\Blog\Domain\Post\Comment\Actions\Create\PostCommentCreatedEvent;
+use EmployeePortal\Blog\Domain\Post\Comment\Actions\Edit\PostCommentEditedEvent;
+use EmployeePortal\Blog\Domain\Post\Comment\PostCommentCollection;
+use EmployeePortal\Blog\Domain\Post\PostCollection;
 use Symfony\Component\Uid\Uuid;
 
 class User
@@ -20,12 +20,12 @@ class User
     // anything you would like to control access to, should likely be declared as a collection
     private PostCollection $posts;
 
-    private CommentCollection $comments;
+    private PostCommentCollection $comments;
 
     public function __construct(
         Uuid $id,
         PostCollection $postCollection,
-        CommentCollection $commentCollection,
+        PostCommentCollection $commentCollection,
     ) {
         $this->id = $id;
         $this->posts = $postCollection->ofOwner($this);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\Domain\User\Password;
 
-use App\EmployeePortal\Authentication\Domain\User\User\Action\Login\Exception\PasswordMismatchException;
+use EmployeePortal\Authentication\Domain\User\Actions\Login\Exception\PasswordMismatchException;
 use SensitiveParameter;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Validator\Constraints as Assert;

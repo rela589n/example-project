@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\Domain\User;
 
-use App\EmployeePortal\Authentication\Domain\PasswordReset\Action\Reset\Model\UserPasswordResetEvent;
+use App\EmployeePortal\Authentication\Domain\User\Actions\Register\Model\UserRegisteredEvent;
 use App\EmployeePortal\Authentication\Domain\User\Email\Email;
 use App\EmployeePortal\Authentication\Domain\User\Password\Password;
-use App\EmployeePortal\Authentication\Domain\User\User\Action\Login\UserLoggedInEvent;
-use App\EmployeePortal\Authentication\Domain\User\User\Action\Register\UserRegistrationEvent;
-use App\EmployeePortal\Authentication\Domain\User\User\Event\UserEvent;
-use App\EmployeePortal\Authentication\Domain\User\User\Repository\UserRepository;
 use Carbon\CarbonImmutable;
 use Cycle\Annotated\Annotation as Cycle;
 use Doctrine\ORM\Mapping as ORM;
+use EmployeePortal\Authentication\Domain\User\Actions\Login\UserLoggedInEvent;
+use EmployeePortal\Authentication\Domain\User\PasswordReset\Actions\Reset\Model\UserPasswordResetEvent;
+use EmployeePortal\Authentication\Domain\User\Support\Event\UserEvent;
+use EmployeePortal\Authentication\Domain\User\Support\Repository\UserRepository;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -35,17 +35,13 @@ class User
     #[ORM\OneToMany(targetEntity: UserEvent::class, mappedBy: 'user')]
     private array $events = [];
 
-    public function __construct(Uuid $id)
-    {
-        $this->id = $id;
-    }
-
     /**
      * It is a lot much easier to update the entity from the event object in one call (e.g. user.register())
      * rather than in a bunch of anemic setters called (e.g. user.setEmail, user.setPassword)
      */
-    public function register(UserRegistrationEvent $event): void
+    public function register(UserRegisteredEvent $event): void
     {
+        $this->id = $event->getId();
         $this->email = $event->getEmail();
         $this->password = $event->getPassword();
         $this->createdAt = $event->getTimestamp();
@@ -53,7 +49,7 @@ class User
         $this->events[] = $event;
     }
 
-    public function logIn(UserLoggedInEvent $event): void
+    public function login(UserLoggedInEvent $event): void
     {
         $this->updatedAt = $event->getTimestamp();
 
