@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\Command;
+namespace App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\Inbox;
 
 use App\EmployeePortal\Authentication\User\PasswordReset\Repository\PasswordResetRequestRepository;
 use App\EmployeePortal\Authentication\User\Support\Repository\UserRepository;

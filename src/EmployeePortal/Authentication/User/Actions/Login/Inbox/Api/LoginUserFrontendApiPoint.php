@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Authentication\User\Actions\Login\Service\Api;
+namespace App\EmployeePortal\Authentication\User\Actions\Login\Inbox\Api;
 
-use App\EmployeePortal\Authentication\User\Actions\Login\Service\LoginUserCommand;
+use App\EmployeePortal\Authentication\User\Actions\Login\Inbox\LoginUserCommand;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;

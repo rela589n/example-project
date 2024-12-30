@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Blog\Post\Comment\Actions\Create;
+namespace App\EmployeePortal\Blog\Post\Comment\Actions\Add;
 
 use App\EmployeePortal\Blog\Post\Comment\PostComment;
 use App\EmployeePortal\Blog\Post\Post;
@@ -10,7 +10,7 @@ use App\EmployeePortal\Blog\User\User;
 use Carbon\CarbonImmutable;
 use Symfony\Component\Uid\Uuid;
 
-final readonly class PostCommentCreatedEvent
+final readonly class PostCommentAddedEvent
 {
     public function __construct(
         private Uuid $id,

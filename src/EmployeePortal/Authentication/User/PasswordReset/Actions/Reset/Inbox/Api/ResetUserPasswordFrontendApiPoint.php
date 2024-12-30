@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\Command\Api;
+namespace App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\Inbox\Api;
 
-use App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\Command\ResetUserPasswordCommand;
+use App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\Inbox\ResetUserPasswordCommand;
 use OpenApi\Attributes as OA;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;

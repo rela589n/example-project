@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Authentication\User\Actions\Login\Service;
+namespace App\EmployeePortal\Authentication\User\Actions\Login\Inbox;
 
 use App\EmployeePortal\Authentication\User\Actions\Login\UserLoggedInEvent;
 use App\EmployeePortal\Authentication\User\Email\Email;
 use App\EmployeePortal\Authentication\User\Email\EmailValidationFailedException;
 use App\EmployeePortal\Authentication\User\Password\PasswordMismatchException;
-use App\EmployeePortal\Authentication\User\Support\Exception\UserNotFoundException;
+use App\EmployeePortal\Authentication\User\Support\Repository\Exception\UserNotFoundException;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUser;

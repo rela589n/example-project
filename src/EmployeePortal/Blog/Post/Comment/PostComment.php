@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\Post\Comment;
 
-use App\EmployeePortal\Blog\Post\Comment\Actions\Create\PostCommentCreatedEvent;
+use App\EmployeePortal\Blog\Post\Comment\Actions\Add\PostCommentAddedEvent;
 use App\EmployeePortal\Blog\Post\Comment\Actions\Edit\PostCommentEditedEvent;
 use App\EmployeePortal\Blog\Post\Post;
 use App\EmployeePortal\Blog\User\User;
@@ -23,7 +23,7 @@ class PostComment
 
     private CarbonImmutable $addedAt;
 
-    public function add(PostCommentCreatedEvent $event): void
+    public function add(PostCommentAddedEvent $event): void
     {
         $this->id = $event->getId();
         $this->author = $event->getAuthor();

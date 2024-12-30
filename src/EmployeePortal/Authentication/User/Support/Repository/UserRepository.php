@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\User\Support\Repository;
 
 use App\EmployeePortal\Authentication\User\Email\Email;
-use App\EmployeePortal\Authentication\User\Support\Exception\UserNotFoundException;
+use App\EmployeePortal\Authentication\User\Support\Repository\Exception\UserNotFoundException;
 use App\EmployeePortal\Authentication\User\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

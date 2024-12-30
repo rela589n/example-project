@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Authentication\User\Actions\Login\Service;
+namespace App\EmployeePortal\Authentication\User\Actions\Login\Inbox;
 
 use App\EmployeePortal\Authentication\User\Support\Repository\UserRepository;
 use App\EmployeePortal\Authentication\User\User;

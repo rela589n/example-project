@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Authentication\User\Support\Exception;
+namespace App\EmployeePortal\Authentication\User\Support\Repository\Exception;
 
 use App\EmployeePortal\Authentication\AuthException;
 use App\EmployeePortal\Authentication\User\Email\Email;

@@ -7,7 +7,7 @@ namespace App\EmployeePortal\Blog\User;
 use App\EmployeePortal\Blog\Post\Actions\Create\PostCreatedEvent;
 use App\EmployeePortal\Blog\Post\Actions\Edit\PostEditedEvent;
 use App\EmployeePortal\Blog\Post\Actions\TransferOwnership\PostOwnershipTransferredEvent;
-use App\EmployeePortal\Blog\Post\Comment\Actions\Create\PostCommentCreatedEvent;
+use App\EmployeePortal\Blog\Post\Comment\Actions\Add\PostCommentAddedEvent;
 use App\EmployeePortal\Blog\Post\Comment\Actions\Edit\PostCommentEditedEvent;
 use App\EmployeePortal\Blog\Post\Comment\PostCommentCollection;
 use App\EmployeePortal\Blog\Post\PostCollection;
@@ -53,7 +53,7 @@ class User
         $post->edit($event);
     }
 
-    public function comment(PostCommentCreatedEvent $event): void
+    public function comment(PostCommentAddedEvent $event): void
     {
         $comment = $event->getComment();
 
