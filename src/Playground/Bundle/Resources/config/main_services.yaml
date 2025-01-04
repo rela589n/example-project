@@ -4,7 +4,7 @@ services:
         autoconfigure: true
 
     App\Playground\:
-        resource: '../../../**/{*Action.php,*ConsoleCommand.php,*Handler.php,*Repository.php}'
+        resource: '../../../**/{*ApiPoint.php,*ConsoleCommand.php,*Handler.php,*Repository.php}'
 
 imports:
     - { resource: '../../../**/config/services.yaml' }

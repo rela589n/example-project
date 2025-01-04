@@ -4,4 +4,4 @@ services:
         autoconfigure: true
 
     App\EmployeePortal\Blog\:
-        resource: '../../../**/{*Action.php,*Handler.php,*Repository.php}'
+        resource: '../../../**/{*ApiPoint.php,*Handler.php,*Repository.php}'
