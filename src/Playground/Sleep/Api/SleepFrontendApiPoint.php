@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[AsController]
-final readonly class SleepFrontendAction
+final readonly class SleepFrontendApiPoint
 {
     #[Route('/sleep')]
     public function __invoke(
