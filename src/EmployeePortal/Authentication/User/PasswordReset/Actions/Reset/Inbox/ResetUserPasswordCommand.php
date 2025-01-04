@@ -39,32 +39,37 @@ final readonly class ResetUserPasswordCommand
 
     public function process(ResetUserPasswordService $service): void
     {
-        /**
-         * One more thing about awaitAnyN() is that it actually allows us to benefit from async i/o
-         * In case if doctrine will add support for it in the future, the code would become faster
-         * without being changed in any way.
-         *
-         * @var User $user
-         * @var PasswordResetRequest $passwordResetRequest
-         */
-        [$user, $passwordResetRequest] = awaitAnyN(2, [
-            async(fn (): User => $this->findUser($service)),
-            async(fn (): PasswordResetRequest => $this->findPasswordResetRequest($service)),
-        ]);
-
-        $event = new UserPasswordResetEvent($user, $passwordResetRequest, CarbonImmutable::instance($service->clock->now()));
+        $event = $this->getEvent($service);
 
         $event->process();
 
         $service->eventBus->dispatch($event);
     }
 
-    private function findUser(ResetUserPasswordService $service): User
+    private function getEvent(ResetUserPasswordService $service): UserPasswordResetEvent
+    {
+        /**
+         * One more thing about awaitAnyN() is that it actually allows us to benefit from async i/o
+         * In case if doctrine will add support for it in the future, the code would become faster
+         * without it being changed in any way.
+         *
+         * @var User $user
+         * @var PasswordResetRequest $passwordResetRequest
+         */
+        [$user, $passwordResetRequest] = awaitAnyN(2, [
+            async($this->getUser(...), $service),
+            async($this->getPasswordResetRequest(...), $service),
+        ]);
+
+        return new UserPasswordResetEvent($user, $passwordResetRequest, CarbonImmutable::instance($service->clock->now()));
+    }
+
+    private function getUser(ResetUserPasswordService $service): User
     {
         return $service->userRepository->findById($this->getUserId());
     }
 
-    private function findPasswordResetRequest(ResetUserPasswordService $service): PasswordResetRequest
+    private function getPasswordResetRequest(ResetUserPasswordService $service): PasswordResetRequest
     {
         return $service->passwordResetRequestRepository->findById($this->getPasswordResetRequestId());
     }

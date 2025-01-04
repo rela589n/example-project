@@ -52,6 +52,22 @@ final readonly class RegisterUserCommand
     /** This method should not have any business logic. It should all be inside the domain model event */
     public function execute(RegisterUserService $service): void
     {
+        $event = $this->getEvent($service);
+
+        $event->execute($service->userRepository);
+
+        // usually command.bus has transactional middleware, hence flush() is not necessarily required
+        // (this could be useful for fixtures, when one fixture could register multiple
+        // users and then flush them all in one go)
+
+        $service->entityManager->persist($event->getUser());
+        $service->entityManager->flush();
+
+        $service->eventBus->dispatch($event);
+    }
+
+    private function getEvent(RegisterUserService $service): UserRegisteredEvent
+    {
         /**
          * Usage of awaitAnyN() allows us to show all the validation errors at once instead of showing them one by one.
          * This is achieved by exception unwrapper integrated into exceptional validation component.
@@ -64,24 +80,13 @@ final readonly class RegisterUserCommand
             async($this->password(...), $service),
         ]);
 
-        $registration = new UserRegisteredEvent(
+        return new UserRegisteredEvent(
             Uuid::fromString($this->id),
             new User(),
             $email,
             $password,
             CarbonImmutable::instance($service->clock->now()),
         );
-
-        $registration->execute($service->userRepository);
-
-        // usually command.bus has transactional middleware, hence flush() is not necessarily required
-        // (this could be useful for fixtures, when one fixture could register multiple
-        // users and then flush them all in one go)
-
-        $service->entityManager->persist($registration->getUser());
-        $service->entityManager->flush();
-
-        $service->eventBus->dispatch($registration);
     }
 
     private function email(RegisterUserService $service): Email

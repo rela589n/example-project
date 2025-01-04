@@ -36,7 +36,40 @@ Api documentation:
 
 ## Terms
 
-### Api
+### Action
+
+> Example of action:
+> [User\Actions\Register](src/EmployeePortal/Authentication/User/Actions/Register)
+
+The actions are self-sufficient modules that represent some actions of the user (like registration, login),
+or some actions of the system (like sending the notification). Either way, the action is usually related to
+some entity it belongs to.
+
+### Event
+
+> Example of
+> event: [UserRegisteredEvent.php](src/EmployeePortal/Authentication/User/Actions/Register/UserRegisteredEvent.php)
+
+Event is a class that is responsible for the core business logic of the application. For example, if user is
+registering, we must verify that the email is free.
+
+All the logic should be placed in `process()` method, and if any invariant fails, it must throw an exception.
+If invariants were met, the event must delegate itself to be applied by the entity itself. For example, see
+`User::login()` method.
+
+Once the event is processed, it must be dispatched into the event bus.
+
+EventTest - a class that is responsible for testing the core business logic.
+
+### Inbox
+
+> Example of Inbox [User\Actions\Login\Inbox](src/EmployeePortal/Authentication/User/Actions/Login/Inbox)
+
+Inbox namespace represents classes that make the event happen. Usually, at the top level it contains Command and Service
+that serve for the event by creating it, processing it, and dispatching it into the event.bus.
+
+
+### ApiPoint
 
 ApiPoint - an entry point to the application from the API. It is a class that is responsible for retrieving the request,
 sending command to the application service, and returning the response.
@@ -59,13 +92,6 @@ Command - a class that represents action carried out by the application.
 ### Outbox
 
 Outbox namespace represents set of inner actions that come after the main action has fulfilled its responsibility.
-
-### Model
-
-Event - a class that is responsible for the inherent business logic of the application. Once the logic has been
-processed, the event could be dispatched to the event.bus.
-
-EventTest - a class that is responsible for testing the core business logic.
 
 ### gRPC
 
