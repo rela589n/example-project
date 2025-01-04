@@ -3,5 +3,5 @@ doctrine:
         mappings:
             AppAuthBundle:
                 type: attribute
-                dir: Domain
-                prefix: App\EmployeePortal\Authentication\Domain
+                dir: ../
+                prefix: App\EmployeePortal\Authentication

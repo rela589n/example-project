@@ -1,5 +1,5 @@
 api_frontend_auth:
-    resource: '../../Domain/**/{*FrontendAction.php}'
+    resource: '../../../**/{*FrontendAction.php}'
     type: attribute
     prefix: /api/employee-portal/auth
     host: '%api_host%'

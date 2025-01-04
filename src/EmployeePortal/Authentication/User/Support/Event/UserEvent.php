@@ -14,7 +14,7 @@ use App\EmployeePortal\Authentication\AuthEvent;
  * In the simplest case, one could on any user event send the actual snapshot of user data
  * so that it's not necessary to treat the events separately.
  */
-interface UserEvent extends AuthEvent
+interface UserEvent
 {
     /**
      * @template TResult

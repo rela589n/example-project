@@ -3,5 +3,5 @@ services:
         autowire: true
         autoconfigure: true
 
-    App\EmployeePortal\Authentication\:
+    App\EmployeePortal\Blog\:
         resource: '../../../**/{*Action.php,*Handler.php,*Repository.php}'
