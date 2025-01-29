@@ -11,7 +11,6 @@ sudo nano /etc/hosts
 Place following domain there:
 
 ```shell
-# NPU EPO
 127.0.0.1       api.example-project.work
 ```
 
@@ -20,6 +19,12 @@ Build docker image (grpc):
 ```shell
 cd docker-configs/backend/
 docker build -t example_project.backend.grpc:v1.0 -f grpc.Dockerfile ./
+```
+
+Run composer install:
+
+```shell
+docker compose run backend composer install
 ```
 
 Start the server:
