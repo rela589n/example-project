@@ -5,6 +5,3 @@ services:
 
     App\Playground\:
         resource: '../../../**/{*ApiPoint.php,*ConsoleCommand.php,*Handler.php,*Repository.php}'
-
-imports:
-    - { resource: '../../../**/config/services.yaml' }

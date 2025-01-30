@@ -1,0 +1,16 @@
+framework:
+    workflows:
+        hello_world:
+            type: state_machine
+            supports:
+                - App\Playground\Workflow\HelloWorld\HelloWorld
+            marking_store:
+                type: 'method'
+                property: 'state'
+            places:
+                - hello
+                - world
+            transitions:
+                complete:
+                    from: hello
+                    to: world
