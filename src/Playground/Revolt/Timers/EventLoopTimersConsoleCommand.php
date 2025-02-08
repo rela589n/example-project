@@ -44,6 +44,8 @@ final class EventLoopTimersConsoleCommand extends Command
                 EventLoop::queue(static function () use ($output) {
                     $output->writeln('Start loop');
                 });
+
+                $output->writeln('Before start');
             },
         );
 
