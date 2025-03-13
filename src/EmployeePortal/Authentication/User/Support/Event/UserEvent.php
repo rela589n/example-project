@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Support\Event;
 
-use App\EmployeePortal\Authentication\AuthEvent;
+use App\EmployeePortal\Authentication\User\Actions\Login\UserLoggedInEvent;
+use App\EmployeePortal\Authentication\User\Actions\Register\UserRegisteredEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\Actions\Create\UserPasswordResetRequestCreatedEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\UserPasswordResetEvent;
+use App\EmployeePortal\Authentication\User\User;
+use Carbon\CarbonImmutable;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * If in your case it's necessary to implement command-side replica,
@@ -14,8 +21,44 @@ use App\EmployeePortal\Authentication\AuthEvent;
  * In the simplest case, one could on any user event send the actual snapshot of user data
  * so that it's not necessary to treat the events separately.
  */
-interface UserEvent
+#[ORM\Entity]
+#[ORM\Table(name: 'user_events')]
+#[ORM\InheritanceType(value: 'JOINED')]
+#[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
+#[ORM\DiscriminatorMap(value: [
+    UserRegisteredEvent::TYPE => UserRegisteredEvent::class,
+    UserLoggedInEvent::TYPE => UserLoggedInEvent::class,
+    UserPasswordResetRequestCreatedEvent::TYPE => UserPasswordResetRequestCreatedEvent::class,
+    UserPasswordResetEvent::TYPE => UserPasswordResetEvent::class,
+])]
+abstract class UserEvent
 {
+    #[ORM\Id]
+    #[ORM\Column(type: 'uuid')]
+    protected Uuid $id;
+
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    #[ORM\JoinColumn(nullable: false)]
+    protected User $user;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    protected CarbonImmutable $timestamp;
+
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function getTimestamp(): CarbonImmutable
+    {
+        return $this->timestamp;
+    }
+
     /**
      * @template TResult
      * @template TData
@@ -25,5 +68,5 @@ interface UserEvent
      *
      * @return TResult
      */
-    public function acceptVisitor(UserEventVisitor $visitor, mixed $data = null): mixed;
+    abstract public function acceptVisitor(UserEventVisitor $visitor, mixed $data = null): mixed;
 }

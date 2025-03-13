@@ -15,18 +15,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
-final readonly class UserPasswordResetEvent implements UserEvent
+#[ORM\Table(name: 'user_password_reset_events')]
+final class UserPasswordResetEvent extends UserEvent
 {
+    protected const string TYPE = 'userPasswordReset';
+
     public function __construct(
-        #[ORM\Id]
-        #[ORM\Column(type: 'uuid')]
-        private Uuid $id,
-        #[ORM\ManyToOne(inversedBy: 'events')]
-        private User $user,
+        protected Uuid $id,
+        protected User $user,
         #[ORM\ManyToOne]
-        private PasswordResetRequest $passwordResetRequest,
-        #[ORM\Column(type: 'carbon_immutable')]
-        private CarbonImmutable $timestamp,
+        #[ORM\JoinColumn(nullable: false)]
+        private readonly PasswordResetRequest $passwordResetRequest,
+        protected CarbonImmutable $timestamp,
     ) {
     }
 
@@ -43,19 +43,9 @@ final readonly class UserPasswordResetEvent implements UserEvent
         $this->user->resetPassword($this);
     }
 
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
     public function getPasswordResetRequest(): PasswordResetRequest
     {
         return $this->passwordResetRequest;
-    }
-
-    public function getTimestamp(): CarbonImmutable
-    {
-        return $this->timestamp;
     }
 
     public function acceptVisitor(UserEventVisitor $visitor, mixed $data = null): mixed

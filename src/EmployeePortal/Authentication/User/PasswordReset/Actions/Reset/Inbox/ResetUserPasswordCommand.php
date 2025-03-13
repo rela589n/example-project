@@ -61,7 +61,7 @@ final readonly class ResetUserPasswordCommand
             async($this->getPasswordResetRequest(...), $service),
         ]);
 
-        return new UserPasswordResetEvent($user, $passwordResetRequest, CarbonImmutable::instance($service->clock->now()));
+        return new UserPasswordResetEvent(Uuid::v7(), $user, $passwordResetRequest, CarbonImmutable::instance($service->clock->now()));
     }
 
     private function getUser(ResetUserPasswordService $service): User

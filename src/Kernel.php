@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Doctrine\ORM\Query\AST\Subselect;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
@@ -17,6 +18,7 @@ final class Kernel extends BaseKernel
 
         yield new Support\MessageBus\Bunde\AppMessageBusBundle();
         yield new Support\CycleBridge\Bundle\AppCycleBridgeBundle();
+        yield new Support\Doctrine\Bundle\AppDoctrineBundle();
 
         yield new Playground\Bundle\AppPlaygroundBundle();
 

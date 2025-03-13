@@ -16,21 +16,19 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
-final readonly class UserRegisteredEvent implements UserEvent
+#[ORM\Table(name: 'user_registered_events')]
+class UserRegisteredEvent extends UserEvent
 {
+    protected const string TYPE = 'userRegistered';
+
     public function __construct(
-        /** Event ID */
-        #[ORM\Id]
-        #[ORM\Column(type: 'uuid')]
-        private Uuid $id,
-        #[ORM\ManyToOne(inversedBy: 'events')]
-        private User $user,
+        protected Uuid $id,
+        protected User $user,
         #[ORM\Embedded(columnPrefix: false)]
-        private Email $email,
+        private readonly Email $email,
         #[ORM\Embedded]
-        private Password $password,
-        #[ORM\Column(type: 'carbon_immutable')]
-        private CarbonImmutable $timestamp,
+        private readonly Password $password,
+        protected CarbonImmutable $timestamp,
     ) {
     }
 
@@ -47,16 +45,6 @@ final readonly class UserRegisteredEvent implements UserEvent
         $this->user->register($this);
     }
 
-    public function getId(): Uuid
-    {
-        return $this->id;
-    }
-
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
     public function getEmail(): Email
     {
         return $this->email;
@@ -65,11 +53,6 @@ final readonly class UserRegisteredEvent implements UserEvent
     public function getPassword(): Password
     {
         return $this->password;
-    }
-
-    public function getTimestamp(): CarbonImmutable
-    {
-        return $this->timestamp;
     }
 
     public function acceptVisitor(UserEventVisitor $visitor, mixed $data = null): mixed

@@ -10,14 +10,12 @@ use App\EmployeePortal\Authentication\User\Email\Email;
 use App\EmployeePortal\Authentication\User\Password\Password;
 use App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\UserPasswordResetEvent;
 use App\EmployeePortal\Authentication\User\Support\Event\UserEvent;
-use App\EmployeePortal\Authentication\User\Support\Repository\UserRepository;
 use Carbon\CarbonImmutable;
-use Cycle\Annotated\Annotation as Cycle;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[Cycle\Entity]
+#[ORM\Entity]
+#[ORM\Table(name: 'users')]
 class User
 {
     #[ORM\Id]
@@ -30,10 +28,10 @@ class User
     #[ORM\Embedded]
     private Password $password;
 
-    #[ORM\Column(type: 'carbon_immutable')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private CarbonImmutable $createdAt;
 
-    #[ORM\Column(type: 'carbon_immutable')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private CarbonImmutable $updatedAt;
 
     /** @var UserEvent[] */

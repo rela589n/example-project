@@ -1,0 +1,5 @@
+doctrine:
+    dbal:
+        types:
+            datetime_immutable: Carbon\Doctrine\DateTimeImmutableType
+            datetime: Carbon\Doctrine\DateTimeType

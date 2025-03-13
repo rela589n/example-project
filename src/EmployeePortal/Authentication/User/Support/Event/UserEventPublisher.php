@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-/** @implements UserEventVisitor<?object, null> */
+/** @extends UserEventVisitor<?object, null> */
 #[AsMessageHandler(bus: 'event.bus')]
 final readonly class UserEventPublisher implements UserEventVisitor
 {

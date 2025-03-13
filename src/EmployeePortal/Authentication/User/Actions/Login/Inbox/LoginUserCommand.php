@@ -18,6 +18,7 @@ use PhPhD\ExceptionalValidation\Formatter\ViolationListExceptionFormatter;
 use PhPhD\ExceptionalValidation\Model\Condition\ValueExceptionMatchCondition;
 use SensitiveParameter;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
+use Symfony\Component\Uid\Uuid;
 
 #[ExceptionalValidation]
 final readonly class LoginUserCommand
@@ -46,11 +47,12 @@ final readonly class LoginUserCommand
     public function process(LoginUserService $service): void
     {
         $event = new UserLoggedInEvent(
+            Uuid::v7(),
             $user = $this->getUser($service),
             CarbonImmutable::instance($service->clock->now()),
         );
 
-        $event->process($service->passwordHasher, $this->password);
+        $event->process($this->password, $service->passwordHasher);
 
         $service->entityManager->flush();
         $service->eventBus->dispatch($event);

@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: PasswordResetRequestRepository::class)]
-final readonly class PasswordResetRequest
+#[ORM\Table(name: 'user_password_reset_requests')]
+class PasswordResetRequest
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
@@ -22,10 +23,10 @@ final readonly class PasswordResetRequest
     #[ORM\JoinColumn(nullable: false)]
     private User $user;
 
-    #[ORM\Column(type: 'carbon_immutable')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private CarbonImmutable $createdAt;
 
-    #[ORM\Column(type: 'carbon_immutable')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private CarbonImmutable $expiresAt;
 
     public function __construct(Uuid $id)

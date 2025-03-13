@@ -15,18 +15,17 @@ use Psr\Clock\ClockInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
-class UserPasswordResetRequestCreatedEvent implements UserEvent
+class UserPasswordResetRequestCreatedEvent extends UserEvent
 {
+    protected const string TYPE = 'userPasswordResetRequestCreated';
+
     private function __construct(
-        #[ORM\Id]
-        #[ORM\Column(type: 'uuid')]
-        private Uuid $id,
-        #[ORM\ManyToOne(inversedBy: 'events')]
-        private User $user,
+        protected Uuid $id,
+        protected User $user,
         #[ORM\ManyToOne]
-        private PasswordResetRequest $passwordResetRequest,
-        #[ORM\Column(type: 'carbon_immutable')]
-        private CarbonImmutable $timestamp,
+        #[ORM\JoinColumn(nullable: false)]
+        private readonly PasswordResetRequest $passwordResetRequest,
+        protected CarbonImmutable $timestamp,
     ) {
     }
 
@@ -49,11 +48,6 @@ class UserPasswordResetRequestCreatedEvent implements UserEvent
     public function getPasswordResetRequest(): PasswordResetRequest
     {
         return $this->passwordResetRequest;
-    }
-
-    public function getTimestamp(): CarbonImmutable
-    {
-        return $this->timestamp;
     }
 
     private function run(): void
