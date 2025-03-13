@@ -20,11 +20,16 @@ final readonly class UserRegisteredEvent implements UserEvent
 {
     public function __construct(
         /** Event ID */
+        #[ORM\Id]
+        #[ORM\Column(type: 'uuid')]
         private Uuid $id,
         #[ORM\ManyToOne(inversedBy: 'events')]
         private User $user,
+        #[ORM\Embedded(columnPrefix: false)]
         private Email $email,
+        #[ORM\Embedded]
         private Password $password,
+        #[ORM\Column(type: 'carbon_immutable')]
         private CarbonImmutable $timestamp,
     ) {
     }

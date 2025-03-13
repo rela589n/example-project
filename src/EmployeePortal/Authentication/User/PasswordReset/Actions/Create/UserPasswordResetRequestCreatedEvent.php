@@ -18,6 +18,9 @@ use Symfony\Component\Uid\Uuid;
 class UserPasswordResetRequestCreatedEvent implements UserEvent
 {
     private function __construct(
+        #[ORM\Id]
+        #[ORM\Column(type: 'uuid')]
+        private Uuid $id,
         #[ORM\ManyToOne(inversedBy: 'events')]
         private User $user,
         #[ORM\ManyToOne]

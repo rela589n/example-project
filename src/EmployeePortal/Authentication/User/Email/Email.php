@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Email;
 
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+#[ORM\Embeddable]
 final readonly class Email
 {
     private function __construct(
+        #[ORM\Column(nullable: false)]
         private string $email,
     ) {
     }

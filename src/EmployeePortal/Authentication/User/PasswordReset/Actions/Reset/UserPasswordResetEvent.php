@@ -12,11 +12,15 @@ use App\EmployeePortal\Authentication\User\Support\Exception\AccessDeniedExcepti
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 final readonly class UserPasswordResetEvent implements UserEvent
 {
     public function __construct(
+        #[ORM\Id]
+        #[ORM\Column(type: 'uuid')]
+        private Uuid $id,
         #[ORM\ManyToOne(inversedBy: 'events')]
         private User $user,
         #[ORM\ManyToOne]

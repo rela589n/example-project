@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Password;
 
+use Doctrine\ORM\Mapping as ORM;
 use SensitiveParameter;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,9 +17,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  *
  * The fact that object could not be created in the invalid state completely removes temporal coupling (https://www.pluralsight.com/tech-blog/forms-of-temporal-coupling/)
  */
+#[ORM\Embeddable]
 final readonly class Password
 {
     private function __construct(
+        #[ORM\Column(nullable: true)]
         private string $hash,
     ) {
     }

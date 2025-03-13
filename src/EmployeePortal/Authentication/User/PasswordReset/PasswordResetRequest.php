@@ -14,12 +14,18 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Entity(repositoryClass: PasswordResetRequestRepository::class)]
 final readonly class PasswordResetRequest
 {
+    #[ORM\Id]
+    #[ORM\Column(type: 'uuid')]
     private Uuid $id;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private User $user;
 
+    #[ORM\Column(type: 'carbon_immutable')]
     private CarbonImmutable $createdAt;
 
+    #[ORM\Column(type: 'carbon_immutable')]
     private CarbonImmutable $expiresAt;
 
     public function __construct(Uuid $id)

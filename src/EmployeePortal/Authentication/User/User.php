@@ -20,15 +20,20 @@ use Symfony\Component\Uid\Uuid;
 #[Cycle\Entity]
 class User
 {
-    #[Cycle\Column('uuid')]
+    #[ORM\Id]
+    #[ORM\Column(type: 'uuid')]
     private Uuid $id;
 
+    #[ORM\Embedded(columnPrefix: false)]
     private Email $email;
 
+    #[ORM\Embedded]
     private Password $password;
 
+    #[ORM\Column(type: 'carbon_immutable')]
     private CarbonImmutable $createdAt;
 
+    #[ORM\Column(type: 'carbon_immutable')]
     private CarbonImmutable $updatedAt;
 
     /** @var UserEvent[] */

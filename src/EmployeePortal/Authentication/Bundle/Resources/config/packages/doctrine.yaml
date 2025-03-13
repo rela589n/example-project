@@ -3,5 +3,6 @@ doctrine:
         mappings:
             AppAuthBundle:
                 type: attribute
-                dir: ../
+                dir: '%kernel.project_dir%/src/EmployeePortal/Authentication'
+                is_bundle: false
                 prefix: App\EmployeePortal\Authentication
