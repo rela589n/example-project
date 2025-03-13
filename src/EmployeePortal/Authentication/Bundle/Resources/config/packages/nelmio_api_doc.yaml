@@ -2,7 +2,7 @@ nelmio_api_doc:
     areas:
         employee_portal_auth:
             path_patterns:
-                - ^/api/employee-portal/auth/(?!/doc$)
+                - ^/api/example-project/auth/(?!/doc$)
             documentation:
                 info:
                     title: EmployeePortal Authentication

@@ -1,0 +1,5 @@
+when@test:
+    phd_api_testing:
+        jwt_authenticators:
+            -   name: default
+                user_provider: security.user.provider.concrete.user_db

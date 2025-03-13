@@ -37,7 +37,7 @@ Open `https://api.example-project.work:8083` to check that everything is up and 
 
 Api documentation:
 
-- https://api.example-project.work:8083/api/employee-portal/auth/doc.html
+- https://api.example-project.work:8083/api/example-project/auth/doc.html
 
 ## Terms
 

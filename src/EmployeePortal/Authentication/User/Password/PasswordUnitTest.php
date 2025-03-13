@@ -64,8 +64,8 @@ final class PasswordUnitTest extends TestCase
     public static function weakPasswordsProvider(): array
     {
         return [
-            'p@$$w0rd',
-            'v/W29O4F8-tf',
+            ['p@$$w0rd'],
+            ['v/W29O4F8-tf'],
         ];
     }
 

@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    app_auth.current_user:
+        shared: false
+        class: App\EmployeePortal\Authentication\User\User
+        factory: [ '@security.user.provider.concrete.inventory_employee_db', 'loadUserByIdentifier' ]
+        arguments: [ '@=service("security.token_storage").getToken().getUserIdentifier()' ]

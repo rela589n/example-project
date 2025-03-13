@@ -1,0 +1,8 @@
+parameters:
+    env(JWT_REFRESH_TTL): '1800' # 30 minutes
+
+gesdinet_jwt_refresh_token:
+    ttl: '%env(int:JWT_REFRESH_TTL)%'
+    token_parameter_name: 'refreshToken'
+    single_use: true
+    refresh_token_class: 'App\EmployeePortal\Authentication\Jwt\Refresh\JwtRefreshToken'

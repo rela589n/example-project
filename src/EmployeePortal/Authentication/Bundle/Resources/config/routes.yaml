@@ -1,18 +1,24 @@
 api_frontend_auth:
     resource: '../../../**/{*FrontendApiPoint.php}'
     type: attribute
-    prefix: /api/employee-portal/auth
+    prefix: /api/example-project/auth
+    host: '%api_host%'
+    schemes: '%api_scheme%'
+
+api_employee_portal_auth_token_refresh:
+    path: /api/example-project/auth/token/refresh
+    methods: POST
     host: '%api_host%'
     schemes: '%api_scheme%'
 
 when@dev:
     api_doc.employee_portal_auth.redocly: &api_doc_redocly
-        path: /api/employee-portal/auth/doc.html
+        path: /api/example-project/auth/doc.html
         methods: GET
         defaults: { _controller: nelmio_api_doc.controller.redocly, area: employee_portal_auth }
 
     api_doc.employee_portal_auth.swagger: &api_doc_json
-        path: /api/employee-portal/auth/doc.json
+        path: /api/example-project/auth/doc.json
         methods: GET
         defaults: { _controller: nelmio_api_doc.controller.swagger, area: employee_portal_auth }
 
