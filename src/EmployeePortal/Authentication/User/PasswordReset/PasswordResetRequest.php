@@ -36,6 +36,7 @@ class PasswordResetRequest
 
     public function create(UserPasswordResetRequestCreatedEvent $event): void
     {
+        $this->id = $event->getId();
         $this->user = $event->getUser();
         $this->createdAt = $event->getTimestamp();
         $this->expiresAt = $event->getTimestamp()->addMinutes(10);
