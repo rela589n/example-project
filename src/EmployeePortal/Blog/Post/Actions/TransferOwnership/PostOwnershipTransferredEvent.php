@@ -18,7 +18,7 @@ final readonly class PostOwnershipTransferredEvent
 
     public function process(): void
     {
-        $this->post->assertBelongsTo($this->owner);
+        $this->post->assertIsOwnedBy($this->owner);
 
         $this->owner->transferPostOwnership($this);
     }

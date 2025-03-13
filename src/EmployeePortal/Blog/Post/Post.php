@@ -60,7 +60,7 @@ class Post
         $this->owner = $event->getNewOwner();
     }
 
-    public function assertBelongsTo(User $owner): void
+    public function assertIsOwnedBy(User $owner): void
     {
         if ($this->owner !== $owner) {
             throw new \InvalidArgumentException('Post does not belong to this user');
