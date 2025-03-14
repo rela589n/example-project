@@ -32,6 +32,12 @@ services:
             - "postgresdata:/var/lib/postgresql/data"
         ports:
             - "127.0.0.1:15432:5432"
+
+    redis:
+        image: redis:7.4
+        ports:
+            - "127.0.0.1:16379:6379"
+
     mailer:
         image: axllent/mailpit
         ports:

@@ -13,6 +13,7 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
 RUN install-php-extensions pgsql
+RUN install-php-extensions redis
 RUN install-php-extensions sockets
 RUN install-php-extensions zip
 RUN install-php-extensions amqp

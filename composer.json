@@ -8,6 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-pgsql": "*",
+        "ext-redis": "*",
         "amphp/amp": "^3.1",
         "amphp/file": ">=3.2",
         "baldinof/roadrunner-bundle": "^3.2",
