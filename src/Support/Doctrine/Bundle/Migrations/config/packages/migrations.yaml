@@ -1,3 +1,6 @@
+parameters:
+    app_doctrine.migrations_template: '@@AppDoctrineBundle/Migrations/migration_template.tpl'
+
 doctrine_migrations:
     migrations_paths:
         # namespace is arbitrary but should be different from App\Migrations
@@ -7,3 +10,4 @@ doctrine_migrations:
     all_or_nothing: true
     organize_migrations: 'BY_YEAR_AND_MONTH'
     enable_profiler: false
+    custom_template: '@=service("file_locator").locate(parameter("app_doctrine.migrations_template"))'
