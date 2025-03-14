@@ -1,7 +1,7 @@
 FROM spiralscout/roadrunner:2024.2 AS roadrunner
 FROM example_project.backend.grpc:v1.0 AS grpc
 FROM mlocati/php-extension-installer AS ext
-FROM composer:2.7 AS composer
+FROM composer:2.8 AS composer
 FROM php:8.3-cli-bookworm
 
 ARG USER_NAME=app

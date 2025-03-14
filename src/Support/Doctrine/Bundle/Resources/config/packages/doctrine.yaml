@@ -29,9 +29,9 @@ doctrine:
             type: pool
             pool: doctrine.query_cache_pool
 
-#        result_cache_driver:
-#            type: pool
-#            pool: doctrine.result_cache_pool
+        result_cache_driver:
+            type: pool
+            pool: doctrine.result_cache_pool
 
 framework:
     cache:
@@ -43,7 +43,7 @@ framework:
                 adapter: cache.adapter.redis
 
 # make sure metadata cache clears on the new migration
-stfalcon_studio_doctrine_redis_cache:
+stfalcon_studio_doctrine_redis_cache: # todo: is it really necessary?
     cache_pools: [ 'cache.doctrine.orm.default.metadata' ]
 
 when@test: &local_config

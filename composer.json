@@ -81,7 +81,89 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "ci:pack": [
+            "@ci:composer-validate",
+            "@ci:composer-audit",
+            "@ci:architecture",
+            "@ci:ecs",
+            "@ci:cache-clear --env=test",
+            "@ci:static-analysis",
+            "@ci:tests",
+            "@ci:lint-container-all",
+            "@ci:lint-schedule",
+            "@ci:lint-twig",
+            "@ci:lint-yaml"
+        ],
+        "ci:about": "bin/console about",
+        "ci:composer-validate": "composer validate --check-lock",
+        "ci:composer-audit": "composer audit",
+        "ci:architecture": "deptrac --config-file=deptrac-components.yaml",
+        "ci:ecs": "vendor/bin/ecs check",
+        "ci:ecs-fix": "vendor/bin/ecs --fix",
+        "ci:cache-clear": "bin/console cache:clear",
+        "ci:static-analysis": [
+            "@ci:rector",
+            "@ci:phpstan",
+            "@ci:psalm"
+        ],
+        "ci:gitlab-static-analysis": [
+            "@ci:architecture",
+            "@ci:cache-warmup --env=test",
+            "@ci:rector --no-progress-bar",
+            "@ci:phpstan --no-progress",
+            "@ci:psalm --no-progress --no-cache --no-file-cache"
+        ],
+        "ci:rector": "XDEBUG_MODE=off vendor/bin/rector process --dry-run",
+        "ci:phpstan": "XDEBUG_MODE=off vendor/bin/phpstan analyse",
+        "ci:psalm": "XDEBUG_MODE=off vendor-bin/linters/bin/psalm --no-diff",
+        "ci:rector-fix": "XDEBUG_MODE=off vendor/bin/rector process",
+        "ci:schema-validate": "bin/console doctrine:schema:validate",
+        "ci:tests": [
+            "@ci:unit-tests",
+            "@ci:integration-tests",
+            "@ci:functional-tests"
+        ],
+        "ci:unit-tests": "bin/phpunit --testsuite=Unit",
+        "ci:integration-tests": "bin/phpunit --testsuite=Integration",
+        "ci:functional-tests": "bin/phpunit --testsuite=Functional",
+        "ci:cache-warmup": "bin/console cache:warmup",
+        "ci:lint-container-all": [
+            "@ci:lint-container --env=test",
+            "@ci:lint-container --env=local_dev",
+            "@ci:lint-container --env=dev",
+            "@ci:lint-container --env=local_stage",
+            "@ci:lint-container --env=stage",
+            "@ci:lint-container --env=prod"
+        ],
+        "ci:lint-container": "bin/console lint:container",
+        "ci:lint-schedule": "bin/console debug:scheduler",
+        "ci:lint-twig": "bin/console lint:twig src",
+        "ci:lint-yaml": "bin/console lint:yaml --parse-tags config docs src",
+        "app:recreate-test-database": [
+            "@app:recreate-database-sync --env=test",
+            "@app:fixtures --env=test"
+        ],
+        "app:recreate-dev-database": [
+            "@app:recreate-database --env=dev",
+            "@app:await-import",
+            "@app:fixtures --env=dev"
+        ],
+        "app:recreate-database-sync": "APP_CONSUMERS_SYNC_MODE=true composer app:recreate-database -- @additional_args",
+        "app:recreate-database": [
+            "@app:clear-redis",
+            "bin/console doctrine:database:create --if-not-exists",
+            "bin/console doctrine:migrations:migrate --no-interaction first",
+            "@app:migrate-database",
+            "@ci:schema-validate",
+            "echo DONE @no_additional_args"
+        ],
+        "app:await-import": "[ \"$APP_CONSUMERS_SYNC_MODE\" != \"true\" ] && sleep 7 || true @no_additional_args",
+        "app:fixtures": "bin/console doctrine:fixtures:load --no-interaction --append",
+        "app:clear-redis": "bin/console cache:pool:clear --all || true",
+        "app:drop-test-database": "@app:drop-database --env=test",
+        "app:drop-database": "bin/console dbal:run-sql \"DROP SCHEMA public CASCADE; CREATE SCHEMA public;\"",
+        "app:migrate-database": "bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration"
     },
     "conflict": {
         "symfony/symfony": "*"
