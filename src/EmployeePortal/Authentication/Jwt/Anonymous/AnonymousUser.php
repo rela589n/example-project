@@ -11,12 +11,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 final class AnonymousUser implements UserInterface, EquatableInterface, LegacyPasswordAuthenticatedUserInterface
 {
-    public const USERNAME = 'anonymous';
+    public const string USERNAME = 'anonymous';
+
+    private const string ROLE = 'ROLE_ANONYMOUS';
 
     #[Override]
     public function getRoles(): array
     {
-        return ['ROLE_ANONYMOUS'];
+        return [self::ROLE];
     }
 
     #[Override]
