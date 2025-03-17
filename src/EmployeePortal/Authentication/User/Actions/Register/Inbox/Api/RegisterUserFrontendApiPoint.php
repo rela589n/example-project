@@ -13,7 +13,6 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 #[ApiDoc\Post(
     summary: 'Register user'
@@ -37,10 +36,7 @@ final readonly class RegisterUserFrontendApiPoint
         methods: ['POST'],
     )]
     public function __invoke(
-        #[MapRequestPayload(serializationContext: [
-            AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false,
-            AbstractNormalizer::REQUIRE_ALL_PROPERTIES => true,
-        ])]
+        #[MapRequestPayload]
         RegisterUserCommand $command,
     ): Response {
         $envelope = $this->apiBus->dispatch($command, [/*new BusNameStamp('command.bus')*/]);

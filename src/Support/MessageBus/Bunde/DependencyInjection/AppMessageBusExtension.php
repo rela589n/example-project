@@ -20,12 +20,12 @@ final class AppMessageBusExtension extends AbstractExtension
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        $container->import(__DIR__.'/../Resources/config/services.yaml');
+        $container->import(__DIR__.'/../../**/services.yaml');
     }
 
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        $container->import(__DIR__.'/../Resources/config/packages.yaml');
+        $container->import(__DIR__.'/../../**/config/packages/*.yaml');
     }
 
     public function getAlias(): string

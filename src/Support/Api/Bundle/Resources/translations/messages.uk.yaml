@@ -1,0 +1,2 @@
+app_api.error.validation_failed: Введено невалідні дані
+app_api.error.extra_arguments: Запит містить зайві аргументи

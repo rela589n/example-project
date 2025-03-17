@@ -14,4 +14,7 @@ return [
     PhPhD\ApiTesting\Bundle\PhdApiTestingBundle::class => ['test' => true],
     DAMA\DoctrineTestBundle\DAMADoctrineTestBundle::class => ['test' => true],
     Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle::class => ['all' => true],
+    PhPhD\ExceptionalValidation\Bundle\PhdExceptionalValidationBundle::class => ['all' => true],
+    PhPhD\ExceptionToolkit\Bundle\PhdExceptionToolkitBundle::class => ['all' => true],
+    PhPhD\ExceptionHandler\Bundle\PhdExceptionHandlerBundle::class => ['all' => true],
 ];

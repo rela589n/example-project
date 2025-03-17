@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e85e4def400d25a6b9e7f0d252833964",
+    "content-hash": "9f167f207ce8e95f1c8ea0beaaa8cb5a",
     "packages": [
         {
             "name": "amphp/amp",
@@ -4093,6 +4093,68 @@
                 "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.10.0"
             },
             "time": "2024-11-09T15:12:26+00:00"
+        },
+        {
+            "name": "phphd/exception-handler",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phphd/exception-handler.git",
+                "reference": "c037312622b0e69159fd90cf08425c312d3feb3f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phphd/exception-handler/zipball/c037312622b0e69159fd90cf08425c312d3feb3f",
+                "reference": "c037312622b0e69159fd90cf08425c312d3feb3f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/messenger": "^6.2 | ^7.0",
+                "symfony/polyfill-php83": "^1.31",
+                "symfony/string": "^6.0 | ^7.0"
+            },
+            "conflict": {
+                "symfony/config": "<6.0 || >=8.0",
+                "symfony/dependency-injection": "<6.0 || >=8.0",
+                "symfony/http-kernel": "<6.0 || >=8.0"
+            },
+            "require-dev": {
+                "nyholm/symfony-bundle-test": "^3.0",
+                "phpat/phpat": "^0.10.18",
+                "phphd/coding-standard": "~0.5.3",
+                "phpstan/phpstan": "^1.10.60",
+                "phpstan/phpstan-phpunit": "^1.4.0",
+                "phpunit/phpunit": "^10.5.36",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "symfony/config": "*",
+                "symfony/dependency-injection": "*",
+                "symfony/http-kernel": "*",
+                "tomasvotruba/type-coverage": "^1.0",
+                "vimeo/psalm": "^5.26.1"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "PhPhD\\ExceptionHandler\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yevhen Sidelnyk",
+                    "email": "zsidelnik@gmail.com"
+                }
+            ],
+            "description": "Message Bus Exception Handler",
+            "support": {
+                "issues": "https://github.com/phphd/exception-handler/issues",
+                "source": "https://github.com/phphd/exception-handler/tree/1.1.1"
+            },
+            "time": "2025-01-11T19:36:04+00:00"
         },
         {
             "name": "phphd/exception-toolkit",

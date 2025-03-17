@@ -39,10 +39,10 @@ final readonly class RegisterUserCommand
     private string $password;
 
     public function __construct(
-        ?string $id,
-        ?string $email,
+        string $id,
+        string $email,
         #[SensitiveParameter]
-        ?string $password,
+        string $password,
     ) {
         $this->id = $id;
         $this->password = $password;

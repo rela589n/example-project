@@ -24,6 +24,7 @@
         "loophp/collection": "^7.6.1",
         "nelmio/api-doc-bundle": "^4.38.1",
         "nesbot/carbon": "^3.8.6",
+        "phphd/exception-handler": "^1.1",
         "phphd/exceptional-validation": "^1.5",
         "revolt/event-loop": "^1.0.7",
         "spiral/roadrunner-cli": "^2.7.1",
