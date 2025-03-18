@@ -27,9 +27,9 @@ final readonly class Password
     }
 
     public static function fromString(
+        #[SensitiveParameter] string $password,
         ValidatorInterface $validator,
         PasswordHasherInterface $passwordHasher,
-        #[SensitiveParameter] string $password,
     ): self {
         $violationList = $validator->validate($password, new Assert\Sequentially([
             new Assert\NotBlank(),

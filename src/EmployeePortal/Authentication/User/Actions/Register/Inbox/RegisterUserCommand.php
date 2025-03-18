@@ -91,11 +91,11 @@ final readonly class RegisterUserCommand
 
     private function email(RegisterUserService $service): Email
     {
-        return Email::fromString($service->validator, $this->email);
+        return Email::fromString($this->email, $service->validator);
     }
 
     private function password(RegisterUserService $service): Password
     {
-        return Password::fromString($service->validator, $service->passwordHasher, $this->password);
+        return Password::fromString($this->password, $service->validator, $service->passwordHasher);
     }
 }

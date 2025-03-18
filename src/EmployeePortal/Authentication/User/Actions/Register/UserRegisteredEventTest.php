@@ -74,11 +74,11 @@ final class UserRegisteredEventTest extends TestCase
 
     private function email(): Email
     {
-        return Email::fromString(Validation::createValidator(), 'test@email.com');
+        return Email::fromString('test@email.com', Validation::createValidator());
     }
 
     private function password(): Password
     {
-        return Password::fromString(Validation::createValidator(), new Pbkdf2PasswordHasher(), 'jG\Qc_g7;%zE85');
+        return Password::fromString('jG\Qc_g7;%zE85', Validation::createValidator(), new Pbkdf2PasswordHasher());
     }
 }

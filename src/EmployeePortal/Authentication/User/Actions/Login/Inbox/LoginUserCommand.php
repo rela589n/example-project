@@ -68,7 +68,7 @@ final readonly class LoginUserCommand
 
     private function getEmail(LoginUserService $service): Email
     {
-        return Email::fromString($service->validator, $this->email);
+        return Email::fromString($this->email, $service->validator);
     }
 
     public function getJwtUser(): JWTUser

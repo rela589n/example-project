@@ -17,7 +17,7 @@ final readonly class Email
     ) {
     }
 
-    public static function fromString(ValidatorInterface $validator, string $email): self
+    public static function fromString(string $email, ValidatorInterface $validator): self
     {
         // Value-object must convey the basic validation rules in order to enforce invariants provided by business.
         // In addition, this approach makes invariants easily unit-tested.

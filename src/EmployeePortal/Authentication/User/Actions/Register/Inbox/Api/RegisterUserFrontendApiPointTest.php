@@ -46,7 +46,7 @@ final class RegisterUserFrontendApiPointTest extends ApiTestCase
                 'json' => [
                     'id' => 'f8fe495c-258a-71d5-b463-033b1b47f004',
                     'email' => 'example@example.com',
-                    'password' => 'password',
+                    'password' => 'jG\Qc_g7;%zE85',
                 ],
             ],
         );

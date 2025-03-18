@@ -71,6 +71,6 @@ final class EmailUnitTest extends TestCase
 
     private function createEmail(string $email): Email
     {
-        return Email::fromString(Validation::createValidator(), $email);
+        return Email::fromString($email, Validation::createValidator());
     }
 }

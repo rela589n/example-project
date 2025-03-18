@@ -71,6 +71,6 @@ final class PasswordUnitTest extends TestCase
 
     private function createPassword(string $password): Password
     {
-        return Password::fromString(Validation::createValidator(), new Pbkdf2PasswordHasher(), $password);
+        return Password::fromString($password, Validation::createValidator(), new Pbkdf2PasswordHasher());
     }
 }
