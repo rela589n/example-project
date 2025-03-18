@@ -18,6 +18,7 @@ RUN install-php-extensions sockets
 RUN install-php-extensions zip
 RUN install-php-extensions amqp
 RUN install-php-extensions swoole
+RUN install-php-extensions xdebug
 
 # Copy grpc-extension binary
 COPY --from=grpc \
