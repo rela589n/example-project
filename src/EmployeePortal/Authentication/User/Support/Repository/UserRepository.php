@@ -11,6 +11,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 
+/** @extends ServiceEntityRepository<User> */
 class UserRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -25,7 +26,7 @@ class UserRepository extends ServiceEntityRepository
 
     public function findByEmail(Email $email): User
     {
-        return $this->findOneBy(['email.email' => $email]) ?? throw new UserNotFoundException(email: $email);
+        return $this->findOneBy(['email.email' => $email->getEmail()]) ?? throw new UserNotFoundException(email: $email);
     }
 
     public function isEmailFree(Email $email): bool

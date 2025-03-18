@@ -11,6 +11,8 @@ use App\EmployeePortal\Authentication\User\Password\Password;
 use App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\UserPasswordResetEvent;
 use App\EmployeePortal\Authentication\User\Support\Event\UserEvent;
 use Carbon\CarbonImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
@@ -34,9 +36,9 @@ class User
     #[ORM\Column(type: 'datetime_immutable')]
     private CarbonImmutable $updatedAt;
 
-    /** @var UserEvent[] */
-    #[ORM\OneToMany(targetEntity: UserEvent::class, mappedBy: 'user')]
-    private array $events = [];
+    /** @var Collection<array-key,UserEvent> */
+    #[ORM\OneToMany(targetEntity: UserEvent::class, mappedBy: 'user', cascade: ['persist'])]
+    private Collection $events;
 
     /**
      * It is a lot much easier to update the entity from the event object in one call (e.g. user.register())
@@ -49,21 +51,21 @@ class User
         $this->password = $event->getPassword();
         $this->createdAt = $event->getTimestamp();
         $this->updatedAt = $event->getTimestamp();
-        $this->events[] = $event;
+        $this->events = new ArrayCollection([$event]);
     }
 
     public function login(UserLoggedInEvent $event): void
     {
         $this->updatedAt = $event->getTimestamp();
 
-        $this->events[] = $event;
+        $this->events->add($event);
     }
 
     public function resetPassword(UserPasswordResetEvent $event): void
     {
         $this->updatedAt = $event->getTimestamp();
 
-        $this->events[] = $event;
+        $this->events->add($event);
     }
 
     public function getId(): Uuid

@@ -45,9 +45,9 @@ final readonly class RegisterUserFrontendApiPoint
         /** @var HandledStamp $handled */
         $handled = $envelope->last(HandledStamp::class);
 
-        /** @var ?Response $result */
-        $result = $handled->getResult();
+        /** @var ?Response $response */
+        $response = $handled->getResult();
 
-        return $result ?? new Response(status: 201);
+        return $response ?? new Response(status: Response::HTTP_CREATED);
     }
 }

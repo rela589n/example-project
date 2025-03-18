@@ -20,4 +20,5 @@ framework:
             event.bus:
                 default_middleware: false
                 middleware:
-                    - handle_message
+                    -   handle_message:
+                            - true

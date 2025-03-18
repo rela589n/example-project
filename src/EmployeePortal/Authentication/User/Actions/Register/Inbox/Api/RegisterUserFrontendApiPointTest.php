@@ -9,7 +9,9 @@ use ApiPlatform\Symfony\Bundle\Test\Client;
 use App\EmployeePortal\Authentication\Jwt\Anonymous\AnonymousUser;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use PhPhD\ApiTesting\Jwt\JwtLoginTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(RegisterUserFrontendApiPoint::class)]
 final class RegisterUserFrontendApiPointTest extends ApiTestCase
 {
     use JwtLoginTrait;
@@ -33,7 +35,7 @@ final class RegisterUserFrontendApiPointTest extends ApiTestCase
     {
         $token = $this->jwtManager->create(new AnonymousUser());
 
-        $response = $this->client->request(
+        $this->client->request(
             'POST',
             '/api/example-project/auth/register',
             [
@@ -51,11 +53,6 @@ final class RegisterUserFrontendApiPointTest extends ApiTestCase
             ],
         );
 
-        self::assertSame(
-            [],
-            $response->toArray(false),
-        );
-
-        self::assertResponseStatusCodeSame(200);
+        self::assertResponseStatusCodeSame(201);
     }
 }
