@@ -6,7 +6,7 @@ framework:
                 middleware:
                     -   add_bus_name_stamp_middleware: [ api.bus ]
                     - phd_exception_handler
-                    - app_message_forwarder
+                    - app_pass_through_bus
 
             api.exception.bus:
                 default_middleware: false

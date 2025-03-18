@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\User\Actions\Register\Inbox;
 
 use App\EmployeePortal\Authentication\User\Support\Repository\UserRepository;
-use App\EmployeePortal\Authentication\User\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Psr\Clock\ClockInterface;
@@ -14,7 +13,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[AsMessageHandler(bus: 'command.bus')]
@@ -22,7 +21,7 @@ final readonly class RegisterUserService
 {
     public function __construct(
         public ValidatorInterface $validator,
-        #[Autowire('@=service("security.password_hasher_factory").getPasswordHasher("'.User::class.'")')]
+        #[Autowire('@=service("security.password_hasher_factory").getPasswordHasher("user")')]
         public PasswordHasherInterface $passwordHasher,
         public ClockInterface $clock,
         public UserRepository $userRepository,
@@ -30,7 +29,7 @@ final readonly class RegisterUserService
         #[Autowire('@event.bus')]
         public MessageBusInterface $eventBus,
         private LoggerInterface $logger,
-        private SerializerInterface $serializer,
+        private NormalizerInterface $serializer,
     ) {
     }
 
@@ -45,7 +44,7 @@ final readonly class RegisterUserService
 
             $this->logger->info('User registration successful');
         } catch (Exception $e) {
-            $this->logger->notice('User registration failed', ['exception' => $e, 'data' => $this->serializer->serialize($command, 'array')]);
+            $this->logger->notice('User registration failed', ['exception' => $e, 'data' => $this->serializer->normalize($command, 'array')]);
 
             throw $e;
         }

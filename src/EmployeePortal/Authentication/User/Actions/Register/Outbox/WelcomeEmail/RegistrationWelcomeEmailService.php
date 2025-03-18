@@ -8,7 +8,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Twig\Environment;
 
-#[AsMessageHandler('consumer.bus')]
+//#[AsMessageHandler('consumer.bus')]
 final readonly class RegistrationWelcomeEmailService
 {
     public function __construct(

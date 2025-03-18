@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\User\Actions\Register\Inbox\Api;
 
 use App\EmployeePortal\Authentication\User\Actions\Register\Inbox\RegisterUserCommand;
+use App\Support\MessageBus\PassThrough\PassThroughBusStamp;
 use OpenApi\Attributes as ApiDoc;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +40,7 @@ final readonly class RegisterUserFrontendApiPoint
         #[MapRequestPayload]
         RegisterUserCommand $command,
     ): Response {
-        $envelope = $this->apiBus->dispatch($command, [/*new BusNameStamp('command.bus')*/]);
+        $envelope = $this->apiBus->dispatch($command, [new PassThroughBusStamp('command.bus')]);
 
         /** @var HandledStamp $handled */
         $handled = $envelope->last(HandledStamp::class);

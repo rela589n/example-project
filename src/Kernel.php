@@ -16,7 +16,7 @@ final class Kernel extends BaseKernel
     {
         yield from $this->registerThirdPartyBundles();
 
-        yield new Support\MessageBus\Bunde\AppMessageBusBundle();
+        yield new Support\MessageBus\Bundle\AppMessageBusBundle();
         yield new Support\CycleBridge\Bundle\AppCycleBridgeBundle();
         yield new Support\Doctrine\Bundle\AppDoctrineBundle();
         yield new Support\Api\Bundle\AppApiBundle();

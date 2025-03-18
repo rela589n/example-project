@@ -3,12 +3,8 @@ framework:
         default_bus: default.bus
 
         buses:
+            # default bus should not be used
             default.bus:
-                default_middleware: false
-                middleware:
-                    - handle_message
-
-            api.bus:
                 default_middleware: false
                 middleware:
                     - handle_message
@@ -16,7 +12,8 @@ framework:
             command.bus:
                 default_middleware: false
                 middleware:
-                    - validation
+                    - app_unwrap_exception
+                    - phd_exceptional_validation
                     - doctrine_transaction
                     - handle_message
 
