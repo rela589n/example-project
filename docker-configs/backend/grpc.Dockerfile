@@ -5,5 +5,5 @@ FROM php:8.3-cli-bookworm
 
 COPY --from=ext /usr/bin/install-php-extensions /usr/local/bin/install-php-extensions
 
-RUN install-php-extensions grpc-1.66.0
-RUN install-php-extensions protobuf-4.27.5
+RUN install-php-extensions grpc-1.71.0
+RUN install-php-extensions protobuf-4.30.1

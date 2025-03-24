@@ -12,14 +12,6 @@ COPY --from=ext /usr/bin/install-php-extensions /usr/local/bin/install-php-exten
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
-RUN install-php-extensions pgsql
-RUN install-php-extensions redis
-RUN install-php-extensions sockets
-RUN install-php-extensions zip
-RUN install-php-extensions amqp
-RUN install-php-extensions swoole
-RUN install-php-extensions xdebug
-
 # Copy grpc-extension binary
 COPY --from=grpc \
 	/usr/local/lib/php/extensions/no-debug-non-zts-20230831/grpc.so \
@@ -35,6 +27,14 @@ COPY --from=grpc \
 
 # Create docker-php-ext-protobuf.ini configuration file
 RUN docker-php-ext-enable protobuf
+
+RUN install-php-extensions pgsql
+RUN install-php-extensions redis
+RUN install-php-extensions sockets
+RUN install-php-extensions zip
+RUN install-php-extensions amqp
+RUN install-php-extensions swoole
+RUN install-php-extensions xdebug
 
 RUN apt-get update
 RUN apt-get install -y htop
