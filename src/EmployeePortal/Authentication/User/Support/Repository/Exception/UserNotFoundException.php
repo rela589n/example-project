@@ -7,7 +7,7 @@ namespace App\EmployeePortal\Authentication\User\Support\Repository\Exception;
 use App\EmployeePortal\Authentication\AuthException;
 use App\EmployeePortal\Authentication\User\Email\Email;
 use DomainException;
-use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
+use PhPhD\ExceptionalValidation\Model\Condition\Value\ValueException;
 use Symfony\Component\Uid\Uuid;
 
 final class UserNotFoundException extends DomainException implements AuthException, ValueException

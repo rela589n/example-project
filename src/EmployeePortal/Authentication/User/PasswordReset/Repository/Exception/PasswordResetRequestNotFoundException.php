@@ -6,7 +6,7 @@ namespace App\EmployeePortal\Authentication\User\PasswordReset\Repository\Except
 
 use App\EmployeePortal\Authentication\AuthException;
 use DomainException;
-use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
+use PhPhD\ExceptionalValidation\Model\Condition\Value\ValueException;
 use Symfony\Component\Uid\Uuid;
 
 final class PasswordResetRequestNotFoundException extends DomainException implements AuthException, ValueException

@@ -25,7 +25,7 @@
         "nelmio/api-doc-bundle": "^4.38.1",
         "nesbot/carbon": "^3.8.6",
         "phphd/exception-handler": "^1.1",
-        "phphd/exceptional-validation": "^1.5",
+        "phphd/exceptional-validation": "dev-main",
         "revolt/event-loop": "^1.0.7",
         "spiral/roadrunner-cli": "^2.7.1",
         "spiral/roadrunner-grpc": "^3.5",
@@ -179,6 +179,7 @@
     "require-dev": {
         "api-platform/core": "^4.1",
         "dama/doctrine-test-bundle": "^8.3",
+        "doctrine/doctrine-fixtures-bundle": "^4.0",
         "phphd/api-testing": "^1.1",
         "phpunit/phpunit": "^11.5.12",
         "swoole/ide-helper": "^5.1.6",

@@ -13,7 +13,7 @@ use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use PhPhD\ExceptionalValidation;
 use PhPhD\ExceptionalValidation\Capture;
-use PhPhD\ExceptionalValidation\Model\Condition\ValueExceptionMatchCondition;
+use PhPhD\ExceptionalValidation\Model\Condition\Value\ValueExceptionMatchCondition;
 use Symfony\Component\Uid\Uuid;
 
 use function Amp\async;

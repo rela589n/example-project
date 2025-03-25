@@ -7,7 +7,7 @@ namespace App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\Exc
 use App\EmployeePortal\Authentication\AuthException;
 use App\EmployeePortal\Authentication\User\PasswordReset\PasswordResetRequest;
 use DomainException;
-use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
+use PhPhD\ExceptionalValidation\Model\Condition\Value\ValueException;
 
 final class ExpiredPasswordResetRequestException extends DomainException implements AuthException, ValueException
 {

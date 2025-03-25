@@ -7,7 +7,7 @@ namespace App\EmployeePortal\Authentication\User\Email;
 use App\EmployeePortal\Authentication\AuthException;
 use DomainException;
 use PhPhD\ExceptionalValidation\Formatter\ViolationListException;
-use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
+use PhPhD\ExceptionalValidation\Model\Condition\Value\ValueException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class EmailValidationFailedException extends DomainException implements AuthException, ValueException, ViolationListException

@@ -15,7 +15,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUser;
 use PhPhD\ExceptionalValidation;
 use PhPhD\ExceptionalValidation\Capture;
 use PhPhD\ExceptionalValidation\Formatter\ViolationListExceptionFormatter;
-use PhPhD\ExceptionalValidation\Model\Condition\ValueExceptionMatchCondition;
+use PhPhD\ExceptionalValidation\Model\Condition\Value\ValueExceptionMatchCondition;
 use SensitiveParameter;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Uid\Uuid;

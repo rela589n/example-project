@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\User\Actions\Login\Inbox;
 
 use App\EmployeePortal\Authentication\User\Support\Repository\UserRepository;
-use App\EmployeePortal\Authentication\User\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Psr\Clock\ClockInterface;
@@ -22,7 +21,7 @@ final readonly class LoginUserService
         public UserRepository $userRepository,
         public ValidatorInterface $validator,
         public ClockInterface $clock,
-        #[Autowire('@=service("security.password_hasher_factory").getPasswordHasher("'.User::class.'")')]
+        #[Autowire('@=service("security.password_hasher_factory").getPasswordHasher("user")')]
         public PasswordHasherInterface $passwordHasher,
         public EntityManagerInterface $entityManager,
         #[Autowire('@event.bus')]

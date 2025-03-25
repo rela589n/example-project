@@ -6,7 +6,7 @@ namespace App\EmployeePortal\Authentication\User\Password;
 
 use App\EmployeePortal\Authentication\AuthException;
 use DomainException;
-use PhPhD\ExceptionalValidation\Model\Condition\Exception\ValueException;
+use PhPhD\ExceptionalValidation\Model\Condition\Value\ValueException;
 use SensitiveParameter;
 
 final class PasswordMismatchException extends DomainException implements AuthException, ValueException
