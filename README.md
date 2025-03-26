@@ -33,6 +33,18 @@ Start the server:
 docker compose up -d
 ```
 
+Generate JWT keys:
+
+```shell
+bin/console lexik:jwt:generate-keypair --overwrite
+```
+
+Recreate database:
+
+```shell
+composer app:recreate-test-database
+```
+
 Open `https://api.example-project.work:8083` to check that everything is up and working.
 
 Api documentation:

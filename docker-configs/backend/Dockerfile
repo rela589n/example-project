@@ -42,7 +42,7 @@ RUN apt-get install -y git zip
 RUN rm -rf /var/lib/apt/lists/*
 
 RUN groupadd --gid $GROUP_ID $USER_NAME
-RUN useradd --uid $USER_ID --gid $GROUP_ID $USER_NAME
+RUN useradd --uid $USER_ID --gid $GROUP_ID --create-home $USER_NAME
 
 WORKDIR /app
 USER $USER_NAME
