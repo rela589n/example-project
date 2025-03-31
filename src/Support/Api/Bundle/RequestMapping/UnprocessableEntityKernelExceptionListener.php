@@ -33,7 +33,6 @@ final readonly class UnprocessableEntityKernelExceptionListener
             return;
         }
 
-        /** @var ValidationFailedException|object $validationFailedException */
         $validationFailedException = $exception->getPrevious();
         Assert::isInstanceOf($validationFailedException, ValidationFailedException::class);
 

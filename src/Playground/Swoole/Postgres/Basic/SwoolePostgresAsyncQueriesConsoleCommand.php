@@ -59,6 +59,6 @@ final class SwoolePostgresAsyncQueriesConsoleCommand extends Command
         $statement->bindValue('result', $sleepTime);
         $statement->bindValue('sleep_time', $sleepTime);
 
-        return (int)$statement->executeQuery()->fetchOne();
+        return (int)$statement->executeQuery()->fetchOne(); // @phpstan-ignore-line
     }
 }

@@ -1,0 +1,49 @@
+includes:
+    - 'vendor/phpstan/phpstan-phpunit/extension.neon'
+    - 'vendor/phpstan/phpstan-phpunit/rules.neon'
+    - 'vendor/phpstan/phpstan-doctrine/extension.neon'
+    - 'vendor/phpstan/phpstan-symfony/extension.neon'
+    - 'vendor/tomasvotruba/type-coverage/config/extension.neon'
+    - 'vendor/phpat/phpat/extension.neon'
+
+parameters:
+    level: 9
+    phpVersion: 80312
+    editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+    paths:
+        - src
+        - tests
+        - migrations
+#    stubFiles:
+#        - vendor-bin/linters/stub/ServiceEntityRepository.stub
+    symfony:
+        containerXmlPath: var/cache/test/App_KernelTestDebugContainer.xml
+    fileExtensions:
+        - 'php'
+    type_coverage:
+        declare: 100
+        return_type: 100
+        param_type: 100
+        property_type: 100
+        constant: 0
+    ignoreErrors:
+#        -   '#Method App\\(\w+\\)*\w+Repository::(get|find)\w+\(\) should return ((array|iterable)<)?App\\(\w+\\)*\w+(>)?(\|null)? but returns (object|mixed)\.#'
+#        -   identifier: missingType.generics
+        - identifier: property.uninitializedReadonly
+          message: '#Class App\\(\w+\\)*\w+Command has an uninitialized readonly property \$\w+\. Assign it in the constructor\.#'
+        - identifier: property.readOnlyAssignNotInConstructor
+          message: '#Readonly property App\\(\w+\\)*\w+Command::\$\w+ is assigned outside of the constructor\.#'
+    excludePaths:
+        - '%rootDir%/../../../src/EmployeeOffice/Inventory/Domain/Employee/Scenarios/GetFixedAssetList/Doctrine/Type/*'
+    phpat:
+        ignore_built_in_classes: true
+
+#services:
+#    -
+#        class: App\Tests\NamingTest
+#        tags:
+#            - phpat.test
+#    -
+#        class: App\Tests\ConventionsTest
+#        tags:
+#            - phpat.test

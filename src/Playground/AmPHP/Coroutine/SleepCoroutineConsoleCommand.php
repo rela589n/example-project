@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Playground\AmPHP\Coroutine;
 
+use Amp\Future;
 use Exception;
 use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -19,8 +20,10 @@ final  class SleepCoroutineConsoleCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        // function is queued for the event loop
-        $future1 = async(function () use ($output) {
+        /** @var Future<int> $future1 */
+
+        // This function is queued for the event loop
+        $future1 = async(function () use ($output): int {
             foreach (range(1, 5) as $item) {
                 echo 'Hallelujah! ';
 
@@ -31,8 +34,9 @@ final  class SleepCoroutineConsoleCommand extends Command
 
             return 1;
         });
+        /** @var Future<int> $future2 */
         // function is queued for the event loop
-        $future2 = async(function () use ($output) {
+        $future2 = async(function () use ($output): int {
             foreach (range(1, 5) as $item) {
                 echo 'Amen! ';
 
@@ -45,7 +49,7 @@ final  class SleepCoroutineConsoleCommand extends Command
         });
 
         // function is queued for the event loop
-        $future3 = async(function () use ($output) {
+        $future3 = async(function () use ($output): never {
             $output->writeln('||The exception is thrown, yet it doesn\'t mess up the rest of futures||');
 
             throw new RuntimeException();

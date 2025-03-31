@@ -20,14 +20,6 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 #[CoversClass(User::class)]
 final class RegisterUserCommandTest extends KernelTestCase
 {
-    private RegisterUserService $context;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->context = $this->getService();
-    }
-
     /** @throws Exception */
     public function testUserIsRegisteredSuccessfully(): void
     {

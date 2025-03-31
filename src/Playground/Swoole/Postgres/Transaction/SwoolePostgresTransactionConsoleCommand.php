@@ -56,6 +56,6 @@ final class SwoolePostgresTransactionConsoleCommand extends Command
         $statement->bindValue('result', $result);
         $statement->bindValue('sleep_time', 3);
 
-        return (int)$statement->executeQuery()->fetchOne();
+        return (int)$statement->executeQuery()->fetchOne(); // @phpstan-ignore-line
     }
 }

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
+use Webmozart\Assert\Assert;
 
 #[AsController]
 final readonly class ConsumeMemoryFrontendAction
@@ -17,6 +18,8 @@ final readonly class ConsumeMemoryFrontendAction
         #[MapQueryParameter('bytes')]
         int $bytesLength = 1,
     ): Response {
+        Assert::positiveInteger($bytesLength);
+
         $bytes = random_bytes($bytesLength);
 
         return new Response('Consumed '.strlen($bytes).' bytes');

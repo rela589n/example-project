@@ -180,11 +180,17 @@
         "api-platform/core": "^4.1",
         "dama/doctrine-test-bundle": "^8.3",
         "doctrine/doctrine-fixtures-bundle": "^4.0",
+        "phpat/phpat": "^0.11.4",
         "phphd/api-testing": "^1.1",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
         "phpunit/phpunit": "^11.5.12",
         "swoole/ide-helper": "^5.1.6",
         "symfony/browser-kit": "7.2.*",
         "symfony/css-selector": "7.2.*",
-        "symfony/phpunit-bridge": "^7.2"
+        "symfony/phpunit-bridge": "^7.2",
+        "tomasvotruba/type-coverage": "^2.0"
     }
 }

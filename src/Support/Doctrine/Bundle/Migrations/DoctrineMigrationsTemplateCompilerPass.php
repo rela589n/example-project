@@ -31,10 +31,10 @@ final readonly class DoctrineMigrationsTemplateCompilerPass implements CompilerP
         $configurationDefinition->addMethodCall('setCustomTemplate', [new Expression(substr($customTemplate, 2))]);
     }
 
-    /** @return ?array{string,array} */
+    /** @return ?array{string,array{string}} */
     private function getCustomTemplateMethodCall(Definition $configurationDefinition): ?array
     {
-        /** @var array{string,array} $call */
+        /** @var array{string,array{string}} $call */
         foreach ($configurationDefinition->getMethodCalls() as $call) {
             $methodName = $call[0];
 

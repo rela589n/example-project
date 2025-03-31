@@ -53,7 +53,7 @@ final readonly class ResetUserPasswordFrontendApiPoint
         $handled = $envelope->last(HandledStamp::class);
 
         /** @var ?Response $result */
-        $result = $handled->getResult();
+        $result = $handled?->getResult();
 
         return $result ?? new Response(status: 200);
     }

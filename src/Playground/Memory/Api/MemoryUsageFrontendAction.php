@@ -17,7 +17,7 @@ final readonly class MemoryUsageFrontendAction
         return new Response($this->formatBytes(memory_get_usage(true)));
     }
 
-    private function formatBytes(int $bytes, $precision = 2)
+    private function formatBytes(int $bytes, int $precision = 2): string
     {
         $units = array('B', 'KB', 'MB', 'GB', 'TB');
 

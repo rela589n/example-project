@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
-use Doctrine\ORM\Query\AST\Subselect;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 

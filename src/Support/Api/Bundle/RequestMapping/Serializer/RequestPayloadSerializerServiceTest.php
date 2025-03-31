@@ -12,8 +12,9 @@ final class RequestPayloadSerializerServiceTest extends KernelTestCase
 {
     public function testSerializerServiceIsRegistered(): void
     {
+        /** @var mixed $requestPayloadSerializer */
         $requestPayloadSerializer = self::getContainer()->get(RequestPayloadSerializer::class);
 
-        self::assertInstanceOf(RequestPayloadSerializer::class, $requestPayloadSerializer);
+        self::assertSame(RequestPayloadSerializer::class, $requestPayloadSerializer::class);
     }
 }

@@ -61,6 +61,7 @@ final class PasswordUnitTest extends TestCase
         self::assertSame('LoxjdBDi5g63XQ/XdnFYsPjgPHpq7W5z3J861pecrCAGJspDK4ddwA==', $password->getHash());
     }
 
+    /** @return list<array{string}> */
     public static function weakPasswordsProvider(): array
     {
         return [
