@@ -30,8 +30,8 @@ final readonly class RegisterUserCommand
     private string $id;
 
     #[ApiDoc\Property(example: 'email@test.com')]
-    #[Capture(exception: EmailAlreadyTakenException::class, condition: ValueExceptionMatchCondition::class)]
     #[Capture(exception: EmailValidationFailedException::class, condition: ValueExceptionMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
+    #[Capture(exception: EmailAlreadyTakenException::class, condition: ValueExceptionMatchCondition::class)]
     private string $email;
 
     #[ApiDoc\Property(example: 'p@$$w0rd')]
