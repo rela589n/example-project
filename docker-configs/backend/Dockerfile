@@ -39,10 +39,13 @@ RUN install-php-extensions xdebug
 RUN apt-get update
 RUN apt-get install -y htop
 RUN apt-get install -y git zip
-RUN rm -rf /var/lib/apt/lists/*
 
 RUN groupadd --gid $GROUP_ID $USER_NAME
 RUN useradd --uid $USER_ID --gid $GROUP_ID --create-home $USER_NAME
+RUN apt-get install -y sudo && \
+    echo "$USER_NAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$USER_NAME
+
+RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 USER $USER_NAME
