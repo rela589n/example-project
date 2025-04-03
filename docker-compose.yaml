@@ -5,13 +5,18 @@ services:
             context: docker-configs/backend
         working_dir: /app
         command: [ "rr", "serve", "-c", ".rr.dev.yaml" ]
+        environment:
+            PHP_IDE_CONFIG: "serverName=example-project-docker"
         ports:
-            - 127.0.0.1:8080:8080
-            - 127.0.0.1:8083:8083
-            - 127.0.0.1:9501:9501 # open swoole
+            - "127.0.0.1:8080:8080"
+            - "127.0.0.1:8083:8083"
+            - "127.0.0.1:9501:9501" # open swoole
         volumes:
             - ./docker-configs/backend/ssl/:/etc/ssl/backend/
+            - ./docker-configs/backend/configs/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
             - .:/app:cached
+        extra_hosts:
+            host.docker.internal: host-gateway
         depends_on:
             - postgresql
 
