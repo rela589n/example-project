@@ -37,8 +37,9 @@ RUN install-php-extensions swoole
 RUN install-php-extensions xdebug
 
 RUN apt-get update
-RUN apt-get install -y htop
+RUN apt-get install -y htop telnet
 RUN apt-get install -y git zip
+RUN apt-get install -y bash-completion
 
 RUN groupadd --gid $GROUP_ID $USER_NAME
 RUN useradd --uid $USER_ID --gid $GROUP_ID --create-home $USER_NAME
