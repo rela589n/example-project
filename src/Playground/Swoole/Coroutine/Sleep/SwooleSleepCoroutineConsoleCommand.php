@@ -15,8 +15,8 @@ final class SwooleSleepCoroutineConsoleCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        Coroutine\run(static function () use ($output) {
-            Coroutine::create(static function () use ($output) {
+        Coroutine\run(static function () use ($output): void {
+            Coroutine::create(static function () use ($output): void {
                 $output->write('Hello ');
 
                 // note that this is the native php function that is usually blocking
@@ -25,7 +25,7 @@ final class SwooleSleepCoroutineConsoleCommand extends Command
                 $output->write('from ');
             });
 
-            Coroutine::create(static function () use ($output) {
+            Coroutine::create(static function () use ($output): void {
                 usleep(500_000);
 
                 $output->write('World ');

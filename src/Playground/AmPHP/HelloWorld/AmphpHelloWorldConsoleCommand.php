@@ -18,7 +18,7 @@ final class AmphpHelloWorldConsoleCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $future1 = async(function () use ($output) {
+        $future1 = async(function () use ($output): void {
             $output->write('Hello ');
 
             delay(1);
@@ -26,7 +26,7 @@ final class AmphpHelloWorldConsoleCommand extends Command
             $output->write('From ');
         });
 
-        $future2 = async(function () use ($output) {
+        $future2 = async(function () use ($output): void {
             delay(0.5);
 
             $output->write('World ');

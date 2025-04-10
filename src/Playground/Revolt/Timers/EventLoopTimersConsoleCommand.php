@@ -16,32 +16,32 @@ final class EventLoopTimersConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         EventLoop::queue(
-            static function () use ($output) {
+            static function () use ($output): void {
                 // repeated callbacks are started after the interval period has elapsed
-                $repeatCallbackId = EventLoop::repeat(1, static function () use ($output) {
+                $repeatCallbackId = EventLoop::repeat(1, static function () use ($output): void {
                     $output->writeln('Repeat');
                 });
 
                 // delayed callbacks are executed after the delay time has elapsed
-                EventLoop::delay(5, static function () use ($output, $repeatCallbackId) {
+                EventLoop::delay(5, static function () use ($output, $repeatCallbackId): void {
                     EventLoop::cancel($repeatCallbackId);
 
-                    EventLoop::defer(static function () use ($output) {
+                    EventLoop::defer(static function () use ($output): void {
                         $output->writeln('Loop completed (last tick)');
                     });
 
-                    EventLoop::queue(static function () use ($output) {
+                    EventLoop::queue(static function () use ($output): void {
                         $output->writeln('Loop finished');
                     });
                 });
 
                 // deferred callbacks are executed on the next tick
-                EventLoop::defer(static function () use ($output) {
+                EventLoop::defer(static function () use ($output): void {
                     $output->writeln('Loop started');
                 });
 
                 // queued callbacks are executed in the current tick
-                EventLoop::queue(static function () use ($output) {
+                EventLoop::queue(static function () use ($output): void {
                     $output->writeln('Start loop');
                 });
 

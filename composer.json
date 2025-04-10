@@ -187,6 +187,7 @@
         "phpstan/phpstan-phpunit": "^2.0",
         "phpstan/phpstan-symfony": "^2.0",
         "phpunit/phpunit": "^11.5.12",
+        "rector/rector": "^2.0",
         "swoole/ide-helper": "^5.1.6",
         "symfony/browser-kit": "7.2.*",
         "symfony/css-selector": "7.2.*",
