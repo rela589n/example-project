@@ -52,7 +52,7 @@ final readonly class RegisterUserCommand
     /** This method should not have any business logic. It should all be inside the domain model event */
     public function execute(RegisterUserService $service): void
     {
-        $event = $this->getEvent($service);
+        $event = $this->createEvent($service);
 
         $event->execute($service->userRepository);
 
@@ -66,7 +66,7 @@ final readonly class RegisterUserCommand
         $service->eventBus->dispatch($event);
     }
 
-    private function getEvent(RegisterUserService $service): UserRegisteredEvent
+    private function createEvent(RegisterUserService $service): UserRegisteredEvent
     {
         /**
          * Usage of awaitAnyN() allows us to show all the validation errors at once instead of showing them one by one.

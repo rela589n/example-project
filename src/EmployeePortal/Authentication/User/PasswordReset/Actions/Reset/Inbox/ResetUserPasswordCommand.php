@@ -39,14 +39,14 @@ final readonly class ResetUserPasswordCommand
 
     public function process(ResetUserPasswordService $service): void
     {
-        $event = $this->getEvent($service);
+        $event = $this->createEvent($service);
 
         $event->process();
 
         $service->eventBus->dispatch($event);
     }
 
-    private function getEvent(ResetUserPasswordService $service): UserPasswordResetEvent
+    private function createEvent(ResetUserPasswordService $service): UserPasswordResetEvent
     {
         /**
          * One more thing about awaitAnyN() is that it actually allows us to benefit from async i/o
