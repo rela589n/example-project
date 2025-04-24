@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final readonly class Password
 {
     private function __construct(
-        #[ORM\Column(nullable: true)]
+        #[ORM\Column]
         private string $hash,
     ) {
     }
