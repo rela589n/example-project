@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\PasswordReset;
 
-use App\EmployeePortal\Authentication\User\PasswordReset\Actions\Create\UserPasswordResetRequestCreatedEvent;
 use App\EmployeePortal\Authentication\User\PasswordReset\Repository\PasswordResetRequestRepository;
+use App\EmployeePortal\Authentication\User\PasswordReset\Stories\Create\UserPasswordResetRequestCreatedEvent;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;

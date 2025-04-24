@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\Post;
 
-use App\EmployeePortal\Blog\Post\Actions\Create\PostCreatedEvent;
-use App\EmployeePortal\Blog\Post\Actions\Edit\PostEditedEvent;
-use App\EmployeePortal\Blog\Post\Actions\TransferOwnership\PostOwnershipTransferredEvent;
 use App\EmployeePortal\Blog\Post\Comment\PostCommentCollection;
+use App\EmployeePortal\Blog\Post\Stories\Create\PostCreatedEvent;
+use App\EmployeePortal\Blog\Post\Stories\Edit\PostEditedEvent;
+use App\EmployeePortal\Blog\Post\Stories\TransferOwnership\PostOwnershipTransferredEvent;
 use App\EmployeePortal\Blog\User\User;
 use Symfony\Component\Uid\Uuid;
 

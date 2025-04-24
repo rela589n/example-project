@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Support\Event;
 
-use App\EmployeePortal\Authentication\User\Actions\Login\UserLoggedInEvent;
-use App\EmployeePortal\Authentication\User\Actions\Register\UserRegisteredEvent;
-use App\EmployeePortal\Authentication\User\PasswordReset\Actions\Create\UserPasswordResetRequestCreatedEvent;
-use App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\UserPasswordResetEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\Stories\Create\UserPasswordResetRequestCreatedEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\Stories\Reset\UserPasswordResetEvent;
+use App\EmployeePortal\Authentication\User\Stories\Login\UserLoggedInEvent;
+use App\EmployeePortal\Authentication\User\Stories\Register\UserRegisteredEvent;
 use App\Support\Contracts\EmployeePortal\Authentication\Login\UserLoggedInServiceEvent;
 use App\Support\Contracts\EmployeePortal\Authentication\Register\UserRegisteredServiceEvent;
 use App\Support\Contracts\EmployeePortal\Authentication\ResetPassword\Create\UserPasswordResetRequestCreatedServiceEvent;

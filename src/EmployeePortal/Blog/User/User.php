@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\User;
 
-use App\EmployeePortal\Blog\Post\Actions\Create\PostCreatedEvent;
-use App\EmployeePortal\Blog\Post\Actions\Edit\PostEditedEvent;
-use App\EmployeePortal\Blog\Post\Actions\TransferOwnership\PostOwnershipTransferredEvent;
 use App\EmployeePortal\Blog\Post\Comment\Actions\Add\PostCommentAddedEvent;
 use App\EmployeePortal\Blog\Post\Comment\Actions\Edit\PostCommentEditedEvent;
 use App\EmployeePortal\Blog\Post\Comment\PostCommentCollection;
 use App\EmployeePortal\Blog\Post\PostCollection;
+use App\EmployeePortal\Blog\Post\Stories\Create\PostCreatedEvent;
+use App\EmployeePortal\Blog\Post\Stories\Edit\PostEditedEvent;
+use App\EmployeePortal\Blog\Post\Stories\TransferOwnership\PostOwnershipTransferredEvent;
 use Symfony\Component\Uid\Uuid;
 
 class User

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User;
 
-use App\EmployeePortal\Authentication\User\Actions\Login\UserLoggedInEvent;
-use App\EmployeePortal\Authentication\User\Actions\Register\UserRegisteredEvent;
 use App\EmployeePortal\Authentication\User\Email\Email;
 use App\EmployeePortal\Authentication\User\Password\Password;
-use App\EmployeePortal\Authentication\User\PasswordReset\Actions\Reset\UserPasswordResetEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\Stories\Reset\UserPasswordResetEvent;
+use App\EmployeePortal\Authentication\User\Stories\Login\UserLoggedInEvent;
+use App\EmployeePortal\Authentication\User\Stories\Register\UserRegisteredEvent;
 use App\EmployeePortal\Authentication\User\Support\Event\UserEvent;
 use Carbon\CarbonImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
