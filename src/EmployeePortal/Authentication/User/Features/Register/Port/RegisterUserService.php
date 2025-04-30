@@ -28,7 +28,7 @@ final readonly class RegisterUserService
         public EntityManagerInterface $entityManager,
         #[Autowire('@event.bus')]
         public MessageBusInterface $eventBus,
-        private LoggerInterface $logger,
+        public LoggerInterface $logger,
         private NormalizerInterface $serializer,
     ) {
     }
