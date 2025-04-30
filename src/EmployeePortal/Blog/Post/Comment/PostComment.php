@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\Post\Comment;
 
-use InvalidArgumentException;
-use App\EmployeePortal\Blog\Post\Comment\Actions\Add\PostCommentAddedEvent;
-use App\EmployeePortal\Blog\Post\Comment\Actions\Edit\PostCommentEditedEvent;
+use App\EmployeePortal\Blog\Post\Comment\Features\Add\PostCommentAddedEvent;
+use App\EmployeePortal\Blog\Post\Comment\Features\Edit\PostCommentEditedEvent;
 use App\EmployeePortal\Blog\Post\Post;
 use App\EmployeePortal\Blog\User\User;
 use Carbon\CarbonImmutable;
+use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
 
 class PostComment

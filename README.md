@@ -53,22 +53,21 @@ Api documentation:
 
 ## Terms
 
-### Action
+### Feature
 
 > Example of action:
-> [User\Actions\Register](src/EmployeePortal/Authentication/User/Actions/Register)
+> [User\Features\Register](src/EmployeePortal/Authentication/User/Actions/Register)
 
-The actions are self-sufficient modules that represent some actions of the user (like registration, login),
-or some actions of the system (like sending the notification). Either way, the action is usually related to
-some entity it belongs to.
+Features are self-sufficient modules that represent some features of the system (like user registration, login).
+Each feature is usually related to some entity, or concept it belongs to.
 
 ### Event
 
 > Example of
-> event: [UserRegisteredEvent.php](src/EmployeePortal/Authentication/User/Actions/Register/UserRegisteredEvent.php)
+> event: [UserRegisteredEvent.php](src/EmployeePortal/Authentication/User/Features/Register/UserRegisteredEvent.php)
 
-Event is a class that is responsible for the core business logic of the application. For example, if user is
-registering, we must verify that the email is free.
+Event is a class that is responsible for the core business logic of the application.
+For example, during user registration, we must verify that the email is free.
 
 All the logic should be placed in `process()` method, and if any invariant fails, it must throw an exception.
 If invariants were met, the event must delegate itself to be applied by the entity itself. For example, see
@@ -78,13 +77,13 @@ Once the event is processed, it must be dispatched into the event bus.
 
 EventTest - a class that is responsible for testing the core business logic.
 
-### Inbox
+### Port
 
-> Example of Inbox [User\Actions\Login\Inbox](src/EmployeePortal/Authentication/User/Actions/Login/Inbox)
+> Example of Port: `User\Features\Login\Port`
 
-Inbox namespace represents classes that make the event happen. Usually, at the top level it contains Command and Service
-that serve for the event by creating it, processing it, and dispatching it into the event.bus.
-
+Port namespace represents classes that make the event happen.
+Usually, at the top level it contains Command and Service that serve for the event by creating it, processing it, and
+dispatching it into the event.bus.
 
 ### ApiPoint
 

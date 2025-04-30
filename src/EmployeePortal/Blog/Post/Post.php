@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\Post;
 
-use InvalidArgumentException;
 use App\EmployeePortal\Blog\Post\Comment\PostCommentCollection;
-use App\EmployeePortal\Blog\Post\Stories\Create\PostCreatedEvent;
-use App\EmployeePortal\Blog\Post\Stories\Edit\PostEditedEvent;
-use App\EmployeePortal\Blog\Post\Stories\TransferOwnership\PostOwnershipTransferredEvent;
+use App\EmployeePortal\Blog\Post\Features\Create\PostCreatedEvent;
+use App\EmployeePortal\Blog\Post\Features\Edit\PostEditedEvent;
+use App\EmployeePortal\Blog\Post\Features\TransferOwnership\PostOwnershipTransferredEvent;
 use App\EmployeePortal\Blog\User\User;
+use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
 
 class Post

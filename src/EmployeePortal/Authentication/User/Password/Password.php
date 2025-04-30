@@ -44,7 +44,7 @@ final readonly class Password
         return new self($passwordHasher->hash($password));
     }
 
-    public function verify(PasswordHasherInterface $passwordHasher, string $plainPassword): void
+    public function verify(string $plainPassword, PasswordHasherInterface $passwordHasher): void
     {
         if (!$passwordHasher->verify($this->getHash(), $plainPassword)) {
             throw new PasswordMismatchException($plainPassword);

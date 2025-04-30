@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Support\Fixture;
 
-use App\EmployeePortal\Authentication\User\Stories\Register\Inbox\RegisterUserCommand;
+use App\EmployeePortal\Authentication\User\Features\Register\Port\RegisterUserCommand;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
