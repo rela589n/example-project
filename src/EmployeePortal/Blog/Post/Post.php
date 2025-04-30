@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\Post;
 
+use InvalidArgumentException;
 use App\EmployeePortal\Blog\Post\Comment\PostCommentCollection;
 use App\EmployeePortal\Blog\Post\Stories\Create\PostCreatedEvent;
 use App\EmployeePortal\Blog\Post\Stories\Edit\PostEditedEvent;
@@ -63,7 +64,7 @@ class Post
     public function assertIsOwnedBy(User $owner): void
     {
         if ($this->owner !== $owner) {
-            throw new \InvalidArgumentException('Post does not belong to this user');
+            throw new InvalidArgumentException('Post does not belong to this user');
         }
     }
 }

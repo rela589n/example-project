@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support\Api\Bundle\Validation;
 
-use PhPhD\ExceptionalValidation\Handler\Exception\ExceptionalValidationFailedException;
+use PhPhD\ExceptionalValidation\Mapper\Validator\Middleware\ExceptionalValidationFailedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

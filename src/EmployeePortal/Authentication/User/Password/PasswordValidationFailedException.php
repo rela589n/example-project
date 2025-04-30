@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Password;
 
+use PhPhD\ExceptionalValidation\Rule\Object\Property\Capture\Condition\Value\ValueException;
+use PhPhD\ExceptionalValidation\Mapper\Validator\Formatter\Item\ViolationList\ViolationListException;
 use App\EmployeePortal\Authentication\AuthException;
 use DomainException;
-use PhPhD\ExceptionalValidation\Formatter\ViolationListException;
-use PhPhD\ExceptionalValidation\Model\Condition\Value\ValueException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class PasswordValidationFailedException extends DomainException implements AuthException, ValueException, ViolationListException

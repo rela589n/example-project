@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Playground\Swoole\Postgres\Basic;
 
+use function Swoole\Coroutine\run;
+use function Swoole\Coroutine\go;
 use Doctrine\DBAL\Connection;
-use Swoole\Coroutine;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,10 +28,10 @@ final class SwoolePostgresAsyncQueriesConsoleCommand extends Command
 
         // if we wrap this run in transaction(), it will result
         // in "another command is already in progress" failure
-        Coroutine\run(function () use ($output): void {
+        run(function () use ($output): void {
             $output->writeln('Making 2 postgresql requests');
 
-            Coroutine\go(function () use ($output): void {
+            go(function () use ($output): void {
                 $output->writeln('First query started');
 
                 $result = $this->runQuery(4);
@@ -38,7 +39,7 @@ final class SwoolePostgresAsyncQueriesConsoleCommand extends Command
                 $output->writeln('First query completed: '.$result);
             });
 
-            Coroutine\go(function () use ($output): void {
+            go(function () use ($output): void {
                 $output->writeln('Second query started');
 
                 $result = $this->runQuery(3);

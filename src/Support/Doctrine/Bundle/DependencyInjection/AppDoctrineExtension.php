@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Support\Doctrine\Bundle\DependencyInjection;
 
-use Exception;
 use Override;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\AbstractExtension;

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Stories\Register\Inbox;
 
+use PhPhD\ExceptionalValidation\Rule\Object\Property\Capture\Condition\Value\ExceptionValueMatchCondition;
+use PhPhD\ExceptionalValidation\Mapper\Validator\Formatter\Item\ViolationList\ViolationListExceptionFormatter;
 use App\EmployeePortal\Authentication\User\Email\Email;
 use App\EmployeePortal\Authentication\User\Email\EmailValidationFailedException;
 use App\EmployeePortal\Authentication\User\Password\Password;
@@ -15,8 +17,6 @@ use Carbon\CarbonImmutable;
 use OpenApi\Attributes as ApiDoc;
 use PhPhD\ExceptionalValidation;
 use PhPhD\ExceptionalValidation\Capture;
-use PhPhD\ExceptionalValidation\Formatter\ViolationListExceptionFormatter;
-use PhPhD\ExceptionalValidation\Model\Condition\Value\ValueExceptionMatchCondition;
 use SensitiveParameter;
 use Symfony\Component\Uid\Uuid;
 
@@ -30,12 +30,12 @@ final readonly class RegisterUserCommand
     private string $id;
 
     #[ApiDoc\Property(example: 'email@test.com')]
-    #[Capture(exception: EmailValidationFailedException::class, condition: ValueExceptionMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
-    #[Capture(exception: EmailAlreadyTakenException::class, condition: ValueExceptionMatchCondition::class)]
+    #[Capture(exception: EmailValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
+    #[Capture(exception: EmailAlreadyTakenException::class, condition: ExceptionValueMatchCondition::class)]
     private string $email;
 
     #[ApiDoc\Property(example: 'p@$$w0rd')]
-    #[Capture(exception: PasswordValidationFailedException::class, condition: ValueExceptionMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
+    #[Capture(exception: PasswordValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
     private string $password;
 
     public function __construct(

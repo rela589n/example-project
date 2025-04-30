@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Playground\AmPHP\HelloWorld;
 
-use Amp\Future;
+use function Amp\Future\awaitAll;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -37,7 +37,7 @@ final class AmphpHelloWorldConsoleCommand extends Command
         });
 
         // when awaiting, every 0.5 seconds the next write is executed
-        Future\awaitAll([$future1, $future2]);
+        awaitAll([$future1, $future2]);
 
         return 0;
     }

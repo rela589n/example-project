@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\User;
 
+use InvalidArgumentException;
 use App\EmployeePortal\Blog\Post\Comment\Actions\Add\PostCommentAddedEvent;
 use App\EmployeePortal\Blog\Post\Comment\Actions\Edit\PostCommentEditedEvent;
 use App\EmployeePortal\Blog\Post\Comment\PostCommentCollection;
@@ -47,7 +48,7 @@ class User
 
         // this method should not load the collection, but rather use preloaded Post object that already belongs to this collection
         if (!$this->posts->contains($post)) {
-            throw new \InvalidArgumentException('Post does not belong to this user');
+            throw new InvalidArgumentException('Post does not belong to this user');
         }
 
         $post->edit($event);
@@ -68,7 +69,7 @@ class User
 
         // this method should not load the collection, but rather use preloaded Comment object that already belongs to this collection
         if (!$this->comments->contains($comment)) {
-            throw new \InvalidArgumentException('Comment does not belong to this user');
+            throw new InvalidArgumentException('Comment does not belong to this user');
         }
 
         $comment->edit($event);
@@ -79,7 +80,7 @@ class User
         $post = $event->getPost();
 
         if (!$this->posts->contains($post)) {
-            throw new \InvalidArgumentException('Post does not belong to this user');
+            throw new InvalidArgumentException('Post does not belong to this user');
         }
 
         $post->transferOwnership($event);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Playground\Swoole\Coroutine\Sleep;
 
+use function Swoole\Coroutine\run;
 use Swoole\Coroutine;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -15,7 +16,7 @@ final class SwooleSleepCoroutineConsoleCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        Coroutine\run(static function () use ($output): void {
+        run(static function () use ($output): void {
             Coroutine::create(static function () use ($output): void {
                 $output->write('Hello ');
 

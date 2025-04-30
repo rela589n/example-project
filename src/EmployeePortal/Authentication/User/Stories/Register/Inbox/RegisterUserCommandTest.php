@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\User\Stories\Register\Inbox;
 
 use App\EmployeePortal\Authentication\User\Stories\Register\UserRegisteredEvent;
-use App\EmployeePortal\Authentication\User\Stories\Register\UserRegisteredEventTest;
 use App\EmployeePortal\Authentication\User\User;
 use Exception;
 use PHPUnit\Framework\Attributes\CoversClass;

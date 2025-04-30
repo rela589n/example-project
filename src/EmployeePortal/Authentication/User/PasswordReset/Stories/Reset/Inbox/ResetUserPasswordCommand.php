@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\PasswordReset\Stories\Reset\Inbox;
 
+use PhPhD\ExceptionalValidation\Rule\Object\Property\Capture\Condition\Value\ExceptionValueMatchCondition;
 use App\EmployeePortal\Authentication\User\PasswordReset\PasswordResetRequest;
 use App\EmployeePortal\Authentication\User\PasswordReset\Repository\Exception\PasswordResetRequestNotFoundException;
 use App\EmployeePortal\Authentication\User\PasswordReset\Stories\Reset\Exception\ExpiredPasswordResetRequestException;
@@ -13,7 +14,6 @@ use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use PhPhD\ExceptionalValidation;
 use PhPhD\ExceptionalValidation\Capture;
-use PhPhD\ExceptionalValidation\Model\Condition\Value\ValueExceptionMatchCondition;
 use Symfony\Component\Uid\Uuid;
 
 use function Amp\async;
@@ -22,11 +22,11 @@ use function Amp\Future\awaitAnyN;
 #[ExceptionalValidation]
 final readonly class ResetUserPasswordCommand
 {
-    #[Capture(UserNotFoundException::class, condition: ValueExceptionMatchCondition::class)]
+    #[Capture(UserNotFoundException::class, condition: ExceptionValueMatchCondition::class)]
     private string $userId;
 
-    #[Capture(PasswordResetRequestNotFoundException::class, condition: ValueExceptionMatchCondition::class)]
-    #[Capture(ExpiredPasswordResetRequestException::class, condition: ValueExceptionMatchCondition::class)]
+    #[Capture(PasswordResetRequestNotFoundException::class, condition: ExceptionValueMatchCondition::class)]
+    #[Capture(ExpiredPasswordResetRequestException::class, condition: ExceptionValueMatchCondition::class)]
     private string $passwordResetRequestId;
 
     public function __construct(

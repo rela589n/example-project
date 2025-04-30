@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Password;
 
+use PhPhD\ExceptionalValidation\Rule\Object\Property\Capture\Condition\Value\ValueException;
 use App\EmployeePortal\Authentication\AuthException;
 use DomainException;
-use PhPhD\ExceptionalValidation\Model\Condition\Value\ValueException;
 use SensitiveParameter;
 
 final class PasswordMismatchException extends DomainException implements AuthException, ValueException

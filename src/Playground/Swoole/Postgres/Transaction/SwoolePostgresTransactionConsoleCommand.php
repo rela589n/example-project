@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Playground\Swoole\Postgres\Transaction;
 
+use function Swoole\Coroutine\go;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -29,7 +30,7 @@ final class SwoolePostgresTransactionConsoleCommand extends Command
         run(function () use ($output): void {
             $output->writeln('Making 2 postgresql requests');
 
-            \Swoole\Coroutine\go(function () use ($output): void {
+            go(function () use ($output): void {
                 $output->writeln('First query started');
 
                 $result = $this->connection->transactional(fn () => $this->runQuery(1));
@@ -37,7 +38,7 @@ final class SwoolePostgresTransactionConsoleCommand extends Command
                 $output->writeln('First query completed: '.$result);
             });
 
-            \Swoole\Coroutine\go(function () use ($output): void {
+            go(function () use ($output): void {
                 $output->writeln('Second query started');
 
                 // this one either uses the same transaction or just fails with exception !

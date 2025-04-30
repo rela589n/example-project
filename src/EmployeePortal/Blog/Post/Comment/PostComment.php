@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\Post\Comment;
 
+use InvalidArgumentException;
 use App\EmployeePortal\Blog\Post\Comment\Actions\Add\PostCommentAddedEvent;
 use App\EmployeePortal\Blog\Post\Comment\Actions\Edit\PostCommentEditedEvent;
 use App\EmployeePortal\Blog\Post\Post;
@@ -45,14 +46,14 @@ class PostComment
     public function assertIsAuthoredBy(User $user): void
     {
         if ($this->author !== $user) {
-            throw new \InvalidArgumentException('Comment does not belong to this user');
+            throw new InvalidArgumentException('Comment does not belong to this user');
         }
     }
 
     public function assertBelongsTo(Post $post): void
     {
         if ($this->post !== $post) {
-            throw new \InvalidArgumentException('Comment does not belong to this post');
+            throw new InvalidArgumentException('Comment does not belong to this post');
         }
     }
 }
