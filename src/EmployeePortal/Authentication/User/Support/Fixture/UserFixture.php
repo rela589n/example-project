@@ -21,9 +21,9 @@ final  class UserFixture extends Fixture
     public function load(ObjectManager $manager): void
     {
         $command = new RegisterUserCommand(
-            '2a977708-1c69-7d38-9074-b388a7f386dc',
             'user@test.com',
             'jG\Qc_g7;%zE85',
+            '2a977708-1c69-7d38-9074-b388a7f386dc',
         );
 
         $this->commandBus->dispatch($command);

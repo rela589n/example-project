@@ -35,7 +35,7 @@ final class RegisterUserCommandTest extends KernelTestCase
     /** @throws Exception */
     public function testUserIsRegisteredSuccessfully(): void
     {
-        $command = new RegisterUserCommand('878a983e-1b1c-472c-8da0-97dc5e4bfb8f', 'test@email.com', 'jG\Qc_g7;%zE85');
+        $command = new RegisterUserCommand('test@email.com', 'jG\Qc_g7;%zE85', '878a983e-1b1c-472c-8da0-97dc5e4bfb8f');
 
         $command->process($this->service);
 

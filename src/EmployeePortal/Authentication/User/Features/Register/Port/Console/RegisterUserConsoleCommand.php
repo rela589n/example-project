@@ -38,9 +38,9 @@ final class RegisterUserConsoleCommand extends Command
         $password = $input->getArgument('password');
 
         $registerUserCommand = new RegisterUserCommand(
-            Uuid::v7()->toRfc4122(),
             $email,
             $password,
+            Uuid::v7()->toRfc4122(),
         );
 
         $this->commandBus->dispatch($registerUserCommand);

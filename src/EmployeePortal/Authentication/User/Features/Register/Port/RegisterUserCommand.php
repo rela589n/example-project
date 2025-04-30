@@ -18,6 +18,7 @@ use PhPhD\ExceptionalValidation\Capture;
 use PhPhD\ExceptionalValidation\Mapper\Validator\Formatter\Item\ViolationList\ViolationListExceptionFormatter;
 use PhPhD\ExceptionalValidation\Rule\Object\Property\Capture\Condition\Value\ExceptionValueMatchCondition;
 use SensitiveParameter;
+use Symfony\Component\Serializer\Attribute as Serializer;
 use Symfony\Component\Uid\Uuid;
 
 use function Amp\async;
@@ -26,6 +27,7 @@ use function Amp\Future\awaitAnyN;
 #[ExceptionalValidation]
 final readonly class RegisterUserCommand
 {
+    #[Serializer\Ignore]
     #[ApiDoc\Property(example: 'd0db5712-6ed7-4c88-a0b0-5a0cad43db71')]
     private string $id;
 
@@ -39,12 +41,12 @@ final readonly class RegisterUserCommand
     private string $password;
 
     public function __construct(
-        string $id,
         string $email,
         #[SensitiveParameter]
         string $password,
+        ?string $id = null,
     ) {
-        $this->id = $id;
+        $this->id = $id ?? Uuid::v7()->toString();
         $this->password = $password;
         $this->email = $email;
     }
