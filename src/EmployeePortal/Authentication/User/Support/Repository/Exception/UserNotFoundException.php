@@ -22,6 +22,6 @@ final class UserNotFoundException extends DomainException implements AuthExcepti
     public function getValue(): ?string
     {
         return $this->id?->toRfc4122()
-            ?? $this->email?->getEmail();
+            ?? $this->email?->toString();
     }
 }

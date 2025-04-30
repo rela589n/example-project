@@ -18,6 +18,6 @@ final class EmailAlreadyTakenException extends DomainException implements ValueE
 
     public function getValue(): string
     {
-        return $this->email->getEmail();
+        return $this->email->toString();
     }
 }

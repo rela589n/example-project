@@ -7,7 +7,7 @@ namespace App\EmployeePortal\Authentication\User\Support\Event;
 use App\EmployeePortal\Authentication\User\Features\Login\UserLoggedInEvent;
 use App\EmployeePortal\Authentication\User\Features\Register\UserRegisteredEvent;
 use App\EmployeePortal\Authentication\User\PasswordReset\Features\Create\UserPasswordResetRequestCreatedEvent;
-use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserPasswordResetEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserResetPasswordEvent;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,7 +29,7 @@ use Symfony\Component\Uid\Uuid;
     UserRegisteredEvent::TYPE => UserRegisteredEvent::class,
     UserLoggedInEvent::TYPE => UserLoggedInEvent::class,
     UserPasswordResetRequestCreatedEvent::TYPE => UserPasswordResetRequestCreatedEvent::class,
-    UserPasswordResetEvent::TYPE => UserPasswordResetEvent::class,
+    UserResetPasswordEvent::TYPE => UserResetPasswordEvent::class,
 ])]
 abstract class UserEvent
 {

@@ -51,27 +51,27 @@ final class Version20250313124411 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN user_password_reset_request_created_event.id IS \'(DC2Type:uuid)\'');
         $this->addSql('COMMENT ON COLUMN user_password_reset_request_created_event.password_reset_request_id IS \'(DC2Type:uuid)\'');
 
-        $this->addSql('CREATE TABLE user_password_reset_events (id UUID NOT NULL, password_reset_request_id UUID NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE INDEX IDX_BEA9ACFE7CBBE7 ON user_password_reset_events (password_reset_request_id)');
-        $this->addSql('ALTER TABLE user_password_reset_events ADD CONSTRAINT FK_BEA9ACBF396750 FOREIGN KEY (id) REFERENCES user_events (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE user_password_reset_events ADD CONSTRAINT FK_BEA9ACFE7CBBE7 FOREIGN KEY (password_reset_request_id) REFERENCES user_password_reset_requests (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('COMMENT ON COLUMN user_password_reset_events.id IS \'(DC2Type:uuid)\'');
-        $this->addSql('COMMENT ON COLUMN user_password_reset_events.password_reset_request_id IS \'(DC2Type:uuid)\'');
+        $this->addSql('CREATE TABLE user_reset_password_events (id UUID NOT NULL, password_reset_request_id UUID NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE INDEX IDX_BEA9ACFE7CBBE7 ON user_reset_password_events (password_reset_request_id)');
+        $this->addSql('ALTER TABLE user_reset_password_events ADD CONSTRAINT FK_BEA9ACBF396750 FOREIGN KEY (id) REFERENCES user_events (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE user_reset_password_events ADD CONSTRAINT FK_BEA9ACFE7CBBE7 FOREIGN KEY (password_reset_request_id) REFERENCES user_password_reset_requests (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('COMMENT ON COLUMN user_reset_password_events.id IS \'(DC2Type:uuid)\'');
+        $this->addSql('COMMENT ON COLUMN user_reset_password_events.password_reset_request_id IS \'(DC2Type:uuid)\'');
     }
 
     public function down(Schema $schema): void
     {
         $this->addSql('ALTER TABLE user_events DROP CONSTRAINT FK_36D54C77A76ED395');
         $this->addSql('ALTER TABLE user_logged_in_events DROP CONSTRAINT FK_9971E1F0BF396750');
-        $this->addSql('ALTER TABLE user_password_reset_events DROP CONSTRAINT FK_BEA9ACFE7CBBE7');
-        $this->addSql('ALTER TABLE user_password_reset_events DROP CONSTRAINT FK_BEA9ACBF396750');
+        $this->addSql('ALTER TABLE user_reset_password_events DROP CONSTRAINT FK_BEA9ACFE7CBBE7');
+        $this->addSql('ALTER TABLE user_reset_password_events DROP CONSTRAINT FK_BEA9ACBF396750');
         $this->addSql('ALTER TABLE user_password_reset_request_created_event DROP CONSTRAINT FK_EEADDE2CFE7CBBE7');
         $this->addSql('ALTER TABLE user_password_reset_request_created_event DROP CONSTRAINT FK_EEADDE2CBF396750');
         $this->addSql('ALTER TABLE user_password_reset_requests DROP CONSTRAINT FK_29A40E19A76ED395');
         $this->addSql('ALTER TABLE user_registered_events DROP CONSTRAINT FK_BF14BE20BF396750');
         $this->addSql('DROP TABLE user_events');
         $this->addSql('DROP TABLE user_logged_in_events');
-        $this->addSql('DROP TABLE user_password_reset_events');
+        $this->addSql('DROP TABLE user_reset_password_events');
         $this->addSql('DROP TABLE user_password_reset_request_created_event');
         $this->addSql('DROP TABLE user_password_reset_requests');
         $this->addSql('DROP TABLE user_registered_events');

@@ -19,7 +19,7 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Table(name: 'user_registered_events')]
 class UserRegisteredEvent extends UserEvent
 {
-    protected const string TYPE = 'userRegistered';
+    protected const string TYPE = 'registered';
 
     public function __construct(
         protected Uuid $id,

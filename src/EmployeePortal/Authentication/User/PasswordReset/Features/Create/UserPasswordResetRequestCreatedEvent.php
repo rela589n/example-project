@@ -15,7 +15,7 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Entity]
 class UserPasswordResetRequestCreatedEvent extends UserEvent
 {
-    protected const string TYPE = 'userPasswordResetRequestCreated';
+    protected const string TYPE = 'passwordResetRequestCreated';
 
     public function __construct(
         protected Uuid $id,

@@ -26,7 +26,7 @@ class UserRepository extends ServiceEntityRepository
 
     public function findByEmail(Email $email): User
     {
-        return $this->findOneBy(['email.email' => $email->getEmail()]) ?? throw new UserNotFoundException(email: $email);
+        return $this->findOneBy(['email.email' => $email->toString()]) ?? throw new UserNotFoundException(email: $email);
     }
 
     public function isEmailFree(Email $email): bool

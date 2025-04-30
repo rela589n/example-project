@@ -7,7 +7,7 @@ namespace App\EmployeePortal\Authentication\User\Support\Event;
 use App\EmployeePortal\Authentication\User\Features\Login\UserLoggedInEvent;
 use App\EmployeePortal\Authentication\User\Features\Register\UserRegisteredEvent;
 use App\EmployeePortal\Authentication\User\PasswordReset\Features\Create\UserPasswordResetRequestCreatedEvent;
-use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserPasswordResetEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserResetPasswordEvent;
 
 /**
  * @template TResult
@@ -27,7 +27,7 @@ interface UserEventVisitor
      *
      * @return TResult
      */
-    public function visitUserPasswordResetEvent(UserPasswordResetEvent $event, mixed $data = null): mixed;
+    public function visitUserPasswordResetEvent(UserResetPasswordEvent $event, mixed $data = null): mixed;
 
     /**
      * @param null|TData $data

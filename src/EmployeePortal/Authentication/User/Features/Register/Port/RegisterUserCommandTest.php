@@ -44,5 +44,9 @@ final class RegisterUserCommandTest extends KernelTestCase
         $user = $this->service->userRepository->find('878a983e-1b1c-472c-8da0-97dc5e4bfb8f');
 
         self::assertNotNull($user);
+
+        $userRegisteredEvent = $user->getEvents()->get('878a983e-1b1c-472c-8da0-97dc5e4bfb8f');
+
+        self::assertInstanceOf(UserRegisteredEvent::class, $userRegisteredEvent);
     }
 }

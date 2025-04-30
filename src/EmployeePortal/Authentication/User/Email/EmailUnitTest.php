@@ -48,7 +48,7 @@ final class EmailUnitTest extends TestCase
     {
         $email = $this->createEmail('example@test.com');
 
-        self::assertSame('example@test.com', $email->getEmail());
+        self::assertSame('example@test.com', $email->toString());
     }
 
     public static function untrimmedEmailsProvider(): array

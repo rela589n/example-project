@@ -51,16 +51,28 @@ final class UserRegisteredEventTest extends TestCase
 
         $user = $this->registerUser();
 
-        self::assertSame('test@email.com', $user->getEmail()->getEmail());
+        self::assertSame('d61ab093-88bd-7d18-ae81-496e7591d409', $user->getId()->toString());
+        self::assertSame('test@email.com', $user->getEmail()->toString());
         self::assertSame('UiRp8M0HR2fedmHmsJEX4elDj8Ry3PoPAaBtLZcJe37IzB+L0ISMYg==', $user->getPassword()->getHash());
         self::assertSame('2024-08-26T22:01:13+00:00', $user->getCreatedAt()->toIso8601String());
         self::assertSame('2024-08-26T22:01:13+00:00', $user->getUpdatedAt()->toIso8601String());
+
+        $events = $user->getEvents();
+        self::assertCount(1, $events);
+        $registeredEvent = $events[0];
+        self::assertInstanceOf(UserRegisteredEvent::class, $registeredEvent);
+
+        self::assertSame($user, $registeredEvent->getUser());
+        self::assertSame($user->getId(), $registeredEvent->getId());
+        self::assertSame($user->getEmail(), $registeredEvent->getEmail());
+        self::assertSame($user->getPassword(), $registeredEvent->getPassword());
+        self::assertSame($user->getCreatedAt(), $registeredEvent->getTimestamp());
     }
 
     private function registerUser(): User
     {
         $registration = new UserRegisteredEvent(
-            Uuid::v7(),
+            Uuid::fromString('d61ab093-88bd-7d18-ae81-496e7591d409'),
             new User(),
             $this->email(),
             $this->password(),

@@ -8,7 +8,7 @@ use App\EmployeePortal\Authentication\User\Email\Email;
 use App\EmployeePortal\Authentication\User\Features\Login\UserLoggedInEvent;
 use App\EmployeePortal\Authentication\User\Features\Register\UserRegisteredEvent;
 use App\EmployeePortal\Authentication\User\Password\Password;
-use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserPasswordResetEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserResetPasswordEvent;
 use App\EmployeePortal\Authentication\User\Support\Event\UserEvent;
 use Carbon\CarbonImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -36,8 +36,8 @@ class User
     #[ORM\Column(type: 'datetime_immutable')]
     private CarbonImmutable $updatedAt;
 
-    /** @var Collection<array-key,UserEvent> */
-    #[ORM\OneToMany(targetEntity: UserEvent::class, mappedBy: 'user', cascade: ['persist'])]
+    /** @var Collection<string,UserEvent> */
+    #[ORM\OneToMany(targetEntity: UserEvent::class, mappedBy: 'user', cascade: ['persist'], indexBy: 'id')]
     private Collection $events;
 
     /**
@@ -61,7 +61,7 @@ class User
         $this->events->add($event);
     }
 
-    public function resetPassword(UserPasswordResetEvent $event): void
+    public function resetPassword(UserResetPasswordEvent $event): void
     {
         $this->updatedAt = $event->getTimestamp();
 
@@ -91,5 +91,11 @@ class User
     public function getUpdatedAt(): CarbonImmutable
     {
         return $this->updatedAt;
+    }
+
+    /** @return Collection<string,UserEvent> */
+    public function getEvents(): Collection
+    {
+        return $this->events;
     }
 }

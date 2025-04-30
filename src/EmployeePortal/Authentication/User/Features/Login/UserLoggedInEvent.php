@@ -16,7 +16,7 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Table(name: 'user_logged_in_events')]
 final class UserLoggedInEvent extends UserEvent
 {
-    protected const string TYPE = 'userLoggedIn';
+    protected const string TYPE = 'loggedIn';
 
     public function __construct(
         protected Uuid $id,

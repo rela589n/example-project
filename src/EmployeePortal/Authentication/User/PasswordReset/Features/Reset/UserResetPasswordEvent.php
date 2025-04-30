@@ -15,10 +15,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'user_password_reset_events')]
-final class UserPasswordResetEvent extends UserEvent
+#[ORM\Table(name: 'user_reset_password_events')]
+final class UserResetPasswordEvent extends UserEvent
 {
-    protected const string TYPE = 'userPasswordReset';
+    protected const string TYPE = 'passwordReset';
 
     public function __construct(
         protected Uuid $id,

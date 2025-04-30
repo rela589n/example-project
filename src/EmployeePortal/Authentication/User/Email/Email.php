@@ -36,7 +36,7 @@ final readonly class Email
         return new self($email);
     }
 
-    public function getEmail(): string
+    public function toString(): string
     {
         return $this->email;
     }

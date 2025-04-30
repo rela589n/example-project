@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\Port;
 
 use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\Exception\ExpiredPasswordResetRequestException;
-use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserPasswordResetEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserResetPasswordEvent;
 use App\EmployeePortal\Authentication\User\PasswordReset\PasswordResetRequest;
 use App\EmployeePortal\Authentication\User\PasswordReset\Repository\Exception\PasswordResetRequestNotFoundException;
 use App\EmployeePortal\Authentication\User\Support\Repository\Exception\UserNotFoundException;
@@ -46,7 +46,7 @@ final readonly class ResetUserPasswordCommand
         $service->eventBus->dispatch($event);
     }
 
-    private function createEvent(ResetUserPasswordService $service): UserPasswordResetEvent
+    private function createEvent(ResetUserPasswordService $service): UserResetPasswordEvent
     {
         /**
          * One more thing about awaitAnyN() is that it actually allows us to benefit from async i/o
@@ -61,7 +61,7 @@ final readonly class ResetUserPasswordCommand
             async($this->getPasswordResetRequest(...), $service),
         ]);
 
-        return new UserPasswordResetEvent(Uuid::v7(), $user, $passwordResetRequest, CarbonImmutable::instance($service->clock->now()));
+        return new UserResetPasswordEvent(Uuid::v7(), $user, $passwordResetRequest, CarbonImmutable::instance($service->clock->now()));
     }
 
     private function getUser(ResetUserPasswordService $service): User
