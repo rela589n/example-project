@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support\Api\Bundle\RequestMapping\Serializer;
 
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -11,6 +12,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 final readonly class RequestPayloadSerializer implements SerializerInterface, DenormalizerInterface
 {
     public function __construct(
+        #[Autowire('@serializer')]
         private SerializerInterface&DenormalizerInterface $serializer,
     ) {
     }

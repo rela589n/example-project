@@ -1,0 +1,4 @@
+doctrine:
+    dbal:
+        types:
+            secret_key: App\EmployeePortal\Authentication\User\SecretKey\Type\SecretKeyType

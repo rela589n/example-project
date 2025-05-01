@@ -1,0 +1,2 @@
+parameters:
+    env(ENCRYPTION_KEY): '%env(APP_SECRET)%'
