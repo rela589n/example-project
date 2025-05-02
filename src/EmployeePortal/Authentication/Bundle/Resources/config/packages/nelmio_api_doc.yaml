@@ -1,6 +1,6 @@
 nelmio_api_doc:
     areas:
-        employee_portal_auth:
+        example_project_auth:
             path_patterns:
                 - ^/api/example-project/auth/(?!/doc$)
             documentation:

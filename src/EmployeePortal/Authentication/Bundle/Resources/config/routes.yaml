@@ -5,23 +5,23 @@ api_frontend_auth:
     host: '%api_host%'
     schemes: '%api_scheme%'
 
-api_employee_portal_auth_token_refresh:
+api_example_project_auth_token_refresh:
     path: /api/example-project/auth/token/refresh
     methods: POST
     host: '%api_host%'
     schemes: '%api_scheme%'
 
 when@dev:
-    api_doc.employee_portal_auth.redocly: &api_doc_redocly
+    api_doc.example_project_auth.redocly: &api_doc_redocly
         path: /api/example-project/auth/doc.html
         methods: GET
-        defaults: { _controller: nelmio_api_doc.controller.redocly, area: employee_portal_auth }
+        defaults: { _controller: nelmio_api_doc.controller.redocly, area: example_project_auth }
 
-    api_doc.employee_portal_auth.swagger: &api_doc_json
+    api_doc.example_project_auth.swagger: &api_doc_json
         path: /api/example-project/auth/doc.json
         methods: GET
-        defaults: { _controller: nelmio_api_doc.controller.swagger, area: employee_portal_auth }
+        defaults: { _controller: nelmio_api_doc.controller.swagger, area: example_project_auth }
 
 when@stage:
-    api_doc.employee_portal_auth.redocly: *api_doc_redocly
-    api_doc.employee_portal_auth.swagger: *api_doc_json
+    api_doc.example_project_auth.redocly: *api_doc_redocly
+    api_doc.example_project_auth.swagger: *api_doc_json

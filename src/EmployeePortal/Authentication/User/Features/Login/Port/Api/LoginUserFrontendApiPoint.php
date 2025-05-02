@@ -27,7 +27,7 @@ final readonly class LoginUserFrontendApiPoint
 
     #[Route(
         path: '/login',
-        name: 'employee_portal_auth_user_login',
+        name: 'example_project_auth_user_login',
         methods: ['POST'],
     )]
     public function __invoke(

@@ -34,7 +34,7 @@ final readonly class ResetUserPasswordFrontendApiPoint
 
     #[Route(
         path: '/reset-password',
-        name: 'employee_portal_auth_user_reset_password',
+        name: 'example_project_auth_user_reset_password',
         methods: ['POST']
     )]
     public function __invoke(
