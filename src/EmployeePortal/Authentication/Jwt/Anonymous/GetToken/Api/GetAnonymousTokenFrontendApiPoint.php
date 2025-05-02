@@ -44,7 +44,7 @@ final readonly class GetAnonymousTokenFrontendApiPoint
 
     #[Route(
         path: '/token',
-        name: 'api_employee_portal_auth_anonymous_token',
+        name: 'api_example_project_auth_anonymous_token',
         methods: [Request::METHOD_GET],
     )]
     public function __invoke(TokenStorageInterface $tokenStorage): Response

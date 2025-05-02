@@ -33,7 +33,7 @@ security:
     access_control:
         - { host: '%api_host%', path: ^\/api\/.*doc\.(json|html)$, roles: PUBLIC_ACCESS }
 
-        - { host: '%api_host%', route: api_employee_portal_auth_anonymous_token, roles: PUBLIC_ACCESS }
+        - { host: '%api_host%', route: api_example_project_auth_anonymous_token, roles: PUBLIC_ACCESS }
 
         - { host: '%api_host%', path: ^/api/example-project/auth/, roles: ROLE_ANONYMOUS }
         - { host: '%api_host%', path: ^/api/example-project/, roles: ROLE_EMPLOYEE }
