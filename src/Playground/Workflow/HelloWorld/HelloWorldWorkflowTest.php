@@ -23,14 +23,16 @@ final class HelloWorldWorkflowTest extends KernelTestCase
         $this->workflow = $workflow;
     }
 
-    public function testNotEnabledTransitionIsNotShown(): void
+    public function testThereAreNoTransitionsFromWorld(): void
     {
         $world = new HelloWorld('world');
 
-        self::assertNull($this->workflow->getEnabledTransition($world, 'complete'));
+        $transition = $this->workflow->getEnabledTransition($world, 'complete');
+
+        self::assertNull($transition);
     }
 
-    public function testEnabledTransition(): void
+    public function testTransitionFromHelloIntoWorldIsAvailable(): void
     {
         $hello = new HelloWorld('hello');
 
@@ -42,7 +44,7 @@ final class HelloWorldWorkflowTest extends KernelTestCase
         self::assertSame(['world'], $transition->getTos());
     }
 
-    public function testEnabledTransitions(): void
+    public function testEnabledTransitionsAsArray(): void
     {
         $hello = new HelloWorld('hello');
 
