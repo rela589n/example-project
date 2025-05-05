@@ -9,6 +9,7 @@ use App\EmployeePortal\Authentication\User\Features\Login\UserLoggedInEvent;
 use App\EmployeePortal\Authentication\User\Features\Register\UserRegisteredEvent;
 use App\EmployeePortal\Authentication\User\Password\Password;
 use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserResetPasswordEvent;
+use App\EmployeePortal\Authentication\User\SecretKey\SecretKey;
 use App\EmployeePortal\Authentication\User\SecretKey\Type\SecretKeyType;
 use App\EmployeePortal\Authentication\User\Support\Event\UserEvent;
 use Carbon\CarbonImmutable;
@@ -32,7 +33,7 @@ class User
     private Password $password;
 
     #[ORM\Column(type: SecretKeyType::NAME)]
-    private string $secretKey;
+    private SecretKey $secretKey;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private CarbonImmutable $createdAt;
@@ -52,7 +53,7 @@ class User
     {
         $this->id = $event->getId();
         $this->email = $event->getEmail();
-        $this->secretKey = 'hello world';
+        $this->secretKey = new SecretKey('hello world');
         $this->password = $event->getPassword();
         $this->createdAt = $event->getTimestamp();
         $this->updatedAt = $event->getTimestamp();
@@ -88,7 +89,7 @@ class User
         return $this->password;
     }
 
-    public function getSecretKey(): string
+    public function getSecretKey(): SecretKey
     {
         return $this->secretKey;
     }

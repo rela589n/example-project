@@ -18,7 +18,7 @@ Build docker image (grpc):
 
 ```shell
 cd docker-configs/backend/
-docker build -t example_project.backend.grpc:v1.0 -f grpc.Dockerfile ./
+docker build -t example_project.backend.grpc:v1.1 -f grpc.Dockerfile ./
 ```
 
 Run composer install:

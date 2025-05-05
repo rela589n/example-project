@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\User\SecretKey\Type;
 
 use App\EmployeePortal\Authentication\User\SecretKey\EncryptionService;
+use App\EmployeePortal\Authentication\User\SecretKey\SecretKey;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Override;
+use ReflectionClass;
 use SensitiveParameter;
 use Webmozart\Assert\Assert;
 
@@ -29,13 +31,13 @@ final class SecretKeyType extends Type
             return null;
         }
 
-        Assert::string($value);
+        Assert::isInstanceOf($value, SecretKey::class);
 
-        return $this->encryptor->encryptSecret($value);
+        return $this->encryptor->encryptSecret($value->getKey());
     }
 
     #[Override]
-    public function convertToPHPValue(#[SensitiveParameter] $value, AbstractPlatform $platform): ?string
+    public function convertToPHPValue(#[SensitiveParameter] $value, AbstractPlatform $platform): ?SecretKey
     {
         if (null === $value) {
             return null;
@@ -43,7 +45,14 @@ final class SecretKeyType extends Type
 
         Assert::string($value);
 
-        return $this->encryptor->decryptSecret(rtrim($value));
+        $reflector = new ReflectionClass(SecretKey::class);
+
+        /** @var SecretKey $secretKeyGhost */
+        $secretKeyGhost = $reflector->newLazyGhost(function (SecretKey $secretKey) use ($value): void {
+            $secretKey->__construct($this->encryptor->decryptSecret(rtrim($value)));
+        });
+
+        return $secretKeyGhost;
     }
 
     #[Override]

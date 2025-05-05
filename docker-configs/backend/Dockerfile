@@ -1,8 +1,8 @@
 FROM spiralscout/roadrunner:2024.2 AS roadrunner
-FROM example_project.backend.grpc:v1.0 AS grpc
+FROM example_project.backend.grpc:v1.1 AS grpc
 FROM mlocati/php-extension-installer AS ext
 FROM composer:2.8 AS composer
-FROM php:8.3-cli-bookworm
+FROM php:8.4-cli-bookworm
 
 ARG USER_NAME=app
 ARG USER_ID=1000
@@ -14,16 +14,16 @@ COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
 # Copy grpc-extension binary
 COPY --from=grpc \
-	/usr/local/lib/php/extensions/no-debug-non-zts-20230831/grpc.so \
-	/usr/local/lib/php/extensions/no-debug-non-zts-20230831/grpc.so
+	/usr/local/lib/php/extensions/no-debug-non-zts-20240924/grpc.so \
+	/usr/local/lib/php/extensions/no-debug-non-zts-20240924/grpc.so
 
 # Create docker-php-ext-grpc.ini configuration file
 RUN docker-php-ext-enable grpc
 
 # Copy protobuf-extension binary
 COPY --from=grpc \
-	/usr/local/lib/php/extensions/no-debug-non-zts-20230831/protobuf.so \
-	/usr/local/lib/php/extensions/no-debug-non-zts-20230831/protobuf.so
+	/usr/local/lib/php/extensions/no-debug-non-zts-20240924/protobuf.so \
+	/usr/local/lib/php/extensions/no-debug-non-zts-20240924/protobuf.so
 
 # Create docker-php-ext-protobuf.ini configuration file
 RUN docker-php-ext-enable protobuf
