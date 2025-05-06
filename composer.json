@@ -20,6 +20,7 @@
         "doctrine/orm": "^3.3.2",
         "gesdinet/jwt-refresh-token-bundle": "^1.4",
         "grpc/grpc": "^1.57",
+        "league/flysystem-bundle": "^3.4",
         "lexik/jwt-authentication-bundle": "^3.1",
         "loophp/collection": "^7.6.1",
         "nelmio/api-doc-bundle": "^4.38.1",
