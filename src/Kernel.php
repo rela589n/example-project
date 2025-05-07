@@ -22,6 +22,7 @@ final class Kernel extends BaseKernel
         yield new Support\Doctrine\Bundle\AppDoctrineBundle();
         yield new Support\Api\Bundle\AppApiBundle();
         yield new Support\Logging\Bundle\AppLoggingBundle();
+        yield new Support\Temporal\Bundle\AppTemporalBundle();
 
         yield new Playground\Bundle\AppPlaygroundBundle();
 
