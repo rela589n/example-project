@@ -22,7 +22,7 @@ final readonly class SecretKeyTypeBootstrapMiddleware implements Middleware
         /** @var SecretKeyType $type */
         $type = Type::getType(SecretKeyType::NAME);
 
-        $type->setEncryptor($this->encryptionService);
+        $type->initialize($this->encryptionService);
 
         return $driver;
     }

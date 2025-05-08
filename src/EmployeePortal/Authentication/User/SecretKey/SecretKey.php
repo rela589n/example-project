@@ -15,4 +15,9 @@ final readonly class SecretKey
     {
         return $this->key;
     }
+
+    public function equals(self $other): bool
+    {
+        return $this->key === $other->key;
+    }
 }

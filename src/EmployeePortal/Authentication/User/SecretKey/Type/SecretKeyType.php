@@ -19,9 +19,12 @@ final class SecretKeyType extends Type
 
     private EncryptionService $encryptor;
 
-    public function setEncryptor(EncryptionService $encryptor): void
+    private ReflectionClass $reflector;
+
+    public function initialize(EncryptionService $encryptor): void
     {
         $this->encryptor = $encryptor;
+        $this->reflector = new ReflectionClass(SecretKey::class);
     }
 
     #[Override]
@@ -33,7 +36,7 @@ final class SecretKeyType extends Type
 
         Assert::isInstanceOf($value, SecretKey::class);
 
-        return $this->encryptor->encryptSecret($value->getKey());
+        return $this->encryptor->encrypt($value->getKey());
     }
 
     #[Override]
@@ -45,12 +48,8 @@ final class SecretKeyType extends Type
 
         Assert::string($value);
 
-        $reflector = new ReflectionClass(SecretKey::class);
-
         /** @var SecretKey $secretKeyGhost */
-        $secretKeyGhost = $reflector->newLazyGhost(function (SecretKey $secretKey) use ($value): void {
-            $secretKey->__construct($this->encryptor->decryptSecret(rtrim($value)));
-        });
+        $secretKeyGhost = $this->reflector->newLazyProxy(fn (): SecretKey => $this->encryptor->decrypt($value));
 
         return $secretKeyGhost;
     }

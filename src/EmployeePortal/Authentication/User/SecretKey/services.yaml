@@ -1,2 +1,7 @@
-parameters:
-    env(ENCRYPTION_KEY): '%env(APP_SECRET)%'
+when@test:
+    parameters:
+        env(ENCRYPTION_KEY): 'G1hix4mI4wYMfqYk9r2fzgFkwkGc9trN5ymMKNuH0O4='
+
+when@dev:
+    parameters:
+        env(ENCRYPTION_KEY): 'kAwHoeDsi/YWx5wXFbQSwnUEPsLMIGvfmm+FYu+De1g='

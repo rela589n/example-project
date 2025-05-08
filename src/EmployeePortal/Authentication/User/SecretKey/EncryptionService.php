@@ -6,48 +6,53 @@ namespace App\EmployeePortal\Authentication\User\SecretKey;
 
 use SensitiveParameter;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Webmozart\Assert\Assert;
 
 final readonly class EncryptionService
 {
+    private const int AES_BLOCK_SIZE = 16;
+
     public function __construct(
-        #[Autowire(env: 'ENCRYPTION_KEY')]
-        private string $privateKey,
+        /** Encryption key, it must be 256 bits (32 bytes) long */
+        #[Autowire('%env(base64:ENCRYPTION_KEY)%')]
+        private string $encryptionKey,
     ) {
     }
 
-    public function encryptSecret(#[SensitiveParameter] string $data): string
+    public function encrypt(SecretKey $secretKey): string
     {
-        $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
-        $key = sodium_crypto_generichash(
-            $this->privateKey,
-            '',
-            SODIUM_CRYPTO_SECRETBOX_KEYBYTES
+        $initializationVector = random_bytes(self::AES_BLOCK_SIZE);
+
+        $encryptedValue = openssl_encrypt(
+            $secretKey->getKey(),
+            'AES-256-CBC',
+            $this->encryptionKey,
+            OPENSSL_RAW_DATA,
+            $initializationVector,
         );
-        $cipher = sodium_crypto_secretbox(
-            $data,
-            $nonce,
-            $key
-        );
-        return base64_encode($nonce . $cipher);
+
+        Assert::notFalse($encryptedValue, 'Encryption failed');
+
+        return base64_encode($initializationVector.$encryptedValue);
     }
 
-    public function decryptSecret(#[SensitiveParameter] string $data): string
+    public function decrypt(#[SensitiveParameter] string $value): SecretKey
     {
-        /** @var string $decodedData */
-        $decodedData = base64_decode($data, true);
-        $nonce = mb_substr($decodedData, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, '8bit');
-        $cipher = mb_substr($decodedData, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, null, '8bit');
-        $key = sodium_crypto_generichash(
-            $this->privateKey,
-            '',
-            SODIUM_CRYPTO_SECRETBOX_KEYBYTES
+        $binaryValue = base64_decode($value, true);
+
+        $initializationVector = substr($binaryValue, 0, self::AES_BLOCK_SIZE);
+        $encryptedValue = substr($binaryValue, self::AES_BLOCK_SIZE);
+
+        $decryptedValue = openssl_decrypt(
+            $encryptedValue,
+            'AES-256-CBC',
+            $this->encryptionKey,
+            OPENSSL_RAW_DATA,
+            $initializationVector,
         );
-        /** @var string $decryptedSecret */
-        $decryptedSecret = sodium_crypto_secretbox_open(
-            $cipher,
-            $nonce,
-            $key
-        );
-        return $decryptedSecret;
+
+        Assert::notFalse($decryptedValue, 'Decryption failed');
+
+        return new SecretKey($decryptedValue);
     }
 }
