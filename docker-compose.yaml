@@ -4,7 +4,7 @@ services:
         build:
             context: docker-configs/backend
         working_dir: /app
-        command: [ "rr", "serve", "-c", ".rr.dev.yaml" ]
+        command: [ "rr", "serve", "--config", ".rr.dev.yaml" ]
         environment:
             PHP_IDE_CONFIG: "serverName=example-project-docker"
         ports:
