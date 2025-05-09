@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Playground\Temporal\HelloWorld;
+namespace App\Playground\Temporal\QuoteOfTheDay;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,11 +17,10 @@ use Temporal\WorkerFactory;
  *     address: "host.docker.internal:7233"
  *     activities:
  *         debug: true
- *         command: "bin/console app:temporal:hello-world:worker"
- *         num_workers: 1 # defaults to 1, when debug
+ *         command: "bin/console app:temporal:quote-of-the-day:worker"
  */
-#[AsCommand(name: 'app:temporal:hello-world:worker')]
-class HelloWorldWorkerConsoleCommand extends Command
+#[AsCommand(name: 'app:temporal:quote-of-the-day:worker')]
+class QuoteOfTheDayWorkerConsoleCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -29,7 +28,8 @@ class HelloWorldWorkerConsoleCommand extends Command
 
         $worker = $factory->newWorker();
 
-        $worker->registerWorkflowTypes(HelloWorldWorkflow::class);
+        $worker->registerWorkflowTypes(QuoteOfTheDayWorkflow::class);
+        $worker->registerActivity(QuoteOfTheDayActivity::class);
 
         $factory->run();
 

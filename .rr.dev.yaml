@@ -26,8 +26,7 @@ temporal:
     address: "host.docker.internal:7233"
     activities:
         debug: true
-        command: "bin/console app:temporal:hello-world:worker"
-        num_workers: 1
+        command: "bin/console app:temporal:quote-of-the-day:worker"
 
 grpc:
     # Shall we use 0.0.0.0 ?
