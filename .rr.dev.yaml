@@ -25,6 +25,7 @@ http:
 temporal:
     address: "host.docker.internal:7233"
     activities:
+        debug: true
         command: "bin/console app:temporal:hello-world:worker"
         num_workers: 1
 
@@ -32,6 +33,10 @@ grpc:
     # Shall we use 0.0.0.0 ?
     listen: tcp://127.0.0.1:9001
     proto: []
+
+# Used by rr reset command
+rpc:
+    listen: tcp://127.0.0.1:6001
 
 logs:
     mode: development

@@ -20,7 +20,7 @@ use Temporal\WorkerFactory;
  *         num_workers: 1
  */
 #[AsCommand(name: 'app:temporal:hello-world:worker')]
-class WorkerRunConsoleCommand extends Command
+class HelloWorldWorkerConsoleCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
