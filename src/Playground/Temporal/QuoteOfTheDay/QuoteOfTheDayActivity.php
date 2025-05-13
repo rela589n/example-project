@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Playground\Temporal\QuoteOfTheDay;
 
 use Temporal\Activity\ActivityInterface;
+use Temporal\Activity\ActivityMethod;
 
 #[ActivityInterface]
 final readonly class QuoteOfTheDayActivity
@@ -15,6 +16,7 @@ final readonly class QuoteOfTheDayActivity
         'Feelings is the voice of the body',
     ];
 
+    #[ActivityMethod]
     public function getQuoteOfTheDay(int $day): string
     {
         return self::QUOTES[$day % count(self::QUOTES)];

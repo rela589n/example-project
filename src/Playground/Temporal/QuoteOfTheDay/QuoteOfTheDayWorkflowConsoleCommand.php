@@ -45,7 +45,7 @@ final class QuoteOfTheDayWorkflowConsoleCommand extends Command
         $workflow = $this->workflowClient->newWorkflowStub(
             QuoteOfTheDayWorkflow::class,
             WorkflowOptions::new()
-                ->withWorkflowExecutionTimeout(5),
+                ->withWorkflowExecutionTimeout(3),
         );
 
         $day = (int)$input->getArgument('day');
