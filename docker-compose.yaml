@@ -33,10 +33,21 @@ services:
             POSTGRES_PASSWORD: "qwerty"
             POSTGRES_DB: "project_db"
             POSTGRES_USER: ${DATABASE_USER:-postgres}
-        volumes:
-            - "postgresdata:/var/lib/postgresql/data"
         ports:
             - "127.0.0.1:15432:5432"
+        volumes:
+            - "postgresdata:/var/lib/postgresql/data"
+
+    elastic:
+        image: elasticsearch:9.0.1
+        ports:
+            - "127.0.0.1:9200:9200"
+            - "127.0.0.1:9300:9300"
+        environment:
+            # Increase JVM heap size to prevent out-of-memory errors
+            ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+        volumes:
+            - "elasticdata:/usr/share/elasticsearch/data"
 
     redis:
         image: redis:7.4
@@ -54,3 +65,4 @@ services:
 
 volumes:
     postgresdata: ~
+    elasticdata: ~
