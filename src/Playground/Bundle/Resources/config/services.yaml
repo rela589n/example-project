@@ -4,4 +4,4 @@ services:
         autoconfigure: true
 
     App\Playground\:
-        resource: '../../../**/{*ApiPoint.php,*ConsoleCommand.php,*Provider.php,*Service.php,*Handler.php,*Repository.php}'
+        resource: '../../../**/{*ApiPoint.php,*ConsoleCommand.php,*Provider.php,*Service.php,*Handler.php,*Repository.php,*Activity.php}'

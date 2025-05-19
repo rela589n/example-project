@@ -18,7 +18,7 @@
       <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="Temporal" />
       <option name="trackOnlyRoot" value="false" />
-      <option name="workingDir" value="$Projectpath$" />
+      <option name="workingDir" value="" />
       <envs />
     </TaskOptions>
   </component>
