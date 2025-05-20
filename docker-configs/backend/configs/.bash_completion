@@ -1,1 +1,2 @@
+source <(composer completion bash)
 source <(/app/bin/console completion bash)
