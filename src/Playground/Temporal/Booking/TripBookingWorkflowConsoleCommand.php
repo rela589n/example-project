@@ -12,32 +12,28 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Temporal\Client\GRPC\ServiceClient;
-use Temporal\Client\WorkflowClient;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Temporal\Client\WorkflowClientInterface;
 use Temporal\Client\WorkflowOptions;
 
+/**
+ * Run temporal server on your host machine as:
+ * temporal server start-dev --ip 0.0.0.0
+ */
 #[AsCommand('app:temporal:trip-booking')]
 final class TripBookingWorkflowConsoleCommand extends Command
 {
-    private WorkflowClientInterface $workflowClient;
-
-    public function __construct()
-    {
+    public function __construct(
+        #[Autowire('@temporal.default.client')]
+        private readonly WorkflowClientInterface $workflowClient,
+    ) {
         parent::__construct();
-
-        // Run temporal server on your host machine as:
-        // temporal server start-dev --ip 0.0.0.0
-        $address = 'host.docker.internal:7233';
-
-        $serviceClient = ServiceClient::create($address);
-
-        $this->workflowClient = WorkflowClient::create($serviceClient);
     }
 
     protected function configure(): void
     {
-        $this->addOption('fail',
+        $this->addOption(
+            'fail',
             null,
             InputOption::VALUE_REQUIRED,
             'Fail flag (none, car, flight, hotel)',

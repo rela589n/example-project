@@ -54,7 +54,8 @@
         "symfony/yaml": "7.2.*",
         "temporal/sdk": "^2.13",
         "twig/extra-bundle": "^3.20",
-        "twig/twig": "^3.20"
+        "twig/twig": "^3.20",
+        "vanta/temporal-bundle": "^0.4.5"
     },
     "config": {
         "allow-plugins": {

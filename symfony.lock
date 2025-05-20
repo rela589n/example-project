@@ -335,5 +335,8 @@
     },
     "twig/extra-bundle": {
         "version": "v3.13.0"
+    },
+    "vanta/temporal-bundle": {
+        "version": "0.4.5"
     }
 }

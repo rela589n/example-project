@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7dd21932ad8e289d808090a21bf3e80b",
+    "content-hash": "be53fd4bca843f4b3bf5f1dc610c96b6",
     "packages": [
         {
             "name": "amphp/amp",
@@ -11985,6 +11985,81 @@
                 }
             ],
             "time": "2025-05-03T07:21:55+00:00"
+        },
+        {
+            "name": "vanta/temporal-bundle",
+            "version": "0.4.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/VantaFinance/temporal-bundle.git",
+                "reference": "78e490aef9a75b9b4686e7e771ab75972906ccd9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/VantaFinance/temporal-bundle/zipball/78e490aef9a75b9b4686e7e771ab75972906ccd9",
+                "reference": "78e490aef9a75b9b4686e7e771ab75972906ccd9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.2",
+                "symfony/dependency-injection": "^6.0|^7.0",
+                "symfony/http-kernel": "^6.0|^7.0",
+                "symfony/runtime": "^6.0|^7.0",
+                "temporal/sdk": "^2.9"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "^2.10",
+                "doctrine/orm": "^2.15",
+                "friendsofphp/php-cs-fixer": "3.65.0",
+                "nyholm/symfony-bundle-test": "^3.0",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-symfony": "^2.0",
+                "phpunit/phpunit": "^10.3",
+                "psr/log": "^3.0",
+                "sentry/sentry-symfony": "^4.10",
+                "symfony/monolog-bundle": "^3.8",
+                "symfony/serializer": "^6.0|^7.0",
+                "symfony/web-profiler-bundle": "^6.0|^7.0",
+                "vanta/temporal-sentry": "^0.1.1"
+            },
+            "suggest": {
+                "vanta/temporal-sentry": "Integration for sentry"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "files": [
+                    "src/DependencyInjection/function.php"
+                ],
+                "psr-4": {
+                    "Vanta\\Integration\\Symfony\\Temporal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vlad Shashkov",
+                    "email": "v.shashkov@pos-credit.ru"
+                },
+                {
+                    "name": "Vanta Team",
+                    "homepage": "https://vanta.ru"
+                }
+            ],
+            "description": "Integration temporal with symfony",
+            "keywords": [
+                "bundle",
+                "symfony",
+                "temporal"
+            ],
+            "support": {
+                "issues": "https://github.com/VantaFinance/temporal-bundle/issues",
+                "source": "https://github.com/VantaFinance/temporal-bundle/tree/0.4.5"
+            },
+            "time": "2025-04-11T07:53:36+00:00"
         },
         {
             "name": "webmozart/assert",
