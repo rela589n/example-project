@@ -7,6 +7,7 @@ services:
         command: [ "rr", "serve", "--config", ".rr.dev.yaml" ]
         environment:
             PHP_IDE_CONFIG: "serverName=example-project-docker"
+            TERM: "${TERM:-xterm}"
         ports:
             - "127.0.0.1:8080:8080"
             - "127.0.0.1:8083:8083"
