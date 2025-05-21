@@ -15,6 +15,7 @@ services:
         volumes:
             - ./docker-configs/backend/ssl/:/etc/ssl/backend/
             - ./docker-configs/backend/configs/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+            - ./docker-configs/backend/configs/php.ini:/usr/local/etc/php/conf.d/php.ini
             - ./docker-configs/backend/configs/.bash_completion:/home/app/.bash_completion
             - .:/app:cached
             - app_user:/home/app
