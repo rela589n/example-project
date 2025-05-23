@@ -151,6 +151,7 @@ final class ShortestSubarraySumUnitTest extends TestCase
 
     public function testBigArray(): void
     {
+        /** @var list<int> $array */
         $array = include __DIR__.'/data.php';
         $target = 396893380;
 

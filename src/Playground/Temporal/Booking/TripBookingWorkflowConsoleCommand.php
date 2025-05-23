@@ -58,7 +58,10 @@ final class TripBookingWorkflowConsoleCommand extends Command
             default => FailFlag::NONE,
         };
 
-        [$carReservationId, $flightReservationId, $hotelReservationId] = $workflow->run($failFlag);
+        /** @var array{string,string,string} $booking */
+        $booking = $workflow->run($failFlag);
+
+        [$carReservationId, $flightReservationId, $hotelReservationId] = $booking;
 
         $io->success('Trip Booking completed successfully!');
         $io->section('Reservations:');

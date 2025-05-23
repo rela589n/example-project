@@ -8,6 +8,7 @@ use Swoole\Http\Server;
 $server = new Swoole\HTTP\Server('0.0.0.0', 9501);
 
 $server->on("start", function (Server $server): void {
+    // @phpstan-ignore-next-line encapsedStringPart.nonString
     echo "OpenSwoole http server is started at $server->host:$server->port\n";
 });
 
