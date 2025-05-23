@@ -36,7 +36,7 @@ final class SecretKeyType extends Type
 
         Assert::isInstanceOf($value, SecretKey::class);
 
-        return $this->encryptor->encrypt($value->getKey());
+        return $this->encryptor->encrypt($value);
     }
 
     #[Override]

@@ -11,7 +11,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
 
 #[AsMessageHandler('event.bus')]
-final readonly class RegistrationWelcomeEmailTrigger
+final readonly class SendWelcomeEmailOutbox
 {
     public function __construct(
         #[Autowire('@consumer.bus')]
@@ -21,7 +21,7 @@ final readonly class RegistrationWelcomeEmailTrigger
 
     public function __invoke(UserRegisteredEvent $event): void
     {
-        $welcomeEmail = new RegistrationWelcomeEmail($event->getEmail());
+        $welcomeEmail = new SendWelcomeEmailCommand($event->getEmail());
 
         // ideally, outbox transaction should be used instead of DispatchAfterCurrentBusStamp
         $this->consumerBus->dispatch($welcomeEmail, [new DispatchAfterCurrentBusStamp()]);

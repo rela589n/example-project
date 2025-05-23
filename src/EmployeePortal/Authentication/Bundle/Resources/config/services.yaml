@@ -4,4 +4,4 @@ services:
         autoconfigure: true
 
     App\EmployeePortal\Authentication\:
-        resource: '../../../**/{*ApiPoint.php,*ConsoleCommand.php,*Service.php,*Middleware.php,*Provider.php,*Fixture.php,*Repository.php}'
+        resource: '../../../**/{*ApiPoint.php,*ConsoleCommand.php,*Service.php,*Outbox.php,*Middleware.php,*Provider.php,*Fixture.php,*Repository.php}'

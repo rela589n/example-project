@@ -1,0 +1,10 @@
+framework:
+    messenger:
+        transports:
+            auth: 'sync://'
+
+when@test:
+    framework:
+        messenger:
+            transports:
+                auth: 'in-memory://'

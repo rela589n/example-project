@@ -24,6 +24,7 @@ use Symfony\Component\Uid\Uuid;
 use function Amp\async;
 use function Amp\Future\awaitAnyN;
 
+/** Using commands as a source of execution fully eliminates the problem of stateful services. */
 #[ExceptionalValidation]
 final readonly class RegisterUserCommand
 {

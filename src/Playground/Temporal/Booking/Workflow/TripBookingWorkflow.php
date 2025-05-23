@@ -7,14 +7,17 @@ namespace App\Playground\Temporal\Booking\Workflow;
 use App\Playground\Temporal\Booking\Workflow\Car\ReserveCarActivity;
 use App\Playground\Temporal\Booking\Workflow\Flight\BookFlightActivity;
 use App\Playground\Temporal\Booking\Workflow\Hotel\BookHotelActivity;
+use Exception;
 use Generator;
 use LogicException;
+use React\Promise\Promise;
 use Temporal\Activity;
 use Temporal\Internal\Workflow\ActivityProxy;
 use Temporal\Workflow;
 use Temporal\Workflow\WorkflowInterface;
 use Temporal\Workflow\WorkflowMethod;
 use Throwable;
+use Traversable;
 
 #[WorkflowInterface]
 final readonly class TripBookingWorkflow
@@ -58,7 +61,7 @@ final readonly class TripBookingWorkflow
     public function run(FailFlag $flag): Generator
     {
         try {
-            return yield $this->runBooking($flag);
+            return yield $this->processBooking($flag);
         } catch (Throwable $e) {
             yield $this->saga->compensate();
 
@@ -66,7 +69,7 @@ final readonly class TripBookingWorkflow
         }
     }
 
-    private function runBooking(FailFlag $flag): Generator
+    private function processBooking(FailFlag $flag): Generator
     {
         $carReservationId = yield $this->reserveCarForTrip($flag);
 

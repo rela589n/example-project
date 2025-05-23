@@ -1,0 +1,23 @@
+framework:
+    messenger:
+        buses:
+            consumer.bus:
+                default_middleware: false
+                middleware:
+                    -   add_bus_name_stamp_middleware: [ consumer.bus ]
+                    # - app_message_consumers_sync_mode
+                    -   send_message:
+                            - false # allow_no_senders: false
+                    - reject_redelivered_message_middleware
+                    - failed_message_processing_middleware
+                    - phd_exception_handler
+                    - app_pass_through_bus
+
+            consumer.exception.bus:
+                default_middleware: false
+                middleware:
+                    - phd_exception_rethrow_unhandled
+                    - phd_exception_chaining
+                    - phd_exception_result_filter
+                    -   handle_message:
+                            - true

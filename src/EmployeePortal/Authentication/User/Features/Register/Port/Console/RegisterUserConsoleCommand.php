@@ -34,7 +34,10 @@ final class RegisterUserConsoleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $email */
         $email = $input->getArgument('email');
+
+        /** @var string $password */
         $password = $input->getArgument('password');
 
         $registerUserCommand = new RegisterUserCommand(

@@ -51,6 +51,7 @@ final class EmailUnitTest extends TestCase
         self::assertSame('example@test.com', $email->toString());
     }
 
+    /** @return list<list<string>> */
     public static function untrimmedEmailsProvider(): array
     {
         return [
@@ -59,6 +60,7 @@ final class EmailUnitTest extends TestCase
         ];
     }
 
+    /** @return list<list<string>> */
     public static function invalidEmailsProvider(): array
     {
         return [
