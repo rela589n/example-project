@@ -45,7 +45,7 @@ final class TripBookingWorkflowConsoleCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $workflow = $this->workflowClient->withTimeout(15)
+        $workflow = $this->workflowClient
             ->newWorkflowStub(TripBookingWorkflow::class);
 
         $io->info('Starting Trip Booking Workflow...');

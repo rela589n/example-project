@@ -1,5 +1,6 @@
 parameters:
     env(TEMPORAL_ADDRESS): 'host.docker.internal:7233'
+    env(RR_RPC): 'tcp://127.0.0.1:6001'
 
 temporal:
     defaultClient: default
@@ -22,3 +23,6 @@ temporal:
             namespace: default
             address: '%env(TEMPORAL_ADDRESS)%'
             dataConverter: temporal.data_converter
+            grpcContext:
+                timeout:
+                    value: 10
