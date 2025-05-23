@@ -7,31 +7,25 @@ namespace App\Playground\Temporal\Booking\Workflow;
 use App\Playground\Temporal\Booking\Workflow\Car\ReserveCarActivity;
 use App\Playground\Temporal\Booking\Workflow\Flight\BookFlightActivity;
 use App\Playground\Temporal\Booking\Workflow\Hotel\BookHotelActivity;
-use Exception;
 use Generator;
 use LogicException;
-use React\Promise\Promise;
 use Temporal\Activity;
 use Temporal\Internal\Workflow\ActivityProxy;
 use Temporal\Workflow;
 use Temporal\Workflow\WorkflowInterface;
 use Temporal\Workflow\WorkflowMethod;
 use Throwable;
-use Traversable;
 
 #[WorkflowInterface]
 final readonly class TripBookingWorkflow
 {
     private Workflow\Saga $saga;
 
-    /** @var ActivityProxy&ReserveCarActivity */
-    private ActivityProxy $reserveCar;
+    private ReserveCarActivity|ActivityProxy $reserveCar;
 
-    /** @var ActivityProxy&BookFlightActivity */
-    private ActivityProxy $bookFlight;
+    private BookFlightActivity|ActivityProxy $bookFlight;
 
-    /** @var ActivityProxy&BookHotelActivity */
-    private ActivityProxy $bookHotel;
+    private BookHotelActivity|ActivityProxy $bookHotel;
 
     public function __construct()
     {
@@ -71,10 +65,13 @@ final readonly class TripBookingWorkflow
 
     private function processBooking(FailFlag $flag): Generator
     {
+        /** @var string $carReservationId */
         $carReservationId = yield $this->reserveCarForTrip($flag);
 
+        /** @var string $flightReservationId */
         $flightReservationId = yield $this->reserveFlight($flag);
 
+        /** @var string $hotelReservationId */
         $hotelReservationId = yield $this->reserveHotel($flag, $flightReservationId);
 
         if (FailFlag::AFTER_ALL === $flag) {
@@ -86,6 +83,7 @@ final readonly class TripBookingWorkflow
 
     private function reserveCarForTrip(FailFlag $flag): Generator
     {
+        /** @var string $carReservationId */
         $carReservationId = yield $this->reserveCar->process($flag);
         $this->saga->addCompensation(fn () => $this->reserveCar->cancel($carReservationId));
 
@@ -94,14 +92,16 @@ final readonly class TripBookingWorkflow
 
     private function reserveFlight(FailFlag $flag): Generator
     {
+        /** @var string $flightReservationId */
         $flightReservationId = yield $this->bookFlight->process($flag);
         $this->saga->addCompensation(fn () => $this->bookFlight->cancel($flightReservationId));
 
         return $flightReservationId;
     }
 
-    private function reserveHotel(FailFlag $flag, $flightReservationId): Generator
+    private function reserveHotel(FailFlag $flag, string $flightReservationId): Generator
     {
+        /** @var string $hotelReservationId */
         $hotelReservationId = yield $this->bookHotel->process($flag, $flightReservationId);
         $this->saga->addCompensation(fn () => $this->bookHotel->cancel($hotelReservationId));
 

@@ -47,6 +47,7 @@ final class HelloWorldWorkflowConsoleCommand extends Command
                 ->withWorkflowExecutionTimeout(1),
         );
 
+        /** @var string $name */
         $name = $input->getArgument('name');
 
         $greeting = $workflow->greet($name);

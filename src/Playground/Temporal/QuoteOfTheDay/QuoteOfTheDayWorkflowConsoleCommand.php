@@ -7,8 +7,8 @@ namespace App\Playground\Temporal\QuoteOfTheDay;
 use Carbon\CarbonImmutable;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Temporal\Client\GRPC\ServiceClient;
 use Temporal\Client\WorkflowClient;
@@ -37,7 +37,7 @@ final class QuoteOfTheDayWorkflowConsoleCommand extends Command
     {
         parent::configure();
 
-        $this->addArgument('day', InputArgument::OPTIONAL, 'Quote Day', CarbonImmutable::now()->dayOfMonth);
+        $this->addOption('day', null, InputOption::VALUE_REQUIRED, 'Quote Day', CarbonImmutable::now()->dayOfMonth);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -48,9 +48,11 @@ final class QuoteOfTheDayWorkflowConsoleCommand extends Command
                 ->withWorkflowExecutionTimeout(3),
         );
 
-        $day = (int)$input->getArgument('day');
+        /** @var string|int $day */
+        $day = $input->getOption('day');
 
-        $greeting = $workflow->getQuoteOfTheDay($day);
+        /** @var string $greeting */
+        $greeting = $workflow->getQuoteOfTheDay((int)$day);
 
         $output->writeln(sprintf("Quote of the day:\n<info>%s</info>", $greeting));
 

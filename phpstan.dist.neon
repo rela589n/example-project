@@ -7,8 +7,8 @@ includes:
     - 'vendor/phpat/phpat/extension.neon'
 
 parameters:
-    level: 9
-    phpVersion: 80312
+    level: max
+    phpVersion: 80407
     editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
     paths:
         - src
@@ -27,8 +27,9 @@ parameters:
         property_type: 100
         constant: 0
     ignoreErrors:
-#        -   '#Method App\\(\w+\\)*\w+Repository::(get|find)\w+\(\) should return ((array|iterable)<)?App\\(\w+\\)*\w+(>)?(\|null)? but returns (object|mixed)\.#'
-#        -   identifier: missingType.generics
+        - identifier: missingType.generics
+        - identifier: property.unusedType
+          message: '#Property .+ is never assigned Temporal\\Internal\\Workflow\\ActivityProxy so it can be removed from the property type\.$#'
         - identifier: property.uninitializedReadonly
           message: '#Class App\\(\w+\\)*\w+Command has an uninitialized readonly property \$\w+\. Assign it in the constructor\.#'
         - identifier: property.readOnlyAssignNotInConstructor
@@ -37,13 +38,3 @@ parameters:
         - '%rootDir%/../../../src/EmployeeOffice/Inventory/Domain/Employee/Scenarios/GetFixedAssetList/Doctrine/Type/*'
     phpat:
         ignore_built_in_classes: true
-
-#services:
-#    -
-#        class: App\Tests\NamingTest
-#        tags:
-#            - phpat.test
-#    -
-#        class: App\Tests\ConventionsTest
-#        tags:
-#            - phpat.test

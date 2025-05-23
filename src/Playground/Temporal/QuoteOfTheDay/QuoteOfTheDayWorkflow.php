@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Playground\Temporal\QuoteOfTheDay;
 
+use Generator;
 use React\Promise\Promise;
 use Temporal\Activity\ActivityOptions;
 use Temporal\Internal\Workflow\ActivityProxy;
@@ -14,8 +15,7 @@ use Temporal\Workflow\WorkflowMethod;
 #[WorkflowInterface]
 final readonly class QuoteOfTheDayWorkflow
 {
-    /** @var ActivityProxy&QuoteOfTheDayActivity */
-    private ActivityProxy $activity;
+    private QuoteOfTheDayActivity|ActivityProxy $activity;
 
     public function __construct()
     {
@@ -27,8 +27,8 @@ final readonly class QuoteOfTheDayWorkflow
     }
 
     #[WorkflowMethod]
-    public function getQuoteOfTheDay(int $dayIndex): Promise
+    public function getQuoteOfTheDay(int $dayIndex): Generator
     {
-        return $this->activity->getQuoteOfTheDay($dayIndex);
+        return yield $this->activity->getQuoteOfTheDay($dayIndex);
     }
 }
