@@ -34,8 +34,8 @@ when@test:
                 channels: ["!event"]
             nested:
                 type: stream
-                path: php://stderr
-                level: notice
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: debug
 
 when@prod:
     monolog:

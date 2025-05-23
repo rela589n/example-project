@@ -10,6 +10,7 @@ use LogicException;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Component\Uid\Uuid;
+use Temporal\Activity;
 use Temporal\Activity\ActivityInterface;
 use Temporal\Activity\ActivityMethod;
 use Temporal\Activity\ActivityOptions;
@@ -43,8 +44,9 @@ final readonly class BookHotelActivity
     #[ActivityMethod]
     public function process(FailFlag $flag, string $flightReservationId): string
     {
-        $this->logger->info('Booking the hotel (flight id: {flightReservationId})', [
+        $this->logger->info('Booking the hotel (flight id: {flightReservationId}, attempt: {attempt})', [
             'flightReservationId' => $flightReservationId,
+            'attempt' => Activity::getInfo()->attempt,
         ]);
 
         if (FailFlag::HOTEL_RESERVATION === $flag) {

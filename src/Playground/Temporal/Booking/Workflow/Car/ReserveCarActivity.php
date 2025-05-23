@@ -9,6 +9,7 @@ use Carbon\CarbonInterval;
 use LogicException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Uid\Uuid;
+use Temporal\Activity;
 use Temporal\Activity\ActivityInterface;
 use Temporal\Activity\ActivityMethod;
 use Temporal\Activity\ActivityOptions;
@@ -47,7 +48,11 @@ final readonly class ReserveCarActivity
     #[ActivityMethod]
     public function process(FailFlag $flag): string
     {
-        $this->logger->info('Reserving the car');
+        $activityInfo = Activity::getInfo();
+
+        $this->logger->info('Reserving the car (attempt {attempt})', [
+            'attempt' => $activityInfo->attempt,
+        ]);
 
         if (FailFlag::CAR_RESERVATION === $flag) {
             throw new LogicException('Could not reserve car');
