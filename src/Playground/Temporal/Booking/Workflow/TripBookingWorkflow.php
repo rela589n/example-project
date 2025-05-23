@@ -9,7 +9,6 @@ use App\Playground\Temporal\Booking\Workflow\Flight\BookFlightActivity;
 use App\Playground\Temporal\Booking\Workflow\Hotel\BookHotelActivity;
 use Generator;
 use LogicException;
-use Temporal\Activity;
 use Temporal\Internal\Workflow\ActivityProxy;
 use Temporal\Workflow;
 use Temporal\Workflow\WorkflowInterface;
@@ -32,23 +31,9 @@ final readonly class TripBookingWorkflow
         $this->saga = new Workflow\Saga()
             ->setParallelCompensation(true);
 
-        $this->reserveCar = Workflow::newActivityStub(
-            ReserveCarActivity::class,
-            Activity\ActivityOptions::new()
-                ->withStartToCloseTimeout(2),
-        );
-
-        $this->bookFlight = Workflow::newActivityStub(
-            BookFlightActivity::class,
-            Activity\ActivityOptions::new()
-                ->withStartToCloseTimeout(2),
-        );
-
-        $this->bookHotel = Workflow::newActivityStub(
-            BookHotelActivity::class,
-            Activity\ActivityOptions::new()
-                ->withStartToCloseTimeout(2),
-        );
+        $this->reserveCar = ReserveCarActivity::create();
+        $this->bookFlight = BookFlightActivity::create();
+        $this->bookHotel = BookHotelActivity::create();
     }
 
     #[WorkflowMethod]

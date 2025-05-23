@@ -35,7 +35,7 @@ when@test:
             nested:
                 type: stream
                 path: php://stderr
-                level: debug
+                level: notice
 
 when@prod:
     monolog:

@@ -5,10 +5,17 @@ declare(strict_types=1);
 namespace App\Playground\Temporal\Booking\Workflow\Hotel;
 
 use App\Playground\Temporal\Booking\Workflow\FailFlag;
+use Carbon\CarbonInterval;
+use LogicException;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 use Symfony\Component\Uid\Uuid;
 use Temporal\Activity\ActivityInterface;
 use Temporal\Activity\ActivityMethod;
+use Temporal\Activity\ActivityOptions;
+use Temporal\Common\RetryOptions;
+use Temporal\Internal\Workflow\ActivityProxy;
+use Temporal\Workflow;
 
 #[ActivityInterface('BookHotel.')]
 final readonly class BookHotelActivity
@@ -16,6 +23,21 @@ final readonly class BookHotelActivity
     public function __construct(
         private LoggerInterface $logger,
     ) {
+    }
+
+    public static function create(): self|ActivityProxy
+    {
+        return Workflow::newActivityStub(
+            self::class,
+            ActivityOptions::new()
+                ->withStartToCloseTimeout(1)
+                ->withRetryOptions(
+                    RetryOptions::new()
+                        ->withInitialInterval(CarbonInterval::seconds(2))
+                        ->withBackoffCoefficient(2)
+                        ->withMaximumAttempts(3),
+                ),
+        );
     }
 
     #[ActivityMethod]
@@ -27,6 +49,10 @@ final readonly class BookHotelActivity
 
         if (FailFlag::HOTEL_RESERVATION === $flag) {
             throw new \LogicException('Could not book hotel');
+        }
+
+        if (random_int(0, 1) !== 0) {
+            throw new RuntimeException('Temporary failure');
         }
 
         $hotelReservationId = Uuid::v7()->toRfc4122();

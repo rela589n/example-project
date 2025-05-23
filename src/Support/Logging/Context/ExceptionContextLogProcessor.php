@@ -38,25 +38,17 @@ final readonly class ExceptionContextLogProcessor
             return $record;
         }
 
+        if (str_contains($exception->getFile(), '/vendor/')) {
+            return $record;
+        }
+
         $exceptionContext = $this->serializer->normalize($exception, 'json', [
-            AbstractNormalizer::IGNORED_ATTRIBUTES => $this->getIgnoredAttributes($exception),
+            AbstractNormalizer::IGNORED_ATTRIBUTES => self::IGNORED_ATTRIBUTES,
             AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
         ]);
 
         $context['caught'] = $exceptionContext;
 
         return $record->with(context: $context);
-    }
-
-    /** @return list<string> */
-    private function getIgnoredAttributes(Throwable $exception): array
-    {
-        $ignored = self::IGNORED_ATTRIBUTES;
-
-        if ($exception instanceof HandlerFailedException) {
-            $ignored[] = 'envelope';
-        }
-
-        return $ignored;
     }
 }
