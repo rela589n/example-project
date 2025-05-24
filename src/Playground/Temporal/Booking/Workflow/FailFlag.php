@@ -14,5 +14,7 @@ enum FailFlag: string
 
     case HOTEL_RESERVATION = 'hotel_reservation';
 
+    case RANDOM = 'random';
+
     case AFTER_ALL = 'after_all';
 }

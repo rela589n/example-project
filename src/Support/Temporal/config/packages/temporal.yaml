@@ -25,4 +25,4 @@ temporal:
             dataConverter: temporal.data_converter
             grpcContext:
                 timeout:
-                    value: 10
+                    value: 12

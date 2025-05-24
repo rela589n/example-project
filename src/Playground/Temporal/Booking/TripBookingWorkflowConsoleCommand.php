@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Playground\Temporal\Booking;
 
 use App\Playground\Temporal\Booking\Workflow\FailFlag;
+use App\Playground\Temporal\Booking\Workflow\FailOptions;
 use App\Playground\Temporal\Booking\Workflow\TripBookingWorkflow;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -14,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Temporal\Client\WorkflowClientInterface;
-use Temporal\Client\WorkflowOptions;
 
 /**
  * Run temporal server on your host machine as:
@@ -39,6 +39,14 @@ final class TripBookingWorkflowConsoleCommand extends Command
             'Fail flag (none, car, flight, hotel)',
             'none'
         );
+
+        $this->addOption(
+            'fail-attempts',
+            null,
+            InputOption::VALUE_REQUIRED,
+            'Fail attempt (number of attempts to fail before succeeding)',
+            1,
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -54,12 +62,25 @@ final class TripBookingWorkflowConsoleCommand extends Command
             'car' => FailFlag::CAR_RESERVATION,
             'flight' => FailFlag::FLIGHT_RESERVATION,
             'hotel' => FailFlag::HOTEL_RESERVATION,
+            'random' => FailFlag::RANDOM,
             'after' => FailFlag::AFTER_ALL,
-            default => FailFlag::NONE,
+            default => null,
         };
 
+        if (null === $failFlag) {
+            $failOptions = FailOptions::doNotFail();
+        } else {
+            /** @var string $failAttempt */
+            $failAttempt = $input->getOption('fail-attempts');
+
+            $failOptions = FailOptions::failAt(
+                $failFlag,
+                (int)$failAttempt,
+            );
+        }
+
         /** @var array{string,string,string} $booking */
-        $booking = $workflow->run($failFlag);
+        $booking = $workflow->run($failOptions);
 
         [$carReservationId, $flightReservationId, $hotelReservationId] = $booking;
 

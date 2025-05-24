@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Playground\Temporal\Booking\Workflow\Car;
 
 use App\Playground\Temporal\Booking\Workflow\FailFlag;
+use App\Playground\Temporal\Booking\Workflow\FailOptions;
 use Carbon\CarbonInterval;
-use LogicException;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 use Symfony\Component\Uid\Uuid;
 use Temporal\Activity;
 use Temporal\Activity\ActivityInterface;
@@ -46,20 +47,14 @@ final readonly class ReserveCarActivity
     }
 
     #[ActivityMethod]
-    public function process(FailFlag $flag): string
+    public function process(FailOptions $failOptions): string
     {
-        $activityInfo = Activity::getInfo();
-
         $this->logger->info('Reserving the car (attempt {attempt})', [
-            'attempt' => $activityInfo->attempt,
+            'attempt' => Activity::getInfo()->attempt,
         ]);
 
-        if (FailFlag::CAR_RESERVATION === $flag) {
-            throw new LogicException('Could not reserve car');
-        }
-
-        if (random_int(0, 2) !== 0) {
-            throw new LogicException('Temporary failure');
+        if ($failOptions->shouldFail(FailFlag::CAR_RESERVATION, Activity::getInfo())) {
+            throw new RuntimeException('Could not reserve car');
         }
 
         $carReservationId = Uuid::v7()->toRfc4122();

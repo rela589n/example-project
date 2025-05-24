@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Playground\Temporal\Booking\Workflow\Hotel;
 
 use App\Playground\Temporal\Booking\Workflow\FailFlag;
+use App\Playground\Temporal\Booking\Workflow\FailOptions;
 use Carbon\CarbonInterval;
-use LogicException;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Component\Uid\Uuid;
@@ -42,19 +42,15 @@ final readonly class BookHotelActivity
     }
 
     #[ActivityMethod]
-    public function process(FailFlag $flag, string $flightReservationId): string
+    public function process(FailOptions $failOptions, string $flightReservationId): string
     {
         $this->logger->info('Booking the hotel (flight id: {flightReservationId}, attempt: {attempt})', [
             'flightReservationId' => $flightReservationId,
             'attempt' => Activity::getInfo()->attempt,
         ]);
 
-        if (FailFlag::HOTEL_RESERVATION === $flag) {
-            throw new \LogicException('Could not book hotel');
-        }
-
-        if (random_int(0, 1) !== 0) {
-            throw new RuntimeException('Temporary failure');
+        if ($failOptions->shouldFail(FailFlag::HOTEL_RESERVATION, Activity::getInfo())) {
+            throw new RuntimeException('Could not book hotel');
         }
 
         $hotelReservationId = Uuid::v7()->toRfc4122();
