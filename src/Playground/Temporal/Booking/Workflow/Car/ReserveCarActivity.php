@@ -15,10 +15,12 @@ use Temporal\Activity\ActivityInterface;
 use Temporal\Activity\ActivityMethod;
 use Temporal\Activity\ActivityOptions;
 use Temporal\Common\RetryOptions;
-use Temporal\Internal\Workflow\ActivityProxy;
+use Temporal\Internal\Workflow\Proxy;
 use Temporal\Workflow;
+use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
 #[ActivityInterface('ReserveCar.')]
+#[AssignWorker('trip_booking')]
 final readonly class ReserveCarActivity
 {
     public function __construct(
@@ -26,7 +28,7 @@ final readonly class ReserveCarActivity
     ) {
     }
 
-    public static function create(): self|ActivityProxy
+    public static function create(): self|Proxy
     {
         return Workflow::newActivityStub(
             self::class,

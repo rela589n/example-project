@@ -53,8 +53,7 @@ final class TripBookingWorkflowConsoleCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $workflow = $this->workflowClient
-            ->newWorkflowStub(TripBookingWorkflow::class);
+        $workflow = TripBookingWorkflow::create($this->workflowClient);
 
         $io->info('Starting Trip Booking Workflow...');
 
@@ -80,7 +79,7 @@ final class TripBookingWorkflowConsoleCommand extends Command
         }
 
         /** @var array{string,string,string} $booking */
-        $booking = $workflow->run($failOptions);
+        $booking = $workflow->run($failOptions); // @phpstan-ignore varTag.nativeType
 
         [$carReservationId, $flightReservationId, $hotelReservationId] = $booking;
 

@@ -9,22 +9,28 @@ use App\Playground\Temporal\Booking\Workflow\Flight\BookFlightActivity;
 use App\Playground\Temporal\Booking\Workflow\Hotel\BookHotelActivity;
 use Generator;
 use LogicException;
-use Temporal\Internal\Workflow\ActivityProxy;
+use Temporal\Client\WorkflowClientInterface;
+use Temporal\Client\WorkflowOptions;
+use Temporal\Internal\Workflow\Proxy;
 use Temporal\Workflow;
 use Temporal\Workflow\WorkflowInterface;
 use Temporal\Workflow\WorkflowMethod;
 use Throwable;
+use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
 #[WorkflowInterface]
+#[AssignWorker(self::TASK_QUEUE)]
 final readonly class TripBookingWorkflow
 {
+    public const TASK_QUEUE = 'trip_booking';
+
     private Workflow\Saga $saga;
 
-    private ReserveCarActivity|ActivityProxy $reserveCar;
+    private ReserveCarActivity|Proxy $reserveCar;
 
-    private BookFlightActivity|ActivityProxy $bookFlight;
+    private BookFlightActivity|Proxy $bookFlight;
 
-    private BookHotelActivity|ActivityProxy $bookHotel;
+    private BookHotelActivity|Proxy $bookHotel;
 
     public function __construct()
     {
@@ -34,6 +40,14 @@ final readonly class TripBookingWorkflow
         $this->reserveCar = ReserveCarActivity::create();
         $this->bookFlight = BookFlightActivity::create();
         $this->bookHotel = BookHotelActivity::create();
+    }
+
+    public static function create(WorkflowClientInterface $workflowClient): self|Proxy
+    {
+        return $workflowClient->newWorkflowStub(
+            self::class,
+            WorkflowOptions::new()->withTaskQueue(self::TASK_QUEUE)
+        );
     }
 
     #[WorkflowMethod]

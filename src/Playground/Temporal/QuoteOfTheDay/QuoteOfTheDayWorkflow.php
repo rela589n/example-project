@@ -11,8 +11,10 @@ use Temporal\Internal\Workflow\ActivityProxy;
 use Temporal\Workflow;
 use Temporal\Workflow\WorkflowInterface;
 use Temporal\Workflow\WorkflowMethod;
+use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
 #[WorkflowInterface]
+#[AssignWorker('default')]
 final readonly class QuoteOfTheDayWorkflow
 {
     private QuoteOfTheDayActivity|ActivityProxy $activity;
