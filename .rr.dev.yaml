@@ -27,11 +27,6 @@ temporal:
     activities:
         debug: true
 
-grpc:
-    # Shall we use 0.0.0.0 ?
-    listen: tcp://127.0.0.1:9001
-    proto: []
-
 # Used by rr reset command
 rpc:
     listen: tcp://127.0.0.1:6001
