@@ -29,7 +29,7 @@ parameters:
     ignoreErrors:
         - identifier: missingType.generics
         - identifier: property.unusedType
-          message: '#Property .+ is never assigned Temporal\\Internal\\Workflow\\ActivityProxy so it can be removed from the property type\.$#'
+          message: '#Property .+ is never assigned Temporal\\Internal\\Workflow\\Proxy so it can be removed from the property type\.$#'
         - identifier: return.unusedType
           message: '#^Method .+ never returns Temporal\\Internal\\Workflow\\Proxy so it can be removed from the return type\.$#'
         - identifier: method.notFound

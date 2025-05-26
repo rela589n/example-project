@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Playground\Temporal\QuoteOfTheDay;
 
 use Generator;
-use React\Promise\Promise;
 use Temporal\Activity\ActivityOptions;
-use Temporal\Internal\Workflow\ActivityProxy;
+use Temporal\Internal\Workflow\Proxy;
 use Temporal\Workflow;
 use Temporal\Workflow\WorkflowInterface;
 use Temporal\Workflow\WorkflowMethod;
@@ -17,7 +16,7 @@ use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 #[AssignWorker('default')]
 final readonly class QuoteOfTheDayWorkflow
 {
-    private QuoteOfTheDayActivity|ActivityProxy $activity;
+    private QuoteOfTheDayActivity|Proxy $activity;
 
     public function __construct()
     {

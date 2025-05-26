@@ -47,7 +47,7 @@ final readonly class ExceptionContextLogProcessor
             AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
         ]);
 
-        $context['caught'] = $exceptionContext;
+        $context += $exceptionContext;
 
         return $record->with(context: $context);
     }
