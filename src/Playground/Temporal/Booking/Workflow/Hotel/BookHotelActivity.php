@@ -7,6 +7,7 @@ namespace App\Playground\Temporal\Booking\Workflow\Hotel;
 use App\Playground\Temporal\Booking\Workflow\FailFlag;
 use App\Playground\Temporal\Booking\Workflow\FailOptions;
 use Carbon\CarbonInterval;
+use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Component\Uid\Uuid;
@@ -21,6 +22,7 @@ use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
 #[ActivityInterface('BookHotel.')]
 #[AssignWorker('trip_booking')]
+#[WithMonologChannel('trip_booking')]
 final readonly class BookHotelActivity
 {
     public function __construct(

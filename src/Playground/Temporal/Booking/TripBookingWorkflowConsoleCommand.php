@@ -36,7 +36,7 @@ final class TripBookingWorkflowConsoleCommand extends Command
             'fail',
             null,
             InputOption::VALUE_REQUIRED,
-            'Fail flag (none, car, flight, hotel)',
+            'Fail flag (none, car, flight, hotel, random)',
             'none'
         );
 
