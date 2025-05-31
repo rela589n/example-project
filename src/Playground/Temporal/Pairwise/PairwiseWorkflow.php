@@ -1,0 +1,47 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Playground\Temporal\Pairwise;
+
+use Generator;
+use Temporal\Activity;
+use Temporal\Internal\Workflow\Proxy;
+use Temporal\Workflow;
+use Temporal\Workflow\WorkflowInterface;
+use Temporal\Workflow\WorkflowMethod;
+use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
+
+#[WorkflowInterface]
+#[AssignWorker('default')]
+final readonly class PairwiseWorkflow
+{
+    private PairwiseActivity|Proxy $activity;
+
+    public function __construct()
+    {
+        $this->activity = Workflow::newActivityStub(
+            PairwiseActivity::class,
+            Activity\ActivityOptions::new()
+                ->withScheduleToCloseTimeout(3),
+        );
+    }
+
+    #[WorkflowMethod]
+    public function pair(): Generator
+    {
+        // try to run console command
+        // and then move first to the place of second,
+        // and second to the place of first
+        // ("First, First")
+
+        $first = yield $this->activity->call('First');
+
+        yield Workflow::timer(7);
+
+        $second = yield $this->activity->call('Second');
+
+        return sprintf("%s, %s", $first, $second);
+    }
+}
+
