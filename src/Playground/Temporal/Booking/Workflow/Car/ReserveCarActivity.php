@@ -6,6 +6,7 @@ namespace App\Playground\Temporal\Booking\Workflow\Car;
 
 use App\Playground\Temporal\Booking\Workflow\FailFlag;
 use App\Playground\Temporal\Booking\Workflow\FailOptions;
+use App\Playground\Temporal\Booking\Workflow\TripBookingWorkflow;
 use Carbon\CarbonInterval;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
@@ -21,8 +22,8 @@ use Temporal\Workflow;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
 #[ActivityInterface('ReserveCar.')]
-#[AssignWorker('trip_booking')]
-#[WithMonologChannel('trip_booking')]
+#[AssignWorker(TripBookingWorkflow::TASK_QUEUE)]
+#[WithMonologChannel(TripBookingWorkflow::TASK_QUEUE)]
 final readonly class ReserveCarActivity
 {
     public function __construct(

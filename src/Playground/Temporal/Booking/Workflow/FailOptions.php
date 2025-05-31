@@ -26,18 +26,21 @@ final readonly class FailOptions
 
     public function shouldFail(FailFlag $flag, ActivityInfo $activityInfo): bool
     {
+        if ($flag === $this->flag) {
+            return true;
+        }
+
+        if (FailFlag::RANDOM !== $this->flag) {
+            return false;
+        }
+
         if ($activityInfo->attempt > $this->attempts) {
             return false;
         }
 
-        if (FailFlag::RANDOM === $this->flag) {
-            // since $activityInfo->attempt is increasing,
-            // there's a bigger chance to not fail on the next retries
-            // (actually, if the max retries number is less than $this->attempts, it'll always be succeeded)
-
-            return random_int($activityInfo->attempt, $this->attempts) !== $this->attempts;
-        }
-
-        return $flag === $this->flag;
+        // since $activityInfo->attempt is increasing,
+        // there's a bigger chance to not fail on the next retries
+        // (actually, if the max retries number is less than $this->attempts, it'll always be succeeded)
+        return random_int($activityInfo->attempt, $this->attempts) !== $this->attempts;
     }
 }

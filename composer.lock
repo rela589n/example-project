@@ -4657,12 +4657,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phphd/exceptional-validation.git",
-                "reference": "101dc6ab4aba384cf34edb5a10f4d421307453c8"
+                "reference": "297290ab75834e9677c891019c342a9109632a0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phphd/exceptional-validation/zipball/101dc6ab4aba384cf34edb5a10f4d421307453c8",
-                "reference": "101dc6ab4aba384cf34edb5a10f4d421307453c8",
+                "url": "https://api.github.com/repos/phphd/exceptional-validation/zipball/297290ab75834e9677c891019c342a9109632a0f",
+                "reference": "297290ab75834e9677c891019c342a9109632a0f",
                 "shasum": ""
             },
             "require": {
@@ -4683,20 +4683,21 @@
             },
             "require-dev": {
                 "nyholm/symfony-bundle-test": "^3.0",
-                "phpat/phpat": "^0.11.4",
-                "phphd/coding-standard": "~0.6.0",
-                "phpstan/phpstan": "^2.1.11",
+                "phpat/phpat": "^0.11.5",
+                "phphd/coding-standard": "~0.6.1",
+                "phpstan/phpstan": "^2.1.17",
                 "phpstan/phpstan-phpunit": "^2.0.6",
-                "phpunit/phpunit": "^10.5.45",
+                "phpunit/phpunit": "^10.5.46",
                 "psalm/plugin-phpunit": "^0.19.5",
                 "symfony/config": "^6.0 || ^7.0",
                 "symfony/dependency-injection": "^6.2 || ^7.0",
                 "symfony/http-kernel": "^6.0 || ^7.0",
                 "symfony/messenger": "^6.4 || ^7.0",
+                "symfony/uid": "^6.0 || ^7.0",
                 "symfony/validator": "^6.0 || ^7.0",
                 "symfony/var-dumper": "^6.0 || ^7.0",
                 "tomasvotruba/type-coverage": "^2.0.2",
-                "vimeo/psalm": "^6.10.0"
+                "vimeo/psalm": "^6.11.0"
             },
             "suggest": {
                 "amphp/amp": "Install AMP package to capture multiple exceptions at once",
@@ -4726,7 +4727,7 @@
                 "issues": "https://github.com/phphd/exceptional-validation/issues",
                 "source": "https://github.com/phphd/exceptional-validation/tree/main"
             },
-            "time": "2025-04-14T10:13:09+00:00"
+            "time": "2025-05-29T14:47:40+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
