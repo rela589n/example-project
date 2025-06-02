@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Playground\Temporal\Booking\Workflow\Flight;
 
-use App\Playground\Temporal\Booking\Workflow\FailFlag;
+use App\Playground\Temporal\Booking\Workflow\BookFailFlag;
 use App\Playground\Temporal\Booking\Workflow\FailOptions;
 use App\Playground\Temporal\Booking\Workflow\TripBookingWorkflow;
 use Carbon\CarbonInterval;
@@ -54,7 +54,7 @@ final readonly class BookFlightActivity
             'attempt' => Activity::getInfo()->attempt,
         ]);
 
-        if ($failOptions->shouldFail(FailFlag::FLIGHT_RESERVATION, Activity::getInfo())) {
+        if ($failOptions->shouldFail(BookFailFlag::FLIGHT_RESERVATION, Activity::getInfo())) {
             throw new RuntimeException('Could not book flight');
         }
 

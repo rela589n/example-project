@@ -9,28 +9,28 @@ use Temporal\Activity\ActivityInfo;
 final readonly class FailOptions
 {
     public function __construct(
-        private(set) FailFlag $flag,
+        private(set) BookFailFlag $flag,
         private(set) int $attempts,
     ) {
     }
 
     public static function doNotFail(): self
     {
-        return new self(FailFlag::NONE, 0);
+        return new self(BookFailFlag::NONE, 0);
     }
 
-    public static function failAt(FailFlag $flag, int $attempt): self
+    public static function failAt(BookFailFlag $flag, int $attempt): self
     {
         return new self($flag, $attempt);
     }
 
-    public function shouldFail(FailFlag $flag, ActivityInfo $activityInfo): bool
+    public function shouldFail(BookFailFlag $flag, ActivityInfo $activityInfo): bool
     {
         if ($flag === $this->flag) {
             return true;
         }
 
-        if (FailFlag::RANDOM !== $this->flag) {
+        if (BookFailFlag::RANDOM !== $this->flag) {
             return false;
         }
 

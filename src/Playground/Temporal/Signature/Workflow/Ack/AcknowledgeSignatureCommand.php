@@ -9,6 +9,7 @@ final readonly class AcknowledgeSignatureCommand
     public function __construct(
         private(set) string $documentId,
         private(set) ?string $signedFilePath,
+        private(set) SignFailFlag $failFlag,
     ) {
     }
 }

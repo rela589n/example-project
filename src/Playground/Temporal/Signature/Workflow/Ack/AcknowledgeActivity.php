@@ -6,11 +6,16 @@ namespace App\Playground\Temporal\Signature\Workflow\Ack;
 
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpClient\Exception\ServerException;
+use Symfony\Component\HttpClient\Exception\TimeoutException;
+use Symfony\Component\HttpClient\Response\MockResponse;
 use Temporal\Activity;
 use Temporal\Activity\ActivityInterface;
 use Temporal\Activity\ActivityMethod;
 use Temporal\Activity\ActivityOptions;
+use Temporal\Common\RetryOptions;
 use Temporal\Exception\Client\ActivityCanceledException;
+use Temporal\Exception\Failure\ApplicationFailure;
 use Temporal\Internal\Workflow\Proxy;
 use Temporal\Workflow;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
@@ -30,7 +35,17 @@ final readonly class AcknowledgeActivity
         return Workflow::newActivityStub(
             self::class,
             ActivityOptions::new()
-                ->withStartToCloseTimeout(8),
+                // backoff: 1 + 3 + 9 < timeout
+                ->withScheduleToStartTimeout(5)
+                ->withScheduleToCloseTimeout(15)
+                ->withRetryOptions(
+                    RetryOptions::new()
+                        //  ->withNonRetryableExceptions([
+                        //      // ServerExceptionInterface::class, // - interface won't work here
+                        //      ServerException::class, // this is matched by previous: as well
+                        //  ])
+                        ->withBackoffCoefficient(3),
+                ),
         );
     }
 
@@ -38,7 +53,7 @@ final readonly class AcknowledgeActivity
     public function acknowledge(string|AcknowledgeSignatureCommand $arg): void
     {
         if (is_string($arg)) {
-            $command = new AcknowledgeSignatureCommand($arg, null);
+            $command = new AcknowledgeSignatureCommand($arg, null, SignFailFlag::NONE);
         } else {
             $command = $arg;
         }
@@ -54,6 +69,12 @@ final readonly class AcknowledgeActivity
         // this will fail if the workflow was cancelled
         try {
             Activity::heartbeat('');
+
+            match ($command->failFlag) {
+                SignFailFlag::ACK_TIMEOUT => throw new TimeoutException('Http timeout reached'),
+                SignFailFlag::ACK_SERVER_ERROR => throw new ServerException(new MockResponse('Internal server error', ['http_code' => 500])),
+                default => null,
+            };
         } catch (ActivityCanceledException $e) {
             $this->logger->info(
                 'Document acknowledgement was cancelled: {documentId}, path: {path}',
@@ -61,6 +82,13 @@ final readonly class AcknowledgeActivity
             );
 
             throw $e;
+        } catch (ServerException $e) {
+            // allow 1 retry for ServerException
+            if (Activity::getInfo()->attempt === 1) {
+                throw $e;
+            }
+
+            throw new ApplicationFailure('APP Server error', $e::class, true, previous: $e);
         }
 
         $this->logger->info(

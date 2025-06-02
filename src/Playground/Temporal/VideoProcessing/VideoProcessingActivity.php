@@ -72,7 +72,7 @@ final readonly class VideoProcessingActivity
                     Activity::heartbeat($i);
                 } catch (ActivityCompletionException $e) {
                     $this->logger->error(
-                        'Current activity completion failed during heartbeat: {iteration}, {message}',
+                        'Current activity heartbeat failed: {iteration}, {message}',
                         [
                             'message' => $e->getMessage(),
                             'iteration' => $i,

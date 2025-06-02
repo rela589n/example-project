@@ -73,7 +73,7 @@ final readonly class TripBookingWorkflow
         /** @var string $hotelReservationId */
         $hotelReservationId = yield $this->reserveHotel($failOptions, $flightReservationId);
 
-        if (FailFlag::AFTER_ALL === $failOptions->flag) {
+        if (BookFailFlag::AFTER_ALL === $failOptions->flag) {
             throw new LogicException('After all, something went wrong');
         }
 

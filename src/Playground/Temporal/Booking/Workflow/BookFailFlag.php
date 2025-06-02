@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Playground\Temporal\Booking\Workflow;
 
-enum FailFlag: string
+enum BookFailFlag: string
 {
     case NONE = 'none';
 

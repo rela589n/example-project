@@ -6,6 +6,7 @@ namespace App\Playground\Temporal\Signature\Workflow;
 
 use App\Playground\Temporal\Signature\Workflow\Ack\AcknowledgeActivity;
 use App\Playground\Temporal\Signature\Workflow\Ack\AcknowledgeSignatureCommand;
+use App\Playground\Temporal\Signature\Workflow\Ack\SignFailFlag;
 use App\Playground\Temporal\Signature\Workflow\Sign\SignDocumentActivity;
 use App\Playground\Temporal\Signature\Workflow\Sign\SignDocumentCommand;
 use Carbon\CarbonInterval;
@@ -58,9 +59,9 @@ final readonly class SignatureWorkflow
             // $signedFilePath = yield $this->signActivity->sign($signCommand->documentId, $signCommand->password);
             $signedFilePath = yield $this->signActivity->sign($signCommand);
 
-            yield Workflow::timer(CarbonInterval::seconds(10));
+            yield Workflow::timer(CarbonInterval::seconds(3));
 
-            $acknowledgeCommand = new AcknowledgeSignatureCommand($documentId, $signedFilePath);
+            $acknowledgeCommand = new AcknowledgeSignatureCommand($documentId, $signedFilePath, SignFailFlag::NONE);
             $this->saga->addCompensation(fn () => $this->acknowledgeActivity->cancel($acknowledgeCommand));
 
             yield $this->acknowledgeActivity->acknowledge($acknowledgeCommand);

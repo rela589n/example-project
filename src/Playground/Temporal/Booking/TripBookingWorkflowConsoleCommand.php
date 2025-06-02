@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Playground\Temporal\Booking;
 
-use App\Playground\Temporal\Booking\Workflow\FailFlag;
+use App\Playground\Temporal\Booking\Workflow\BookFailFlag;
 use App\Playground\Temporal\Booking\Workflow\FailOptions;
 use App\Playground\Temporal\Booking\Workflow\TripBookingWorkflow;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -58,11 +58,11 @@ final class TripBookingWorkflowConsoleCommand extends Command
         $io->info('Starting Trip Booking Workflow...');
 
         $failFlag = match ($input->getOption('fail')) {
-            'car' => FailFlag::CAR_RESERVATION,
-            'flight' => FailFlag::FLIGHT_RESERVATION,
-            'hotel' => FailFlag::HOTEL_RESERVATION,
-            'random' => FailFlag::RANDOM,
-            'after' => FailFlag::AFTER_ALL,
+            'car' => BookFailFlag::CAR_RESERVATION,
+            'flight' => BookFailFlag::FLIGHT_RESERVATION,
+            'hotel' => BookFailFlag::HOTEL_RESERVATION,
+            'random' => BookFailFlag::RANDOM,
+            'after' => BookFailFlag::AFTER_ALL,
             default => null,
         };
 
