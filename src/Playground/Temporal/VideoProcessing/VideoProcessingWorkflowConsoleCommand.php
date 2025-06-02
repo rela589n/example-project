@@ -27,32 +27,34 @@ final class VideoProcessingWorkflowConsoleCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('videoPath', InputArgument::REQUIRED, 'Path to the video file');
+        $this->addArgument('length', InputArgument::REQUIRED, 'Video length');
         $this->addOption('fail', null, InputOption::VALUE_NONE, 'Simulate a failure in the workflow');
-        $this->addOption('beat-range', null, InputOption::VALUE_OPTIONAL, 'Beat range in seconds: [min,max]', '[1,1]');
+        $this->addOption('beat-range', null, InputOption::VALUE_REQUIRED, 'Beat range in seconds: [min,max]', '[1,1]');
+        $this->addOption('beat-limit', null, InputOption::VALUE_REQUIRED, 'Heartbeat only until this iteration');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
-        /** @var string $videoPath */
-        $videoPath = $input->getArgument('videoPath');
+        $length = $this->getLength($input);
+
+        $beatRange = $this->getBeatRange($input);
+
+        $beatLimit = $this->getHeartbeatLimit($input);
 
         /** @var bool $fail */
         $fail = $input->getOption('fail');
 
-        $beatRange = $this->getBeatRange($input);
-
         $workflow = $this->workflowClient
-            ->withTimeout(10)
+            ->withTimeout($length * 1.5)
             ->newWorkflowStub(
                 VideoProcessingWorkflow::class,
                 WorkflowOptions::new(),
             );
 
         /** @var string $result */
-        $result = $workflow->process($videoPath, $fail, $beatRange);
+        $result = $workflow->process($length, $beatRange, $beatLimit, $fail);
 
         $io->success($result);
 
@@ -75,6 +77,26 @@ final class VideoProcessingWorkflowConsoleCommand extends Command
         }
 
         return $beatRange;
+    }
+
+    private function getLength(InputInterface $input): int
+    {
+        /** @var string $length */
+        $length = $input->getArgument('length');
+
+        return (int)$length;
+    }
+
+    private function getHeartbeatLimit(InputInterface $input): ?int
+    {
+        /** @var ?string $beatLimit */
+        $beatLimit = $input->getOption('beat-limit');
+
+        if (null === $beatLimit) {
+            return null;
+        }
+
+        return (int)$beatLimit;
     }
 }
 

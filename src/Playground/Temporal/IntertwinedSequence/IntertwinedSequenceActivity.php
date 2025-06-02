@@ -10,7 +10,7 @@ use Temporal\Activity\ActivityInterface;
 use Temporal\Activity\ActivityMethod;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
-#[ActivityInterface('IntertwinedSequence')]
+#[ActivityInterface('IntertwinedSequence.')]
 #[AssignWorker('default')]
 #[WithMonologChannel('intertwined_sequence')]
 final readonly class IntertwinedSequenceActivity

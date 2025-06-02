@@ -8,7 +8,7 @@ use Temporal\Activity\ActivityInterface;
 use Temporal\Activity\ActivityMethod;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
-#[ActivityInterface('Pairwise')]
+#[ActivityInterface('Pairwise.')]
 #[AssignWorker('default')]
 final class PairwiseActivity
 {

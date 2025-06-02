@@ -8,7 +8,7 @@ use Temporal\Activity\ActivityInterface;
 use Temporal\Activity\ActivityMethod;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
-#[ActivityInterface('VersionedActivity')]
+#[ActivityInterface('VersionedActivity.')]
 #[AssignWorker('default')]
 final class HelloWorldActivity
 {

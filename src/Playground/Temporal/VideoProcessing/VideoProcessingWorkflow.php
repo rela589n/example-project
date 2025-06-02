@@ -1,11 +1,13 @@
 <?php
 
+/** @noinspection PhpVoidFunctionResultUsedInspection */
+
 declare(strict_types=1);
 
 namespace App\Playground\Temporal\VideoProcessing;
 
+use Exception;
 use Generator;
-use Temporal\Activity;
 use Temporal\Internal\Workflow\Proxy;
 use Temporal\Workflow;
 use Temporal\Workflow\WorkflowInterface;
@@ -16,18 +18,26 @@ use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 #[AssignWorker('default')]
 final readonly class VideoProcessingWorkflow
 {
-    private VideoProcessingActivity|Proxy $activities;
+    private VideoProcessingActivity|Proxy $videoProcessing;
 
-    public function __construct()
+    #[Workflow\WorkflowInit]
+    public function __construct(int $length)
     {
-        $this->activities = VideoProcessingActivity::create();
+        $this->videoProcessing = VideoProcessingActivity::create($length);
     }
 
     /** @param array{int,int} $beatRange */
     #[WorkflowMethod]
-    public function process(string $videoPath, bool $fail, array $beatRange): Generator
+    public function process(int $length, array $beatRange, ?int $beatLimit, bool $failAfterHeartBeat): Generator
     {
-        return yield $this->activities->render($videoPath, $fail, $beatRange);
+        try {
+            return yield $this->videoProcessing->render($length, $beatRange, $beatLimit, $failAfterHeartBeat);
+        } catch (Exception $e) {
+            // since Activity uses cancellationType=WaitCancellationCompleted,
+            // it will have already been cancelled (or heartbeat timed-out) up to this moment
+            yield Workflow::asyncDetached(fn () => yield $this->videoProcessing->cancel($length));
+
+            throw $e;
+        }
     }
 }
-

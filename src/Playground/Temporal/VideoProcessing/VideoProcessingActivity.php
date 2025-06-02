@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Playground\Temporal\VideoProcessing;
 
 use Carbon\CarbonInterval;
-use Exception;
 use LogicException;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
@@ -20,7 +19,7 @@ use Temporal\Internal\Workflow\Proxy;
 use Temporal\Workflow;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
-#[ActivityInterface('VideoProcessing')]
+#[ActivityInterface('VideoProcessing.')]
 #[AssignWorker('default')]
 #[WithMonologChannel('video_processing')]
 final readonly class VideoProcessingActivity
@@ -30,13 +29,16 @@ final readonly class VideoProcessingActivity
     ) {
     }
 
-    public static function create(): self|Proxy
+    public static function create(int $length): self|Proxy
     {
         return Workflow::newActivityStub(
             self::class,
             ActivityOptions::new()
-                ->withStartToCloseTimeout(8)
-                ->withHeartbeatTimeout(2) // try running with --beat-range=[1,3]
+                ->withScheduleToStartTimeout(CarbonInterval::seconds(5))
+                ->withScheduleToCloseTimeout(CarbonInterval::seconds($length * 1.5))
+                ->withHeartbeatTimeout(2) // try running with --beat-range=[1,3] to see timeout fails
+                // this will ensure that activity is cancelled before throwing CanceledFailure to the Workflow
+                ->withCancellationType(Activity\ActivityCancellationType::WaitCancellationCompleted)
                 ->withRetryOptions(
                     RetryOptions::new()
                         ->withInitialInterval(CarbonInterval::milliseconds(50))
@@ -47,18 +49,17 @@ final readonly class VideoProcessingActivity
 
     /** @param array{int,int} $beatRange */
     #[ActivityMethod]
-    public function render(string $videoPath, bool $fail, array $beatRange): string
+    public function render(int $length, array $beatRange, ?int $beatLimit, bool $failAfterHeartbeat): string
     {
+        $beatLimit ??= $length;
+
         /** @var int $lastIteration */
         $lastIteration = Activity::getHeartbeatDetails(Type::TYPE_INT) ?? -1;
 
-        for ($i = $lastIteration + 1; $i < 5; ++$i) {
+        for ($i = $lastIteration + 1; $i < $length; ++$i) {
             $this->logger->info(
-                'Rendering iteration for video: {videoPath}, i: {iteration}',
-                [
-                    'videoPath' => $videoPath,
-                    'iteration' => $i
-                ],
+                "Rendering Iteration:\t{iteration}",
+                ['iteration' => $i],
             );
 
             sleep(1);
@@ -66,24 +67,39 @@ final readonly class VideoProcessingActivity
             $beatInterval = random_int(...$beatRange);
 
             if ($i % $beatInterval === 0) {
-                $this->logger->info('Sending Heartbeat for iteration: {iteration}', ['iteration' => $i]);
-
                 try {
-                    Activity::heartbeat($i);
+                    if ($i < $beatLimit) {
+                        $this->logger->info("Sending Heartbeat:\t{iteration}", ['iteration' => $i]);
+
+                        Activity::heartbeat($i);
+                    } else {
+                        $this->logger->info("Heartbeat stopped:\t{iteration}", ['iteration' => $i]);
+                    }
                 } catch (ActivityCompletionException $e) {
                     $this->logger->error(
-                        'Current activity heartbeat failed: {iteration}, {message}',
+                        "Heartbeat failed:\t{iteration}, {message}",
                         [
-                            'message' => $e->getMessage(),
                             'iteration' => $i,
+                            'message' => $e->getMessage(),
                             'exception' => $e,
                         ],
+                    );
+
+                    // Workflow will have to wait for this Activity to exit before throwing CanceledFailure
+
+                    sleep(1);
+
+                    // if previous sleep was longer than heartbeat timeout,
+                    // at this point, workflow execution will have already been cancelled.
+                    $this->logger->error(
+                        "Activity exiting:\t{iteration}",
+                        ['iteration' => $i],
                     );
 
                     throw $e;
                 }
 
-                if ($fail) {
+                if ($failAfterHeartbeat) {
                     $this->logger->error(
                         'Failing iteration: {iteration}',
                         ['iteration' => $i],
@@ -96,10 +112,20 @@ final readonly class VideoProcessingActivity
             }
         }
 
-        $this->logger->info("Finished rendering video: $videoPath");
+        $this->logger->info("Finished rendering video: $length");
 
-        return "Rendered video from path: $videoPath";
+        return "Rendered video: $length";
+    }
+
+    #[ActivityMethod]
+    public function cancel(int $length): void
+    {
+        $this->logger->info("Cancelling video processing:\t{length}", ['length' => $length]);
+
+        // if compensation takes longer than main activity options restrict,
+        // it will fail just like any other activity can fail
+        // sleep(5);
+
+        $this->logger->warning("Cancelled video processing:\t{length}", ['length' => $length]);
     }
 }
-
-
