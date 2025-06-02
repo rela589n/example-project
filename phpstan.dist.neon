@@ -28,6 +28,7 @@ parameters:
         constant: 0
     ignoreErrors:
         - identifier: missingType.generics
+        - identifier: catch.neverThrown
         - identifier: property.unusedType
           message: '#Property .+ is never assigned Temporal\\Internal\\Workflow\\Proxy so it can be removed from the property type\.$#'
         - identifier: return.unusedType

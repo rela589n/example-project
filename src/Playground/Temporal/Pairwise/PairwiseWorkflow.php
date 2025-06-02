@@ -35,10 +35,12 @@ final readonly class PairwiseWorkflow
         // and second to the place of first
         // ("First, First")
 
+        /** @var string $first */
         $first = yield $this->activity->call('First');
 
         yield Workflow::timer(7);
 
+        /** @var string $second */
         $second = yield $this->activity->call('Second');
 
         return sprintf("%s, %s", $first, $second);

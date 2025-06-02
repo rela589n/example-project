@@ -51,6 +51,7 @@ final class VideoProcessingWorkflowConsoleCommand extends Command
                 WorkflowOptions::new(),
             );
 
+        /** @var string $result */
         $result = $workflow->process($videoPath, $fail, $beatRange);
 
         $io->success($result);

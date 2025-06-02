@@ -54,6 +54,7 @@ final readonly class SignatureWorkflow
 
             yield Workflow::timer(CarbonInterval::seconds(1));
 
+            /** @var string $signedFilePath */
             // $signedFilePath = yield $this->signActivity->sign($signCommand->documentId, $signCommand->password);
             $signedFilePath = yield $this->signActivity->sign($signCommand);
 

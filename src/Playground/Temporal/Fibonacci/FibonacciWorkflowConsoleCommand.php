@@ -39,7 +39,7 @@ final class FibonacciWorkflowConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $limit = (int)$input->getOption('limit');
+        $limit = $this->getLimit($input);
 
         $workflow = $this->workflowClient->newWorkflowStub(
             FibonacciNumbersWorkflow::class,
@@ -55,6 +55,14 @@ final class FibonacciWorkflowConsoleCommand extends Command
         ]);
 
         return Command::SUCCESS;
+    }
+
+    private function getLimit(InputInterface $input): int
+    {
+        /** @var string $limit */
+        $limit = $input->getOption('limit');
+
+        return (int)$limit;
     }
 }
 
