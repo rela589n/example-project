@@ -50,18 +50,20 @@ final readonly class SignatureWorkflow
     public function run(string $documentId, string $password): Generator
     {
         try {
-            $signCommand = new SignDocumentCommand($documentId, $password);
-            $this->saga->addCompensation(fn () => $this->signActivity->cancel($signCommand));
-
             yield Workflow::timer(CarbonInterval::seconds(1));
+
+            $signCommand = new SignDocumentCommand($documentId, $password);
+
+            $this->saga->addCompensation(fn () => $this->signActivity->cancel($signCommand));
 
             /** @var string $signedFilePath */
             // $signedFilePath = yield $this->signActivity->sign($signCommand->documentId, $signCommand->password);
             $signedFilePath = yield $this->signActivity->sign($signCommand);
 
-            yield Workflow::timer(CarbonInterval::seconds(3));
+            yield Workflow::timer(CarbonInterval::seconds(1));
 
             $acknowledgeCommand = new AcknowledgeSignatureCommand($documentId, $signedFilePath, SignFailFlag::NONE);
+
             $this->saga->addCompensation(fn () => $this->acknowledgeActivity->cancel($acknowledgeCommand));
 
             yield $this->acknowledgeActivity->acknowledge($acknowledgeCommand);

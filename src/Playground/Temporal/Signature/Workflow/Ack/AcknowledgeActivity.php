@@ -37,7 +37,7 @@ final readonly class AcknowledgeActivity
             ActivityOptions::new()
                 // backoff: 1 + 3 + 9 < timeout
                 ->withScheduleToStartTimeout(5)
-                ->withScheduleToCloseTimeout(15)
+                ->withScheduleToCloseTimeout(10)
                 ->withRetryOptions(
                     RetryOptions::new()
                         //  ->withNonRetryableExceptions([
@@ -64,15 +64,20 @@ final readonly class AcknowledgeActivity
         );
 
         // like http request
-        sleep(5);
+        sleep(4);
 
-        // this will fail if the workflow was cancelled
         try {
+            // this will fail if the workflow was cancelled/terminated
             Activity::heartbeat('');
 
             match ($command->failFlag) {
-                SignFailFlag::ACK_TIMEOUT => throw new TimeoutException('Http timeout reached'),
+                SignFailFlag::ACK_TIMEOUT_WITHIN_LIMIT => throw new TimeoutException('Http timeout reached'),
                 SignFailFlag::ACK_SERVER_ERROR => throw new ServerException(new MockResponse('Internal server error', ['http_code' => 500])),
+                // if the activity times-out by execution timeout, but is still doing something,
+                // it's very bad, because compensations will kick in before it completes, and
+                // it might complete after compensation, resulting in a corrupted state
+                // Setting cancellationType=WaitCancellationCompleted won't help, since it's already timed-out
+                SignFailFlag::ACK_TIMEOUT => sleep(7),
                 default => null,
             };
         } catch (ActivityCanceledException $e) {
@@ -100,9 +105,9 @@ final readonly class AcknowledgeActivity
     #[ActivityMethod]
     public function cancel(AcknowledgeSignatureCommand $command): void
     {
-        $this->logger->info(
+        $this->logger->warning(
             'Document {documentId}, path {path} acknowledgement cancelled',
-            ['documentId' => $command, 'path' => $command->signedFilePath],
+            ['documentId' => $command->documentId, 'path' => $command->signedFilePath],
         );
     }
 }
