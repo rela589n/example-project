@@ -46,6 +46,8 @@ RUN useradd --uid $USER_ID --gid $GROUP_ID --create-home $USER_NAME
 RUN apt-get install -y sudo && \
     echo "$USER_NAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$USER_NAME
 
+RUN echo '[ -f ~/.bashrc.local ] && source ~/.bashrc.local' >> /home/$USER_NAME/.bashrc
+
 RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
