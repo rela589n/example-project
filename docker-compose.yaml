@@ -25,6 +25,13 @@ services:
         depends_on:
             - postgresql
 
+    dump_server:
+        image: example_project.backend:v1.0
+        working_dir: /app
+        command: [ "vendor/bin/var-dump-server", "--no-ansi", "--host", "0.0.0.0:9912" ]
+        volumes: [ .:/app:cached ]
+        depends_on: [ backend ]
+
     postgresql:
         image: postgres:17.0
         command: [ "postgres", "-c", "max_connections=200", "-c", "log_statement=all" ]

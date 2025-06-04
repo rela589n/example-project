@@ -109,6 +109,14 @@ Command - a class that represents action carried out by the application.
 
 Outbox namespace represents set of inner actions that come after the main action has fulfilled its responsibility.
 
+### Dump Server
+
+To debug Temporal Workflows, you can use var-dump-server, and then analyse output with lnav:
+
+```shell
+docker compose logs --no-log-prefix -f dump_server | lnav
+```
+
 ### gRPC
 
 Generate library:
