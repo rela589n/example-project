@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Support\Temporal\Bundle\DependencyInjection;
 
+use App\Support\Temporal\Schedule\ScheduleProvider;
+use App\Support\Temporal\Schedule\ScheduleProviderTombstone;
 use Override;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\AbstractExtension;
@@ -18,6 +20,7 @@ final class AppTemporalExtension extends AbstractExtension
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $container->import(__DIR__.'/../../**/services.yaml');
+        $container->import(__DIR__.'/../../**/services.php');
     }
 
     #[Override]

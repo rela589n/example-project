@@ -109,11 +109,3 @@ final class SignatureWorkflowConsoleCommand extends Command
         return $rows;
     }
 }
-
-
-
-
-
-
-
-
