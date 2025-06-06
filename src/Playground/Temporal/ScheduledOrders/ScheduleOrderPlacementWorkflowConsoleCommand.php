@@ -31,13 +31,15 @@ final class ScheduleOrderPlacementWorkflowConsoleCommand extends Command
     {
         $this->addArgument(
             'order-id',
-            InputArgument::REQUIRED,
+            InputArgument::OPTIONAL,
             'Order ID',
+            'order' . random_int(1, 200),
         );
 
-        $this->addArgument(
+        $this->addOption(
             'interval',
-            InputArgument::OPTIONAL,
+            null,
+            InputOption::VALUE_REQUIRED,
             'The time interval at which the order should be placed (in seconds from now)',
             '10',
         );
@@ -51,7 +53,7 @@ final class ScheduleOrderPlacementWorkflowConsoleCommand extends Command
         $orderId = $input->getArgument('order-id');
 
         /** @var string $placementInterval */
-        $placementInterval = $input->getArgument('interval');
+        $placementInterval = $input->getOption('interval');
         $placementInterval = (int)$placementInterval;
 
         $io->writeln(sprintf('Placing order in %d seconds', $placementInterval));
