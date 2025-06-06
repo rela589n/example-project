@@ -10,6 +10,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -33,10 +34,12 @@ final class ReScheduleOrderPlacementConsoleCommand extends Command
             'Order ID',
         );
 
-        $this->addArgument(
+        $this->addOption(
             'interval',
-            InputArgument::REQUIRED,
+            null,
+            InputOption::VALUE_REQUIRED,
             'The time interval at which the order should be placed (in seconds from now)',
+            '10',
         );
     }
 
@@ -48,7 +51,7 @@ final class ReScheduleOrderPlacementConsoleCommand extends Command
         $orderId = $input->getArgument('order-id');
 
         /** @var string $placementInterval */
-        $placementInterval = $input->getArgument('interval');
+        $placementInterval = $input->getOption('interval');
         $placementInterval = (int)$placementInterval;
 
         $io->writeln(sprintf('Re-scheduling order to be placed in %d seconds', $placementInterval));

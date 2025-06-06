@@ -15,6 +15,7 @@ final class Kernel extends BaseKernel
 
     public function registerBundles(): iterable
     {
+        /** @phpstan-ignore generator.valueType */
         yield from $this->registerThirdPartyBundles();
 
         yield new Support\MessageBus\Bundle\AppMessageBusBundle();

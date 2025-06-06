@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Playground\Temporal\Subscription\Workflow;
 
+use App\Support\Temporal\Timer\Timer;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterval;
 use DateTimeImmutable;
@@ -161,22 +162,12 @@ final class SubscriptionWorkflow
         return CarbonImmutable::createFromTimestamp($nextCycleTimestamp);
     }
 
-    private function waitUntil(?DateTimeImmutable $timestamp): Generator
+    private function waitUntil(?CarbonImmutable $timestamp): Generator
     {
         if (null === $timestamp) {
             return;
         }
 
-        /** @var CarbonImmutable $currentDate */
-        $currentDate = yield $this->getCurrentDate();
-
-        $interval = $currentDate->diff($timestamp);
-
-        if ($interval->invert) {
-            // past interval, it's the time already
-            return;
-        }
-
-        yield Workflow::timer($interval);
+        yield new Timer($timestamp)();
     }
 }

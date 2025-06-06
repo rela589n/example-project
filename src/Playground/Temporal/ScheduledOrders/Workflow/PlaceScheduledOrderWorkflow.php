@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Playground\Temporal\ScheduledOrders\Workflow;
 
-use App\Playground\Temporal\ScheduledOrders\WaitUntil;
+use App\Support\Temporal\Timer\WatchfulTimer;
+use App\Support\Temporal\Timer\Timer;
 use Carbon\CarbonImmutable;
 use Generator;
+use RuntimeException;
 use Temporal\Internal\Workflow\Proxy;
 use Temporal\Workflow;
 use Temporal\Workflow\WorkflowInterface;
@@ -17,6 +19,8 @@ use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 #[AssignWorker('default')]
 final class PlaceScheduledOrderWorkflow
 {
+    private WatchfulTimer $timer;
+
     private PlaceScheduledOrderActivity|Proxy $activity;
 
     #[Workflow\WorkflowInit]
@@ -30,14 +34,18 @@ final class PlaceScheduledOrderWorkflow
     #[WorkflowMethod]
     public function execute(): Generator
     {
-        yield new WaitUntil(fn () => $this->placementDate)();
+        yield ($this->timer = new WatchfulTimer(fn () => $this->placementDate))();
 
         yield $this->activity->placeOrder($this->orderId);
     }
 
     #[Workflow\UpdateMethod]
-    public function changePlacementDate(CarbonImmutable $placeAt): void
+    public function changePlacementDate(CarbonImmutable $placementDate): void
     {
-        $this->placementDate = $placeAt;
+        if ($this->timer->isCompleted()) {
+            throw new RuntimeException('Cannot change placement date after the timer has been completed.');
+        }
+
+        $this->placementDate = $placementDate;
     }
 }
