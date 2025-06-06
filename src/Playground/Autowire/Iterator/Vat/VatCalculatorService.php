@@ -10,8 +10,8 @@ use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 final readonly class VatCalculatorService
 {
     public function __construct(
+        /** @var iterable<VatProvider> */
         #[AutowireIterator('app.vat_provider')]
-        /** @var VatProvider[] */
         private iterable $vatProviders,
     ) {
     }

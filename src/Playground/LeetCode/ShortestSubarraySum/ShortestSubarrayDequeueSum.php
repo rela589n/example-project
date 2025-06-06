@@ -16,6 +16,7 @@ final readonly class ShortestSubarrayDequeueSum implements ShortestSubarraySum
         }
 
         $sum = 0;
+        /** @var SplDoublyLinkedList<array{int,int}> $prefixSumQueue */
         $prefixSumQueue = new SplDoublyLinkedList();
         $prefixSumQueue->push([0, -1]); // not taking any item would result in zero-sum
         $minLength = PHP_INT_MAX;

@@ -13,6 +13,7 @@ final readonly class VatServiceCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
+        /** @var array<string,list<array{priority:int}>> $taggedServiceIds */
         $taggedServiceIds = $container->findTaggedServiceIds('app.vat_provider');
 
         uasort($taggedServiceIds, static fn (array $tags1, array $tags2): int => $tags2[0]['priority'] <=> $tags1[0]['priority']);
@@ -20,7 +21,7 @@ final readonly class VatServiceCompilerPass implements CompilerPassInterface
         $definition = $container->getDefinition(VatCalculatorService::class);
 
         $serviceIds = array_keys($taggedServiceIds);
-        $serviceReferences = array_map(static fn ($id) => new Reference($id), $serviceIds);
+        $serviceReferences = array_map(static fn (string $id): Reference => new Reference($id), $serviceIds);
 
         $definition->setArgument(0, $serviceReferences);
     }

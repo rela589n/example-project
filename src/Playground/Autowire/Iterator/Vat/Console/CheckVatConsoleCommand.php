@@ -30,7 +30,9 @@ class CheckVatConsoleCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $fopGroup = (int)$input->getArgument('fop-group');
+        /** @var string $fopGroup */
+        $fopGroup = $input->getArgument('fop-group');
+        $fopGroup = (int)$fopGroup;
 
         $vat = $this->service->calculate($fopGroup);
 

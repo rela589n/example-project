@@ -12,7 +12,7 @@ final readonly class DailyTemperaturesSolution
     /**
      * @param list<int> $temperatures
      *
-     * @return list<int>
+     * @return array<int,int>
      */
     public function dailyTemperatures(array $temperatures): array
     {
@@ -30,9 +30,12 @@ final readonly class DailyTemperaturesSolution
         //                    [76] - add 76 to stack
         //                    [76,73] - add 73 to the stack
 
+        /** @var SplStack<int> $pendingBetterWeatherDays */
         $pendingBetterWeatherDays = new SplStack();
 
         $n = count($temperatures);
+
+        /** @var list<int> $results */
         $results = array_fill(0, $n, 0);
 
         foreach ($temperatures as $day => $dayTemperature) {

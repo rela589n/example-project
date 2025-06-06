@@ -31,6 +31,8 @@ final class SplMinHeapUnitTest extends TestCase
         return new class extends SplMinHeap {
             protected function compare(mixed $value1, mixed $value2): int
             {
+                /** @var list<int|string> $value1 */
+                /** @var list<int|string> $value2 */
                 [$v1] = $value1;
                 [$v2] = $value2;
 
