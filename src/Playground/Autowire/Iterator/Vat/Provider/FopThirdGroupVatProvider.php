@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Playground\Autowire\Iterator\Vat\Provider;
 
+use App\Playground\Autowire\Iterator\Vat\FopGroup;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 #[AutoconfigureTag('app.vat_provider', ['priority' => 10])]
 final readonly class FopThirdGroupVatProvider implements VatProvider
 {
-    private const int GROUP_3 = 3;
-
-    public function supports(int $fopGroup): bool
+    public function supports(FopGroup $fopGroup): bool
     {
-        return self::GROUP_3 === $fopGroup;
+        return FopGroup::THIRD === $fopGroup;
     }
 
     public function getVat(): int

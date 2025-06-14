@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Playground\Autowire\Iterator\Vat\Console;
 
+use App\Playground\Autowire\Iterator\Vat\FopGroup;
 use App\Playground\Autowire\Iterator\Vat\VatCalculatorService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -34,7 +35,7 @@ class CheckVatConsoleCommand extends Command
         $fopGroup = $input->getArgument('fop-group');
         $fopGroup = (int)$fopGroup;
 
-        $vat = $this->service->calculate($fopGroup);
+        $vat = $this->service->calculate(FopGroup::from($fopGroup));
 
         $io->success(sprintf('VAT for FOP group %d is: %d', $fopGroup, $vat / 100));
 

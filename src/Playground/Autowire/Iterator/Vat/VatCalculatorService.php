@@ -16,7 +16,7 @@ final readonly class VatCalculatorService
     ) {
     }
 
-    public function calculate(int $groupFop): int
+    public function calculate(FopGroup $groupFop): int
     {
         $vat = 0;
 
