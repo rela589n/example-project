@@ -18,7 +18,7 @@ class User
 {
     private Uuid $id;
 
-    // anything you would like to control access to, should likely be declared as a collection
+    // anything you would like to control access to should likely be declared as a collection
     private PostCollection $posts;
 
     private PostCommentCollection $comments;
@@ -35,11 +35,9 @@ class User
 
     public function createPost(PostCreatedEvent $event): void
     {
-        $post = $event->getPost();
+        $event->getPost()->create($event);
 
-        $post->create($event);
-
-        $this->posts->add($post);
+        $this->posts->add($event->getPost());
     }
 
     public function editPost(PostEditedEvent $event): void
@@ -67,7 +65,7 @@ class User
     {
         $comment = $event->getComment();
 
-        // this method should not load the collection, but rather use preloaded Comment object that already belongs to this collection
+        // this method should not load the collection but rather use preloaded Comment object that already belongs to this collection
         if (!$this->comments->contains($comment)) {
             throw new InvalidArgumentException('Comment does not belong to this user');
         }

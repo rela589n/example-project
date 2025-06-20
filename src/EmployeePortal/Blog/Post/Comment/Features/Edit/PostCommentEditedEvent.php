@@ -9,24 +9,27 @@ use App\EmployeePortal\Blog\Post\Post;
 use App\EmployeePortal\Blog\User\User;
 use Carbon\CarbonImmutable;
 use RuntimeException;
+use Symfony\Component\Uid\Uuid;
 
 final readonly class PostCommentEditedEvent
 {
     private const MAX_EDITION_HOURS = 2;
 
+    private PostComment $comment;
+
     public function __construct(
         private User $editor,
         private Post $post,
-        private PostComment $comment,
+        private Uuid $commentId,
         private string $text,
         private CarbonImmutable $timestamp,
     ) {
+        $this->comment = $this->post->getComments()->get($this->commentId);
     }
 
     public function invoke(): void
     {
         $this->comment->assertIsAuthoredBy($this->editor);
-        $this->comment->assertBelongsTo($this->post);
 
         if ($this->timestamp->diff($this->comment->getAddedAt())->totalHours >= self::MAX_EDITION_HOURS) {
             throw new RuntimeException('Comment can only be edited within 2 hours of being added');
