@@ -37,6 +37,7 @@ class Post
         // loading $this->topComments shouldn't load $this->comments;
         // loading $this->comments should load $this->topComments
         // if during loading $this->comments, there were some comments matching the criteria, these should not be included for the database query (inner collection)
+        // if orderByRating is called multiple times, it should return the same object
         $this->topComments = $this->comments->orderByRating()->limit(10);
     }
 
@@ -66,5 +67,20 @@ class Post
         if ($this->owner !== $owner) {
             throw new InvalidArgumentException('Post does not belong to this user');
         }
+    }
+
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
+    public function getComments(): PostCommentCollection
+    {
+        return $this->comments;
+    }
+
+    public function getTopComments(): PostCommentCollection
+    {
+        return $this->comments->orderByRating()->limit(10);
     }
 }

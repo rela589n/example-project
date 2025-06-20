@@ -50,10 +50,8 @@ class PostComment
         }
     }
 
-    public function assertBelongsTo(Post $post): void
+    public function getId(): Uuid
     {
-        if ($this->post !== $post) {
-            throw new InvalidArgumentException('Comment does not belong to this post');
-        }
+        return $this->id;
     }
 }
