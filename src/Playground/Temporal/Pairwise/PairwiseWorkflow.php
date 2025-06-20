@@ -43,6 +43,9 @@ final readonly class PairwiseWorkflow
         /** @var string $second */
         $second = yield $this->activity->call('Second');
 
+        // As you can see, Replay doesn't take into account arguments
+        // of an activity call (neither of the timers)
+
         return sprintf("%s, %s", $first, $second);
     }
 }

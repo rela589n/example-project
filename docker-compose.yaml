@@ -50,6 +50,30 @@ services:
         volumes:
             - "postgres_data:/var/lib/postgresql/data"
 
+    temporal:
+        image: temporalio/auto-setup:1.27
+        environment:
+            DB: 'postgres12'
+            POSTGRES_SEEDS: 'postgresql'
+            DB_PORT: 5432
+            DBNAME: 'temporal'
+            POSTGRES_USER: ${DATABASE_USER:-postgres}
+            POSTGRES_PWD: "qwerty"
+            DYNAMIC_CONFIG_FILE_PATH: 'config/dynamicconfig/development-sql.yaml'
+        ports:
+            - "127.0.0.1:7233:7233"
+        volumes:
+            - ./docker-configs/temporal:/etc/temporal/config/dynamicconfig
+        depends_on: [ postgresql ]
+
+    temporal_ui:
+        image: temporalio/ui:v2.38.3
+        environment:
+            TEMPORAL_ADDRESS: 'temporal:7233'
+        ports:
+            - "127.0.0.1:8000:8080"
+        depends_on: [ temporal ]
+
     elastic:
         image: elasticsearch:9.0.1
         ports:

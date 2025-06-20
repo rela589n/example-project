@@ -36,8 +36,8 @@ final class FibonacciNumbersWorkflow
         $b = 1;
 
         // Even though shiftLimit() might be called,
-        // those iterations that have already passed will be replayed again
-        // until shiftLimit() update is applied.
+        // those iterations that have already been passed will be replayed again
+        // up to the last processed, and only then is shiftLimit() update applied.
         for ($this->iteration = 1; $this->iteration <= $this->limit; ++$this->iteration) {
             yield $this->activity->log($this->iteration, $b);
 

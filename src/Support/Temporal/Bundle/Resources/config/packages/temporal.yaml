@@ -1,5 +1,5 @@
 parameters:
-    env(TEMPORAL_ADDRESS): 'host.docker.internal:7233'
+    env(TEMPORAL_ADDRESS): 'temporal:7233'
     env(RR_RPC): 'tcp://127.0.0.1:6001'
 
 temporal:
