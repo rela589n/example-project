@@ -9,33 +9,34 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\Common\Collections\Selectable;
+use Symfony\Component\Uid\Uuid;
 
 final readonly class PostCollection
 {
     public function __construct(
         /** @var Selectable<Post>&Collection<Post> */
-        private Collection $collection,
+        private object $collection,
     ) {
     }
 
-    public function ofOwner(User $user): self
+    public function ofOwner(Uuid $userId): self
     {
         /** @var ExpressionBuilder $expr */
         $expr = Criteria::expr();
 
-        $criteria = Criteria::create()->where($expr->eq('owner', $user));
+        $criteria = Criteria::create()->where($expr->eq('owner', $userId));
 
         return new self($this->collection->matching($criteria));
-    }
-
-    public function add(Post $post): void
-    {
-        $this->collection->set($post->getId()->toRfc4122(), $post);
     }
 
     public function contains(Post $post): bool
     {
         // get method should just load only this one post
         return $this->collection->get($post->getId()->toRfc4122()) !== null;
+    }
+
+    public function add(Post $post): void
+    {
+        $this->collection->set($post->getId()->toRfc4122(), $post);
     }
 }

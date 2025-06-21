@@ -78,4 +78,9 @@ class Post
     {
         return $this->comments;
     }
+
+    public function getTopComments(): PostCommentCollection
+    {
+        return $this->comments->orderByRating()->limit(10);
+    }
 }
