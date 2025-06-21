@@ -2,20 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Blog\Support;
+namespace App\EmployeePortal\Blog\Support\Collection;
 
-use App\EmployeePortal\Blog\Support\Specification\Specification;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Persisters\Entity\EntityPersister;
 
-/**
- * @implements Collection
- * @implements Selectable
- */
-final class EntityCollection
+final class EntityCollection implements Collection
 {
     public function __construct(
         private EntityPersister $persister,
@@ -23,7 +15,12 @@ final class EntityCollection
     ) {
     }
 
-    public function get(int|string $key)
+    public function has(int|string $key): bool
+    {
+        // TODO: Implement has() method.
+    }
+
+    public function get(int|string $key): mixed
     {
         $entity = $this->itemsSet->get($key);
 
@@ -54,6 +51,7 @@ final class EntityCollection
             // there's no guarantee that there are no other, that if loaded,
             // would be prior to the existing items, and thus represent the requested set more correctly
             $this->itemsSet->matching($criteria),
+            // if the collection is loaded completely, every request must result in memory-lookup
         );
     }
 }

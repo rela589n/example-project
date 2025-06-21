@@ -6,6 +6,9 @@ namespace App\EmployeePortal\Blog\Support;
 
 use App\EmployeePortal\Blog\Post\Post;
 use App\EmployeePortal\Blog\Post\PostCollection;
+use App\EmployeePortal\Blog\Support\Collection\EntityCollection;
+use App\EmployeePortal\Blog\Support\Collection\MemoryCollection;
+use App\EmployeePortal\Blog\Support\Collection\Set;
 use Doctrine\ORM\Persisters\Entity\EntityPersister;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
@@ -19,9 +22,7 @@ final class PostCollectionTest extends TestCase
 
     public function testAddingItemToDerivedCollectionAddsItemToTheSupersetCollection(): void
     {
-        $entityPersister = $this->createMock(EntityPersister::class);
-
-        $entityCollection = new EntityCollection($entityPersister);
+        $entityCollection = new Set();
 
         $collection = new PostCollection($entityCollection);
 

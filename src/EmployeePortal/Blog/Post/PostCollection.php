@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\Post;
 
-use App\EmployeePortal\Blog\User\User;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\ExpressionBuilder;
@@ -14,7 +13,7 @@ use Symfony\Component\Uid\Uuid;
 final readonly class PostCollection
 {
     public function __construct(
-        /** @var Selectable<Post>&Collection<Post> */
+        /** @var Selectable<Post>&Collection<Post>|\App\EmployeePortal\Blog\Support\Collection\Collection */
         private object $collection,
     ) {
     }
@@ -32,7 +31,7 @@ final readonly class PostCollection
     public function contains(Post $post): bool
     {
         // get method should just load only this one post
-        return $this->collection->get($post->getId()->toRfc4122()) !== null;
+        return $this->collection->has($post->getId()->toRfc4122());
     }
 
     public function add(Post $post): void
