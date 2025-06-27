@@ -57,20 +57,8 @@ final class SecretKeyType extends Type
     #[Override]
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
+        $column['length'] ??= 255;
+
         return $platform->getStringTypeDeclarationSQL($column);
-    }
-
-    #[Override]
-    public function getName(): string
-    {
-        return self::NAME;
-    }
-
-    #[Override]
-    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
-    {
-        // this is required to make doctrine migrations diff command
-        // not to generate alter column statement every time
-        return true;
     }
 }

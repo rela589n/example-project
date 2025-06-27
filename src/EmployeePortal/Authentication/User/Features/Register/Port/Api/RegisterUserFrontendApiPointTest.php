@@ -8,14 +8,11 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Symfony\Bundle\Test\Client;
 use App\EmployeePortal\Authentication\Jwt\Anonymous\AnonymousUser;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use PhPhD\ApiTesting\Jwt\JwtLoginTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(RegisterUserFrontendApiPoint::class)]
 final class RegisterUserFrontendApiPointTest extends ApiTestCase
 {
-    use JwtLoginTrait;
-
     private Client $client;
 
     private JWTTokenManagerInterface $jwtManager;
