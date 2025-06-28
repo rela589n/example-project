@@ -24,10 +24,12 @@ final class Kernel extends BaseKernel
         yield new Support\Api\Bundle\AppApiBundle();
         yield new Support\Logging\Bundle\AppLoggingBundle();
         yield new Support\Temporal\Bundle\AppTemporalBundle();
+        yield new Support\Partitioning\Bundle\AppPartitioningBundle();
 
         yield new Playground\Bundle\AppPlaygroundBundle();
 
         yield new EmployeePortal\Authentication\Bundle\AppAuthBundle();
+        yield new EmployeePortal\Accounting\Bundle\AppAccountingBundle();
         yield new EmployeePortal\Blog\Bundle\AppBlogBundle();
     }
 }

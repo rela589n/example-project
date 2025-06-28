@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Support\Partitioning\:
+        resource: '../../../**/{*Listener.php,*Manager.php,*Registry.php,*Middleware.php,*Resolver.php}'

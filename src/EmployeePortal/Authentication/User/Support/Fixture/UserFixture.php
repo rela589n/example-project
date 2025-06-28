@@ -20,12 +20,27 @@ final  class UserFixture extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $command = new RegisterUserCommand(
-            'user@test.com',
-            'jG\Qc_g7;%zE85',
-            '2a977708-1c69-7d38-9074-b388a7f386dc',
-        );
+        $users = [
+            [
+                'email' => 'user@test.com',
+                'password' => 'jG\Qc_g7;%zE85',
+                'id' => '2a977708-1c69-7d38-9074-b388a7f386dc',
+            ],
+            [
+                'email' => 'user2@test.com',
+                'password' => 'jG\Qc_g7;%zE85',
+                'id' => 'de13a4f3-b43e-74d4-aca9-7ce087a21b73',
+            ],
+        ];
 
-        $this->commandBus->dispatch($command);
+        foreach ($users as $userData) {
+            $command = new RegisterUserCommand(
+                $userData['email'],
+                $userData['password'],
+                $userData['id'],
+            );
+
+            $this->commandBus->dispatch($command);
+        }
     }
 }

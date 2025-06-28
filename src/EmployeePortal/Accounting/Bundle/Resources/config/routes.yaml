@@ -1,0 +1,21 @@
+api_frontend_accounting:
+    resource: '../../../**/{*FrontendApiPoint.php}'
+    type: attribute
+    prefix: /api/example-project/accounting
+    host: '%api_host%'
+    schemes: '%api_scheme%'
+
+when@dev:
+    api_doc.example_project_accounting.redocly: &api_doc_redocly
+        path: /api/example-project/accounting/doc.html
+        methods: GET
+        defaults: { _controller: nelmio_api_doc.controller.redocly, area: example_project_accounting }
+
+    api_doc.example_project_accounting.swagger: &api_doc_json
+        path: /api/example-project/accounting/doc.json
+        methods: GET
+        defaults: { _controller: nelmio_api_doc.controller.swagger, area: example_project_accounting }
+
+when@stage:
+    api_doc.example_project_accounting.redocly: *api_doc_redocly
+    api_doc.example_project_accounting.swagger: *api_doc_json
