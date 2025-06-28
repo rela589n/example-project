@@ -7,14 +7,11 @@ namespace App\EmployeePortal\Authentication\Jwt\Refresh;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Symfony\Bundle\Test\Client;
 use App\EmployeePortal\Authentication\Jwt\Tests\Constraint\ValidJwtTokenPair;
-use PhPhD\ApiTesting\Jwt\JwtLoginTrait;
 use PHPUnit\Framework\Attributes\CoversNothing;
 
 #[CoversNothing]
 final class RefreshJwtTokenApiPointTest extends ApiTestCase
 {
-    use JwtLoginTrait;
-
     private Client $client;
 
     protected function setUp(): void

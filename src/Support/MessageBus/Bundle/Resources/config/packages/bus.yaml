@@ -17,6 +17,13 @@ framework:
                     - doctrine_transaction
                     - handle_message
 
+            query.bus:
+                default_middleware: false
+                middleware:
+                    - app_unwrap_exception
+                    - phd_exceptional_validation
+                    - handle_message
+
             event.bus:
                 default_middleware: false
                 middleware:

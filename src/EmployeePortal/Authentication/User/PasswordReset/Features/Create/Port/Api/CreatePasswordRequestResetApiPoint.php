@@ -22,8 +22,8 @@ final readonly class CreatePasswordRequestResetApiPoint
     ) {
     }
     #[Route(
-        path: '/register',
-        name: 'example_project_auth_user_register',
+        path: '/password-requests',
+        name: 'example_project_auth_password_request_create',
         methods: ['POST'],
     )]
     public function __invoke(

@@ -57,7 +57,7 @@ final readonly class LoginUserCommand
         $service->entityManager->flush();
         $service->eventBus->dispatch($event);
 
-        $this->jwtUser = new JWTUser($user->getId()->toRfc4122());
+        $this->jwtUser = new JWTUser($user->getId()->toRfc4122(), ['ROLE_USER']);
         $this->jwtToken = $service->tokenManager->create($this->jwtUser);
     }
 

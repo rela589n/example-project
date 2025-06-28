@@ -22,7 +22,7 @@ final class SwoolePostgresTransactionConsoleCommand extends Command
         parent::__construct();
 
         // Not having savepoints would result in thrown error
-        $this->connection->setNestTransactionsWithSavepoints(false);
+        // $this->connection->setNestTransactionsWithSavepoints(false);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
