@@ -1,0 +1,8 @@
+doctrine:
+    orm:
+        mappings:
+            AppAccountingBundle:
+                type: attribute
+                dir: '%kernel.project_dir%/src/EmployeePortal/Accounting'
+                is_bundle: false
+                prefix: App\EmployeePortal\Accounting
