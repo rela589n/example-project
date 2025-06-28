@@ -6,11 +6,9 @@ namespace App\EmployeePortal\Accounting\Account\Support;
 
 use App\Support\Partitioning\Entity\PartitionId;
 use App\Support\Partitioning\Resolve\PartitionIdResolver;
-use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Uid\Uuid;
 
-#[AsAlias(PartitionIdResolver::class)]
 final readonly class AppPartitionIdResolver implements PartitionIdResolver
 {
     public function __construct(

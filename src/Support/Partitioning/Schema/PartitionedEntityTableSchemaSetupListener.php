@@ -36,6 +36,8 @@ final class PartitionedEntityTableSchemaSetupListener
 
         $partitionId = $entity->getPartitionId();
 
+
+
         $this->scheduledPartitionSetups[$entity::class][$partitionId->getId()] = $partitionId;
 
         $eventArgs->getObjectManager()->getEventManager()->addEventListener(Events::onFlush, $this);

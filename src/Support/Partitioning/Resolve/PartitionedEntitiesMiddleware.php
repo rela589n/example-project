@@ -17,13 +17,21 @@ final readonly class PartitionedEntitiesMiddleware
     ) {
     }
 
-    public function __invoke(PartitionId $partitionId, callable $next, ...$args): mixed
+    /**
+     * @param PartitionId[] $partitionIds
+     * @param callable(): mixed $next
+     */
+    public function __invoke(array $partitionIds, callable $next): mixed
     {
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $this->managerRegistry->getManager();
 
         $partitionManager = $this->partitionManagerRegistry->getManager($entityManager);
 
-        return $partitionManager->callWithPartition($partitionId, static fn (): mixed => $next(...$args));
+        foreach ($partitionIds as $partitionId) {
+            $next = static fn (): mixed => $partitionManager->callWithPartition($partitionId, $next);
+        }
+
+        return $next();
     }
 }

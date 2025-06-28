@@ -9,6 +9,7 @@ final class PartitionId
     public function __construct(
         private readonly int|string $id,
         private ?string $tableNameSuffix = null,
+        private string $group = 'default',
     ) {
         $this->tableNameSuffix ??= (string)$this->id;
     }
@@ -26,5 +27,10 @@ final class PartitionId
     public function getTableName(string $mainTableName): string
     {
         return sprintf('%s_%s', $mainTableName, $this->tableNameSuffix);
+    }
+
+    public function getGroup(): string
+    {
+        return $this->group;
     }
 }
