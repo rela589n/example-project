@@ -12,6 +12,7 @@
         "ext-redis": "*",
         "amphp/amp": "^3.1",
         "amphp/file": ">=3.2",
+        "amphp/postgres": "^2.1",
         "baldinof/roadrunner-bundle": "^3.2",
         "carbonphp/carbon-doctrine-types": "^3.2",
         "cycle/annotated": "^4.2.3",

@@ -4,4 +4,4 @@ services:
         autoconfigure: true
 
     App\Support\Partitioning\:
-        resource: '../../../**/{*Listener.php,*Manager.php,*Registry.php,*Middleware.php,*Resolver.php}'
+        resource: '../../../**/{*Listener.php,*Manager.php,*Registry.php,*Middleware.php,*Resolver.php,*ConsoleCommand.php}'

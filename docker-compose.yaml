@@ -34,7 +34,7 @@ services:
 
     postgresql:
         image: postgres:17.0
-        command: [ "postgres", "-c", "max_connections=200", "-c", "log_statement=all", "-c", "config_file=/etc/postgresql/postgresql.conf" ]
+        command: [ "postgres", "-c", "log_statement=all", "-c", "config_file=/etc/postgresql/postgresql.conf" ]
         healthcheck:
             test: [ "CMD", "pg_isready", "-d", "project_db", "-U", "${DATABASE_USER:-postgres}" ]
             timeout: 5s
