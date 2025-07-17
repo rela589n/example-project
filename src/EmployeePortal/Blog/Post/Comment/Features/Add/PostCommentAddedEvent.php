@@ -12,19 +12,24 @@ use Symfony\Component\Uid\Uuid;
 
 final readonly class PostCommentAddedEvent
 {
+    private PostComment $comment;
+
     public function __construct(
         private Uuid $id,
         private User $author,
         private Post $post,
-        private PostComment $comment,
         private string $text,
         private CarbonImmutable $timestamp,
     ) {
     }
 
-    public function process(): void
+    public function process(): PostComment
     {
+        $this->comment = new PostComment($this);
+
         $this->author->comment($this);
+
+        return $this->comment;
     }
 
     public function getId(): Uuid

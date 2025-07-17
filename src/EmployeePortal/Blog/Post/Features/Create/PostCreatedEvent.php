@@ -6,20 +6,32 @@ namespace App\EmployeePortal\Blog\Post\Features\Create;
 
 use App\EmployeePortal\Blog\Post\Post;
 use App\EmployeePortal\Blog\User\User;
+use Symfony\Component\Uid\Uuid;
 
 final readonly class PostCreatedEvent
 {
+    private Post $post;
+
     public function __construct(
+        private Uuid $id,
         private User $author,
-        private Post $post,
         private string $title,
         private string $description,
     ) {
     }
 
-    public function process(): void
+    public function process(): Post
     {
+        $this->post = new Post($this);
+
         $this->author->createPost($this);
+
+        return $this->post;
+    }
+
+    public function getId(): Uuid
+    {
+        return $this->id;
     }
 
     public function getAuthor(): User

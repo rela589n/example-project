@@ -4,83 +4,101 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\Post\Comment;
 
-use App\EmployeePortal\Blog\Post\Post;
-use App\EmployeePortal\Blog\User\User;
+use App\Support\Orm\EntityNotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\Common\Collections\Order;
+use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\Uid\Uuid;
 
-// any of the methods, if called multiple times, should return the same instance as previously
+#[Autoconfigure(constructor: 'create')]
 final readonly class PostCommentCollection
 {
     public function __construct(
-        /** @var Selectable<PostComment>&Collection<PostComment> */
-        private Collection $collection = new ArrayCollection(),
+        private Selectable $repository = new ArrayCollection(),
+        private Criteria $criteria = new Criteria(),
     ) {
     }
 
-    public function ofPost(Post $post): self
+    public static function create(EntityManagerInterface $entityManager): self
     {
-        /** @var ExpressionBuilder $expr */
-        $expr = Criteria::expr();
-
-        $criteria = Criteria::create()->where($expr->eq('post', $post));
-
-        return new self($this->collection->matching($criteria));
+        return new self($entityManager->getRepository(PostComment::class));
     }
 
-    public function ofAuthor(User $user): self
+    public function ofPost(Uuid $postId): self
     {
         /** @var ExpressionBuilder $expr */
         $expr = Criteria::expr();
 
-        $criteria = Criteria::create()->where($expr->eq('author', $user));
+        /** @see PostComment::$post */
+        return $this->andWhere($expr->eq('post', $postId));
+    }
 
-        return new self($this->collection->matching($criteria));
+    public function ofAuthor(Uuid $userId): self
+    {
+        /** @var ExpressionBuilder $expr */
+        $expr = Criteria::expr();
+
+        /** @see PostComment::$author */
+        return $this->andWhere($expr->eq('author', $userId));
+    }
+
+    public function whereId(Uuid $id): self
+    {
+        /** @var ExpressionBuilder $expr */
+        $expr = Criteria::expr();
+
+        return $this->andWhere($expr->eq('id', $id->toRfc4122()));
     }
 
     public function add(PostComment $comment): void
     {
-        $this->collection->add($comment);
+        // $this->repository->set($comment->getId()->toRfc4122(), $comment);
     }
 
     public function orderByRating(): self
     {
-        $orderCriteria = Criteria::create()->orderBy(['rating' => Order::Descending]);
+        $criteria = clone $this->criteria;
+        $criteria->orderBy(['rating' => Order::Descending]);
 
-        return new self($this->collection->matching($orderCriteria));
+        return new self($this->repository, $criteria);
     }
 
     public function contains(PostComment $comment): bool
     {
         // get method should just load only this one comment
-        return $this->collection->get($comment->getId()->toString()) !== null;
+        return !empty($this->whereId($comment->id)->match()->first());
     }
 
     public function limit(int $limit): self
     {
-        $maxResultsCriteria = Criteria::create()->setMaxResults($limit);
+        $criteria = clone $this->criteria;
+        $criteria->setMaxResults($limit);
 
-        return new self($this->collection->matching($maxResultsCriteria));
+        return new self($this->repository, $criteria);
+    }
+
+    public function match(): ReadableCollection
+    {
+        return $this->repository->matching($this->criteria);
     }
 
     public function get(Uuid $id): PostComment
     {
-        $comment = $this->collection->get($id->toString());
-
-        if ($comment === null) {
-            throw new \InvalidArgumentException('Comment not found');
-        }
-
-        return $comment;
+        return $this->whereId($id)->match()->first() ?: throw new EntityNotFoundException($id);
     }
 
-    public static function empty(): PostCommentCollection
+    private function andWhere(Expression $expression): self
     {
-        return new self();
+        $criteria = clone $this->criteria;
+
+        $criteria->andWhere($expression);
+
+        return new self($this->repository, $criteria);
     }
 }

@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\EmployeePortal\Blog\:
+        resource: '../../../../**/{*ApiPoint.php,*Service.php,*Listener.php,*Handler.php,*Fixture.php,*Collection.php}'

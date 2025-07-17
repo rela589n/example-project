@@ -9,44 +9,53 @@ use App\EmployeePortal\Blog\Post\Features\Create\PostCreatedEvent;
 use App\EmployeePortal\Blog\Post\Features\Edit\PostEditedEvent;
 use App\EmployeePortal\Blog\Post\Features\TransferOwnership\PostOwnershipTransferredEvent;
 use App\EmployeePortal\Blog\User\User;
+use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
 
+#[ORM\Entity]
+#[ORM\Table(name: 'blog_posts')]
 class Post
 {
-    private Uuid $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'uuid')]
+    private(set) Uuid $id;
 
-    private User $author;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private(set) User $author;
 
-    private User $owner;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private(set) User $owner;
 
-    private string $title;
+    #[ORM\Column]
+    private(set) string $title;
 
-    private string $description;
+    #[ORM\Column]
+    private(set) string $description;
 
-    private PostCommentCollection $comments;
-
-    private PostCommentCollection $topComments;
-
-    public function __construct(
-        Uuid $id,
-        PostCommentCollection $comments,
-    ) {
-        $this->id = $id;
-        $this->comments = $comments->ofPost($this);
-        // loading $this->topComments shouldn't load $this->comments;
-        // loading $this->comments should load $this->topComments
-        // if during loading $this->comments, there were some comments matching the criteria, these should not be included for the database query (inner collection)
-        // if orderByRating is called multiple times, it should return the same object
-        $this->topComments = $this->comments->orderByRating()->limit(10);
+    // #[Autowire]
+    private(set) PostCommentCollection $comments {
+        set => $value->ofPost($this->id);
     }
 
-    public function create(PostCreatedEvent $event): void
+    // loading $this->topComments shouldn't load $this->comments;
+    // loading $this->comments should load $this->topComments
+    // if during loading $this->comments, there were some comments matching the criteria, these should not be included for the database query (subset collection)
+    // if orderByRating is called multiple times, it should return the same object
+    // #[Autowire]
+    private(set) PostCommentCollection $topComments {
+        set => $this->comments->orderByRating()->limit(10);
+    }
+
+    public function __construct(PostCreatedEvent $event)
     {
+        $this->id = $event->getId();
         $this->author = $event->getAuthor();
         $this->owner = $event->getAuthor();
         $this->title = $event->getTitle();
         $this->description = $event->getDescription();
+        $this->comments = new PostCommentCollection();
+        $this->topComments = new PostCommentCollection();
     }
 
     public function edit(PostEditedEvent $event): void
@@ -67,16 +76,6 @@ class Post
         if ($this->owner !== $owner) {
             throw new InvalidArgumentException('Post does not belong to this user');
         }
-    }
-
-    public function getId(): Uuid
-    {
-        return $this->id;
-    }
-
-    public function getComments(): PostCommentCollection
-    {
-        return $this->comments;
     }
 
     public function getTopComments(): PostCommentCollection

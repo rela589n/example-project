@@ -29,3 +29,9 @@ framework:
                 middleware:
                     -   handle_message:
                             - true
+
+            service.event.bus:
+                default_middleware: false
+                middleware:
+                    -   handle_message:
+                            - true

@@ -9,22 +9,31 @@ use App\EmployeePortal\Blog\Post\Comment\Features\Edit\PostCommentEditedEvent;
 use App\EmployeePortal\Blog\Post\Post;
 use App\EmployeePortal\Blog\User\User;
 use Carbon\CarbonImmutable;
+use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
 
+#[ORM\Entity]
+#[ORM\Table(name: 'blog_post_comments')]
 class PostComment
 {
-    private Uuid $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'uuid')]
+    private(set) Uuid $id;
 
-    private User $author;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private(set) User $author;
 
-    private Post $post;
+    #[ORM\ManyToOne(targetEntity: Post::class)]
+    private(set) Post $post;
 
-    private string $text;
+    #[ORM\Column(type: 'text')]
+    private(set) string $text;
 
+    #[ORM\Column(type: 'datetime_immutable')]
     private CarbonImmutable $addedAt;
 
-    public function add(PostCommentAddedEvent $event): void
+    public function __construct(PostCommentAddedEvent $event)
     {
         $this->id = $event->getId();
         $this->author = $event->getAuthor();
@@ -33,7 +42,7 @@ class PostComment
         $this->addedAt = $event->getTimestamp();
     }
 
-    public function edit(PostCommentEditedEvent $event)
+    public function edit(PostCommentEditedEvent $event): void
     {
         $this->text = $event->getText();
     }
@@ -48,10 +57,5 @@ class PostComment
         if ($this->author !== $user) {
             throw new InvalidArgumentException('Comment does not belong to this user');
         }
-    }
-
-    public function getId(): Uuid
-    {
-        return $this->id;
     }
 }

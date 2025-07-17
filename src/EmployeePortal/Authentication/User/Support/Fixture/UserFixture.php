@@ -6,16 +6,22 @@ namespace App\EmployeePortal\Authentication\User\Support\Fixture;
 
 use App\EmployeePortal\Authentication\User\Features\Register\Port\RegisterUserCommand;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final  class UserFixture extends Fixture
+final class UserFixture extends Fixture implements OrderedFixtureInterface
 {
     public function __construct(
         #[Autowire('@command.bus')]
         private readonly MessageBusInterface $commandBus,
     ) {
+    }
+
+    public function getOrder(): int
+    {
+        return 10;
     }
 
     public function load(ObjectManager $manager): void

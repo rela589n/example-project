@@ -10,20 +10,20 @@ use Symfony\Component\Uid\Uuid;
 
 final readonly class AccountCreatedEvent
 {
+    private Account $account;
+
     public function __construct(
         private Uuid $id,
-        private Account $account,
         private Uuid $userId,
         private int $number,
         private CarbonImmutable $timestamp,
     ) {
     }
 
-    public function process(): void
+    public function process(): Account
     {
-        $this->account->create($this);
+        return $this->account = new Account($this);
     }
-
 
     public function getId(): Uuid
     {

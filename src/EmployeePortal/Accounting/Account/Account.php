@@ -27,7 +27,7 @@ class Account implements PartitionedEntityInterface
     #[ORM\Column(type: 'datetime_immutable')]
     private CarbonImmutable $updatedAt;
 
-    public function create(AccountCreatedEvent $event): void
+    public function __construct(AccountCreatedEvent $event)
     {
         $this->id = new ScopedId($event->getId(), $event->getUserId());
         $this->number = $event->getNumber();

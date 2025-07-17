@@ -11,32 +11,38 @@ use App\EmployeePortal\Blog\Post\Features\Create\PostCreatedEvent;
 use App\EmployeePortal\Blog\Post\Features\Edit\PostEditedEvent;
 use App\EmployeePortal\Blog\Post\Features\TransferOwnership\PostOwnershipTransferredEvent;
 use App\EmployeePortal\Blog\Post\PostCollection;
+use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
 
+#[ORM\Entity]
+#[ORM\Table(name: 'blog_users')]
 class User
 {
-    private Uuid $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'uuid')]
+    private(set) Uuid $id;
 
     // anything you would like to control access to should likely be declared as a collection
-    private PostCollection $posts;
+    // #[Autowire]
+    private(set) PostCollection $posts {
+        set => $value->ofOwner($this->id);
+    }
 
-    private PostCommentCollection $comments;
+    // #[Autowire]
+    private(set) PostCommentCollection $comments {
+        set => $value->ofAuthor($this->id);
+    }
 
-    public function __construct(
-        Uuid $id,
-        PostCollection $postCollection,
-        PostCommentCollection $commentCollection,
-    ) {
+    public function __construct(Uuid $id)
+    {
         $this->id = $id;
-        $this->posts = $postCollection->ofOwner($this);
-        $this->comments = $commentCollection->ofAuthor($this);
+        $this->posts = new PostCollection();
+        $this->comments = new PostCommentCollection();
     }
 
     public function createPost(PostCreatedEvent $event): void
     {
-        $event->getPost()->create($event);
-
         $this->posts->add($event->getPost());
     }
 
@@ -54,11 +60,7 @@ class User
 
     public function comment(PostCommentAddedEvent $event): void
     {
-        $comment = $event->getComment();
-
-        $comment->add($event);
-
-        $this->comments->add($comment);
+        $this->comments->add($event->getComment());
     }
 
     public function editComment(PostCommentEditedEvent $event): void

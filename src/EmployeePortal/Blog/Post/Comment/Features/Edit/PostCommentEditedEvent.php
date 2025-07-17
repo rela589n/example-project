@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Blog\Post\Comment\Features\Edit;
 
 use App\EmployeePortal\Blog\Post\Comment\PostComment;
+use App\EmployeePortal\Blog\Post\Comment\PostCommentCollection;
 use App\EmployeePortal\Blog\Post\Post;
 use App\EmployeePortal\Blog\User\User;
 use Carbon\CarbonImmutable;
@@ -24,10 +25,10 @@ final readonly class PostCommentEditedEvent
         private string $text,
         private CarbonImmutable $timestamp,
     ) {
-        $this->comment = $this->post->getComments()->get($this->commentId);
+        $this->comment = $this->post->comments->get($this->commentId);
     }
 
-    public function invoke(): void
+    public function process(): void
     {
         $this->comment->assertIsAuthoredBy($this->editor);
 

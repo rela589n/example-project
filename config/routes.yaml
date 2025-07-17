@@ -6,3 +6,6 @@ auth_routes:
 
 accounting_routes:
     resource: '@AppAccountingBundle/Resources/config/routes.yaml'
+
+blog_routes:
+    resource: '@AppBlogBundle/Resources/config/routes.yaml'
