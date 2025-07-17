@@ -1,0 +1,40 @@
+parameters:
+    app_proxy_manager.cache_dir: '%kernel.cache_dir%/proxy_manager'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Playground\ProxyManager\:
+        resource: '**/{*Locator.php,*Warmer.php,*Inflector.php}'
+
+    app_proxy_manager.factory.lazy_loading_ghost:
+        public: true
+        class: ProxyManager\Factory\LazyLoadingGhostFactory
+        arguments: [ '@app_proxy_manager.config' ]
+
+    app_proxy_manager.factory.access_interceptor_scope_localizer:
+        class: ProxyManager\Factory\AccessInterceptorScopeLocalizerFactory
+        arguments: [ '@app_proxy_manager.config' ]
+
+    app_proxy_manager.factory.access_interceptor_value_holder:
+        class: ProxyManager\Factory\AccessInterceptorValueHolderFactory
+        arguments: [ '@app_proxy_manager.config' ]
+
+    app_proxy_manager.config:
+        public: true
+        class: ProxyManager\Configuration
+        calls:
+            - [ setProxiesTargetDir,[ '%app_proxy_manager.cache_dir%' ] ]
+            - [ setClassNameInflector, [ '@app_proxy_manager.config.class_name_inflector' ] ]
+            - [ setGeneratorStrategy, [ '@app_proxy_manager.generator_strategy' ] ]
+
+    app_proxy_manager.generator_strategy:
+        lazy: true
+        class: ProxyManager\GeneratorStrategy\FileWriterGeneratorStrategy
+        arguments: [ '@app_proxy_manager.file_locator' ]
+
+    app_proxy_manager.generator_strategy.fallback:
+        public: true
+        class: ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy
