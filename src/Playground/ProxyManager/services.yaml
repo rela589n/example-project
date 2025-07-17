@@ -14,6 +14,11 @@ services:
         class: ProxyManager\Factory\LazyLoadingGhostFactory
         arguments: [ '@app_proxy_manager.config' ]
 
+    app_proxy_manager.factory.lazy_loading_value_holder:
+        public: true
+        class: ProxyManager\Factory\LazyLoadingValueHolderFactory
+        arguments: [ '@app_proxy_manager.config' ]
+
     app_proxy_manager.factory.access_interceptor_scope_localizer:
         class: ProxyManager\Factory\AccessInterceptorScopeLocalizerFactory
         arguments: [ '@app_proxy_manager.config' ]
