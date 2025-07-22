@@ -41,5 +41,4 @@ final readonly class PostEditedEvent
     {
         return $this->description;
     }
-
 }

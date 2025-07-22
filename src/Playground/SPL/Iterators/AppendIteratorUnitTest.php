@@ -9,6 +9,8 @@ use ArrayIterator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+use function iterator_to_array;
+
 #[CoversClass(AppendIterator::class)]
 final class AppendIteratorUnitTest extends TestCase
 {

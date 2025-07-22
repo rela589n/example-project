@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use WeakMap;
 
+use function gc_collect_cycles;
+
 #[CoversClass(WeakMap::class)]
 final class WeakMapUnitTest extends TestCase
 {
@@ -31,6 +33,7 @@ final class WeakMapUnitTest extends TestCase
     {
         $partitionManager = new stdClass();
         $partitionManager->entityManager = $entityManager;
+
         return $partitionManager;
     }
 }

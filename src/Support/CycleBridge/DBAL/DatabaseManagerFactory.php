@@ -18,7 +18,7 @@ final readonly class DatabaseManagerFactory
             'databases' => [
                 'default' => [
                     'connection' => 'postgres',
-                ]
+                ],
             ],
             'connections' => [
                 'postgres' => new PostgresDriverConfig(

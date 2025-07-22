@@ -17,6 +17,8 @@ use Temporal\Client\WorkflowClientInterface;
 use Temporal\Exception\Client\WorkflowFailedException;
 use Temporal\Exception\Failure\ApplicationFailure;
 
+use function json_encode;
+
 #[AsCommand('app:temporal:signature')]
 final class SignatureWorkflowConsoleCommand extends Command
 {
@@ -87,7 +89,6 @@ final class SignatureWorkflowConsoleCommand extends Command
         return Command::SUCCESS;
     }
 
-
     /**
      * Convert constraint violations to a table row format.
      *
@@ -98,6 +99,7 @@ final class SignatureWorkflowConsoleCommand extends Command
     private function getViolationRows(array $constraintViolations): array
     {
         $rows = [];
+
         foreach ($constraintViolations as $violation) {
             $rows[] = [
                 $violation->getPropertyPath(),

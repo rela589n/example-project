@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Playground\Swoole\Postgres\Basic;
 
-use function Swoole\Coroutine\run;
-use function Swoole\Coroutine\go;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
+
+use function Swoole\Coroutine\go;
+use function Swoole\Coroutine\run;
 
 #[AsCommand('app:swoole:postgres-async')]
 final class SwoolePostgresAsyncQueriesConsoleCommand extends Command

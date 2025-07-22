@@ -7,8 +7,6 @@ namespace App\EmployeePortal\Blog\Post\Features\Edit\Port\Api;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Symfony\Bundle\Test\Client;
 use App\EmployeePortal\Blog\Post\Post;
-use App\EmployeePortal\Blog\Post\PostCollection;
-use App\EmployeePortal\Blog\User\UserCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUser;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;

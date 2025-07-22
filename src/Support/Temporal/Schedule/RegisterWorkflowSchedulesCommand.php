@@ -7,6 +7,11 @@ namespace App\Support\Temporal\Schedule;
 use Temporal\Client\Schedule\Info\ScheduleListEntry;
 use Temporal\Client\ScheduleClientInterface;
 
+use function array_keys;
+use function array_map;
+use function implode;
+use function sprintf;
+
 final class RegisterWorkflowSchedulesCommand
 {
     public function __construct(
@@ -82,7 +87,6 @@ final class RegisterWorkflowSchedulesCommand
     }
 
     /**
-     * @param ScheduleClientInterface $scheduleClient
      * @param list<string> $scheduleIds
      *
      * @return iterable<ScheduleListEntry>

@@ -17,6 +17,9 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Temporal\Client\WorkflowClientInterface;
 use Temporal\Client\WorkflowOptions;
 
+use function random_int;
+use function sprintf;
+
 #[AsCommand('app:temporal:scheduled-order:schedule', 'Schedule a new order placement')]
 final class ScheduleOrderPlacementWorkflowConsoleCommand extends Command
 {
@@ -33,7 +36,7 @@ final class ScheduleOrderPlacementWorkflowConsoleCommand extends Command
             'order-id',
             InputArgument::OPTIONAL,
             'Order ID',
-            'order' . random_int(1, 200),
+            'order'.random_int(1, 200),
         );
 
         $this->addOption(
@@ -63,7 +66,8 @@ final class ScheduleOrderPlacementWorkflowConsoleCommand extends Command
                 PlaceScheduledOrderWorkflow::class,
                 WorkflowOptions::new()
                     ->withWorkflowId($orderId.':schedule'),
-            );
+            )
+        ;
 
         $placeAt = CarbonImmutable::now()->addSeconds($placementInterval);
 

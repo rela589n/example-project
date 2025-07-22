@@ -53,7 +53,7 @@ final class TransferPostOwnershipFrontendApiPointTest extends ApiTestCase
 
         $this->client->request(
             'POST',
-            "/api/example-project/blog/posts/a2f6d821-6b23-73f4-bb85-6daf4280b72c/transfer-ownership",
+            '/api/example-project/blog/posts/a2f6d821-6b23-73f4-bb85-6daf4280b72c/transfer-ownership',
             [
                 'auth_bearer' => $token,
                 'headers' => [

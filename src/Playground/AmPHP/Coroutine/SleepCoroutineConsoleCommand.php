@@ -14,9 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use function Amp\async;
 use function Amp\delay;
+use function range;
 
 #[AsCommand('app:amphp:sleep-coroutine')]
-final  class SleepCoroutineConsoleCommand extends Command
+final class SleepCoroutineConsoleCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

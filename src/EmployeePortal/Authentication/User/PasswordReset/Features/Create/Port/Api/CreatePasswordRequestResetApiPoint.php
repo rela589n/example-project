@@ -21,6 +21,7 @@ final readonly class CreatePasswordRequestResetApiPoint
         private MessageBusInterface $apiBus,
     ) {
     }
+
     #[Route(
         path: '/password-requests',
         name: 'example_project_auth_password_request_create',

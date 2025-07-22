@@ -10,9 +10,11 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $container, ContainerBuilder $builder): void {
     $builder
         ->registerForAutoconfiguration(ScheduleProvider::class)
-        ->addTag(ScheduleProvider::class);
+        ->addTag(ScheduleProvider::class)
+    ;
 
     $builder
         ->registerForAutoconfiguration(ScheduleProviderTombstone::class)
-        ->addTag(ScheduleProviderTombstone::class);
+        ->addTag(ScheduleProviderTombstone::class)
+    ;
 };

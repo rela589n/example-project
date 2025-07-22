@@ -10,6 +10,8 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\PasswordHasher\Hasher\Pbkdf2PasswordHasher;
 use Symfony\Component\Validator\Validation;
 
+use function str_repeat;
+
 #[CoversClass(Password::class)]
 final class PasswordUnitTest extends TestCase
 {
@@ -17,7 +19,7 @@ final class PasswordUnitTest extends TestCase
     {
         $this->expectException(PasswordValidationFailedException::class);
         $this->expectExceptionMessage(
-            'This value should not be blank. (code c1051bb4-d103-4f74-8988-acbcafc7fdc3)'
+            'This value should not be blank. (code c1051bb4-d103-4f74-8988-acbcafc7fdc3)',
         );
 
         $this->createPassword('');
@@ -27,7 +29,7 @@ final class PasswordUnitTest extends TestCase
     {
         $this->expectException(PasswordValidationFailedException::class);
         $this->expectExceptionMessage(
-            'This value is too short. It should have 8 characters or more. (code 9ff3fdc4-b214-49db-8718-39c315e33d45)'
+            'This value is too short. It should have 8 characters or more. (code 9ff3fdc4-b214-49db-8718-39c315e33d45)',
         );
 
         $this->createPassword('1234567');
@@ -37,7 +39,7 @@ final class PasswordUnitTest extends TestCase
     {
         $this->expectException(PasswordValidationFailedException::class);
         $this->expectExceptionMessage(
-            'This value is too long. It should have 31 characters or less. (code d94b19cc-114f-4f44-9cc4-4138e80a87b9)'
+            'This value is too long. It should have 31 characters or less. (code d94b19cc-114f-4f44-9cc4-4138e80a87b9)',
         );
 
         $this->createPassword(str_repeat('@', 32));
@@ -48,7 +50,7 @@ final class PasswordUnitTest extends TestCase
     {
         $this->expectException(PasswordValidationFailedException::class);
         $this->expectExceptionMessage(
-            'The password strength is too low. Please use a stronger password. (code 4234df00-45dd-49a4-b303-a75dbf8b10d8)'
+            'The password strength is too low. Please use a stronger password. (code 4234df00-45dd-49a4-b303-a75dbf8b10d8)',
         );
 
         $this->createPassword($weakPassword);

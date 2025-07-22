@@ -22,6 +22,8 @@ use Temporal\Workflow;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 use Webmozart\Assert\Assert;
 
+use function iterator_to_array;
+
 #[ActivityInterface('SignActivity.')]
 #[AssignWorker('default')]
 #[WithMonologChannel('signature')]
@@ -40,14 +42,14 @@ final readonly class SignDocumentActivity
         return Workflow::newActivityStub(
             self::class,
             ActivityOptions::new()
-                ->withScheduleToCloseTimeout(3)
+                ->withScheduleToCloseTimeout(3),
         );
     }
 
     #[ActivityMethod]
     public function sign(SignDocumentCommand|string $commandOrDocumentId, ?string $password = null): string
     {
-        if ($password !== null) {
+        if (null !== $password) {
             Assert::string($commandOrDocumentId);
 
             $command = new SignDocumentCommand($commandOrDocumentId, $password);
@@ -59,7 +61,10 @@ final readonly class SignDocumentActivity
         try {
             $this->logger->info(
                 'Signing document: {documentId}, attempt: {attempt}',
-                ['documentId' => $command->documentId, 'attempt' => Activity::getInfo()->attempt],
+                [
+                    'documentId' => $command->documentId,
+                    'attempt' => Activity::getInfo()->attempt,
+                ],
             );
 
             // schedule-to-close has never been elapsed yet
@@ -71,7 +76,11 @@ final readonly class SignDocumentActivity
 
             $this->logger->info(
                 'Document signed successfully: {documentId}, attempt: {attempt}, result: {result}',
-                ['documentId' => $command->documentId, 'attempt' => Activity::getInfo()->attempt, 'result' => $result],
+                [
+                    'documentId' => $command->documentId,
+                    'attempt' => Activity::getInfo()->attempt,
+                    'result' => $result,
+                ],
             );
 
             return $result;
@@ -101,4 +110,3 @@ final readonly class SignDocumentActivity
         );
     }
 }
-

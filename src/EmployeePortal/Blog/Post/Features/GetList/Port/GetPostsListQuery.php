@@ -8,6 +8,8 @@ use App\EmployeePortal\Blog\Post\Features\GetList\PostDto;
 use App\EmployeePortal\Blog\Post\Post;
 use Doctrine\ORM\EntityManagerInterface;
 
+use function array_map;
+
 final readonly class GetPostsListQuery
 {
     public function execute(EntityManagerInterface $entityManager): array

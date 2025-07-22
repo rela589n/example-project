@@ -27,7 +27,8 @@ final readonly class Password
     }
 
     public static function fromString(
-        #[SensitiveParameter] string $password,
+        #[SensitiveParameter]
+        string $password,
         ValidatorInterface $validator,
         PasswordHasherInterface $passwordHasher,
     ): self {

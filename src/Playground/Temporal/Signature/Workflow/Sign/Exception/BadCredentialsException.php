@@ -11,7 +11,7 @@ final class BadCredentialsException extends RuntimeException
     public function __construct()
     {
         parent::__construct(
-            'Invalid credentials provided for signing the document. Please check your password and try again.'
+            'Invalid credentials provided for signing the document. Please check your password and try again.',
         );
     }
 }

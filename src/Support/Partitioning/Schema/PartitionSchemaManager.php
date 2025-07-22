@@ -9,6 +9,8 @@ use App\Support\Partitioning\Entity\PartitionId;
 use App\Support\Partitioning\Manager\PartitionManager;
 use Doctrine\DBAL\Connection;
 
+use function sprintf;
+
 final readonly class PartitionSchemaManager
 {
     public function __construct(

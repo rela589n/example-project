@@ -13,16 +13,16 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 final class AppTemporalBundle extends Bundle
 {
     #[Override]
-    protected function createContainerExtension(): AppTemporalExtension
-    {
-        return new AppTemporalExtension();
-    }
-
-    #[Override]
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
         $container->addCompilerPass(new TemporalWorkerRegistrationCompilerPass());
+    }
+
+    #[Override]
+    protected function createContainerExtension(): AppTemporalExtension
+    {
+        return new AppTemporalExtension();
     }
 }

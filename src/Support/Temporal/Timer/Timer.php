@@ -63,12 +63,12 @@ final class Timer
 
     public function isScheduled(): bool
     {
-        return $this->state === TimerState::SCHEDULED;
+        return TimerState::SCHEDULED === $this->state;
     }
 
     public function isStarted(): bool
     {
-        return $this->state === TimerState::STARTED;
+        return TimerState::STARTED === $this->state;
     }
 
     public function isCompleted(): bool
@@ -78,12 +78,12 @@ final class Timer
 
     public function isFired(): bool
     {
-        return $this->state === TimerState::FIRED;
+        return TimerState::FIRED === $this->state;
     }
 
     public function isCancelled(): bool
     {
-        return $this->state === TimerState::CANCELLED;
+        return TimerState::CANCELLED === $this->state;
     }
 
     private function schedule(CarbonImmutable $fireAt): void

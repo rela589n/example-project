@@ -6,14 +6,9 @@ namespace App\Playground\Temporal\Fibonacci\Workflow;
 
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
-use React\Promise\FulfilledPromise;
-use React\Promise\Promise;
-use React\Promise\PromiseInterface;
 use Temporal\Activity\ActivityInterface;
 use Temporal\Activity\ActivityMethod;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
-
-use function React\Promise\resolve;
 
 #[ActivityInterface]
 #[AssignWorker('default')]
@@ -21,7 +16,7 @@ use function React\Promise\resolve;
 final readonly class FibonacciNumbersActivity
 {
     public function __construct(
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -34,4 +29,3 @@ final readonly class FibonacciNumbersActivity
         ]);
     }
 }
-

@@ -13,16 +13,16 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 final class AppDoctrineBundle extends Bundle
 {
     #[Override]
-    protected function createContainerExtension(): AppDoctrineExtension
-    {
-        return new AppDoctrineExtension();
-    }
-
-    #[Override]
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
         $container->addCompilerPass(new DoctrineMigrationsTemplateCompilerPass());
+    }
+
+    #[Override]
+    protected function createContainerExtension(): AppDoctrineExtension
+    {
+        return new AppDoctrineExtension();
     }
 }

@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpVoidFunctionResultUsedInspection */
+<?php
+
+/** @noinspection PhpVoidFunctionResultUsedInspection */
 
 declare(strict_types=1);
 
@@ -57,7 +59,7 @@ final class SubscriptionWorkflow
         } catch (CanceledFailure $e) {
             if (isset($this->subscriptionValidUntil)) {
                 yield Workflow::asyncDetached(
-                    fn () => yield $this->activities->sendSorryToSeeYouGoEmail($this->subscriptionStatus->userId, $this->subscriptionValidUntil)
+                    fn () => yield $this->activities->sendSorryToSeeYouGoEmail($this->subscriptionStatus->userId, $this->subscriptionValidUntil),
                 );
             }
 

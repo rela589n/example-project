@@ -63,12 +63,15 @@ final class EntityClassNameInflectorUnitTest extends TestCase
             $inflector->getProxyClassName($fooBar, ['tab' => 'baz']),
         );
         self::assertNotSame(
-            $inflector->getProxyClassName($fooBar, ['foo' => 'bar', 'tab' => 'baz']),
+            $inflector->getProxyClassName($fooBar, ['foo' => 'bar',
+                'tab' => 'baz']),
             $inflector->getProxyClassName($fooBar, ['foo' => 'bar']),
         );
         self::assertNotSame(
-            $inflector->getProxyClassName($fooBar, ['foo' => 'bar', 'tab' => 'baz']),
-            $inflector->getProxyClassName($fooBar, ['tab' => 'baz', 'foo' => 'bar']),
+            $inflector->getProxyClassName($fooBar, ['foo' => 'bar',
+                'tab' => 'baz']),
+            $inflector->getProxyClassName($fooBar, ['tab' => 'baz',
+                'foo' => 'bar']),
         );
     }
 

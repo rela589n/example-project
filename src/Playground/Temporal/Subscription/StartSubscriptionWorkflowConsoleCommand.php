@@ -17,6 +17,8 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Temporal\Client\WorkflowClientInterface;
 use Temporal\Client\WorkflowOptions;
 
+use function sprintf;
+
 #[AsCommand('app:temporal:subscription:start')]
 final class StartSubscriptionWorkflowConsoleCommand extends Command
 {
@@ -32,7 +34,7 @@ final class StartSubscriptionWorkflowConsoleCommand extends Command
         $this->addArgument(
             'userId',
             InputArgument::REQUIRED,
-            'User ID'
+            'User ID',
         );
     }
 

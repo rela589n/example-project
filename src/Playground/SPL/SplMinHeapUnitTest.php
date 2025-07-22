@@ -28,7 +28,7 @@ final class SplMinHeapUnitTest extends TestCase
 
     private static function newHeap(): SplMinHeap
     {
-        return new class extends SplMinHeap {
+        return new class() extends SplMinHeap {
             protected function compare(mixed $value1, mixed $value2): int
             {
                 /** @var list<int|string> $value1 */

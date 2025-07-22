@@ -9,6 +9,10 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
+use function array_keys;
+use function array_map;
+use function uasort;
+
 final readonly class VatServiceCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void

@@ -14,7 +14,7 @@ final readonly class FopSecondGroupVatProvider implements VatProvider
 
     public function supports(FopGroup $fopGroup): bool
     {
-        return $fopGroup === FopGroup::SECOND;
+        return FopGroup::SECOND === $fopGroup;
     }
 
     public function getVat(): int

@@ -46,6 +46,16 @@ final readonly class ResetUserPasswordCommand
         $service->eventBus->dispatch($event);
     }
 
+    public function getUserId(): Uuid
+    {
+        return Uuid::fromString($this->userId);
+    }
+
+    public function getPasswordResetRequestId(): Uuid
+    {
+        return Uuid::fromString($this->passwordResetRequestId);
+    }
+
     private function createEvent(ResetUserPasswordService $service): UserResetPasswordEvent
     {
         /**
@@ -72,15 +82,5 @@ final readonly class ResetUserPasswordCommand
     private function getPasswordResetRequest(ResetUserPasswordService $service): PasswordResetRequest
     {
         return $service->passwordResetRequestRepository->findById($this->getPasswordResetRequestId());
-    }
-
-    public function getUserId(): Uuid
-    {
-        return Uuid::fromString($this->userId);
-    }
-
-    public function getPasswordResetRequestId(): Uuid
-    {
-        return Uuid::fromString($this->passwordResetRequestId);
     }
 }

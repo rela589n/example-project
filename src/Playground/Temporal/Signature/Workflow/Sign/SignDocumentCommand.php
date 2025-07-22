@@ -25,15 +25,15 @@ final readonly class SignDocumentCommand
 
     public function process(): string
     {
-        if ($this->documentId === 'd00') {
+        if ('d00' === $this->documentId) {
             throw new MissingPrivateKeyException();
         }
 
-        if ($this->documentId === 'd01') {
+        if ('d01' === $this->documentId) {
             throw new ExpiredPrivateKeyCertificateException(new CarbonImmutable('2022-01-01 12:00:00'));
         }
 
-        if ($this->password === 'p00') {
+        if ('p00' === $this->password) {
             throw new BadCredentialsException();
         }
 

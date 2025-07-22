@@ -29,7 +29,8 @@ final class RegisterUserConsoleCommand extends Command
         $this
             ->setDescription('Registers a new user.')
             ->addArgument('email', InputArgument::REQUIRED, 'The email of the user.')
-            ->addArgument('password', InputArgument::REQUIRED, 'The password of the user.');
+            ->addArgument('password', InputArgument::REQUIRED, 'The password of the user.')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -6,7 +6,6 @@ namespace App\EmployeePortal\Authentication\User\Features\Register\Outbox\Welcom
 
 use App\EmployeePortal\Authentication\User\Email\Email;
 
-
 final readonly class SendWelcomeEmailCommand
 {
     public function __construct(
@@ -22,7 +21,8 @@ final readonly class SendWelcomeEmailCommand
             ->to($this->email->toString())
             ->subject('Welcome to Example Project')
             ->text('Welcome to the Example Project! We are glad to see you.')
-            ->html('<p>Welcome to the Example Project! We are glad to see you.</p>');
+            ->html('<p>Welcome to the Example Project! We are glad to see you.</p>')
+        ;
 
         $service->mailer->send($mail);
     }

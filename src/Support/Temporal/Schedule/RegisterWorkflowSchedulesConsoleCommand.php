@@ -13,6 +13,11 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Temporal\Client\ScheduleClientInterface;
 
+use function array_keys;
+use function count;
+use function iterator_to_array;
+use function sprintf;
+
 #[AsCommand('app:temporal:schedules:register', description: 'Register Workflow Schedules')]
 final class RegisterWorkflowSchedulesConsoleCommand extends Command
 {

@@ -18,11 +18,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[ApiDoc\Put(
-    summary: 'Edit post'
+    summary: 'Edit post',
 )]
 #[ApiDoc\Response(
     response: Response::HTTP_OK,
-    description: 'Updated'
+    description: 'Updated',
 )]
 #[AsController]
 final readonly class EditPostFrontendApiPoint

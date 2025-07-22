@@ -61,6 +61,8 @@ final class GetMyPostsFrontendApiPointTest extends ApiTestCase
                     'title' => 'Second Sample Post',
                     'description' => 'This is the second sample post created by the fixture.',
                 ],
-            ], $responseData);
+            ],
+            $responseData,
+        );
     }
 }

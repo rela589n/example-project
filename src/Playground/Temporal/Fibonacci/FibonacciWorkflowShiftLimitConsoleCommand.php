@@ -30,14 +30,14 @@ final class FibonacciWorkflowShiftLimitConsoleCommand extends Command
         $this->addArgument(
             'limit',
             InputArgument::REQUIRED,
-            'New Fibonacci limit'
+            'New Fibonacci limit',
         );
 
         $this->addOption(
             'workflow-id',
             null,
             InputOption::VALUE_REQUIRED,
-            'Workflow ID of the running Fibonacci workflow'
+            'Workflow ID of the running Fibonacci workflow',
         );
     }
 
@@ -64,9 +64,8 @@ final class FibonacciWorkflowShiftLimitConsoleCommand extends Command
 
         $workflow->shiftLimit((int)$limit);
 
-        $io->success("Limit shifted to $limit for workflow $workflowId.");
+        $io->success("Limit shifted to {$limit} for workflow {$workflowId}.");
 
         return Command::SUCCESS;
     }
 }
-

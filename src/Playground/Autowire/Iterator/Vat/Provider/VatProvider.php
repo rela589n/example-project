@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Playground\Autowire\Iterator\Vat\Provider;
 
-
 use App\Playground\Autowire\Iterator\Vat\FopGroup;
 
 interface VatProvider

@@ -28,7 +28,7 @@ final class CheckConnectionConsoleCommand extends Command
 
         $database = $this->databaseManager->database('default');
 
-        if ($database->table('auth_users')->exists()){
+        if ($database->table('auth_users')->exists()) {
             $io->success('Table auth_users exists');
         } else {
             $io->warning('Table auth_users does not exist');

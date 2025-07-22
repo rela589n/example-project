@@ -12,14 +12,10 @@ use ProxyManager\Exception\InvalidProxyDirectoryException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+use function spl_autoload_register;
+
 final class AppPlaygroundBundle extends Bundle
 {
-    #[Override]
-    protected function createContainerExtension(): AppPlaygroundExtension
-    {
-        return new AppPlaygroundExtension();
-    }
-
     #[Override]
     public function build(ContainerBuilder $container): void
     {
@@ -41,5 +37,11 @@ final class AppPlaygroundBundle extends Bundle
         } catch (InvalidProxyDirectoryException) {
             $config->setGeneratorStrategy($this->container->get('app_proxy_manager.generator_strategy.fallback'));
         }
+    }
+
+    #[Override]
+    protected function createContainerExtension(): AppPlaygroundExtension
+    {
+        return new AppPlaygroundExtension();
     }
 }

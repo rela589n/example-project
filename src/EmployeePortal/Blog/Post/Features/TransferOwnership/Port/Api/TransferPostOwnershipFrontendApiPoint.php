@@ -18,11 +18,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[ApiDoc\Post(
-    summary: 'Transfer post ownership'
+    summary: 'Transfer post ownership',
 )]
 #[ApiDoc\Response(
     response: Response::HTTP_OK,
-    description: 'Success'
+    description: 'Success',
 )]
 #[AsController]
 final readonly class TransferPostOwnershipFrontendApiPoint

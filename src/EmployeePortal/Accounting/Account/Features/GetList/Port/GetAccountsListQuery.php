@@ -8,6 +8,8 @@ use App\EmployeePortal\Accounting\Account\Account;
 use App\EmployeePortal\Accounting\Account\Features\GetList\AccountDto;
 use Doctrine\ORM\EntityManagerInterface;
 
+use function array_map;
+
 final readonly class GetAccountsListQuery
 {
     public function execute(EntityManagerInterface $entityManager): array

@@ -7,6 +7,8 @@ namespace App\EmployeePortal\Authentication\User\SecretKey;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+use function random_bytes;
+
 #[CoversClass(EncryptionService::class)]
 final class EncryptionServiceUnitTest extends TestCase
 {

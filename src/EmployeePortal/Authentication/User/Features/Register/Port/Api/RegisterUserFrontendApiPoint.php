@@ -16,7 +16,7 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[ApiDoc\Post(
-    summary: 'Register user'
+    summary: 'Register user',
 )]
 #[ApiDoc\Response(
     response: 201,

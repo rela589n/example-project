@@ -8,13 +8,17 @@ use App\EmployeePortal\Accounting\Account\Account;
 use App\EmployeePortal\Accounting\Account\Support\AccountFixture;
 use App\EmployeePortal\Accounting\Account\Transaction\AccountTransaction;
 use Carbon\CarbonImmutable;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use RuntimeException;
 use Symfony\Component\Clock\Clock;
 use Symfony\Component\Clock\MockClock;
 use Symfony\Component\Clock\NativeClock;
 use Symfony\Component\Uid\Uuid;
+
+use function sprintf;
 
 final class AccountTransactionFixture extends Fixture implements DependentFixtureInterface
 {
@@ -27,7 +31,7 @@ final class AccountTransactionFixture extends Fixture implements DependentFixtur
 
     public function load(ObjectManager $manager): void
     {
-        Clock::set(new MockClock(new \DateTimeImmutable('2023-01-01T12:00:00+00:00')));
+        Clock::set(new MockClock(new DateTimeImmutable('2023-01-01T12:00:00+00:00')));
 
         $transactions = [
             // User 1, Account 1
@@ -63,10 +67,10 @@ final class AccountTransactionFixture extends Fixture implements DependentFixtur
             ]);
 
             if (!$account) {
-                throw new \RuntimeException(sprintf(
+                throw new RuntimeException(sprintf(
                     'Account with ID %s and User ID %s not found.',
                     $transactionData['account_id'],
-                    $transactionData['user_id']
+                    $transactionData['user_id'],
                 ));
             }
 
@@ -75,7 +79,7 @@ final class AccountTransactionFixture extends Fixture implements DependentFixtur
                 $account,
                 $transactionData['amount'],
                 $transactionData['description'],
-                new CarbonImmutable('2023-01-01T12:00:00+00:00')
+                new CarbonImmutable('2023-01-01T12:00:00+00:00'),
             );
 
             $manager->persist($transaction);

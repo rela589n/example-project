@@ -9,6 +9,8 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
+use function sleep;
+
 #[AsController]
 final readonly class SleepFrontendApiPoint
 {

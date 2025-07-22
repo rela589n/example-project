@@ -43,7 +43,7 @@ final class AddPostCommentFrontendApiPointTest extends ApiTestCase
 
         $this->client->request(
             'POST',
-            "/api/example-project/blog/posts/a2f6d821-6b23-73f4-bb85-6daf4280b72c/comments",
+            '/api/example-project/blog/posts/a2f6d821-6b23-73f4-bb85-6daf4280b72c/comments',
             [
                 'auth_bearer' => $token,
                 'headers' => [

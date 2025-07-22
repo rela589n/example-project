@@ -20,6 +20,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use function Amp\async;
 use function Amp\Future\awaitAll;
 use function Amp\Future\awaitAnyN;
+use function count;
+use function reset;
+use function sprintf;
 
 #[AsCommand(name: 'app:partitioning:setup-partitions', description: 'Setup partitions')]
 final class SetupPartitionsConsoleCommand extends Command
@@ -33,19 +36,21 @@ final class SetupPartitionsConsoleCommand extends Command
             ->addArgument('target-table', InputArgument::REQUIRED, 'Target (partitioned) table')
             ->addOption('connections', 'c', InputOption::VALUE_OPTIONAL, 'Number of concurrent connections', self::CONNECTIONS)
             ->addOption('start-at', null, InputOption::VALUE_REQUIRED, 'Number of iterations to skip', 0)
-            ->setHelp(<<<'HELP'
+            ->setHelp(
+                <<<'HELP'
 The <info>%command.name%</info> command sets up partitions.
 
 Usage example:
   <info>bin/console app:partitioning:setup-partitions accounting_accounts_not_partitioned accounting_account_transactions -c 256 --start-at=0 -vv</info>
 HELP
-            );
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $config = PostgresConfig::fromString("host=postgresql user=postgres db=project_db_test password=qwerty");
+        $config = PostgresConfig::fromString('host=postgresql user=postgres db=project_db_test password=qwerty');
 
         /** @var string $connections */
         $connections = $input->getOption('connections');
@@ -75,6 +80,7 @@ HELP
 
         $it = 0;
         $futures = [];
+
         foreach ($results as ['sequence_id' => $sequenceId, 'id' => $id]) {
             // Skip the specified number of iterations
             if ($it < $startAt) {

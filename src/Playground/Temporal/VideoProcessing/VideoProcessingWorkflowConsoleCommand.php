@@ -15,6 +15,11 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Temporal\Client\WorkflowClientInterface;
 use Temporal\Client\WorkflowOptions;
 
+use function array_map;
+use function explode;
+use function ltrim;
+use function rtrim;
+
 #[AsCommand('app:temporal:video-processing')]
 final class VideoProcessingWorkflowConsoleCommand extends Command
 {
@@ -51,7 +56,8 @@ final class VideoProcessingWorkflowConsoleCommand extends Command
             ->newWorkflowStub(
                 VideoProcessingWorkflow::class,
                 WorkflowOptions::new(),
-            );
+            )
+        ;
 
         /** @var string $result */
         $result = $workflow->process($length, $beatRange, $beatLimit, $fail);
@@ -99,4 +105,3 @@ final class VideoProcessingWorkflowConsoleCommand extends Command
         return (int)$beatLimit;
     }
 }
-

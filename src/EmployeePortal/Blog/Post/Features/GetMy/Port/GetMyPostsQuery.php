@@ -8,6 +8,8 @@ use App\EmployeePortal\Blog\Post\Features\GetMy\MyPostDto;
 use App\EmployeePortal\Blog\Post\PostCollection;
 use Symfony\Component\Uid\Uuid;
 
+use function array_map;
+
 final readonly class GetMyPostsQuery
 {
     public function __construct(

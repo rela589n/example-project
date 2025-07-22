@@ -19,16 +19,16 @@ class PostComment
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private(set) Uuid $id;
+    private(set) public Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private(set) User $author;
+    private(set) public User $author;
 
     #[ORM\ManyToOne(targetEntity: Post::class)]
-    private(set) Post $post;
+    private(set) public Post $post;
 
     #[ORM\Column(type: 'text')]
-    private(set) string $text;
+    private(set) public string $text;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private CarbonImmutable $addedAt;

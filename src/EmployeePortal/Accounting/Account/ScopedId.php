@@ -14,7 +14,6 @@ final readonly class ScopedId
         #[ORM\Id]
         #[ORM\Column(type: 'uuid')]
         private(set) Uuid $id,
-
         #[ORM\Id]
         #[ORM\Column(type: 'uuid')]
         private(set) Uuid $userId,

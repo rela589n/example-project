@@ -19,22 +19,22 @@ class Post
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private(set) Uuid $id;
+    private(set) public Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private(set) User $author;
+    private(set) public User $author;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private(set) User $owner;
+    private(set) public User $owner;
 
     #[ORM\Column]
-    private(set) string $title;
+    private(set) public string $title;
 
     #[ORM\Column]
-    private(set) string $description;
+    private(set) public string $description;
 
     // #[Autowire]
-    private(set) PostCommentCollection $comments {
+    private(set) public PostCommentCollection $comments {
         set => $value->ofPost($this->id);
     }
 
@@ -43,7 +43,7 @@ class Post
     // if during loading $this->comments, there were some comments matching the criteria, these should not be included for the database query (subset collection)
     // if orderByRating is called multiple times, it should return the same object
     // #[Autowire]
-    private(set) PostCommentCollection $topComments {
+    private(set) public PostCommentCollection $topComments {
         set => $this->comments->orderByRating()->limit(10);
     }
 

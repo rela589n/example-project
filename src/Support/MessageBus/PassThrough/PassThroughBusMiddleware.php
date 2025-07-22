@@ -13,6 +13,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 
+use function sprintf;
+
 #[AsAlias('app_pass_through_bus')]
 final readonly class PassThroughBusMiddleware implements MiddlewareInterface
 {

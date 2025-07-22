@@ -31,13 +31,14 @@ final class UserRegisteredEventTest extends TestCase
     {
         parent::setUp();
 
-        $this->userRepository = $this->createStub(UserRepository::class);
+        $this->userRepository = self::createStub(UserRepository::class);
     }
 
     public function testEmailMustBeUnique(): void
     {
         $this->userRepository->method('isEmailFree')
-            ->willReturn(false);
+            ->willReturn(false)
+        ;
 
         $this->expectException(EmailAlreadyTakenException::class);
 
@@ -47,7 +48,8 @@ final class UserRegisteredEventTest extends TestCase
     public function testSuccessfulUserRegistration(): void
     {
         $this->userRepository->method('isEmailFree')
-            ->willReturn(true);
+            ->willReturn(true)
+        ;
 
         $user = $this->registerUser();
 

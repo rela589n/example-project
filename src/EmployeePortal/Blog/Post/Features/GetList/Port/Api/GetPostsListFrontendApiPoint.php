@@ -14,11 +14,11 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[ApiDoc\Get(
-    summary: 'Get posts'
+    summary: 'Get posts',
 )]
 #[ApiDoc\Response(
     response: Response::HTTP_OK,
-    description: 'Success'
+    description: 'Success',
 )]
 #[AsController]
 final readonly class GetPostsListFrontendApiPoint

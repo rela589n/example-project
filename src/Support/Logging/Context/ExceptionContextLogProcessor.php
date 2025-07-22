@@ -7,11 +7,12 @@ namespace App\Support\Logging\Context;
 use Monolog\Attribute\AsMonologProcessor;
 use Monolog\LogRecord;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Throwable;
+
+use function str_contains;
 
 #[AsMonologProcessor]
 final readonly class ExceptionContextLogProcessor

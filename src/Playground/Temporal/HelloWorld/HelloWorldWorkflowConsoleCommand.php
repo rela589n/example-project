@@ -14,6 +14,8 @@ use Temporal\Client\WorkflowClient;
 use Temporal\Client\WorkflowClientInterface;
 use Temporal\Client\WorkflowOptions;
 
+use function sprintf;
+
 #[AsCommand('app:temporal:hello')]
 final class HelloWorldWorkflowConsoleCommand extends Command
 {

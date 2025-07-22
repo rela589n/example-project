@@ -60,16 +60,27 @@ final class ShortestSubarrayHeapSum implements ShortestSubarraySum
             }
         }
 
-        if ($this->minLength === PHP_INT_MAX) {
+        if (PHP_INT_MAX === $this->minLength) {
             return -1;
         }
 
         return $this->minLength;
     }
 
+    public static function pair(int $prefixSum, int $index): object
+    {
+        return new class($prefixSum, $index) {
+            public function __construct(
+                public int $prefixSum,
+                public int $index,
+            ) {
+            }
+        };
+    }
+
     private static function newHeap(): SplMinHeap
     {
-        return new class extends SplMinHeap {
+        return new class() extends SplMinHeap {
             private int $shift = 0;
 
             public function addShift(int $shift): void
@@ -100,17 +111,6 @@ final class ShortestSubarrayHeapSum implements ShortestSubarraySum
     {
         $this->sum += $num;
         $this->sumPrefixHeap->insert(self::pair($this->sum, $this->r));
-    }
-
-    public static function pair(int $prefixSum, int $index): object
-    {
-        return new class($prefixSum, $index) {
-            public function __construct(
-                public int $prefixSum,
-                public int $index,
-            ) {
-            }
-        };
     }
 
     /** Resetting sum for the next iteration */
@@ -167,4 +167,3 @@ final class ShortestSubarrayHeapSum implements ShortestSubarraySum
         return $cutItem->index;
     }
 }
-

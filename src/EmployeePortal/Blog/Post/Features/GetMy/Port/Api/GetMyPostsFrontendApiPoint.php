@@ -6,7 +6,6 @@ namespace App\EmployeePortal\Blog\Post\Features\GetMy\Port\Api;
 
 use App\EmployeePortal\Blog\Post\Features\GetMy\Port\GetMyPostsQuery;
 use App\EmployeePortal\Blog\Post\PostCollection;
-use Doctrine\ORM\EntityManagerInterface;
 use OpenApi\Attributes as ApiDoc;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,14 +13,13 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use Symfony\Component\Uid\Uuid;
 
 #[ApiDoc\Get(
-    summary: 'Get my posts'
+    summary: 'Get my posts',
 )]
 #[ApiDoc\Response(
     response: Response::HTTP_OK,
-    description: 'Success'
+    description: 'Success',
 )]
 #[AsController]
 final readonly class GetMyPostsFrontendApiPoint
@@ -30,6 +28,7 @@ final readonly class GetMyPostsFrontendApiPoint
         private PostCollection $postCollection,
     ) {
     }
+
     #[Route(
         path: '/posts/my',
         name: 'example_project_post_get_my',

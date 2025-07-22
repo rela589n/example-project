@@ -20,6 +20,6 @@ final readonly class SubscriptionWorkflowId
 
     public function getId(): string
     {
-        return $this->userId . ':subscription';
+        return $this->userId.':subscription';
     }
 }

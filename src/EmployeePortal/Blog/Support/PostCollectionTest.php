@@ -6,7 +6,6 @@ namespace App\EmployeePortal\Blog\Support;
 
 use App\EmployeePortal\Blog\Post\Post;
 use App\EmployeePortal\Blog\Post\PostCollection;
-use App\EmployeePortal\Blog\Support\Collection\MemoryCollection;
 use App\Support\Orm\Collection\Set;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;

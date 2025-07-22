@@ -17,7 +17,7 @@ final class EntityCollection implements Collection
 
     public function has(int|string $key): bool
     {
-        // TODO: Implement has() method.
+
     }
 
     public function get(int|string $key): mixed

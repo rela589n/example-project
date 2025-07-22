@@ -24,7 +24,7 @@ final readonly class SubscriptionStatus
         return new self($userId, true, null);
     }
 
-    public function nextCycle(CarbonImmutable $nextCycleDate): SubscriptionStatus
+    public function nextCycle(CarbonImmutable $nextCycleDate): self
     {
         return new self($this->userId, false, $nextCycleDate);
     }

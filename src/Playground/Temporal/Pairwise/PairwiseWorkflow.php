@@ -12,6 +12,8 @@ use Temporal\Workflow\WorkflowInterface;
 use Temporal\Workflow\WorkflowMethod;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
+use function sprintf;
+
 #[WorkflowInterface]
 #[AssignWorker('default')]
 final readonly class PairwiseWorkflow
@@ -46,7 +48,6 @@ final readonly class PairwiseWorkflow
         // As you can see, Replay doesn't take into account arguments
         // of an activity call (neither of the timers)
 
-        return sprintf("%s, %s", $first, $second);
+        return sprintf('%s, %s', $first, $second);
     }
 }
-

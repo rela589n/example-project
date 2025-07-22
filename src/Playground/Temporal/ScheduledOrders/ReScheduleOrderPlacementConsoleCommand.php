@@ -16,6 +16,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Temporal\Client\WorkflowClientInterface;
 
+use function sprintf;
+
 #[AsCommand('app:temporal:scheduled-order:re-schedule', 'Re-schedule a scheduled order placement')]
 final class ReScheduleOrderPlacementConsoleCommand extends Command
 {
@@ -68,4 +70,3 @@ final class ReScheduleOrderPlacementConsoleCommand extends Command
         return Command::SUCCESS;
     }
 }
-

@@ -38,7 +38,7 @@ class AccountTransaction implements PartitionedEntityInterface
         Account $account,
         int $amount,
         string $description,
-        CarbonImmutable $createdAt
+        CarbonImmutable $createdAt,
     ) {
         $this->id = new ScopedId($id, $account->getUserId());
         $this->account = $account;
@@ -46,7 +46,6 @@ class AccountTransaction implements PartitionedEntityInterface
         $this->description = $description;
         $this->createdAt = $createdAt;
     }
-
 
     public function getAccount(): Account
     {

@@ -8,6 +8,8 @@ use Temporal\Activity\ActivityInterface;
 use Temporal\Activity\ActivityMethod;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
+use function count;
+
 #[ActivityInterface]
 #[AssignWorker('default')]
 final readonly class QuoteOfTheDayActivity

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Blog\Post\Features\Edit\Port;
 
 use App\EmployeePortal\Blog\Post\Features\Edit\PostEditedEvent;
-use App\EmployeePortal\Blog\Post\PostCollection;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
@@ -16,15 +15,12 @@ final readonly class EditPostCommand
         #[Assert\NotBlank]
         #[Assert\Uuid]
         private string $id,
-
         #[Assert\NotBlank]
         #[Assert\Uuid]
         private string $editorId,
-
         #[Assert\NotBlank]
         #[Assert\Length(min: 3, max: 255)]
         private string $title,
-
         #[Assert\NotBlank]
         #[Assert\Length(min: 10, max: 2047)]
         private string $description,

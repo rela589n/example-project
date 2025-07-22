@@ -31,7 +31,8 @@ final class PairwiseWorkflowConsoleCommand extends Command
             ->newWorkflowStub(
                 PairwiseWorkflow::class,
                 WorkflowOptions::new(),
-            );
+            )
+        ;
 
         $result = $workflow->pair();
 
@@ -40,4 +41,3 @@ final class PairwiseWorkflowConsoleCommand extends Command
         return Command::SUCCESS;
     }
 }
-

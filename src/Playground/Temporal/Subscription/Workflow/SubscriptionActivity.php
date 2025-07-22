@@ -17,6 +17,8 @@ use Temporal\Internal\Workflow\Proxy;
 use Temporal\Workflow;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
+use function var_export;
+
 #[ActivityInterface('Subscription.')]
 #[AssignWorker('default')]
 #[WithMonologChannel('subscription')]
@@ -60,7 +62,8 @@ final readonly class SubscriptionActivity
     #[Activity\ActivityMethod]
     public function extendSubscriptionUntil(string $userId, DateTimeImmutable $endDate): void
     {
-        $this->logger->info('Extending subscription for {userId} until {endDate}',
+        $this->logger->info(
+            'Extending subscription for {userId} until {endDate}',
             [
                 'userId' => $userId,
                 'endDate' => $endDate->format('Y-m-d H:i:s'),

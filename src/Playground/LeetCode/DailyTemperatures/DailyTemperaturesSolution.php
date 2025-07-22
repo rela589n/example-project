@@ -6,6 +6,9 @@ namespace App\Playground\LeetCode\DailyTemperatures;
 
 use SplStack;
 
+use function array_fill;
+use function count;
+
 /** @see https://leetcode.com/problems/daily-temperatures/description/ */
 final readonly class DailyTemperaturesSolution
 {

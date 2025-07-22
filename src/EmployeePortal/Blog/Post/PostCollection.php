@@ -73,7 +73,7 @@ final readonly class PostCollection
         $criteria = clone $this->criteria;
 
         $criteria->andWhere($expression);
-        
+
         return new self($this->repository, $criteria);
     }
 }

@@ -35,13 +35,13 @@ final readonly class IntertwinedSequenceWorkflow
 
         $oddNumbersCoroutine = Workflow::async(function () use ($limit, &$results) {
             for ($i = 1; $i <= $limit; $i += 2) {
-                $results [] = yield $this->activity->print($i);
+                $results[] = yield $this->activity->print($i);
             }
         });
 
         $evenNumbersCoroutine = Workflow::async(function () use ($limit, &$results) {
             for ($i = 2; $i <= $limit; $i += 2) {
-                $results [] = yield $this->activity->print($i);
+                $results[] = yield $this->activity->print($i);
             }
         });
 
@@ -52,4 +52,3 @@ final readonly class IntertwinedSequenceWorkflow
         return $results;
     }
 }
-

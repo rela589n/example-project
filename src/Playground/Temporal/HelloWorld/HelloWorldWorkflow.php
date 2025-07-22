@@ -8,6 +8,8 @@ use Temporal\Workflow\WorkflowInterface;
 use Temporal\Workflow\WorkflowMethod;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
+use function sprintf;
+
 #[WorkflowInterface]
 #[AssignWorker('default')]
 final readonly class HelloWorldWorkflow

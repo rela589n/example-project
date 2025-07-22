@@ -19,6 +19,10 @@ use Temporal\Internal\Workflow\Proxy;
 use Temporal\Workflow;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
+use function random_int;
+use function sleep;
+use function sprintf;
+
 #[ActivityInterface('VideoProcessing.')]
 #[AssignWorker('default')]
 #[WithMonologChannel('video_processing')]
@@ -107,14 +111,14 @@ final readonly class VideoProcessingActivity
 
                     // This will fail every time, but eventually it'll complete due to heartbeat.
 
-                    throw new LogicException(sprintf("Fail iteration: %d", $i));
+                    throw new LogicException(sprintf('Fail iteration: %d', $i));
                 }
             }
         }
 
-        $this->logger->info("Finished rendering video: $length");
+        $this->logger->info("Finished rendering video: {$length}");
 
-        return "Rendered video: $length";
+        return "Rendered video: {$length}";
     }
 
     #[ActivityMethod]

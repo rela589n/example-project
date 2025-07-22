@@ -35,7 +35,8 @@ final readonly class TripBookingWorkflow
     public function __construct()
     {
         $this->saga = new Workflow\Saga()
-            ->setParallelCompensation(true);
+            ->setParallelCompensation(true)
+        ;
 
         $this->reserveCar = ReserveCarActivity::create();
         $this->bookFlight = BookFlightActivity::create();
@@ -46,7 +47,7 @@ final readonly class TripBookingWorkflow
     {
         return $workflowClient->newWorkflowStub(
             self::class,
-            WorkflowOptions::new()->withTaskQueue(self::TASK_QUEUE)
+            WorkflowOptions::new()->withTaskQueue(self::TASK_QUEUE),
         );
     }
 

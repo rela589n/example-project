@@ -19,11 +19,11 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Uid\Uuid;
 
 #[ApiDoc\Post(
-    summary: 'Create post'
+    summary: 'Create post',
 )]
 #[ApiDoc\Response(
     response: Response::HTTP_CREATED,
-    description: 'Created'
+    description: 'Created',
 )]
 #[AsController]
 final readonly class CreatePostFrontendApiPoint

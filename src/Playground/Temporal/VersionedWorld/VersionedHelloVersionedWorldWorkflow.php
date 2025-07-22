@@ -13,6 +13,9 @@ use Temporal\Workflow\WorkflowInterface;
 use Temporal\Workflow\WorkflowMethod;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
+use function array_filter;
+use function implode;
+
 #[WorkflowInterface]
 #[AssignWorker('default')]
 final readonly class VersionedHelloVersionedWorldWorkflow
@@ -41,7 +44,7 @@ final readonly class VersionedHelloVersionedWorldWorkflow
 
         // if Workflow::getVersion() is added after the code has already executed the next activity,
         // then "-1" is used, and the default (previous) version is executed.
-        if ($version === Workflow::DEFAULT_VERSION) {
+        if (Workflow::DEFAULT_VERSION === $version) {
             $versioned = '';
         } else {
             $versioned = yield $this->activities->versioned();
@@ -55,4 +58,3 @@ final readonly class VersionedHelloVersionedWorldWorkflow
         return implode(' ', array_filter([$hello, $versioned, $world]));
     }
 }
-

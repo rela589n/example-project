@@ -10,6 +10,9 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Webmozart\Assert\Assert;
 
+use function random_bytes;
+use function strlen;
+
 #[AsController]
 final readonly class ConsumeMemoryFrontendAction
 {

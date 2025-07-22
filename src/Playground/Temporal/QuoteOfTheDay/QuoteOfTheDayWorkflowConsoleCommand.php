@@ -15,6 +15,8 @@ use Temporal\Client\WorkflowClient;
 use Temporal\Client\WorkflowClientInterface;
 use Temporal\Client\WorkflowOptions;
 
+use function sprintf;
+
 #[AsCommand('app:temporal:quote-of-the-day')]
 final class QuoteOfTheDayWorkflowConsoleCommand extends Command
 {

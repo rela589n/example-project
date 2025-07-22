@@ -15,15 +15,12 @@ final readonly class CreatePostCommand
         #[Assert\NotBlank]
         #[Assert\Uuid]
         private string $id,
-
         #[Assert\NotBlank]
         #[Assert\Uuid]
         private string $authorId,
-
         #[Assert\NotBlank]
         #[Assert\Length(min: 3, max: 255)]
         private string $title,
-
         #[Assert\NotBlank]
         #[Assert\Length(min: 10, max: 2047)]
         private string $description,

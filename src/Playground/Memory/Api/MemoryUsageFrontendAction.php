@@ -8,6 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 
+use function count;
+use function floor;
+use function log;
+use function max;
+use function memory_get_usage;
+use function min;
+use function round;
+
 #[AsController]
 final readonly class MemoryUsageFrontendAction
 {
@@ -19,7 +27,7 @@ final readonly class MemoryUsageFrontendAction
 
     private function formatBytes(int $bytes, int $precision = 2): string
     {
-        $units = array('B', 'KB', 'MB', 'GB', 'TB');
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
 
         $bytes = max($bytes, 0);
         $pow = floor(($bytes ? log($bytes) : 0) / log(1024));

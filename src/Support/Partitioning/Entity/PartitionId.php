@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Support\Partitioning\Entity;
 
+use function is_string;
+use function sprintf;
+
 final class PartitionId
 {
     public function __construct(

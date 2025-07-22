@@ -7,6 +7,8 @@ namespace App\EmployeePortal\Blog\Support\Specification;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 
+use function array_map;
+
 final readonly class Specification
 {
     public function __construct(

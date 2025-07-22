@@ -20,6 +20,9 @@ use Temporal\Internal\Workflow\Proxy;
 use Temporal\Workflow;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 
+use function is_string;
+use function sleep;
+
 #[ActivityInterface('AcknowledgeActivity.')]
 #[AssignWorker('default')]
 #[WithMonologChannel('signature')]
@@ -60,7 +63,10 @@ final readonly class AcknowledgeActivity
 
         $this->logger->info(
             'Acknowledging document: {documentId}, path: {path}',
-            ['documentId' => $command->documentId, 'path' => $command->signedFilePath],
+            [
+                'documentId' => $command->documentId,
+                'path' => $command->signedFilePath,
+            ],
         );
 
         // like http request
@@ -83,7 +89,8 @@ final readonly class AcknowledgeActivity
         } catch (ActivityCanceledException $e) {
             $this->logger->info(
                 'Document acknowledgement was cancelled: {documentId}, path: {path}',
-                ['documentId' => $command->documentId, 'path' => $command->signedFilePath],
+                ['documentId' => $command->documentId,
+                    'path' => $command->signedFilePath],
             );
 
             throw $e;
@@ -98,7 +105,8 @@ final readonly class AcknowledgeActivity
 
         $this->logger->info(
             'Document acknowledged: {documentId}, path: {path}',
-            ['documentId' => $command->documentId, 'path' => $command->signedFilePath],
+            ['documentId' => $command->documentId,
+                'path' => $command->signedFilePath],
         );
     }
 
@@ -107,7 +115,8 @@ final readonly class AcknowledgeActivity
     {
         $this->logger->warning(
             'Document {documentId}, path {path} acknowledgement cancelled',
-            ['documentId' => $command->documentId, 'path' => $command->signedFilePath],
+            ['documentId' => $command->documentId,
+                'path' => $command->signedFilePath],
         );
     }
 }

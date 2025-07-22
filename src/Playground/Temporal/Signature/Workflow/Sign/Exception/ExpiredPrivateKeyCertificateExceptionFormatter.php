@@ -9,6 +9,8 @@ use PhPhD\ExceptionalValidation\Rule\Exception\CapturedException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Validator\ConstraintViolation;
 
+use function array_merge;
+
 /** @implements ExceptionViolationFormatter<ExpiredPrivateKeyCertificateException> */
 final readonly class ExpiredPrivateKeyCertificateExceptionFormatter implements ExceptionViolationFormatter
 {

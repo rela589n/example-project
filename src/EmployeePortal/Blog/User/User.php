@@ -21,16 +21,16 @@ class User
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private(set) Uuid $id;
+    private(set) public Uuid $id;
 
     // anything you would like to control access to should likely be declared as a collection
     // #[Autowire]
-    private(set) PostCollection $posts {
+    private(set) public PostCollection $posts {
         set => $value->ofOwner($this->id);
     }
 
     // #[Autowire]
-    private(set) PostCommentCollection $comments {
+    private(set) public PostCommentCollection $comments {
         set => $value->ofAuthor($this->id);
     }
 

@@ -21,6 +21,7 @@ final readonly class TemporalWorkerRegistrationCompilerPass implements CompilerP
                 $container
                     ->register(TemporalWorker::class, TemporalWorker::class)
                     ->setArguments([new Reference('temporal.runtime')]),
-            ]);
+            ])
+        ;
     }
 }

@@ -26,7 +26,8 @@ final readonly class FilesCleanupWorkflowScheduleProvider implements SchedulePro
                             CarbonInterval::hours(3),
                         ),
                     ),
-            );
+            )
+        ;
     }
 
     public static function getId(): string

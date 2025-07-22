@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Swoole\Http\Request;
@@ -7,13 +8,13 @@ use Swoole\Http\Server;
 
 $server = new Swoole\HTTP\Server('0.0.0.0', 9501);
 
-$server->on("start", function (Server $server): void {
+$server->on('start', function (Server $server): void {
     // @phpstan-ignore-next-line encapsedStringPart.nonString
-    echo "OpenSwoole http server is started at $server->host:$server->port\n";
+    echo "OpenSwoole http server is started at {$server->host}:{$server->port}\n";
 });
 
-$server->on("request", function (Request $request, Response $response): void {
-    $response->header("Content-Type", "text/plain");
+$server->on('request', function (Request $request, Response $response): void {
+    $response->header('Content-Type', 'text/plain');
     $response->end("Hello World\n");
 
     echo "The request was processed\n";

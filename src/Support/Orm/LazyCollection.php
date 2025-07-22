@@ -16,6 +16,7 @@ use Traversable;
 final class LazyCollection implements Collection, Selectable
 {
     private bool $isInitialized = false;
+
     private Collection&Selectable $collection;
 
     public function __construct(

@@ -15,11 +15,9 @@ final readonly class TransferPostOwnershipCommand
         #[Assert\NotBlank]
         #[Assert\Uuid]
         private string $postId,
-
         #[Assert\NotBlank]
         #[Assert\Uuid]
         private string $currentOwnerId,
-
         #[Assert\NotBlank]
         #[Assert\Uuid]
         private string $newOwnerId,

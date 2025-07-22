@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Blog\Post\Comment\Features\Edit;
 
 use App\EmployeePortal\Blog\Post\Comment\PostComment;
-use App\EmployeePortal\Blog\Post\Comment\PostCommentCollection;
 use App\EmployeePortal\Blog\Post\Post;
 use App\EmployeePortal\Blog\User\User;
 use Carbon\CarbonImmutable;

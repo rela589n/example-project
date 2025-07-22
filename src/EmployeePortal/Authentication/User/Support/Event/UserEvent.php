@@ -64,7 +64,7 @@ abstract class UserEvent
      * @template TData
      *
      * @param UserEventVisitor<TResult,TData> $visitor
-     * @param null|TData $data
+     * @param TData|null $data
      *
      * @return TResult
      */

@@ -16,28 +16,28 @@ use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserRese
 interface UserEventVisitor
 {
     /**
-     * @param null|TData $data
+     * @param TData|null $data
      *
      * @return TResult
      */
     public function visitUserRegisteredEvent(UserRegisteredEvent $event, mixed $data = null): mixed;
 
     /**
-     * @param null|TData $data
+     * @param TData|null $data
      *
      * @return TResult
      */
     public function visitUserPasswordResetEvent(UserResetPasswordEvent $event, mixed $data = null): mixed;
 
     /**
-     * @param null|TData $data
+     * @param TData|null $data
      *
      * @return TResult
      */
     public function visitUserLoggedInEvent(UserLoggedInEvent $event, mixed $data = null): mixed;
 
     /**
-     * @param null|TData $data
+     * @param TData|null $data
      *
      * @return TResult
      */

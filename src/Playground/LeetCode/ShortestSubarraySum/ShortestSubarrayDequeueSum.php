@@ -6,6 +6,8 @@ namespace App\Playground\LeetCode\ShortestSubarraySum;
 
 use SplDoublyLinkedList;
 
+use function min;
+
 final readonly class ShortestSubarrayDequeueSum implements ShortestSubarraySum
 {
     /** @param list<int> $nums */
@@ -56,7 +58,7 @@ final readonly class ShortestSubarrayDequeueSum implements ShortestSubarraySum
             $prefixSumQueue->push([$sum, $r]);
         }
 
-        if ($minLength === PHP_INT_MAX) {
+        if (PHP_INT_MAX === $minLength) {
             return -1;
         }
 

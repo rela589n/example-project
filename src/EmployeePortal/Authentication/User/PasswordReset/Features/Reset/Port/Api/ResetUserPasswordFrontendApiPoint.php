@@ -17,11 +17,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[ApiDoc\Post(
-    summary: 'Reset password'
+    summary: 'Reset password',
 )]
 #[ApiDoc\Response(
     response: 200,
-    description: 'OK'
+    description: 'OK',
 )]
 #[AsController]
 final readonly class ResetUserPasswordFrontendApiPoint
@@ -35,7 +35,7 @@ final readonly class ResetUserPasswordFrontendApiPoint
     #[Route(
         path: '/reset-password',
         name: 'example_project_auth_user_reset_password',
-        methods: ['POST']
+        methods: ['POST'],
     )]
     public function __invoke(
         #[CurrentUser]

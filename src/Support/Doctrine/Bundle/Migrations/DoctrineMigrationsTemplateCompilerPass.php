@@ -9,6 +9,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\ExpressionLanguage\Expression;
 
+use function str_starts_with;
+use function substr;
+
 final readonly class DoctrineMigrationsTemplateCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void

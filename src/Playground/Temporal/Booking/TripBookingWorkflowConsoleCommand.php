@@ -16,6 +16,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Temporal\Client\WorkflowClientInterface;
 
+use function sprintf;
+
 /**
  * Run temporal server on your host machine as:
  * temporal server start-dev --ip 0.0.0.0
@@ -37,7 +39,7 @@ final class TripBookingWorkflowConsoleCommand extends Command
             null,
             InputOption::VALUE_REQUIRED,
             'Fail flag (none, car, flight, hotel, random)',
-            'none'
+            'none',
         );
 
         $this->addOption(

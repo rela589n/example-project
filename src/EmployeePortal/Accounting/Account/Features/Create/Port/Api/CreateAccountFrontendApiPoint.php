@@ -6,7 +6,6 @@ namespace App\EmployeePortal\Accounting\Account\Features\Create\Port\Api;
 
 use App\EmployeePortal\Accounting\Account\Features\Create\Port\CreateAccountCommand;
 use App\Support\MessageBus\PassThrough\PassThroughBusStamp;
-use LogicException;
 use OpenApi\Attributes as ApiDoc;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,11 +19,11 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Uid\Uuid;
 
 #[ApiDoc\Post(
-    summary: 'Create account'
+    summary: 'Create account',
 )]
 #[ApiDoc\Response(
     response: Response::HTTP_CREATED,
-    description: 'Created'
+    description: 'Created',
 )]
 #[AsController]
 final readonly class CreateAccountFrontendApiPoint
@@ -45,7 +44,7 @@ final readonly class CreateAccountFrontendApiPoint
         #[CurrentUser]
         UserInterface $user,
     ): Response {
-        $id = $request->getPayload()->get('id') ;
+        $id = $request->getPayload()->get('id');
 
         $command = new CreateAccountCommand(
             $id ?? Uuid::v7()->toRfc4122(),

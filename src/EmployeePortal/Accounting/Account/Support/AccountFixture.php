@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Accounting\Account\Support;
 
 use App\EmployeePortal\Accounting\Account\Features\Create\Port\CreateAccountCommand;
-use Carbon\CarbonImmutable;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Psr\Clock\ClockInterface;
 use Symfony\Component\Clock\Clock;
 use Symfony\Component\Clock\MockClock;
 use Symfony\Component\Clock\NativeClock;
@@ -25,7 +24,7 @@ final class AccountFixture extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        Clock::set(new MockClock(new \DateTimeImmutable('2023-01-01T12:00:00+00:00')));
+        Clock::set(new MockClock(new DateTimeImmutable('2023-01-01T12:00:00+00:00')));
 
         $accountsByUser = [
             '2a977708-1c69-7d38-9074-b388a7f386dc' => [

@@ -8,7 +8,6 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Symfony\Bundle\Test\Client;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUser;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use PhPhD\ApiTesting\Jwt\JwtLoginTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(GetAccountsListFrontendApiPoint::class)]

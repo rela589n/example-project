@@ -31,7 +31,8 @@ final class VersionedHelloWorldWorkflowConsoleCommand extends Command
             ->newWorkflowStub(
                 VersionedHelloVersionedWorldWorkflow::class,
                 WorkflowOptions::new(),
-            );
+            )
+        ;
 
         $helloWorld = $workflow->helloWorld(5);
 
@@ -40,4 +41,3 @@ final class VersionedHelloWorldWorkflowConsoleCommand extends Command
         return Command::SUCCESS;
     }
 }
-

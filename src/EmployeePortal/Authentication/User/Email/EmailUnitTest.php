@@ -16,7 +16,7 @@ final class EmailUnitTest extends TestCase
     {
         $this->expectException(EmailValidationFailedException::class);
         $this->expectExceptionMessage(
-            'This value should not be blank. (code c1051bb4-d103-4f74-8988-acbcafc7fdc3)'
+            'This value should not be blank. (code c1051bb4-d103-4f74-8988-acbcafc7fdc3)',
         );
 
         $this->createEmail('');
@@ -27,7 +27,7 @@ final class EmailUnitTest extends TestCase
     {
         $this->expectException(EmailValidationFailedException::class);
         $this->expectExceptionMessage(
-            'This value is not a valid email address. (code bd79c0ab-ddba-46cc-a703-a7a4b08de310)'
+            'This value is not a valid email address. (code bd79c0ab-ddba-46cc-a703-a7a4b08de310)',
         );
 
         $this->createEmail($untrimmedEmail);
@@ -38,7 +38,7 @@ final class EmailUnitTest extends TestCase
     {
         $this->expectException(EmailValidationFailedException::class);
         $this->expectExceptionMessage(
-            'This value is not a valid email address. (code bd79c0ab-ddba-46cc-a703-a7a4b08de310)'
+            'This value is not a valid email address. (code bd79c0ab-ddba-46cc-a703-a7a4b08de310)',
         );
 
         $this->createEmail($invalidEmail);

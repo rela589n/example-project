@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Temporal\Client\WorkflowClientInterface;
 use Temporal\Client\WorkflowOptions;
 
+use function sprintf;
+
 #[AsCommand('app:temporal:fibonacci')]
 final class FibonacciWorkflowConsoleCommand extends Command
 {
@@ -32,7 +34,7 @@ final class FibonacciWorkflowConsoleCommand extends Command
             null,
             InputOption::VALUE_REQUIRED,
             'Fibonacci limit',
-            10
+            10,
         );
     }
 
@@ -65,4 +67,3 @@ final class FibonacciWorkflowConsoleCommand extends Command
         return (int)$limit;
     }
 }
-

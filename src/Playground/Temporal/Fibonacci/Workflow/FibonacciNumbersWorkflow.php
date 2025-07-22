@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Playground\Temporal\Fibonacci\Workflow;
 
 use Carbon\CarbonInterval;
+use Generator;
 use Temporal\Activity\ActivityOptions;
 use Temporal\Internal\Workflow\Proxy;
 use Temporal\Workflow;
@@ -25,12 +26,12 @@ final class FibonacciNumbersWorkflow
         $this->activity = Workflow::newActivityStub(
             FibonacciNumbersActivity::class,
             ActivityOptions::new()
-                ->withStartToCloseTimeout(1)
+                ->withStartToCloseTimeout(1),
         );
     }
 
     #[Workflow\WorkflowMethod]
-    public function run(): \Generator
+    public function run(): Generator
     {
         $a = 0;
         $b = 1;

@@ -8,6 +8,13 @@ use SensitiveParameter;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Webmozart\Assert\Assert;
 
+use function base64_decode;
+use function base64_encode;
+use function openssl_decrypt;
+use function openssl_encrypt;
+use function random_bytes;
+use function substr;
+
 final readonly class EncryptionService
 {
     private const int AES_BLOCK_SIZE = 16;

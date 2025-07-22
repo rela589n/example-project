@@ -34,7 +34,7 @@ final readonly class LoginUserFrontendApiPoint
         #[MapRequestPayload]
         LoginUserCommand $command,
     ): Response {
-        $envelope = $this->apiBus->dispatch($command,  [new PassThroughBusStamp('command.bus')]);
+        $envelope = $this->apiBus->dispatch($command, [new PassThroughBusStamp('command.bus')]);
 
         /** @var HandledStamp $handled */
         $handled = $envelope->last(HandledStamp::class);

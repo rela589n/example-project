@@ -1,11 +1,12 @@
-<?php /** @noinspection PhpVoidFunctionResultUsedInspection */
+<?php
+
+/** @noinspection PhpVoidFunctionResultUsedInspection */
 
 declare(strict_types=1);
 
 namespace App\Playground\Temporal\ScheduledOrders\Workflow;
 
 use App\Support\Temporal\Timer\WatchfulTimer;
-use App\Support\Temporal\Timer\Timer;
 use Carbon\CarbonImmutable;
 use Generator;
 use RuntimeException;

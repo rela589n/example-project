@@ -61,16 +61,6 @@ final readonly class LoginUserCommand
         $this->jwtToken = $service->tokenManager->create($this->jwtUser);
     }
 
-    private function getUser(LoginUserService $service): User
-    {
-        return $service->userRepository->findByEmail($this->getEmail($service));
-    }
-
-    private function getEmail(LoginUserService $service): Email
-    {
-        return Email::fromString($this->email, $service->validator);
-    }
-
     public function getJwtUser(): JWTUser
     {
         return $this->jwtUser;
@@ -79,5 +69,15 @@ final readonly class LoginUserCommand
     public function getJwtToken(): string
     {
         return $this->jwtToken;
+    }
+
+    private function getUser(LoginUserService $service): User
+    {
+        return $service->userRepository->findByEmail($this->getEmail($service));
+    }
+
+    private function getEmail(LoginUserService $service): Email
+    {
+        return Email::fromString($this->email, $service->validator);
     }
 }

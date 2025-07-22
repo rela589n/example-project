@@ -6,6 +6,8 @@ namespace App\Playground\Temporal\Booking\Workflow;
 
 use Temporal\Activity\ActivityInfo;
 
+use function random_int;
+
 final readonly class FailOptions
 {
     public function __construct(

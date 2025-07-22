@@ -44,7 +44,10 @@ final readonly class RegisterUserService
 
             $this->logger->info('User registration successful');
         } catch (Exception $e) {
-            $this->logger->notice('User registration failed', ['exception' => $e, 'data' => $this->serializer->normalize($command, 'array')]);
+            $this->logger->notice('User registration failed', [
+                'exception' => $e,
+                'data' => $this->serializer->normalize($command, 'array'),
+            ]);
 
             throw $e;
         }

@@ -30,7 +30,7 @@ final class FibonacciWorkflowGetCurrentIterationConsoleCommand extends Command
             'workflow-id',
             null,
             InputOption::VALUE_REQUIRED,
-            'Workflow ID of the running Fibonacci workflow'
+            'Workflow ID of the running Fibonacci workflow',
         );
     }
 
@@ -54,9 +54,8 @@ final class FibonacciWorkflowGetCurrentIterationConsoleCommand extends Command
 
         $iteration = $workflow->getIteration();
 
-        $io->success("Current workflow iteration is: $iteration");
+        $io->success("Current workflow iteration is: {$iteration}");
 
         return Command::SUCCESS;
     }
 }
-

@@ -29,7 +29,7 @@ final class CancelSubscriptionWorkflowConsoleCommand extends Command
         $this->addArgument(
             'userId',
             InputArgument::REQUIRED,
-            'User ID'
+            'User ID',
         );
     }
 
