@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "298eaeac80b67b1e91938bcb554cb1f1",
+    "content-hash": "24cb61a85840a0f673f1c956be0f92ff",
     "packages": [
         {
             "name": "amphp/amp",
@@ -4735,16 +4735,16 @@
         },
         {
             "name": "phphd/exceptional-validation",
-            "version": "dev-main",
+            "version": "2.0.0-rc1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phphd/exceptional-validation.git",
-                "reference": "e8332fadcab4798874ada79f5c82711264c28c32"
+                "reference": "859f1e137b4e6fdb0da60dfd8fcb5df142da45f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phphd/exceptional-validation/zipball/e8332fadcab4798874ada79f5c82711264c28c32",
-                "reference": "e8332fadcab4798874ada79f5c82711264c28c32",
+                "url": "https://api.github.com/repos/phphd/exceptional-validation/zipball/859f1e137b4e6fdb0da60dfd8fcb5df142da45f1",
+                "reference": "859f1e137b4e6fdb0da60dfd8fcb5df142da45f1",
                 "shasum": ""
             },
             "require": {
@@ -4786,7 +4786,6 @@
                 "symfony/messenger": "Install Messenger component to use exceptional validation middleware",
                 "symfony/validator": "Install Validator component to use constraint violations mapper"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
@@ -4807,9 +4806,9 @@
             "description": "Capture domain exceptions and map them to the corresponding properties that caused them",
             "support": {
                 "issues": "https://github.com/phphd/exceptional-validation/issues",
-                "source": "https://github.com/phphd/exceptional-validation/tree/main"
+                "source": "https://github.com/phphd/exceptional-validation/tree/2.0.0-rc1"
             },
-            "time": "2025-05-30T10:50:18+00:00"
+            "time": "2025-07-05T09:37:37+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
@@ -15821,7 +15820,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phphd/exceptional-validation": 20
+        "phphd/exceptional-validation": 5
     },
     "prefer-stable": true,
     "prefer-lowest": false,
