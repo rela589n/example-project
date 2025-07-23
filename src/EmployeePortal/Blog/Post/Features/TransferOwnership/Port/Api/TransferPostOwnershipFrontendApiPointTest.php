@@ -39,15 +39,11 @@ final class TransferPostOwnershipFrontendApiPointTest extends ApiTestCase
 
     public function testTransferPostOwnership(): void
     {
-        // Use the first user as the current owner
-        $currentOwnerId = '2a977708-1c69-7d38-9074-b388a7f386dc';
-        $user = new JWTUser($currentOwnerId, ['ROLE_USER']);
+        $user = new JWTUser('2a977708-1c69-7d38-9074-b388a7f386dc', ['ROLE_USER']);
         $token = $this->jwtManager->create($user);
 
-        // Use the third user as the new owner
         $newOwnerId = 'de13a4f3-b43e-74d4-aca9-7ce087a21b73';
 
-        // Get the post before transfer to verify the owner changes
         $postBefore = $this->entityManager->find(Post::class, 'a2f6d821-6b23-73f4-bb85-6daf4280b72c');
         $initialOwner = $postBefore->owner;
 
@@ -69,14 +65,11 @@ final class TransferPostOwnershipFrontendApiPointTest extends ApiTestCase
 
         self::assertResponseStatusCodeSame(200);
 
-        // Clear the entity manager to ensure we get fresh data
-        $this->entityManager->clear();
-
-        // Get the post after transfer to verify the owner has changed
         $post = $this->entityManager->find(Post::class, 'a2f6d821-6b23-73f4-bb85-6daf4280b72c');
-        $newOwner = $this->entityManager->find(User::class, $newOwnerId);
+        self::assertNotNull($post, 'Post should exist');
 
         self::assertSame($initialOwner->id->toRfc4122(), $post->author->id->toRfc4122(), 'Post authorship should remain the same');
-        self::assertSame($newOwner, $post->owner, 'Post should be owned by the new owner');
+        self::assertSame('a2f6d821-6b23-73f4-bb85-6daf4280b72c', $post->id->toRfc4122());
+        self::assertSame($newOwnerId, $post->owner->id->toRfc4122());
     }
 }

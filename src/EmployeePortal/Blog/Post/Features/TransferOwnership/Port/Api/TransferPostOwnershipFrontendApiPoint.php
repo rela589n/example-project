@@ -22,7 +22,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 )]
 #[ApiDoc\Response(
     response: Response::HTTP_OK,
-    description: 'Success',
+    description: 'Ownership transferred',
 )]
 #[AsController]
 final readonly class TransferPostOwnershipFrontendApiPoint
@@ -34,12 +34,12 @@ final readonly class TransferPostOwnershipFrontendApiPoint
     }
 
     #[Route(
-        path: '/posts/{postId}/transfer-ownership',
+        path: '/posts/{id}/transfer-ownership',
         name: 'example_project_blog_post_transfer_ownership',
         methods: ['POST'],
     )]
     public function __invoke(
-        string $postId,
+        string $id,
         Request $request,
         #[CurrentUser]
         UserInterface $user,
@@ -47,7 +47,7 @@ final readonly class TransferPostOwnershipFrontendApiPoint
         $newOwnerId = $request->getPayload()->getString('newOwnerId');
 
         $command = new TransferPostOwnershipCommand(
-            $postId,
+            $id,
             $user->getUserIdentifier(),
             $newOwnerId,
         );

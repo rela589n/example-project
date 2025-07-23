@@ -18,8 +18,8 @@ final readonly class TransferPostOwnershipService
     public function __construct(
         public ValidatorInterface $validator,
         public EntityManagerInterface $entityManager,
-        public PostCollection $postCollection,
         public UserCollection $userCollection,
+        public PostCollection $postCollection,
         #[Autowire('@event.bus')]
         public MessageBusInterface $eventBus,
     ) {

@@ -14,10 +14,10 @@ final readonly class TransferPostOwnershipCommand
     public function __construct(
         #[Assert\NotBlank]
         #[Assert\Uuid]
-        private string $postId,
+        private string $id,
         #[Assert\NotBlank]
         #[Assert\Uuid]
-        private string $currentOwnerId,
+        private string $ownerId,
         #[Assert\NotBlank]
         #[Assert\Uuid]
         private string $newOwnerId,
@@ -32,12 +32,12 @@ final readonly class TransferPostOwnershipCommand
             throw new ValidationFailedException($this, $violationList);
         }
 
-        $post = $service->postCollection->get(Uuid::fromString($this->postId));
-        $currentOwner = $service->userCollection->get(Uuid::fromString($this->currentOwnerId));
+        $owner = $service->userCollection->get(Uuid::fromString($this->ownerId));
         $newOwner = $service->userCollection->get(Uuid::fromString($this->newOwnerId));
+        $post = $service->postCollection->get(Uuid::fromString($this->id));
 
         $event = new PostOwnershipTransferredEvent(
-            $currentOwner,
+            $owner,
             $newOwner,
             $post,
         );
@@ -45,6 +45,7 @@ final readonly class TransferPostOwnershipCommand
         $event->process();
 
         $service->entityManager->flush();
+
         $service->eventBus->dispatch($event);
     }
 }
