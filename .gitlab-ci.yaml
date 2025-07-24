@@ -1,0 +1,93 @@
+.build-ci-image: &build-ci-image
+    before_script:
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    script:
+        - cp .env.ci .env
+        - docker build -t "$TAG_LATEST" .
+        - docker push "$TAG_LATEST"
+
+.before_script_template: &prepare_ci
+    image: $TAG_LATEST
+    before_script:
+        - composer install --prefer-dist --optimize-autoloader --classmap-authoritative
+
+build-ci-image:
+    stage: build
+    <<: *build-ci-image
+    only: [ merge_requests ]
+
+linters:
+    stage: ci-tests
+    needs: [ build-ci-image ]
+    <<: *prepare_ci
+    script:
+        - composer ci:about
+        - composer ci:composer-validate
+        - composer ci:composer-audit
+        - composer ci:ecs
+        - composer ci:schema-validate -- --skip-sync
+        - composer ci:lint-container-all
+        - composer ci:lint-schedule
+        - composer ci:lint-yaml
+        - composer ci:lint-twig
+    only: [ merge_requests ]
+
+static analysis:
+    stage: ci-tests
+    needs: [ build-ci-image ]
+    <<: *prepare_ci
+    image: registry.example.com:443/example/project/example-project-backend-dev:v1.1
+    script:
+        - composer ci:gitlab-static-analysis
+    only: [ merge_requests ]
+
+phpunit:
+    stage: ci-tests
+    needs: [ build-ci-image ]
+    image: registry.example.com:443/example/project/example-project-backend-dev:v1.1
+    services:
+        - name: postgres:17
+          alias: postgresql
+        - name: registry.example.com:443/example/project/example-project-redis:v1.0
+          alias: redis
+        - name: registry.example.com:443/example/project/example-project-rabbitmq:v1.0
+          alias: rabbitmq
+        - name: minio/minio:RELEASE.2025-07-23T15-54-02Z
+          alias: minio
+          command: [ 'server', '/minio' ]
+    artifacts:
+        paths:
+            - './phpunit-coverage.xml'
+            - './clover-coverage.xml'
+            - './junit.xml'
+            - './html-coverage'
+        reports:
+            junit: './junit.xml'
+    variables:
+        POSTGRES_PASSWORD: qwerty
+        RABBITMQ_DEFAULT_USER: example-user
+        RABBITMQ_DEFAULT_PASS: s3cr3t
+        MINIO_ROOT_USER: admin
+        MINIO_ROOT_PASSWORD: top-secret
+    script:
+        - composer install --optimize-autoloader
+        - bin/console lexik:jwt:generate-keypair --env=test
+        - composer app:recreate-test-database
+        - composer ci:tests
+    only: [ merge_requests ]
+
+delete-ci-image:
+    stage: ci-cleanup
+    needs: [ phpunit, linters, 'static analysis' ]
+    before_script:
+        - curl --fail --show-error --location "https://github.com/genuinetools/reg/releases/download/v$REG_VERSION/reg-linux-amd64" --output ./reg
+        - echo "$REG_SHA256  ./reg" | sha256sum -c -
+        - chmod a+x ./reg
+    image: curlimages/curl:7.86.0
+    script:
+        - ./reg rm -d --auth-url $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $TAG_LATEST
+    variables:
+        REG_SHA256: ade837fc5224acd8c34732bf54a94f579b47851cc6a7fd5899a98386b782e228
+        REG_VERSION: 0.16.1
+    only: [ merge_requests ]
+    allow_failure: true
