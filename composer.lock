@@ -4735,16 +4735,16 @@
         },
         {
             "name": "phphd/exceptional-validation",
-            "version": "2.0.0-rc1",
+            "version": "2.0.0-rc2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phphd/exceptional-validation.git",
-                "reference": "859f1e137b4e6fdb0da60dfd8fcb5df142da45f1"
+                "reference": "7c2c2e2fe859921328e6d41223c185e9053108cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phphd/exceptional-validation/zipball/859f1e137b4e6fdb0da60dfd8fcb5df142da45f1",
-                "reference": "859f1e137b4e6fdb0da60dfd8fcb5df142da45f1",
+                "url": "https://api.github.com/repos/phphd/exceptional-validation/zipball/7c2c2e2fe859921328e6d41223c185e9053108cb",
+                "reference": "7c2c2e2fe859921328e6d41223c185e9053108cb",
                 "shasum": ""
             },
             "require": {
@@ -4806,9 +4806,9 @@
             "description": "Capture domain exceptions and map them to the corresponding properties that caused them",
             "support": {
                 "issues": "https://github.com/phphd/exceptional-validation/issues",
-                "source": "https://github.com/phphd/exceptional-validation/tree/2.0.0-rc1"
+                "source": "https://github.com/phphd/exceptional-validation/tree/2.0.0-rc2"
             },
-            "time": "2025-07-05T09:37:37+00:00"
+            "time": "2025-07-24T09:25:36+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",

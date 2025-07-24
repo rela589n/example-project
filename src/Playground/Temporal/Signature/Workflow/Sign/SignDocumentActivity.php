@@ -32,7 +32,7 @@ final readonly class SignDocumentActivity
     public function __construct(
         private LoggerInterface $logger,
         /** @var ExceptionMapper<ConstraintViolationListInterface> */
-        #[Autowire('@phd_exceptional_validation.exception_mapper.validator')]
+        #[Autowire(service: ExceptionMapper::class.'<'.ConstraintViolationListInterface::class.'>')]
         private ExceptionMapper $exceptionMapper,
     ) {
     }

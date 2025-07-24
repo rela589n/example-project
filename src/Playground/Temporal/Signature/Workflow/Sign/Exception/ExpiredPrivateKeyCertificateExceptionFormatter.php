@@ -15,7 +15,7 @@ use function array_merge;
 final readonly class ExpiredPrivateKeyCertificateExceptionFormatter implements ExceptionViolationFormatter
 {
     public function __construct(
-        #[Autowire('@phd_exceptional_validation.violation_formatter.default')]
+        #[Autowire(service: ExceptionViolationFormatter::class.'<Throwable>')]
         private ExceptionViolationFormatter $formatter,
     ) {
     }
