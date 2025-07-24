@@ -24,6 +24,7 @@ services:
             host.docker.internal: host-gateway
         depends_on:
             - postgresql
+            - temporal
 
     dump_server:
         image: example_project.backend:v1.0
