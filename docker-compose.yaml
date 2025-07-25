@@ -95,6 +95,16 @@ services:
             - '127.0.0.1:9090:9000'
             - '127.0.0.1:9001:9001'
 
+    rabbitmq:
+        image: example_project.rabbitmq:v1.0
+        build:
+            context: docker-configs/rabbitmq
+        environment:
+            RABBITMQ_DEFAULT_USER: example_user
+            RABBITMQ_DEFAULT_PASS: qwerty
+        ports:
+            - "127.0.0.1:15672:15672"
+
     elastic:
         image: elasticsearch:9.0.1
         ports:
@@ -107,7 +117,7 @@ services:
             - "elastic_data:/usr/share/elasticsearch/data"
 
     redis:
-        image: redis:7.4
+        image: redis:8.0
         ports:
             - "127.0.0.1:16379:6379"
 
