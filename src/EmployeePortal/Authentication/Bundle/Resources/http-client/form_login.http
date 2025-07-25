@@ -1,0 +1,21 @@
+POST {{api_host}}/api/example-project/auth/login
+Content-Type: application/json
+Authorization: Bearer {{token}}
+Accept: application/json
+Accept-Language: {{accept_language}}
+
+{
+    "email": "user@test.com",
+    "password": "jG\\Qc_g7;%zE85"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    if (200 === response.status) {
+        client.global.set("token", response.body.token);
+        client.global.set("refreshToken", response.body.refreshToken);
+    }
+%}

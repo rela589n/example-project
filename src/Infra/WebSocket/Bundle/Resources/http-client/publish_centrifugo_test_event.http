@@ -1,0 +1,9 @@
+POST {{api_host}}/api/example-project/infra/web-socket/centrifugo/test-event
+Accept-Language: {{accept_language}}
+Authorization: Bearer {{token}}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 204, "Response status is not 204");
+    });
+%}

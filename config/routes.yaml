@@ -9,3 +9,6 @@ accounting_routes:
 
 blog_routes:
     resource: '@AppBlogBundle/Resources/config/routes.yaml'
+
+web_socket_routes:
+    resource: '@AppWebSocketBundle/Resources/config/routes.yaml'

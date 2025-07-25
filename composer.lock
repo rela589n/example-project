@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24cb61a85840a0f673f1c956be0f92ff",
+    "content-hash": "1d27070eb52bbdc7a7aa1e522ba8dd40",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2933,6 +2933,164 @@
                 }
             ],
             "time": "2025-03-06T22:45:56+00:00"
+        },
+        {
+            "name": "fresh/centrifugo-bundle",
+            "version": "6.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fre5h/CentrifugoBundle.git",
+                "reference": "baada3dd6446d7b9b4fbbe25b5965dae6deecd8b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fre5h/CentrifugoBundle/zipball/baada3dd6446d7b9b4fbbe25b5965dae6deecd8b",
+                "reference": "baada3dd6446d7b9b4fbbe25b5965dae6deecd8b",
+                "shasum": ""
+            },
+            "require": {
+                "fresh/datetime": "^4.0",
+                "php": ">=8.3",
+                "symfony/config": "~7.0",
+                "symfony/console": "~7.0",
+                "symfony/dependency-injection": "~7.0",
+                "symfony/framework-bundle": "~7.0",
+                "symfony/http-client": "~7.0",
+                "symfony/http-foundation": "~7.0",
+                "symfony/http-kernel": "~7.0",
+                "symfony/security-core": "~7.0",
+                "symfony/validator": "~7.0"
+            },
+            "require-dev": {
+                "escapestudios/symfony2-coding-standard": "^3.13",
+                "friendsofphp/php-cs-fixer": "^v3.64",
+                "jetbrains/phpstorm-attributes": "^1.0",
+                "phpstan/phpstan": "^1.12",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "phpstan/phpstan-phpunit": "^1.4",
+                "phpstan/phpstan-symfony": "^1.4",
+                "phpunit/phpunit": "^11.3",
+                "roave/security-advisories": "dev-latest",
+                "seec/phpunit-consecutive-params": "^1.1",
+                "slam/phpstan-extensions": "^6.4"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Fresh\\CentrifugoBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Artem Henvald",
+                    "email": "genvaldartem@gmail.com",
+                    "role": "Creator"
+                },
+                {
+                    "name": "Community",
+                    "homepage": "https://github.com/fre5h/CentrifugoBundle/graphs/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "Provides communication with web-socket server Centrifugo in Symfony applications.",
+            "homepage": "https://github.com/fre5h/CentrifugoBundle",
+            "keywords": [
+                "Socket",
+                "bundle",
+                "centrifugo",
+                "real time",
+                "symfony",
+                "web socket",
+                "web-socket"
+            ],
+            "support": {
+                "email": "genvaldartem@gmail.com",
+                "issues": "https://github.com/fre5h/CentrifugoBundle/issues",
+                "source": "https://github.com/fre5h/CentrifugoBundle/tree/6.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fre5h",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-12-19T13:01:52+00:00"
+        },
+        {
+            "name": "fresh/datetime",
+            "version": "v4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fre5h/datetime-php.git",
+                "reference": "6c05a783f833e380bd5480003e7c96c887b7cbfb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fre5h/datetime-php/zipball/6c05a783f833e380bd5480003e7c96c887b7cbfb",
+                "reference": "6c05a783f833e380bd5480003e7c96c887b7cbfb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "psr/clock": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.64",
+                "phpstan/phpstan": "^1.12",
+                "phpstan/phpstan-phpunit": "^1.4",
+                "phpunit/phpunit": "^11.3",
+                "slam/phpstan-extensions": "^6.4",
+                "squizlabs/php_codesniffer": "^3.10",
+                "thecodingmachine/phpstan-strict-rules": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fresh\\DateTime\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Artem Henvald",
+                    "email": "genvaldartem@gmail.com",
+                    "role": "Creator"
+                }
+            ],
+            "description": "PHP library that provides additional functions for processing dates & times.",
+            "homepage": "https://github.com/fre5h/datetime-php",
+            "keywords": [
+                "date",
+                "datetime",
+                "midnight",
+                "time",
+                "timezone"
+            ],
+            "support": {
+                "email": "genvaldartem@gmail.com",
+                "issues": "https://github.com/fre5h/datetime-php/issues",
+                "source": "https://github.com/fre5h/datetime-php/tree/v4.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fre5h",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-14T19:25:47+00:00"
         },
         {
             "name": "gesdinet/jwt-refresh-token-bundle",

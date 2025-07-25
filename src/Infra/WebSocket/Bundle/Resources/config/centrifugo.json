@@ -1,0 +1,34 @@
+{
+    "client": {
+        "token": {
+            "hmac_secret_key": "centrifugo-jwt-secret"
+        },
+        "allowed_origins": [
+            "http://localhost:3003"
+        ]
+    },
+    "health": {
+        "enabled": true
+    },
+    "admin": {
+        "enabled": true,
+        "password": "qwerty",
+        "secret": "strong_secret_key_to_sign_authorization_token"
+    },
+    "http_api": {
+        "key": "secret-centrifugo-api-key"
+    },
+    "channel": {
+        "namespaces": [
+            {
+                "name": "user_events",
+                "history_size": 100,
+                "history_ttl": "600s",
+                "force_positioning": true,
+                "force_recovery": true,
+                "allow_user_limited_channels": true,
+                "allow_history_for_subscriber": true
+            }
+        ]
+    }
+}

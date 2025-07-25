@@ -1,0 +1,111 @@
+<html>
+
+<head>
+    <title>Centrifugo quick start</title>
+    <style>
+        .token-input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        .connect-button {
+            padding: 8px 16px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .connection-status {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <h3>Enter your User ID:</h3>
+    <input type="text" id="userIdInput" class="token-input" value="2a977708-1c69-7d38-9074-b388a7f386dc" placeholder="Enter your User ID">
+
+    <h3>Enter your Centrifugo JWT token:</h3>
+    <input type="text" id="tokenInput" class="token-input" placeholder="Paste your Centrifugo JWT token here">
+
+    <button id="connectButton" class="connect-button">Connect</button>
+    <div id="connectionStatus" class="connection-status">Not connected</div>
+</div>
+<pre id="container">No data sent</pre>
+<script src="https://unpkg.com/centrifuge@5.4.0/dist/centrifuge.js"></script>
+<script type="text/javascript">
+    const container = document.getElementById('container');
+    const tokenInput = document.getElementById('tokenInput');
+    const userIdInput = document.getElementById('userIdInput');
+    const connectButton = document.getElementById('connectButton');
+    const connectionStatus = document.getElementById('connectionStatus');
+
+    connectButton.addEventListener('click', function() {
+        if (!tokenInput.value.trim()) {
+            alert('Please enter a valid token');
+            return;
+        }
+        if (!userIdInput.value.trim()) {
+            alert('Please enter a valid User ID');
+            return;
+        }
+
+        // Check if already connected
+        if (centrifuge.state === 'connected') {
+            console.log('Already connected');
+            return;
+        }
+
+        connectionStatus.textContent = 'Connecting...';
+        centrifuge.connect();
+    })
+
+    const centrifuge = new Centrifuge("ws://localhost:8008/connection/websocket", {
+        getToken: async () => tokenInput.value.trim(),
+    });
+
+    let subscription = null;
+
+    centrifuge.on('connecting', function (ctx) {
+        console.log(`connecting: ${ctx.code}, ${ctx.reason}`);
+        connectionStatus.textContent = `Connecting: ${ctx.code}, ${ctx.reason}`;
+    }).on('connected', function (ctx) {
+        console.log(`connected over ${ctx.transport}`);
+        connectionStatus.textContent = `Connected over ${ctx.transport}`;
+
+        // Set up subscription after successful connection
+        setupSubscription();
+    }).on('disconnected', function (ctx) {
+        console.log(`disconnected: ${ctx.code}, ${ctx.reason}`);
+        connectionStatus.textContent = `Disconnected: ${ctx.code}, ${ctx.reason}`;
+
+        // Reset subscription on disconnect
+        subscription = null;
+    });
+
+    function setupSubscription() {
+        const userId = userIdInput.value.trim();
+        subscription = centrifuge.newSubscription("user_events:general#"+ userId);
+
+        subscription.on('publication', function (ctx) {
+            console.log(ctx.data)
+
+            let eventName = ctx.data.event;
+
+            if ('test_event' === eventName) {
+                alert(eventName);
+            }
+
+            document.title = eventName;
+            container.innerHTML = JSON.stringify(ctx.data.data);
+        }).on('subscribing', function (ctx) {
+            console.log(`subscribing: ${ctx.code}, ${ctx.reason}`);
+        }).on('subscribed', function (ctx) {
+            console.log('subscribed', ctx);
+        }).on('unsubscribed', function (ctx) {
+            console.log(`unsubscribed: ${ctx.code}, ${ctx.reason}`);
+        }).subscribe();
+    }
+</script>
+</body>
+</html>

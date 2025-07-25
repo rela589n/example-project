@@ -23,6 +23,7 @@
         "doctrine/doctrine-bundle": "^2.14.0",
         "doctrine/doctrine-migrations-bundle": "^3.4.2",
         "doctrine/orm": "^3.4.2",
+        "fresh/centrifugo-bundle": "^6.2",
         "gesdinet/jwt-refresh-token-bundle": "^1.5.0",
         "grpc/grpc": "^1.57",
         "league/flysystem-bundle": "^3.4",
@@ -171,7 +172,7 @@
             "@ci:schema-validate",
             "echo DONE @no_additional_args"
         ],
-        "app:await-import": "[ \"$APP_CONSUMERS_SYNC_MODE\" != \"true\" ] && sleep 7 || true @no_additional_args",
+        "app:await-import": "[ \"$APP_CONSUMERS_SYNC_MODE\" != \"true\" ] && sleep 1 || true @no_additional_args",
         "app:fixtures": "bin/console doctrine:fixtures:load --no-interaction --append",
         "app:clear-redis": "bin/console cache:pool:clear --all || true",
         "app:drop-test-database": "@app:drop-database --env=test",

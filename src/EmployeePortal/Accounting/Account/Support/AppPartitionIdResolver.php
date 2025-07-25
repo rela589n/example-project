@@ -24,7 +24,11 @@ final readonly class AppPartitionIdResolver implements PartitionIdResolver
             return null;
         }
 
-        $id = Uuid::fromString($userIdentifier);
+        try {
+            $id = Uuid::fromString($userIdentifier);
+        } catch (\InvalidArgumentException) {
+            return null;
+        }
 
         return new PartitionId($id->toRfc4122(), $id->toBase58());
     }

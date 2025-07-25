@@ -1,0 +1,13 @@
+GET {{api_host}}/api/example-project/infra/web-socket/centrifugo/token
+Accept-Language: {{accept_language}}
+Authorization: Bearer {{token}}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    if (200 === response.status) {
+        client.global.set("wsToken", response.body.token);
+    }
+%}

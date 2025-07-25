@@ -1,3 +1,6 @@
+include:
+    - ./src/Infra/WebSocket/centrifugo-compose.yaml
+
 services:
     backend:
         image: example_project.backend:v1.0
@@ -104,4 +107,5 @@ services:
 volumes:
     postgres_data: ~
     elastic_data: ~
+    minio_data: ~
     app_user: ~

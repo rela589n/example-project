@@ -1,0 +1,6 @@
+api_web_socket:
+    resource: '../../../**/{*ApiPoint.php}'
+    type: attribute
+    prefix: /api/example-project/infra/web-socket
+    host: '%api_host%'
+    schemes: '%api_scheme%'

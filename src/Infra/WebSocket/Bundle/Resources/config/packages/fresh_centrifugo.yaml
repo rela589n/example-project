@@ -1,0 +1,11 @@
+parameters:
+    env(CENTRIFUGO_JWT_TTL): '3600'
+    env(CENTRIFUGO_FAKE_MODE): 'false'
+
+fresh_centrifugo:
+    api_key: '%env(CENTRIFUGO_API_KEY)%'
+    api_endpoint: '%env(CENTRIFUGO_API_ENDPOINT)%'
+    secret: '%env(CENTRIFUGO_SECRET)%'
+    jwt:
+        ttl: '%env(int:CENTRIFUGO_JWT_TTL)%'
+    fake_mode: '%env(bool:CENTRIFUGO_FAKE_MODE)%'

@@ -32,6 +32,8 @@ final class Kernel extends BaseKernel
 
         yield new Support\Partitioning\Bundle\AppPartitioningBundle();
 
+        yield new Infra\WebSocket\Bundle\AppWebSocketBundle();
+
         yield new Playground\Bundle\AppPlaygroundBundle();
 
         yield new EmployeePortal\Authentication\Bundle\AppAuthBundle();
