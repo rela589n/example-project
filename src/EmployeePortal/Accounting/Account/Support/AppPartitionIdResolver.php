@@ -6,6 +6,7 @@ namespace App\EmployeePortal\Accounting\Account\Support;
 
 use App\Support\Partitioning\Entity\PartitionId;
 use App\Support\Partitioning\Resolve\PartitionIdResolver;
+use InvalidArgumentException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -26,7 +27,7 @@ final readonly class AppPartitionIdResolver implements PartitionIdResolver
 
         try {
             $id = Uuid::fromString($userIdentifier);
-        } catch (\InvalidArgumentException) {
+        } catch (InvalidArgumentException) {
             return null;
         }
 

@@ -8,6 +8,7 @@ use Error;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use TypeError;
 
 #[CoversClass(ReflectionClass::class)]
 final class NativeProxiesUnitTest extends TestCase
@@ -98,5 +99,20 @@ final class NativeProxiesUnitTest extends TestCase
 
         self::assertSame($proxy, $proxy->getThis());
         self::assertNotSame($object->getThis(), $proxy->getThis());
+    }
+
+    public function testLazyProxyForChildProxiedObjectIsNotPossible(): void
+    {
+        $object = new ProxiedObject(1, '2');
+
+        $reflectionClass = new ReflectionClass(ProxiedObject::class);
+
+        $reflectionClass->resetAsLazyProxy($object, fn () => new ChildProxiedObject(1, '2'));
+
+        $this->expectExceptionMessage('The real instance class App\Playground\ProxyManager\Tests\ChildProxiedObject is not compatible with the proxy class App\Playground\ProxyManager\Tests\ProxiedObject. The proxy must be a instance of the same class as the real instance, or a sub-class with no additional properties, and no overrides of the __destructor or __clone methods.');
+        $this->expectException(TypeError::class);
+
+        /** @noinspection PhpExpressionResultUnusedInspection */
+        $object->foo;
     }
 }

@@ -14,6 +14,8 @@ use ReflectionClass;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use TypeError;
 
+use function dd;
+
 #[CoversClass(LazyLoadingGhostFactory::class)]
 #[CoversClass(LazyLoadingValueHolderFactory::class)]
 final class LazyLoadingProxyIntegrationTest extends KernelTestCase
@@ -104,6 +106,25 @@ final class LazyLoadingProxyIntegrationTest extends KernelTestCase
         $proxy = $reflectionClass->newLazyProxy(fn () => $ghostProxy);
 
         self::assertSame(123, $proxy->foo);
+    }
+
+    public function testResetObjectAsGhostProxyIsNotPossible(): void
+    {
+        $object = new SimpleProxiedObject(1, '2', '3');
+
+        $ghostProxy = $this->createGhostProxy();
+
+        $reflectionClass = new ReflectionClass(SimpleProxiedObject::class);
+
+        $reflectionClass->resetAsLazyProxy($object, function () use ($ghostProxy) {
+            return $ghostProxy;
+        });
+
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage('The real instance class ProxyManagerGeneratedProxy\Generated90b862e9716a786e470e2052e11950ef\__PM__\App\Playground\ProxyManager\Tests\SimpleProxiedObject is not compatible with the proxy class App\Playground\ProxyManager\Tests\SimpleProxiedObject. The proxy must be a instance of the same class as the real instance, or a sub-class with no additional properties, and no overrides of the __destructor or __clone methods.');
+
+        /** @noinspection PhpExpressionResultUnusedInspection */
+        $object->foo;
     }
 
     private function createValueHolderProxy(): SimpleProxiedObject
