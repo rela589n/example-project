@@ -37,6 +37,25 @@ final class NativeProxiesUnitTest extends TestCase
         self::assertSame('3', $object->bar);
     }
 
+    public function testGhostCanBeResetAsProxy(): void
+    {
+        $object = $this->reflectionClass->newLazyGhost(function (ProxiedObject $object) {
+            $object->__construct(1, '2');
+        });
+
+        self::assertSame(2, $object->foo);
+
+        $this->reflectionClass->resetAsLazyProxy($object, function (ProxiedObject $object) {
+            self::assertFalse(isset($object->foo));
+            self::assertFalse(isset($object->bar));
+
+            return new ProxiedObject(3, '4');
+        });
+
+        self::assertSame(4, $object->foo);
+        self::assertSame('4', $object->bar);
+    }
+
     public function testProxyInitializerMustNotReturnProxy(): void
     {
         $proxy = $this->reflectionClass->newLazyProxy(function () {
