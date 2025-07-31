@@ -40,14 +40,15 @@ final class PublishEventHandlerIntegrationTest extends KernelTestCase
     public function testDispatchesUserEventToCentrifugo(): void
     {
         $this->centrifugo
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('publish')
             ->with([
                 'event' => 'test_event',
                 'data' => [
                     'some' => 'payload',
                 ],
-            ], 'user_events:general#138140ed-1dd2-11b2-a4a6-17edf8bcbc91');
+            ], 'user_events:general#138140ed-1dd2-11b2-a4a6-17edf8bcbc91')
+        ;
 
         $command = new UserWebSocketEvent(
             Uuid::fromString('138140ed-1dd2-11b2-a4a6-17edf8bcbc91'),

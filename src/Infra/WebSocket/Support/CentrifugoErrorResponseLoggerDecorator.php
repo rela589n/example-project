@@ -196,6 +196,7 @@ final readonly class CentrifugoErrorResponseLoggerDecorator implements Centrifug
 
     private function logCentrifugoException(CentrifugoException $exception): void
     {
-        $this->logger->alert('Centrifugo Exception', ['response' => $exception->getResponse()->getContent(false), 'exception' => $exception]);
+        $this->logger->alert('Centrifugo Exception', ['response' => $exception->getResponse()->getContent(false),
+            'exception' => $exception]);
     }
 }

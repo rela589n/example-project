@@ -32,7 +32,7 @@ final readonly class PublishTestEventFrontendApiPoint
     #[Route(
         path: '/centrifugo/test-event',
         name: 'api_frontend_publish_centrifugo_test_event',
-        methods: [Request::METHOD_POST]
+        methods: [Request::METHOD_POST],
     )]
     public function __invoke(UserInterface $user): Response
     {

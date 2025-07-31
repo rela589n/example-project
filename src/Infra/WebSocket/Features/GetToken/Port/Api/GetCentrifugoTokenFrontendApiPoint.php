@@ -24,7 +24,7 @@ final readonly class GetCentrifugoTokenFrontendApiPoint
     #[Route(
         path: '/centrifugo/token',
         name: 'api_frontend_get_centrifugo_token',
-        methods: [Request::METHOD_GET]
+        methods: [Request::METHOD_GET],
     )]
     public function __invoke(
         #[Autowire('@=service("security.token_storage").getToken().getUser()')]

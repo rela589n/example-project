@@ -14,8 +14,6 @@ use ReflectionClass;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use TypeError;
 
-use function dd;
-
 #[CoversClass(LazyLoadingGhostFactory::class)]
 #[CoversClass(LazyLoadingValueHolderFactory::class)]
 final class LazyLoadingProxyIntegrationTest extends KernelTestCase

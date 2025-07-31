@@ -35,7 +35,8 @@ final class SendTestEventConsoleCommand extends Command
         parent::configure();
 
         $this
-            ->addArgument('user-id', InputArgument::REQUIRED, 'The ID of the user to send the notification to.');
+            ->addArgument('user-id', InputArgument::REQUIRED, 'The ID of the user to send the notification to.')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
