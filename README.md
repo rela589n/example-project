@@ -122,8 +122,8 @@ docker compose logs --no-log-prefix -f dump_server | lnav
 Generate library:
 
 ```shell
-#bin/protoc \
-#    --plugin=./bin/protoc-gen-php-grpc \
-#    --php_out=./src/Support/Contracts/Common/Playground/HelloWorld/ \
-#    ./src/Support/Contracts/Common/Playground/HelloWorld/hello-world.proto
+protoc \
+   --php_out=./src/Support/Contracts/Playground/HelloWorld/ \
+   --php-grpc_out=./src/Support/Contracts/Playground/HelloWorld/ \
+   ./src/Support/Contracts/Playground/HelloWorld/hello-world.proto
 ```
