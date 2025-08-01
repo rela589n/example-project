@@ -7,6 +7,11 @@ FROM php:8.4-cli-bookworm
 ARG USER_NAME=app
 ARG USER_ID=1000
 ARG GROUP_ID=1000
+ARG TARGETOS
+ARG TARGETARCH
+
+RUN apt-get update
+RUN apt-get install -y git zip
 
 COPY --from=ext /usr/bin/install-php-extensions /usr/local/bin/install-php-extensions
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
@@ -28,17 +33,26 @@ COPY --from=grpc \
 # Create docker-php-ext-protobuf.ini configuration file
 RUN docker-php-ext-enable protobuf
 
+# Install protobuf compiler (dev-only, https://protobuf.dev/installation/)
+RUN PROTOC_VERSION=31.1 && \
+    PROTOC_ARCH=$(echo "${TARGETARCH}" | sed 's/amd64/x86_64/; s/arm64/aarch_64/') && \
+    PROTOC_ZIP=protoc-$PROTOC_VERSION-$TARGETOS-$PROTOC_ARCH.zip && \
+    curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOC_VERSION/$PROTOC_ZIP && \
+    unzip $PROTOC_ZIP -d /opt/protoc && \
+    rm $PROTOC_ZIP && \
+    chmod +x /opt/protoc/bin/protoc && \
+    ln -s /opt/protoc/bin/protoc /usr/local/bin/protoc
+
 RUN install-php-extensions pgsql
 RUN install-php-extensions redis
 RUN install-php-extensions sockets
 RUN install-php-extensions zip
 RUN install-php-extensions amqp
 RUN install-php-extensions swoole
-RUN install-php-extensions xdebug
+RUN install-php-extensions xdebug # dev-only
 
 RUN apt-get update
 RUN apt-get install -y htop telnet
-RUN apt-get install -y git zip
 RUN apt-get install -y bash-completion
 
 RUN groupadd --gid $GROUP_ID $USER_NAME
