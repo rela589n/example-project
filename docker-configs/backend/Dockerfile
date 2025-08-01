@@ -1,9 +1,10 @@
-FROM spiralscout/roadrunner:2024.3.5 AS roadrunner
+FROM spiralscout/roadrunner:2025.1.2 AS roadrunner
 FROM example_project.backend.grpc:v1.1 AS grpc
 FROM mlocati/php-extension-installer AS ext
 FROM composer:2.8 AS composer
 FROM php:8.4-cli-bookworm
 
+ARG RR_VERSION=2025.1.2
 ARG USER_NAME=app
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -16,6 +17,14 @@ RUN apt-get install -y git zip
 COPY --from=ext /usr/bin/install-php-extensions /usr/local/bin/install-php-extensions
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
+
+RUN install-php-extensions pgsql
+RUN install-php-extensions redis
+RUN install-php-extensions sockets
+RUN install-php-extensions zip
+RUN install-php-extensions amqp
+RUN install-php-extensions swoole
+RUN install-php-extensions xdebug # dev-only
 
 # Copy grpc-extension binary
 COPY --from=grpc \
@@ -40,16 +49,14 @@ RUN PROTOC_VERSION=31.1 && \
     curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOC_VERSION/$PROTOC_ZIP && \
     unzip $PROTOC_ZIP -d /opt/protoc && \
     rm $PROTOC_ZIP && \
-    chmod +x /opt/protoc/bin/protoc && \
     ln -s /opt/protoc/bin/protoc /usr/local/bin/protoc
 
-RUN install-php-extensions pgsql
-RUN install-php-extensions redis
-RUN install-php-extensions sockets
-RUN install-php-extensions zip
-RUN install-php-extensions amqp
-RUN install-php-extensions swoole
-RUN install-php-extensions xdebug # dev-only
+# Install protoc-gen-php-grpc plugin (dev-only)
+RUN PROTOC_PLUGIN_PHP_TAR=protoc-gen-php-grpc-$RR_VERSION-$TARGETOS-$TARGETARCH.tar.gz && \
+	curl -LO https://github.com/roadrunner-server/roadrunner/releases/download/v$RR_VERSION/$PROTOC_PLUGIN_PHP_TAR && \
+    tar -xzf $PROTOC_PLUGIN_PHP_TAR --strip-components=1 -C /opt/protoc/bin && \
+    rm $PROTOC_PLUGIN_PHP_TAR && \
+    ln -s /opt/protoc/bin/protoc-gen-php-grpc /usr/local/bin/protoc-gen-php-grpc
 
 RUN apt-get update
 RUN apt-get install -y htop telnet
