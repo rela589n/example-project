@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-option php_namespace = "GRPC\\Greeter";
-option php_metadata_namespace = "GRPC\\GPBMetadata";
+//option php_namespace = "GRPC\\Greeter";
+//option php_metadata_namespace = "GRPC\\GPBMetadata";
 
-package Greeter;
+package App.Support.Contracts.Playground.HelloWorld.GRPC;
 
 message Name {
   string firstName = 1;
