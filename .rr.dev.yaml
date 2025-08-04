@@ -23,6 +23,11 @@ http:
         dir: "public"
         forbid: [ ".php", ".htaccess" ]
 
+grpc:
+    listen: "tcp://0.0.0.0:8084"
+#    proto:
+#        - "proto/hello-world.proto"
+
 temporal:
     address: "temporal:7233"
     activities:
