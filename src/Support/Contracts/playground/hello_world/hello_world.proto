@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package playground.hello_world;
+
+option php_namespace = "App\\Contracts\\HelloWorld";
+
+import "playground/hello_world/greet_request.proto";
+
+
+message GreetResponse {
+  string response = 1;
+}
+
+service HelloWorldService {
+  rpc Greet(GreetRequest) returns (GreetResponse);
+}
