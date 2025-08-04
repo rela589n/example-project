@@ -1,0 +1,11 @@
+version: v2
+managed:
+    enabled: true
+    override:
+        - file_option: php_namespace
+          value: "App\\Support\\Contracts"
+plugins:
+    -   remote: buf.build/protocolbuffers/php:v31.1
+        out: gen
+    -   remote: buf.build/community/roadrunner-server-php-grpc:v4.8.0
+        out: gen

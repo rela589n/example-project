@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package playground.hello_world;
+
+option php_namespace = "App\\Contracts\\HelloWorld";
+
+message GreetRequest {
+  string first_name = 1;
+  string last_name = 2;
+}
