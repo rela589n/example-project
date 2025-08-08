@@ -36,7 +36,7 @@ final class AmphpHelloWorldConsoleCommand extends Command
             $output->writeln('the future!');
         });
 
-        // when awaiting, every 0.5 seconds the next write is executed
+        // During await, the text is written every 0.5 seconds
         awaitAll([$future1, $future2]);
 
         return 0;
