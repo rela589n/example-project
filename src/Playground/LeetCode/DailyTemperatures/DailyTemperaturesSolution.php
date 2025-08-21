@@ -46,8 +46,8 @@ final readonly class DailyTemperaturesSolution
                 $pendingBetterWeatherDay = $pendingBetterWeatherDays->top();
 
                 if ($dayTemperature <= $temperatures[$pendingBetterWeatherDay]) {
-                    // Current weather is no better.
-                    // No point looking further, as previous values have only higher expectations.
+                    // The current weather is no better.
+                    // No point looking further, as previous values will only have higher expectations.
                     break;
                 }
 
