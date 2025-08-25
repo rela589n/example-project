@@ -1,0 +1,17 @@
+version: v2
+managed:
+    enabled: true
+    disable:
+        -   file_option: php_namespace # don't reset it to the default
+        -   file_option: php_metadata_namespace
+
+plugins:
+    # message classes
+    -   remote: buf.build/protocolbuffers/php:v32.0
+        out: gen/php
+    # client class
+    -   remote: buf.build/grpc/php
+        out: gen/php
+    # service class
+    -   remote: buf.build/community/roadrunner-server-php-grpc:v4.8.0
+        out: gen/php

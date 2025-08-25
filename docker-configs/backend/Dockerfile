@@ -2,6 +2,7 @@ FROM spiralscout/roadrunner:2025.1.2 AS roadrunner
 FROM example_project.backend.grpc:v1.1 AS grpc
 FROM mlocati/php-extension-installer AS ext
 FROM composer:2.8 AS composer
+FROM bufbuild/buf:1.56 as buf
 FROM php:8.4-cli-bookworm
 
 ARG RR_VERSION=2025.1.2
@@ -16,6 +17,7 @@ RUN apt-get install -y git zip
 
 COPY --from=ext /usr/bin/install-php-extensions /usr/local/bin/install-php-extensions
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+COPY --from=buf /usr/local/bin/buf /usr/local/bin/buf
 COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
 RUN install-php-extensions pgsql
@@ -74,4 +76,4 @@ RUN rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 USER $USER_NAME
 
-CMD ["rr", "serve", "-c", ".rr.yaml"]
+CMD ["rr", "serve", "-c", ".rr.dev.yaml"]

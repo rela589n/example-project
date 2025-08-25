@@ -1,0 +1,21 @@
+parameters:
+    'env(GRPC_SERVICE_HOSTNAME)': 'localhost:50051'
+    'env(GRPC_SERVER_CERT_PATH)': '/app/config/tls/grpc/server/certificate.crt'
+    'env(GRPC_CLIENT_KEY_PATH)': '/app/config/tls/grpc/client/privateKey.key'
+    'env(GRPC_CLIENT_CERT_PATH)': '/app/config/tls/grpc/client/certificate.crt'
+
+services:
+    app_contracts.grpc_client:
+        abstract: true
+        class: Grpc\BaseStub
+        arguments:
+            - '%env(GRPC_SERVICE_HOSTNAME)%'
+            -   credentials: '@app_contracts.grpc_channel_credentials'
+
+    app_contracts.grpc_channel_credentials:
+        class: Grpc\ChannelCredentials
+        factory: [ ~ , 'createSsl' ]
+        arguments:
+            - '%env(file:GRPC_SERVER_CERT_PATH)%'
+            - '%env(file:GRPC_CLIENT_KEY_PATH)%'
+            - '%env(file:GRPC_CLIENT_CERT_PATH)%'

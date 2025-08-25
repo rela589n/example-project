@@ -18,6 +18,8 @@ final class Kernel extends BaseKernel
         /** @phpstan-ignore generator.valueType */
         yield from $this->registerThirdPartyBundles();
 
+        yield new Support\Contracts\Bundle\AppContractsBundle();
+
         yield new Support\MessageBus\Bundle\AppMessageBusBundle();
 
         yield new Support\CycleBridge\Bundle\AppCycleBridgeBundle();

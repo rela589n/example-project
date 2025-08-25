@@ -15,13 +15,28 @@ http:
     ssl:
         address: 0.0.0.0:8083
         redirect: true
-        cert: /etc/ssl/backend/certificate.crt
-        key: /etc/ssl/backend/privateKey.key
+        cert: /app/config/tls/http/certificate.crt
+        key: /app/config/tls/http/privateKey.key
     uploads:
         forbid: [ ".php", ".exe", ".bat" ]
     static:
         dir: "public"
         forbid: [ ".php", ".htaccess" ]
+
+grpc:
+    listen: "tcp://0.0.0.0:50051"
+    tls: # Enable mTLS for gRPC by providing a certificate and private key.
+        cert: /app/config/tls/grpc/server/certificate.crt
+        key: /app/config/tls/grpc/server/privateKey.key
+        client_auth_type: require_and_verify_client_cert # full mTLS
+        root_ca: /app/config/tls/grpc/client/certificate.crt # trusted client certificates
+    proto:
+        - "src/Support/Contracts/*/*/*/*.proto"
+        - "src/Support/Contracts/*/*/*.proto"
+        - "src/Support/Contracts/*/*.proto"
+
+metrics:
+    address: "0.0.0.0:2112"
 
 temporal:
     address: "temporal:7233"
@@ -29,6 +44,7 @@ temporal:
         debug: true
 
 # Used by rr reset command
+# as well as metrics client
 rpc:
     listen: tcp://127.0.0.1:6001
 

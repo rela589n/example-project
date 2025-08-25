@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package hello_world.v1;
+
+option php_namespace = "App\\Support\\Contracts\\Playground\\GRPC\\HelloWorld";
+option php_metadata_namespace = "App\\Support\\Contracts\\Playground\\GRPC\\HelloWorld\\GPBMetadata";
+
+message GreetRequest {
+  string first_name = 1;
+  string last_name = 2;
+}
+
+message GreetResponse {
+  string response = 1;
+}
+
+service HelloWorldGrpcService {
+  rpc Greet(GreetRequest) returns (GreetResponse);
+}
