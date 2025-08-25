@@ -23,7 +23,7 @@
         "doctrine/dbal": "^4.2.4",
         "doctrine/doctrine-bundle": "^2.14.0",
         "doctrine/doctrine-migrations-bundle": "^3.4.2",
-        "doctrine/orm": "^3.4.2",
+        "doctrine/orm": "^3.6@dev",
         "fresh/centrifugo-bundle": "^6.2",
         "gesdinet/jwt-refresh-token-bundle": "^1.5.0",
         "grpc/grpc": "^1.57",
