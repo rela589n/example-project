@@ -32,8 +32,9 @@ class SpyOnHookedObject extends HookedObject
 
             $this->changes['bar'][] = $this->bar;
         }
-        private array $changes = [];
     }
+
+    private array $changes = [];
 
     public function getChanges(): array
     {

@@ -9,6 +9,7 @@ use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\Constraint\IsEmpty;
 use PHPUnit\Framework\Constraint\IsType;
 use PHPUnit\Framework\Constraint\LogicalNot;
+use PHPUnit\Framework\NativeType;
 
 final class ValidJwtTokenPair extends Constraint
 {
@@ -21,11 +22,11 @@ final class ValidJwtTokenPair extends Constraint
     {
         /** @var array{token: mixed, refreshToken: mixed} $other */
 
-        return (new ArrayHasKey('token'))->matches($other)
-            && (new IsType(IsType::TYPE_STRING))->matches($other['token'])
-            && (new LogicalNot(new IsEmpty()))->matches($other['token'])
-            && (new ArrayHasKey('refreshToken'))->matches($other)
-            && (new IsType(IsType::TYPE_STRING))->matches($other['refreshToken'])
-            && (new LogicalNot(new IsEmpty()))->matches($other['refreshToken']);
+        return new ArrayHasKey('token')->matches($other)
+            && new IsType(NativeType::String)->matches($other['token'])
+            && new LogicalNot(new IsEmpty())->matches($other['token'])
+            && new ArrayHasKey('refreshToken')->matches($other)
+            && new IsType(NativeType::String)->matches($other['refreshToken'])
+            && new LogicalNot(new IsEmpty())->matches($other['refreshToken']);
     }
 }

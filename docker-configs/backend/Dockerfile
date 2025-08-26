@@ -6,6 +6,7 @@ FROM bufbuild/buf:1.56 as buf
 FROM php:8.4-cli-bookworm
 
 ARG RR_VERSION=2025.1.2
+ARG PROTOC_VERSION=31.1
 ARG USER_NAME=app
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -45,8 +46,7 @@ COPY --from=grpc \
 RUN docker-php-ext-enable protobuf
 
 # Install protobuf compiler (dev-only, https://protobuf.dev/installation/)
-RUN PROTOC_VERSION=31.1 && \
-    PROTOC_ARCH=$(echo "${TARGETARCH}" | sed 's/amd64/x86_64/; s/arm64/aarch_64/') && \
+RUN PROTOC_ARCH=$(echo "${TARGETARCH}" | sed 's/amd64/x86_64/; s/arm64/aarch_64/') && \
     PROTOC_ZIP=protoc-$PROTOC_VERSION-$TARGETOS-$PROTOC_ARCH.zip && \
     curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOC_VERSION/$PROTOC_ZIP && \
     unzip $PROTOC_ZIP -d /opt/protoc && \

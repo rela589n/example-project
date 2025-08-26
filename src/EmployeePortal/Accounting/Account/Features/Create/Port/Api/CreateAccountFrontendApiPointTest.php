@@ -60,7 +60,7 @@ final class CreateAccountFrontendApiPointTest extends ApiTestCase
 
         self::assertResponseStatusCodeSame(201);
 
-        $account = $this->entityManager->getRepository(Account::class)->findOneBy(['id' => 'd00fbee7-d5e8-7e68-b1ff-e794250e7cfa']);
+        $account = $this->entityManager->getRepository(Account::class)->findOneBy(['id.id' => 'd00fbee7-d5e8-7e68-b1ff-e794250e7cfa']);
 
         self::assertNotNull($account, 'Account should be created');
         self::assertSame('d00fbee7-d5e8-7e68-b1ff-e794250e7cfa', $account->getId()->toRfc4122());
