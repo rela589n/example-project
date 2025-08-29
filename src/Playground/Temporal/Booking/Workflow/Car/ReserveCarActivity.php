@@ -37,7 +37,7 @@ final readonly class ReserveCarActivity
             self::class,
             ActivityOptions::new()
                 // It's good to have "Schedule-To-Start" timeout for the first activity,
-                // since if the server is overloaded, it's better not to make the new load
+                // since if the server is overloaded, it's better not to make the new load at all
                 ->withScheduleToStartTimeout(3)
                 // "Start-To-Close" timeout is required
                 ->withStartToCloseTimeout(1)
