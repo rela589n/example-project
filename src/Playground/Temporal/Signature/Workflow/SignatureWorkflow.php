@@ -57,6 +57,7 @@ final readonly class SignatureWorkflow
             $this->saga->addCompensation(fn () => $this->signActivity->cancel($signCommand));
 
             /** @var string $signedFilePath */
+            // Old format:
             // $signedFilePath = yield $this->signActivity->sign($signCommand->documentId, $signCommand->password);
             $signedFilePath = yield $this->signActivity->sign($signCommand);
 

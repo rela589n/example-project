@@ -70,49 +70,52 @@ final readonly class VideoProcessingActivity
 
             $beatInterval = random_int(...$beatRange);
 
-            if ($i % $beatInterval === 0) {
-                try {
-                    if ($i < $beatLimit) {
-                        $this->logger->info("Sending Heartbeat:\t{iteration}", ['iteration' => $i]);
+            // iteration doesn't heartbeat
+            if ($i % $beatInterval !== 0) {
+                continue;
+            }
 
-                        Activity::heartbeat($i);
-                    } else {
-                        $this->logger->info("Heartbeat stopped:\t{iteration}", ['iteration' => $i]);
-                    }
-                } catch (ActivityCompletionException $e) {
-                    $this->logger->error(
-                        "Heartbeat failed:\t{iteration}, {message}",
-                        [
-                            'iteration' => $i,
-                            'message' => $e->getMessage(),
-                            'exception' => $e,
-                        ],
-                    );
+            try {
+                if ($i >= $beatLimit) {
+                    $this->logger->info("Heartbeat stopped:\t{iteration}", ['iteration' => $i]);
+                } else {
+                    $this->logger->info("Sending Heartbeat:\t{iteration}", ['iteration' => $i]);
 
-                    // Workflow will have to wait for this Activity to exit before throwing CanceledFailure
-
-                    sleep(1);
-
-                    // if previous sleep was longer than heartbeat timeout,
-                    // at this point, workflow execution will have already been cancelled.
-                    $this->logger->error(
-                        "Activity exiting:\t{iteration}",
-                        ['iteration' => $i],
-                    );
-
-                    throw $e;
+                    Activity::heartbeat($i);
                 }
+            } catch (ActivityCompletionException $e) {
+                $this->logger->error(
+                    "Heartbeat failed:\t{iteration}, {message}",
+                    [
+                        'iteration' => $i,
+                        'message' => $e->getMessage(),
+                        'exception' => $e,
+                    ],
+                );
 
-                if ($failAfterHeartbeat) {
-                    $this->logger->error(
-                        'Failing iteration: {iteration}',
-                        ['iteration' => $i],
-                    );
+                // Workflow will have to wait for this Activity to exit before throwing CanceledFailure
 
-                    // This will fail every time, but eventually it'll complete due to heartbeat.
+                sleep(1);
 
-                    throw new LogicException(sprintf('Fail iteration: %d', $i));
-                }
+                // if previous sleep was longer than heartbeat timeout,
+                // at this point, workflow execution will have already been cancelled.
+                $this->logger->error(
+                    "Activity exiting:\t{iteration}",
+                    ['iteration' => $i],
+                );
+
+                throw $e;
+            }
+
+            if ($failAfterHeartbeat) {
+                $this->logger->error(
+                    'Failing iteration: {iteration}',
+                    ['iteration' => $i],
+                );
+
+                // This will fail every time, but eventually it'll complete due to heartbeat.
+
+                throw new LogicException(sprintf('Fail iteration: %d', $i));
             }
         }
 

@@ -45,6 +45,7 @@ final class Timer
         $this->state = TimerState::FIRED;
     }
 
+    /** @api */
     public function rewind(CarbonImmutable $fireAt): void
     {
         if ($this->fireAt->eq($fireAt)) {
@@ -55,32 +56,38 @@ final class Timer
         $this->schedule($fireAt);
     }
 
+    /** @api */
     public function cancel(): void
     {
         $this->task->cancel();
         $this->state = TimerState::CANCELLED;
     }
 
+    /** @api */
     public function isScheduled(): bool
     {
         return TimerState::SCHEDULED === $this->state;
     }
 
+    /** @api */
     public function isStarted(): bool
     {
         return TimerState::STARTED === $this->state;
     }
 
+    /** @api */
     public function isCompleted(): bool
     {
         return $this->isFired() || $this->isCancelled();
     }
 
+    /** @api */
     public function isFired(): bool
     {
         return TimerState::FIRED === $this->state;
     }
 
+    /** @api */
     public function isCancelled(): bool
     {
         return TimerState::CANCELLED === $this->state;

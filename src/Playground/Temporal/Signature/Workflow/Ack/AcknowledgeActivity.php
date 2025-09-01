@@ -38,14 +38,15 @@ final readonly class AcknowledgeActivity
         return Workflow::newActivityStub(
             self::class,
             ActivityOptions::new()
-                // backoff: 1 + 3 + 9 < timeout
+                // Take note of this when using both:
+                // `(backoff: 1 + 3 + 9) < timeout`
                 ->withScheduleToStartTimeout(5)
                 ->withScheduleToCloseTimeout(10)
                 ->withRetryOptions(
                     RetryOptions::new()
                         //  ->withNonRetryableExceptions([
                         //      // ServerExceptionInterface::class, // - interface won't work here
-                        //      ServerException::class, // this is matched by previous: as well
+                        //      ServerException::class, // - previous is matched as well
                         //  ])
                         ->withBackoffCoefficient(3),
                 ),
@@ -81,8 +82,9 @@ final readonly class AcknowledgeActivity
                 SignFailFlag::ACK_SERVER_ERROR => throw new ServerException(new MockResponse('Internal server error', ['http_code' => 500])),
                 // if the activity times-out by execution timeout, but is still doing something,
                 // it's very bad, because compensations will kick in before it completes, and
-                // it might complete after compensation, resulting in a corrupted state
+                // this activity might complete after the compensation, resulting in a corrupted state
                 // Setting cancellationType=WaitCancellationCompleted won't help, since it's already timed-out
+                // therefore, it's important to have a timeout greater than normal time to complete
                 SignFailFlag::ACK_TIMEOUT => sleep(7),
                 default => null,
             };

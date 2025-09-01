@@ -34,7 +34,7 @@ final readonly class VideoProcessingWorkflow
             return yield $this->videoProcessing->render($length, $beatRange, $beatLimit, $failAfterHeartBeat);
         } catch (Exception $e) {
             // since Activity uses cancellationType=WaitCancellationCompleted,
-            // it will have already been cancelled (or heartbeat timed-out) up to this moment
+            // it will have already been cancelled (or timed-out by heartbeat) by this moment
             yield Workflow::asyncDetached(fn () => yield $this->videoProcessing->cancel($length));
 
             throw $e;

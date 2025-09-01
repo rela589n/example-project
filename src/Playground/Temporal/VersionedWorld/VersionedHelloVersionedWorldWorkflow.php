@@ -37,13 +37,14 @@ final readonly class VersionedHelloVersionedWorldWorkflow
         $hello = yield $this->activities->hello();
 
         /** @var int<-1,0> $version */
-        // $version = Workflow::DEFAULT_VERSION;
-        // if the workflow hasn't yet executed the next activity,
+        // If the workflow hasn't yet executed the next activity,
         // a max supported version will be used
+        // Before:
+        // $version = Workflow::DEFAULT_VERSION;
         $version = yield Workflow::getVersion('AddVersion', Workflow::DEFAULT_VERSION, 0);
 
         // if Workflow::getVersion() is added after the code has already executed the next activity,
-        // then "-1" is used, and the default (previous) version is executed.
+        // then "-1" is used, and the default (previous, initial) version is executed.
         if (Workflow::DEFAULT_VERSION === $version) {
             $versioned = '';
         } else {

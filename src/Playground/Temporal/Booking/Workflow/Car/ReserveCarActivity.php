@@ -36,10 +36,10 @@ final readonly class ReserveCarActivity
         return Workflow::newActivityStub(
             self::class,
             ActivityOptions::new()
-                // It's good to have "Schedule-To-Start" timeout for the first activity,
-                // since if the server is overloaded, it's better not to make the new load
+                // It's good to have a "Schedule-To-Start" timeout for the first Activity,
+                // since it will fail right away if the server is overloaded (better not to make the new load at all)
                 ->withScheduleToStartTimeout(3)
-                // "Start-To-Close" timeout is required
+                // "Start-To-Close" timeout is required (execution)
                 ->withStartToCloseTimeout(1)
                 ->withRetryOptions(
                     RetryOptions::new()

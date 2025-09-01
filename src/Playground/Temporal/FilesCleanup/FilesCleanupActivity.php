@@ -6,6 +6,7 @@ namespace App\Playground\Temporal\FilesCleanup;
 
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
+use Temporal\Activity;
 use Temporal\Activity\ActivityInterface;
 use Temporal\Activity\ActivityMethod;
 use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
@@ -26,6 +27,9 @@ final readonly class FilesCleanupActivity
         $this->logger->info('Files cleanup activity started.');
 
         // Here you would implement the logic to clean up files.
+
+        Activity::heartbeat('Cleaned up M of N files.');
+
         // For example, deleting temporary files or old logs.
 
         $this->logger->info('Files cleanup activity completed successfully.');

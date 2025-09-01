@@ -25,7 +25,8 @@ final readonly class FilesCleanupWorkflow
         $this->activity = Workflow::newActivityStub(
             FilesCleanupActivity::class,
             ActivityOptions::new()
-                ->withStartToCloseTimeout(CarbonInterval::hour()),
+                ->withStartToCloseTimeout(CarbonInterval::hour())
+                ->withHeartbeatTimeout(CarbonInterval::minute()),
         );
     }
 

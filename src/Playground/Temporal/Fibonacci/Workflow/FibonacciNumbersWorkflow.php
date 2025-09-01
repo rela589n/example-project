@@ -42,11 +42,11 @@ final class FibonacciNumbersWorkflow
         for ($this->iteration = 1; $this->iteration <= $this->limit; ++$this->iteration) {
             yield $this->activity->log($this->iteration, $b);
 
-            // timer can be removed during the execution by writing maxSupported: 0
+            // You can remove this timer not to be triggered in teh next iterations by setting maxSupported: 0
             /** @var int $version */
             $version = yield Workflow::getVersion('timer-'.$this->iteration, Workflow::DEFAULT_VERSION, Workflow::DEFAULT_VERSION);
 
-            if (!~$version) { // BC for a previous version
+            if (Workflow::DEFAULT_VERSION === $version) {
                 yield Workflow::timer(CarbonInterval::second());
             }
 

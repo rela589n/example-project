@@ -32,10 +32,8 @@ final readonly class PairwiseWorkflow
     #[WorkflowMethod]
     public function pair(): Generator
     {
-        // try to run console command
-        // and then move first to the place of second,
-        // and second to the place of first
-        // ("First, First")
+        // Try to run the console command and then swap the first call with the second.
+        // It will result in: ("First, First")
 
         /** @var string $first */
         $first = yield $this->activity->call('First');

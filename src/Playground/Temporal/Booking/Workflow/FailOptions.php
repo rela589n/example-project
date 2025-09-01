@@ -36,6 +36,8 @@ final readonly class FailOptions
             return false;
         }
 
+        // Random
+
         if ($activityInfo->attempt > $this->attempts) {
             return false;
         }
