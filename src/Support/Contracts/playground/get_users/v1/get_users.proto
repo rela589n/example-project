@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package get_users.v1;
+
+option php_namespace = "App\\Support\\Contracts\\Playground\\GRPC\\GetUsers";
+option php_metadata_namespace = "App\\Support\\Contracts\\Playground\\GRPC\\GetUsers\\GPBMetadata";
+
+// Request message for retrieving users.
+// If `usn` is empty, all users will be returned.
+message GetUsersRequest {
+  uint64 usn = 1; // optional filter by USN (not setting it would mean 0)
+  uint32 limit = 2;
+}
+
+// Value object representing a user's name.
+message FullName {
+  string first_name = 1;
+  string last_name = 2;
+}
+
+// A basic representation of a user in the system.
+message User {
+  string id = 1;
+  string email = 2;
+  FullName name = 3; // value object encapsulating first and last name
+  string usn = 5;
+}
+
+// Response containing a list of users.
+message GetUsersResponse {
+  repeated User users = 1;
+}
+
+// Internal gRPC service for user-related operations.
+service GetUsersGrpcService {
+  // Returns a list of users filtered by an optional USN number.
+  rpc GetUsers(GetUsersRequest) returns (GetUsersResponse);
+}
