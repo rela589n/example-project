@@ -75,7 +75,10 @@
         "psr-4": {
             "App\\": "src/",
             "App\\Support\\Contracts\\": "src/Support/Contracts/gen/php/App/Support/Contracts/"
-        }
+        },
+        "files": [
+            "licence.php"
+        ]
     },
     "replace": {
         "symfony/polyfill-ctype": "*",
