@@ -38,6 +38,8 @@ return ECSConfig::configure()
         PhpCsFixer\Fixer\Basic\SingleLineEmptyBodyFixer::class,
         PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer::class,
         Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer::class,
+        __DIR__.'/src/Support/Contracts/gen',
+        __DIR__.'/config/bundles.php',
     ])
     ->withConfiguredRule(PhpCsFixer\Fixer\FunctionNotation\NativeFunctionInvocationFixer::class, [
         'include' => ['@all'],
