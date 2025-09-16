@@ -9,7 +9,7 @@ use Closure;
 use Generator;
 use Temporal\Workflow;
 
-final class WatchfulTimer
+final class ReactiveTimer
 {
     private bool $isCompleted = false;
 

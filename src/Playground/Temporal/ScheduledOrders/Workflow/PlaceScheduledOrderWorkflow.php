@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace App\Playground\Temporal\ScheduledOrders\Workflow;
 
-use App\Support\Temporal\Timer\WatchfulTimer;
+use App\Support\Temporal\Timer\ReactiveTimer;
 use Carbon\CarbonImmutable;
 use Generator;
 use RuntimeException;
@@ -20,7 +20,7 @@ use Vanta\Integration\Symfony\Temporal\Attribute\AssignWorker;
 #[AssignWorker('default')]
 final class PlaceScheduledOrderWorkflow
 {
-    private WatchfulTimer $timer;
+    private ReactiveTimer $timer;
 
     private PlaceScheduledOrderActivity|Proxy $activity;
 
@@ -35,7 +35,7 @@ final class PlaceScheduledOrderWorkflow
     #[WorkflowMethod]
     public function execute(): Generator
     {
-        yield ($this->timer = new WatchfulTimer(fn () => $this->placementDate))();
+        yield ($this->timer = new ReactiveTimer(fn () => $this->placementDate))();
 
         yield $this->activity->placeOrder($this->orderId);
     }
