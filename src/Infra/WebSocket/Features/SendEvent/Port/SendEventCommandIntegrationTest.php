@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\WebSocket\Features\PublishEvent\Port;
+namespace App\Infra\WebSocket\Features\SendEvent\Port;
 
-use App\Infra\WebSocket\Features\PublishEvent\UserWebSocketEvent;
 use Fresh\CentrifugoBundle\Service\CentrifugoInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -14,9 +13,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 
 /** @internal */
-#[CoversClass(UserWebSocketEvent::class)]
-#[CoversClass(PublishEventService::class)]
-final class PublishEventHandlerIntegrationTest extends KernelTestCase
+#[CoversClass(SendEventCommand::class)]
+#[CoversClass(SendEventService::class)]
+final class SendEventCommandIntegrationTest extends KernelTestCase
 {
     private CentrifugoInterface&MockObject $centrifugo;
 
@@ -50,7 +49,7 @@ final class PublishEventHandlerIntegrationTest extends KernelTestCase
             ], 'user_events:general#138140ed-1dd2-11b2-a4a6-17edf8bcbc91')
         ;
 
-        $command = new UserWebSocketEvent(
+        $command = new SendEventCommand(
             Uuid::fromString('138140ed-1dd2-11b2-a4a6-17edf8bcbc91'),
             'test_event',
             ['some' => 'payload'],

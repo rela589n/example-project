@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\WebSocket\Features\PublishEvent\Port\Api;
+namespace App\Infra\WebSocket\Features\SendEvent\Port\Api;
 
-use App\Infra\WebSocket\Features\PublishEvent\UserWebSocketEvent;
+use App\Infra\WebSocket\Features\SendEvent\Port\SendEventCommand;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ use function in_array;
 use function random_int;
 
 #[AsController]
-final readonly class PublishTestEventFrontendApiPoint
+final readonly class SendTestEventFrontendApiPoint
 {
     private const TEST_USERS_WHITELIST = [];
 
@@ -42,7 +42,7 @@ final readonly class PublishTestEventFrontendApiPoint
 
         $userId = Uuid::fromString($user->getUserIdentifier());
 
-        $event = new UserWebSocketEvent($userId, 'test_event', ['test' => 'test event'.random_int(0, 100)]);
+        $event = new SendEventCommand($userId, 'test_event', ['test' => 'test event'.random_int(0, 100)]);
 
         $this->wsEventBus->dispatch($event);
 

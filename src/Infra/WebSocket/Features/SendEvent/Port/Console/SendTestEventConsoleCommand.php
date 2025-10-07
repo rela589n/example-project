@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\WebSocket\Features\PublishEvent\Port\Console;
+namespace App\Infra\WebSocket\Features\SendEvent\Port\Console;
 
-use App\Infra\WebSocket\Features\PublishEvent\UserWebSocketEvent;
+use App\Infra\WebSocket\Features\SendEvent\Port\SendEventCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -47,7 +47,7 @@ final class SendTestEventConsoleCommand extends Command
         $uuid = $input->getArgument('user-id');
         $userId = Uuid::fromString($uuid);
 
-        $this->wsEventBus->dispatch(new UserWebSocketEvent($userId, 'test_event', ['hello' => 'world'.random_int(0, 100)]));
+        $this->wsEventBus->dispatch(new SendEventCommand($userId, 'test_event', ['hello' => 'world'.random_int(0, 100)]));
 
         $io->success('Test event has been sent successfully!');
 
