@@ -1,3 +1,178 @@
-nelmio_api_doc:
-    areas:
-        default: { }
+when@dev: &api_doc
+    nelmio_api_doc:
+        areas:
+            default: { }
+
+        # Common documentation that will be added to all areas
+        documentation:
+            info:
+                version: 1.0.0
+            servers:
+                -   url: 'https://api.example-project.work'
+                    description: DEV
+                -   url: 'https://api.example-project.work'
+                    description: STAGE
+                -   url: 'https://api.example-project.work'
+                    description: PROD
+            components:
+                parameters:
+                    HeaderContentType:
+                        in: header
+                        name: Content-Type
+                        required: true
+                        schema:
+                            type: string
+                            example: 'application/json'
+                    HeaderAcceptLanguage:
+                        in: header
+                        name: Accept-Language
+                        required: true
+                        schema:
+                            type: string
+                            example: 'uk'
+                    HeaderAccept:
+                        in: header
+                        name: Accept
+                        required: true
+                        schema:
+                            type: string
+                            example: application/json
+                    HeaderMultipartContentType:
+                        in: header
+                        name: Content-Type
+                        required: true
+                        description: multipart/form-data
+                        example: 'multipart/form-data; boundary=----WebKitFormBoundary4rx0uWAgTY7ZWMk'
+                        schema:
+                            type: string
+                    HeaderBearerAuthorization:
+                        in: header
+                        name: Authorization
+                        required: true
+                        schema:
+                            type: string
+                            example: 'Bearer JU0cQOGKeJLebyCiJiA1SXhVOJizii...3ia63gcNXwaGWX5innXbf0r3h-3XfQSAJ'
+                    PathId:
+                        in: path
+                        name: id
+                        required: true
+                        schema:
+                            type: string
+                            format: uuid
+                        example: 375819cc-f5bf-7c2c-9230-9d95234ab0eb
+                    UrlQueryHash:
+                        in: query
+                        name: _hash
+                        schema:
+                            type: string
+                        example: 2nyB3J7bX26NxfLJc
+                        required: true
+                    SearchQuery:
+                        in: query
+                        name: search
+                        schema:
+                            type: string
+                        example: Клавіатура REV-000301
+                        required: false
+                    OrderByQueryFields:
+                        in: query
+                        name: orderBy
+                        required: false
+                        schema:
+                            type: object
+                            example:
+                                orderBy[name]: asc
+                                orderBy[sequenceNumber]: desc
+                responses:
+                    GenericApiException:
+                        description: Generic Error
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/GenericApiError'
+                    ValidationFailed:
+                        description: Validation Failed
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/ValidationFailed'
+                requestBodies:
+                    UploadedFile:
+                        required: true
+                        content:
+                            multipart/form-data:
+                                schema:
+                                    type: object
+                                    properties:
+                                        uploadedFile:
+                                            type: string
+                                            format: binary
+                schemas:
+                    GenericApiError:
+                        type: object
+                        required:
+                            - error
+                            - errorDescription
+                        properties:
+                            error:
+                                type: string
+                            errorDescription:
+                                $ref: '#/components/schemas/ErrorDescription'
+                    ErrorDescription:
+                        type: string
+                        example: "Error description"
+                    ValidationFailed:
+                        type: object
+                        required:
+                            - error
+                            - errorDescription
+                            - violations
+                        properties:
+                            error:
+                                type: string
+                                enum:
+                                    - validation_failed
+                                    - schema_validation_failed
+                            errorDescription:
+                                $ref: '#/components/schemas/ErrorDescription'
+                            violations:
+                                type: array
+                                description: 'Array of all violations related to the current request object'
+                                items:
+                                    type: object
+                                    required:
+                                        - propertyPath
+                                        - title
+                                        - type
+                                    properties:
+                                        propertyPath:
+                                            type: string
+                                            description: 'Path to the field of the json object from request'
+                                            example: 'object.field'
+                                        title:
+                                            type: string
+                                            description: 'Validation error description related to that filed'
+                                            example: 'This value must not be empty'
+                                        type:
+                                            type: string
+                                            description: 'Unique identifier of this validation error'
+                                            example: 'urn:uuid:ca23f4ca-38f4-4325-9bcc-eb570a4abe7f'
+                    PaginationMetadata:
+                        type: object
+                        properties:
+                            total:
+                                type: integer
+                                example: 100
+                            limit:
+                                type: integer
+                                example: 10
+                            offset:
+                                type: integer
+                                example: 0
+
+                securitySchemes:
+                    BearerAuth:
+                        type: http
+                        scheme: bearer
+                        bearerFormat: JWT
+when@stage: *api_doc
