@@ -1,66 +1,68 @@
-nelmio_api_doc:
-    areas:
-        example_project_auth:
-            documentation:
-                paths:
-                    '/api/example-project/auth/token/refresh':
-                        post:
-                            parameters:
-                                -   ref: '#/components/parameters/HeaderAcceptLanguage'
-                                -   ref: '#/components/parameters/HeaderAccept'
-                                -   ref: '#/components/parameters/HeaderContentType'
-                            tags: [ Token ]
-                            operationId: RefreshToken
-                            summary: 'Refresh JWT Token'
-                            requestBody:
-                                required: true
-                                content:
-                                    application/json:
-                                        schema:
-                                            required:
-                                                - refreshToken
-                                            properties:
-                                                refreshToken:
-                                                    type: string
-                                                    example: 'JAJO0VXeiiyKe...1OCGciQLiJhib'
-                            responses:
-                                '200':
-                                    description: OK
+when@dev: &api_doc
+    nelmio_api_doc:
+        areas:
+            example_project_auth:
+                documentation:
+                    paths:
+                        '/api/example-project/auth/token/refresh':
+                            post:
+                                parameters:
+                                    -   ref: '#/components/parameters/HeaderAcceptLanguage'
+                                    -   ref: '#/components/parameters/HeaderAccept'
+                                    -   ref: '#/components/parameters/HeaderContentType'
+                                tags: [ Token ]
+                                operationId: RefreshToken
+                                summary: 'Refresh JWT Token'
+                                requestBody:
+                                    required: true
                                     content:
                                         application/json:
                                             schema:
-                                                $ref: '#/components/schemas/JwtTokenPair'
-                                '401':
-                                    $ref: '#/components/responses/InvalidRefreshToken'
-                components:
-                    responses:
-                        InvalidRefreshToken:
-                            description: InvalidRefreshToken
-                            content:
-                                application/json:
-                                    schema:
-                                        $ref: '#/components/schemas/InvalidRefreshToken'
-                    schemas:
-                        JwtTokenPair:
-                            required:
-                                - token
-                                - refreshToken
-                            properties:
-                                token:
-                                    type: string
-                                    example: 'eyJ0eXAiOiJKV...1QiLCJhbGciOi'
-                                refreshToken:
-                                    type: string
-                                    example: 'JAJO0VXeiiyKe...1OCGciQLiJhib'
-                        InvalidRefreshToken:
-                            type: object
-                            required:
-                                - error
-                                - errorDescription
-                            properties:
-                                error:
-                                    type: string
-                                    enum:
-                                        - invalid_refresh_token
-                                errorDescription:
-                                    $ref: '#/components/schemas/ErrorDescription'
+                                                required:
+                                                    - refreshToken
+                                                properties:
+                                                    refreshToken:
+                                                        type: string
+                                                        example: 'JAJO0VXeiiyKe...1OCGciQLiJhib'
+                                responses:
+                                    '200':
+                                        description: OK
+                                        content:
+                                            application/json:
+                                                schema:
+                                                    $ref: '#/components/schemas/JwtTokenPair'
+                                    '401':
+                                        $ref: '#/components/responses/InvalidRefreshToken'
+                    components:
+                        responses:
+                            InvalidRefreshToken:
+                                description: InvalidRefreshToken
+                                content:
+                                    application/json:
+                                        schema:
+                                            $ref: '#/components/schemas/InvalidRefreshToken'
+                        schemas:
+                            JwtTokenPair:
+                                required:
+                                    - token
+                                    - refreshToken
+                                properties:
+                                    token:
+                                        type: string
+                                        example: 'eyJ0eXAiOiJKV...1QiLCJhbGciOi'
+                                    refreshToken:
+                                        type: string
+                                        example: 'JAJO0VXeiiyKe...1OCGciQLiJhib'
+                            InvalidRefreshToken:
+                                type: object
+                                required:
+                                    - error
+                                    - errorDescription
+                                properties:
+                                    error:
+                                        type: string
+                                        enum:
+                                            - invalid_refresh_token
+                                    errorDescription:
+                                        $ref: '#/components/schemas/ErrorDescription'
+when@stage: *api_doc

@@ -1,10 +1,12 @@
-nelmio_api_doc:
-    areas:
-        example_project_accounting:
-            path_patterns:
-                - ^/api/example-project/accounting/(?!/doc$)
-            documentation:
-                info:
-                    title: EmployeePortal Accounting
-                    description: This is an awesome <b>Module</b>!
-                    version: 1.0.0
+when@dev: &api_doc
+    nelmio_api_doc:
+        areas:
+            example_project_accounting:
+                path_patterns:
+                    - ^/api/example-project/accounting/(?!/doc$)
+                documentation:
+                    info:
+                        title: EmployeePortal Accounting
+                        description: This is an awesome <b>Module</b>!
+                        version: 1.0.0
+when@stage: *api_doc

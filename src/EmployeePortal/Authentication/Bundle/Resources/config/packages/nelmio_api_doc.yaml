@@ -1,10 +1,12 @@
-nelmio_api_doc:
-    areas:
-        example_project_auth:
-            path_patterns:
-                - ^/api/example-project/auth/(?!/doc$)
-            documentation:
-                info:
-                    title: EmployeePortal Authentication
-                    description: This is an awesome <b>Module</b>!
-                    version: 1.0.0
+when@dev: &api_doc
+    nelmio_api_doc:
+        areas:
+            example_project_auth:
+                path_patterns:
+                    - ^/api/example-project/auth/(?!/doc$)
+                documentation:
+                    info:
+                        title: EmployeePortal Authentication
+                        description: This is an awesome <b>Module</b>!
+                        version: 1.0.0
+when@stage: *api_doc
