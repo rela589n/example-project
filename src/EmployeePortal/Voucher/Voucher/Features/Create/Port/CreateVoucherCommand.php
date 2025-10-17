@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Voucher\Voucher\Features\Create\Port;
 
 use App\EmployeePortal\Voucher\Voucher\Features\Create\VoucherCreatedEvent;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Uid\Uuid;
 
 final readonly class CreateVoucherCommand
@@ -13,7 +14,8 @@ final readonly class CreateVoucherCommand
 
     public function __construct(
         private int $discount,
-         ?Uuid $id = null,
+        #[Ignore]
+        ?Uuid $id = null,
     ) {
         $this->id = $id ?? Uuid::v4();
     }

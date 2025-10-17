@@ -39,50 +39,39 @@ class Voucher
     public function prorate(array $items): array
     {
         $prices = array_map(static fn (Item $item) => $item->price, $items);
-        $totalSum = array_sum($prices);
+        $totalPrice = array_sum($prices);
 
-        if ($this->discount >= $totalSum) {
+        if ($this->discount >= $totalPrice) {
             return array_map(static fn (Item $item) => $item->withPriceWithDiscount(0), $items);
         }
-        // [400, 600], d 100 => d 100 / t 1000
-        //  -40, -60
-        // [360, 540],
 
-        // [1, 999], 100
-        // [1, 900]
-
-        $mainDiscount = 0;
-
-        $results = [];
+        $resultingTotalPrice = $totalPrice - $this->discount;
+        $percentage = $resultingTotalPrice / $totalPrice;
 
         foreach ($items as $item) {
-            $v = $item->price * $this->discount; // 400 * 100
-
-            $discount = intdiv($v, $totalSum); //  400 * 100 / 1000 => 40
-
-            $mainDiscount += $discount;
-
-            $results[] = $item->applyDiscount($discount);
+            $discountedItem = $item->deductDiscount($percentage);
         }
 
-        $remnant = $this->discount - $mainDiscount;
+        // 100 for [400, 600]
+        //         [-40, -60]
+        //         [360, 540],
+        // 100 for 1000
+        // 0.1 for discount
+        // 0.9 for each
 
-        while ($remnant > 0) {
-            foreach ($results as $result) {
-                if ($remnant === 0) {
-                    break;
-                }
+        // 2 for [  1,   2,     3]
+        //       [ 0.66, 1.33,  2]
+        //       [ 1,    2,      2]
+        // 2 for 6
+        // 0.3333333 for discount
+        // 0.6 for each
 
-                if ($result->price_with_discount === 0) {
-                    continue;
-                }
 
-                --$result->price_with_discount;
-                --$remnant;
-            }
-        }
+        // 100 for [1, 999]
+        //         [1, 899]
+        // 0.9 for each
 
-        return $results;
+        return $this->initialProrateSolution($items, $totalPrice);
 
         // [123, 123] 123
         // [62, 61]
@@ -106,5 +95,41 @@ class Voucher
     public function getUpdatedAt(): CarbonImmutable
     {
         return $this->updatedAt;
+    }
+
+    private function initialProrateSolution(array $items, int $totalSum): array
+    {
+        $mainDiscount = 0;
+
+        $results = [];
+
+        foreach ($items as $item) {
+            $v = $item->price * $this->discount; // 400 * 100
+
+            $discount = intdiv($v, $totalSum); //  400 * 100 / 1000 => 40
+
+            $mainDiscount += $discount;
+
+            $results[] = $item->subtractDiscount($discount);
+        }
+
+        $remnant = $this->discount - $mainDiscount;
+
+        while ($remnant > 0) {
+            foreach ($results as $result) {
+                if ($remnant === 0) {
+                    break;
+                }
+
+                if ($result->price_with_discount === 0) {
+                    continue;
+                }
+
+                --$result->price_with_discount;
+                --$remnant;
+            }
+        }
+
+        return $results;
     }
 }

@@ -13,16 +13,14 @@ final class Item
     ) {
     }
 
-    public function getDiscountAmount(int $discount, int $totalPrice)
+    public function deductDiscount(float $percentage): self
     {
-        // price, total price
-        // 400,   1000
-        $percent = $this->price / $totalPrice;
+        $priceWithDiscount = (int)ceil($this->price * $percentage);
 
-
+        return new self($this->id, $this->price, $priceWithDiscount);
     }
 
-    public function applyDiscount(int $discount): self
+    public function subtractDiscount(int $discount): self
     {
         $self = clone $this;
         $self->price_with_discount = $this->price - $discount;
@@ -34,13 +32,5 @@ final class Item
         $self = clone $this;
         $self->price_with_discount = $price_with_discount;
         return $self;
-    }
-
-    public static function fromArray(array $item): Item
-    {
-        return new self(
-            $item['id'],
-            $item['price'],
-        );
     }
 }

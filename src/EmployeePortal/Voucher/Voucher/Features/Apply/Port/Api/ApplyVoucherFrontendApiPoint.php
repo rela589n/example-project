@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Attribute\Route;
@@ -39,9 +40,9 @@ final readonly class ApplyVoucherFrontendApiPoint
     )]
     public function __invoke(
         Request $request,
+        #[MapRequestPayload]
+        ApplyVoucherCommand $command,
     ): Response {
-        $command = ApplyVoucherCommand::fromArray($request->toArray());
-
         $envelope = $this->apiBus->dispatch($command, [new PassThroughBusStamp('command.bus')]);
 
         /** @var HandledStamp $handled */

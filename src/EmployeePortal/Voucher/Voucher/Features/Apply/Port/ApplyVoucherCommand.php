@@ -14,9 +14,9 @@ final readonly class ApplyVoucherCommand
 
     private(set) array $itemsWithDiscount;
 
+    /** @param array<array-key,Item> $items */
     public function __construct(
         private string $code,
-        /** @var Item[] */
         private array $items,
     ) {
         $this->id = Uuid::fromBase58($this->code);
@@ -26,7 +26,7 @@ final readonly class ApplyVoucherCommand
     {
         return new self(
             $array['code'],
-            array_map(static fn(array $item) => Item::fromArray($item), $array['items']),
+            array_map(static fn (array $item) => Item::fromArray($item), $array['items']),
         );
     }
 
