@@ -1,9 +1,9 @@
 api_frontend_service:
     resource: '../../../**/{*FrontendApiPoint.php}'
     type: attribute
-    prefix: /api/example-project/service
-    host: '%api_host%'
-    schemes: '%api_scheme%'
+    prefix: /
+#    host: '%api_host%'
+#    schemes: '%api_scheme%'
 
 when@dev:
     api_doc.example_project_service.redocly: &api_doc_redocly

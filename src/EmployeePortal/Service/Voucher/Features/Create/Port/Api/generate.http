@@ -1,0 +1,8 @@
+### GET request to example server
+POST http://api.example-project.work:8080/generate
+Content-Type: application/json
+Accept: application/json
+
+{
+
+}

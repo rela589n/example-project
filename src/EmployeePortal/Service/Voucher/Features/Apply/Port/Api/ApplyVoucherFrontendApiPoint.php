@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Service\Voucher\Features\Create\Port\Api;
+namespace App\EmployeePortal\Service\Voucher\Features\Apply\Port\Api;
 
+use App\EmployeePortal\Service\Voucher\Features\Apply\ApplyVoucherCommand;
 use App\EmployeePortal\Service\Voucher\Features\Create\Port\CreateVoucherCommand;
 use App\Support\MessageBus\PassThrough\PassThroughBusStamp;
 use OpenApi\Attributes as ApiDoc;
@@ -18,14 +19,14 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[ApiDoc\Post(
-    summary: 'Create Voucher',
+    summary: 'Apply Voucher',
 )]
 #[ApiDoc\Response(
-    response: Response::HTTP_CREATED,
-    description: 'Created',
+    response: Response::HTTP_OK,
+    description: 'OK',
 )]
 #[AsController]
-final readonly class CreateVoucherFrontendApiPoint
+final readonly class ApplyVoucherFrontendApiPoint
 {
     public function __construct(
         #[Autowire('@api.bus')]
@@ -34,15 +35,15 @@ final readonly class CreateVoucherFrontendApiPoint
     }
 
     #[Route(
-        path: '/generate',
-        name: 'example_project_voucher_create',
+        path: '/apply',
+        name: 'example_project_voucher_apply',
         methods: ['POST'],
     )]
     public function __invoke(
         Request $request,
-        #[MapRequestPayload]
-        CreateVoucherCommand $command,
     ): Response {
+        $command = ApplyVoucherCommand::fromArray($request->toArray());
+
         $envelope = $this->apiBus->dispatch($command, [new PassThroughBusStamp('command.bus')]);
 
         /** @var HandledStamp $handled */
@@ -51,6 +52,11 @@ final readonly class CreateVoucherFrontendApiPoint
         /** @var ?Response $response */
         $response = $handled->getResult();
 
-        return $response ?? new JsonResponse(['code' => $command->id->toBase58()], status: Response::HTTP_CREATED);
+        return $response ?? new JsonResponse(
+            [
+                'items' => $command->itemsWithDiscount,
+                'code' => $command->id->toBase58(),
+            ],
+            status: Response::HTTP_OK);
     }
 }
