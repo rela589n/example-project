@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Service\Account\Support;
+namespace App\EmployeePortal\Service\Voucher\Support;
 
-use App\EmployeePortal\Service\Account\Features\Create\Port\CreateAccountCommand;
+use App\EmployeePortal\Service\Voucher\Features\Create\Port\CreateAccountCommand;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
