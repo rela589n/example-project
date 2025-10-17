@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Voucher\Voucher\Features\Apply;
+namespace App\EmployeePortal\Voucher\Voucher\Features\Apply\Port;
 
+use App\EmployeePortal\Voucher\Voucher\Features\Apply\Item;
 use App\EmployeePortal\Voucher\Voucher\Voucher;
 use Symfony\Component\Uid\Uuid;
 

@@ -13,6 +13,15 @@ final class Item
     ) {
     }
 
+    public function getDiscountAmount(int $discount, int $totalPrice)
+    {
+        // price, total price
+        // 400,   1000
+        $percent = $this->price / $totalPrice;
+
+
+    }
+
     public function applyDiscount(int $discount): self
     {
         $self = clone $this;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Voucher\Voucher\Features\Apply;
+namespace App\EmployeePortal\Voucher\Voucher\Features\Apply\Port;
 
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;

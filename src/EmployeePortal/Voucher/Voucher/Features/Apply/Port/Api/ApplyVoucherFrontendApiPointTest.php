@@ -31,7 +31,7 @@ final class ApplyVoucherFrontendApiPointTest extends ApiTestCase
     {
         $response = $this->client->request(
             'POST',
-            '/api/example-project/service/voucher/apply',
+            '/api/example-project/voucher/apply',
             [
                 'headers' => [
                     'Content-Type' => 'application/json',
@@ -40,14 +40,14 @@ final class ApplyVoucherFrontendApiPointTest extends ApiTestCase
                 ],
                 'json' => [
                     'code' => '4KKKvRooJfif3jaGCbEMuE',
-                    "items" => [
+                    'items' => [
                         [
-                            "id" => 1,
-                            "price" => 5,
+                            'id' => 1,
+                            'price' => 5,
                         ],
                         [
-                            "id" => 1,
-                            "price" => 5,
+                            'id' => 1,
+                            'price' => 5,
                         ],
                     ],
                 ],

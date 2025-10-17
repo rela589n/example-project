@@ -1,9 +1,9 @@
 api_frontend_voucher:
     resource: '../../../**/{*FrontendApiPoint.php}'
     type: attribute
-    prefix: /
-#    host: '%api_host%'
-#    schemes: '%api_scheme%'
+    prefix: /api/example-project/voucher
+    host: '%api_host%'
+    schemes: '%api_scheme%'
 
 when@dev:
     api_doc.example_project_voucher.redocly: &api_doc_redocly

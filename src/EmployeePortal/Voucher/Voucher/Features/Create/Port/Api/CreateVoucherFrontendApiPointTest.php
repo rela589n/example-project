@@ -34,7 +34,7 @@ final class CreateVoucherFrontendApiPointTest extends ApiTestCase
     {
         $response = $this->client->request(
             'POST',
-            '/api/example-project/service/voucher/generate',
+            '/api/example-project/voucher/generate',
             [
                 'headers' => [
                     'Content-Type' => 'application/json',

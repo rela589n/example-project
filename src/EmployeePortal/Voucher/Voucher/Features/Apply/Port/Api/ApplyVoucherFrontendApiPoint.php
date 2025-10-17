@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Voucher\Voucher\Features\Apply\Port\Api;
 
-use App\EmployeePortal\Voucher\Voucher\Features\Apply\ApplyVoucherCommand;
+use App\EmployeePortal\Voucher\Voucher\Features\Apply\Port\ApplyVoucherCommand;
 use App\Support\MessageBus\PassThrough\PassThroughBusStamp;
 use OpenApi\Attributes as ApiDoc;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
