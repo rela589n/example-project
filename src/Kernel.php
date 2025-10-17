@@ -40,7 +40,7 @@ final class Kernel extends BaseKernel
 
         yield new EmployeePortal\Authentication\Bundle\AppAuthBundle();
 
-        yield new EmployeePortal\Accounting\Bundle\AppAccountingBundle();
+        // yield new EmployeePortal\Accounting\Bundle\AppAccountingBundle();
 
         yield new EmployeePortal\Blog\Support\Bundle\AppBlogBundle();
     }

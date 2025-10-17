@@ -3,3 +3,10 @@ parameters:
     api_scheme: '%env(API_SCHEME)%'
 
     env(API_SCHEME): 'https'
+
+services:
+    app_accounting.dbal.disabled.schema_filter:
+        class: Doctrine\Bundle\DoctrineBundle\Dbal\RegexSchemaAssetFilter
+        arguments: [ '#^(?!(accounting_account_transactions|accounting_accounts_number_seq|accounting_accounts)$).*#' ]
+        tags:
+            - { name: doctrine.dbal.schema_filter }
