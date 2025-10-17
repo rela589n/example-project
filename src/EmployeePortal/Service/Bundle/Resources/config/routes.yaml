@@ -1,0 +1,21 @@
+api_frontend_service:
+    resource: '../../../**/{*FrontendApiPoint.php}'
+    type: attribute
+    prefix: /api/example-project/service
+    host: '%api_host%'
+    schemes: '%api_scheme%'
+
+when@dev:
+    api_doc.example_project_service.redocly: &api_doc_redocly
+        path: /api/example-project/service/doc.html
+        methods: GET
+        defaults: { _controller: nelmio_api_doc.controller.redocly, area: example_project_service }
+
+    api_doc.example_project_service.swagger: &api_doc_json
+        path: /api/example-project/service/doc.json
+        methods: GET
+        defaults: { _controller: nelmio_api_doc.controller.swagger, area: example_project_service }
+
+when@stage:
+    api_doc.example_project_service.redocly: *api_doc_redocly
+    api_doc.example_project_service.swagger: *api_doc_json

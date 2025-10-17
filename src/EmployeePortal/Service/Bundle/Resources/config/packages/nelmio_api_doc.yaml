@@ -1,0 +1,12 @@
+when@dev: &api_doc
+    nelmio_api_doc:
+        areas:
+            example_project_service:
+                path_patterns:
+                    - ^/api/example-project/service/(?!/doc$)
+                documentation:
+                    info:
+                        title: EmployeePortal Service
+                        description: This is an awesome <b>Module</b>!
+                        version: 1.0.0
+when@stage: *api_doc
