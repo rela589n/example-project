@@ -1,3 +1,2 @@
 #services:
-#    backend:
-#        command: [ "rr", "serve", "-c", ".rr.yaml" ]
+

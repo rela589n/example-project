@@ -1,0 +1,21 @@
+api_frontend_voucher:
+    resource: '../../../**/{*FrontendApiPoint.php}'
+    type: attribute
+    prefix: /api/example-project/voucher
+    host: '%api_host%'
+    schemes: '%api_scheme%'
+
+when@dev:
+    api_doc.example_project_voucher.redocly: &api_doc_redocly
+        path: /api/example-project/voucher/doc.html
+        methods: GET
+        defaults: { _controller: nelmio_api_doc.controller.redocly, area: example_project_voucher }
+
+    api_doc.example_project_voucher.swagger: &api_doc_json
+        path: /api/example-project/voucher/doc.json
+        methods: GET
+        defaults: { _controller: nelmio_api_doc.controller.swagger, area: example_project_voucher }
+
+when@stage:
+    api_doc.example_project_voucher.redocly: *api_doc_redocly
+    api_doc.example_project_voucher.swagger: *api_doc_json

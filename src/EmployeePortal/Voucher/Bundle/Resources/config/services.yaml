@@ -3,5 +3,5 @@ services:
         autowire: true
         autoconfigure: true
 
-    App\EmployeePortal\Service\:
+    App\EmployeePortal\Voucher\:
         resource: '../../../**/{*ApiPoint.php,*Service.php,*Handler.php,*Fixture.php}'

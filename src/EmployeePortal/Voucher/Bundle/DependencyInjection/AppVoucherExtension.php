@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Service\Bundle\DependencyInjection;
+namespace App\EmployeePortal\Voucher\Bundle\DependencyInjection;
 
 use Override;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\AbstractExtension;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-final class AppServiceExtension extends AbstractExtension
+final class AppVoucherExtension extends AbstractExtension
 {
-    public const ALIAS = 'app_service';
+    public const ALIAS = 'app_voucher';
 
     /** @param array<array-key,mixed> $config */
     #[Override]

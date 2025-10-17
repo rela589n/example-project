@@ -7,8 +7,8 @@ auth_routes:
 #accounting_routes:
 #    resource: '@AppAccountingBundle/Resources/config/routes.yaml'
 
-service_routes:
-    resource: '@AppServiceBundle/Resources/config/routes.yaml'
+voucher_routes:
+    resource: '@AppVoucherBundle/Resources/config/routes.yaml'
 
 blog_routes:
     resource: '@AppBlogBundle/Resources/config/routes.yaml'

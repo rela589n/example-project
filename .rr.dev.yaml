@@ -14,7 +14,7 @@ http:
         debug: true
     ssl:
         address: 0.0.0.0:8083
-        redirect: true
+#        redirect: true
         cert: /app/config/tls/http/certificate.crt
         key: /app/config/tls/http/privateKey.key
     uploads:

@@ -1,0 +1,8 @@
+doctrine:
+    orm:
+        mappings:
+            AppVoucherBundle:
+                type: attribute
+                dir: '%kernel.project_dir%/src/EmployeePortal/Voucher'
+                is_bundle: false
+                prefix: App\EmployeePortal\Voucher
