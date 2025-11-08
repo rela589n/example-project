@@ -34,7 +34,7 @@ final class NativeProxiesUnitTest extends TestCase
             $object->__construct(2, '3');
         });
 
-        self::assertSame(3, $object->foo);
+        self::assertSame(3, $object->foo); // hook
         self::assertSame('3', $object->bar);
     }
 
@@ -60,12 +60,12 @@ final class NativeProxiesUnitTest extends TestCase
     public function testProxyInitializerMustNotReturnProxy(): void
     {
         $proxy = $this->reflectionClass->newLazyProxy(function () {
-            $this->expectException(Error::class);
-            $this->expectExceptionMessage('Lazy proxy factory must return a non-lazy object');
-
             return $this->reflectionClass->newLazyProxy(function () {
             });
         });
+
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage('Lazy proxy factory must return a non-lazy object');
 
         /** @noinspection PhpExpressionResultUnusedInspection */
         $proxy->foo;
@@ -101,7 +101,7 @@ final class NativeProxiesUnitTest extends TestCase
         self::assertNotSame($object->getThis(), $proxy->getThis());
     }
 
-    public function testLazyProxyForChildProxiedObjectIsNotPossible(): void
+    public function testExistingObjectCanNotBeResetToLazyProxyForChildObject(): void
     {
         $object = new ProxiedObject(1, '2');
 
