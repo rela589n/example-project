@@ -1,0 +1,8 @@
+doctrine:
+    orm:
+        mappings:
+            AppEntityBundle:
+                type: attribute
+                dir: '%kernel.project_dir%/src/EmployeePortal/Entity'
+                is_bundle: false
+                prefix: App\EmployeePortal\Entity

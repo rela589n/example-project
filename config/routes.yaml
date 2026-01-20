@@ -10,6 +10,9 @@ auth_routes:
 voucher_routes:
     resource: '@AppVoucherBundle/Resources/config/routes.yaml'
 
+entity_routes:
+    resource: '@AppEntityBundle/Resources/config/routes.yaml'
+
 blog_routes:
     resource: '@AppBlogBundle/Resources/config/routes.yaml'
 

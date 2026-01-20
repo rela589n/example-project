@@ -44,6 +44,8 @@ final class Kernel extends BaseKernel
 
         yield new EmployeePortal\Voucher\Bundle\AppVoucherBundle();
 
+        yield new EmployeePortal\Entity\Bundle\AppEntityBundle();
+
         yield new EmployeePortal\Blog\Support\Bundle\AppBlogBundle();
     }
 }
