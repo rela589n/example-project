@@ -47,5 +47,7 @@ final class Kernel extends BaseKernel
         yield new EmployeePortal\Entity\Bundle\AppEntityBundle();
 
         yield new EmployeePortal\Blog\Support\Bundle\AppBlogBundle();
+
+        yield new EmployeePortal\Chatbot\Support\Bundle\AppChatbotBundle();
     }
 }
