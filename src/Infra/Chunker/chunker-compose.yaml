@@ -1,0 +1,14 @@
+services:
+    chunker:
+        image: example_project.chunker:v1.0
+        build:
+            context: .
+        ports:
+            - "127.0.0.1:8001:8000"
+        volumes:
+            - ./server.py:/app/server.py:ro
+        healthcheck:
+            test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+            interval: 30s
+            timeout: 10s
+            retries: 3
