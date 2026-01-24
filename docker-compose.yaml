@@ -1,5 +1,6 @@
 include:
     - ./src/Infra/WebSocket/centrifugo-compose.yaml
+    - ./src/Infra/Chunker/chunker-compose.yaml
 
 services:
     backend:
