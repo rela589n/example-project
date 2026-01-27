@@ -4,4 +4,4 @@ services:
         autoconfigure: true
 
     App\EmployeePortal\Entity\:
-        resource: '../../../**/{*ApiPoint.php,*Service.php,*Handler.php,*Fixture.php,*Collection.php}'
+        resource: '../../../**/{*ApiPoint.php,*Service.php,*Handler.php,*ConsoleCommand.php,*Fixture.php,*Collection.php}'
