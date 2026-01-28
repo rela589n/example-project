@@ -1,0 +1,25 @@
+services:
+    vespa:
+        image: vespaengine/vespa:8.631.39
+        ports:
+            - "127.0.0.1:8089:8080"   # Container API
+            - "127.0.0.1:19071:19071" # Config server
+        volumes:
+            - vespa_data:/opt/vespa/var
+            - ./application:/app/application:ro
+            - ./deploy.sh:/app/deploy.sh:ro
+        environment:
+            VESPA_CONFIGSERVERS: vespa
+        healthcheck:
+            test: [ "CMD", "curl", "-f", "http://localhost:19071/state/v1/health" ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 120s
+        deploy:
+            resources:
+                limits:
+                    memory: 4G
+
+volumes:
+    vespa_data: ~

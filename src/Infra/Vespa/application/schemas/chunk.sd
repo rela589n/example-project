@@ -1,0 +1,56 @@
+schema chunk {
+    document chunk {
+        field id type string {
+            indexing: summary | attribute
+        }
+        field text type string {
+            indexing: summary | index
+            index: enable-bm25
+        }
+    }
+
+    # ColBERT embeddings with binary quantization
+    # 128 float dims → packed into 16 int8 values (32x raw storage savings)
+    field colbert_embedding type tensor<int8>(token{}, dim[16]) {
+        indexing: input text | embed colbert | pack_bits | attribute
+    }
+
+    fieldset default {
+        fields: text
+    }
+
+    # Pure ColBERT MaxSim scoring with unpacked bits
+    rank-profile colbert inherits default {
+        inputs {
+            query(query_embedding) tensor<float>(querytoken{}, dim[128])
+        }
+        first-phase {
+            expression: sum(
+                reduce(
+                    sum(
+                        query(query_embedding) * unpack_bits(attribute(colbert_embedding)),
+                        dim
+                    ),
+                    max, token
+                ),
+                querytoken
+            )
+        }
+    }
+
+    # Hybrid: BM25 + ColBERT
+    rank-profile hybrid inherits colbert {
+        first-phase {
+            expression {
+                bm25(text) +
+                sum(
+                    reduce(
+                        sum(query(query_embedding) * unpack_bits(attribute(colbert_embedding)), dim),
+                        max, token
+                    ),
+                    querytoken
+                )
+            }
+        }
+    }
+}

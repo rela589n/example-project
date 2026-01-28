@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<services version="1.0">
+    <container id="default" version="1.0">
+        <search/>
+        <document-api/>
+
+        <!-- ColBERT embedder with binary quantization (int8 packed output) -->
+        <component id="colbert" type="colbert-embedder">
+            <transformer-model url="https://data.vespa.oath.cloud/onnx_models/colbert-v2/colbert-v2.onnx"/>
+            <tokenizer-model url="https://data.vespa.oath.cloud/onnx_models/colbert-v2/tokenizer.json"/>
+            <max-query-tokens>32</max-query-tokens>
+            <max-document-tokens>512</max-document-tokens>
+        </component>
+    </container>
+
+    <content id="content" version="1.0">
+        <redundancy>1</redundancy>
+        <documents>
+            <document type="chunk" mode="index"/>
+        </documents>
+        <nodes>
+            <node distribution-key="0" hostalias="node1"/>
+        </nodes>
+    </content>
+</services>
