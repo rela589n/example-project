@@ -2,7 +2,7 @@ FROM spiralscout/roadrunner:2025.1.2 AS roadrunner
 FROM example_project.backend.grpc:v1.1 AS grpc
 FROM mlocati/php-extension-installer AS ext
 FROM composer:2.8 AS composer
-FROM bufbuild/buf:1.56 as buf
+FROM bufbuild/buf:1.56 AS buf
 FROM php:8.4-cli-bookworm
 
 ARG RR_VERSION=2025.1.2
