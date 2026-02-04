@@ -12,6 +12,7 @@ use App\EmployeePortal\Authentication\User\Support\Repository\Exception\UserNotF
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUser;
+use OpenApi\Attributes as ApiDoc;
 use PhPhD\ExceptionalValidation;
 use PhPhD\ExceptionalValidation\Capture;
 use PhPhD\ExceptionalValidation\Mapper\Validator\Formatter\Item\ViolationList\ViolationListExceptionFormatter;
@@ -23,16 +24,18 @@ use Symfony\Component\Uid\Uuid;
 #[ExceptionalValidation]
 final readonly class LoginUserCommand
 {
+    #[ApiDoc\Property(example: 'email@test.com')]
     #[Capture(exception: EmailValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
     #[Capture(exception: UserNotFoundException::class, condition: ExceptionValueMatchCondition::class)]
     private string $email;
 
+    #[ApiDoc\Property(example: 'p@$$w0rd')]
     #[Capture(exception: PasswordMismatchException::class, condition: ExceptionValueMatchCondition::class)]
     private string $password;
 
-    private JWTUser $jwtUser;
+    private(set) JWTUser $jwtUser;
 
-    private string $jwtToken;
+    private(set) string $jwtToken;
 
     public function __construct(
         string $email,
@@ -59,16 +62,6 @@ final readonly class LoginUserCommand
 
         $this->jwtUser = new JWTUser($user->getId()->toRfc4122(), ['ROLE_USER']);
         $this->jwtToken = $service->tokenManager->create($this->jwtUser);
-    }
-
-    public function getJwtUser(): JWTUser
-    {
-        return $this->jwtUser;
-    }
-
-    public function getJwtToken(): string
-    {
-        return $this->jwtToken;
     }
 
     private function getUser(LoginUserService $service): User

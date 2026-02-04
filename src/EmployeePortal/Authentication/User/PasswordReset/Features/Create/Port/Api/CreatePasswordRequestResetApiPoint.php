@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Authentication\User\PasswordReset\Features\Create\Port\Api;
 
 use App\EmployeePortal\Authentication\User\Features\Login\Port\LoginUserCommand;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUser;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -38,7 +39,7 @@ final readonly class CreatePasswordRequestResetApiPoint
 
         /** @var ?Response $response */
         $response = $handled->getResult();
-        $response ??= $this->authenticationSuccessHandler->handleAuthenticationSuccess($command->getJwtUser(), $command->getJwtToken());
+        $response ??= $this->authenticationSuccessHandler->handleAuthenticationSuccess($command->jwtUser, $command->jwtToken);
 
         return $response;
     }
