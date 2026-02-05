@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<services version="1.0">
+    <!--
+     Container cluster - api server - stateless, handles requests (search queries, document operations)
+     High query load? → Add container nodes
+    -->
+    <container id="default" version="1.0">
+        <search/>
+        <document-api/>
+        <nodes>
+            <node hostalias="node1"/>
+        </nodes>
+    </container>
+    <!--
+    Content cluster - stateful, stores documents and indexes
+    More data? → Add content nodes
+    -->
+    <content id="content" version="1.0">
+        <redundancy>1</redundancy> <!-- 1 copy of data (no replication) -->
+        <documents> <!-- Links your schema -->
+            <document type="greeting" mode="index"/>
+        </documents>
+        <nodes>
+            <node hostalias="node1" distribution-key="0"/>
+        </nodes>
+    </content>
+</services>

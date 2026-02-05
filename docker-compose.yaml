@@ -1,6 +1,7 @@
 include:
     - ./src/Infra/WebSocket/centrifugo-compose.yaml
     - ./src/Infra/Chunker/chunker-compose.yaml
+    - ./src/Infra/Vespa/vespa-compose.yaml
 
 services:
     backend:
@@ -31,6 +32,7 @@ services:
         depends_on:
             postgresql: { condition: service_started }
             temporal: { condition: service_healthy }
+            vespa: { condition: service_healthy }
 
     dump_server:
         image: example_project.backend:v1.0
