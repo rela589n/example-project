@@ -1,6 +1,7 @@
 include:
     - ./src/Infra/WebSocket/centrifugo-compose.yaml
     - ./src/Infra/Chunker/chunker-compose.yaml
+    - ./src/Infra/Vespa/vespa-compose.yaml
 
 services:
     backend:
@@ -31,6 +32,7 @@ services:
         depends_on:
             postgresql: { condition: service_started }
             temporal: { condition: service_healthy }
+            vespa: { condition: service_healthy }
 
     dump_server:
         image: example_project.backend:v1.0
@@ -111,17 +113,6 @@ services:
             RABBITMQ_DEFAULT_PASS: qwerty
         ports:
             - "127.0.0.1:15672:15672"
-
-    elastic:
-        image: elasticsearch:9.0.1
-        ports:
-            - "127.0.0.1:9200:9200"
-            - "127.0.0.1:9300:9300"
-        environment:
-            # Increase JVM heap size to prevent out-of-memory errors
-            ES_JAVA_OPTS: "-Xms512m -Xmx512m"
-        volumes:
-            - "elastic_data:/usr/share/elasticsearch/data"
 
     redis:
         image: redis:8.0

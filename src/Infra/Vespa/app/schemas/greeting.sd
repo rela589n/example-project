@@ -1,0 +1,10 @@
+schema greeting {
+	document greeting {
+		field name type string {
+			indexing: index | summary
+		}
+		field message type string {
+			indexing: index | summary
+		}
+	}
+}
