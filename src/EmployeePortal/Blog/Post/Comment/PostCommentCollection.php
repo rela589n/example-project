@@ -20,6 +20,7 @@ use Symfony\Component\Uid\Uuid;
 final readonly class PostCommentCollection
 {
     public function __construct(
+        /** @var Selectable<array-key,PostComment> */
         private Selectable $repository = new ArrayCollection(),
         private Criteria $criteria = new Criteria(),
     ) {
@@ -83,6 +84,7 @@ final readonly class PostCommentCollection
         return new self($this->repository, $criteria);
     }
 
+    /** @return ReadableCollection<array-key,PostComment> */
     public function match(): ReadableCollection
     {
         return $this->repository->matching($this->criteria);

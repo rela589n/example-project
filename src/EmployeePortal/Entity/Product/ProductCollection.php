@@ -19,6 +19,7 @@ use Symfony\Component\Uid\Uuid;
 final readonly class ProductCollection
 {
     public function __construct(
+        /** @var Selectable<array-key,Product> */
         private Selectable $repository = new ArrayCollection(),
         private Criteria $criteria = new Criteria(),
     ) {
@@ -45,6 +46,7 @@ final readonly class ProductCollection
         return $this->andWhere($expr->eq('title.title', $title));
     }
 
+    /** @return ReadableCollection<array-key,Product> */
     public function match(): ReadableCollection
     {
         return $this->repository->matching($this->criteria);
