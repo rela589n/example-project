@@ -12,6 +12,7 @@ use function array_map;
 
 final readonly class GetAccountsListQuery
 {
+    /** @return list<AccountDto> */
     public function execute(EntityManagerInterface $entityManager): array
     {
         $accounts = $entityManager->getRepository(Account::class)->findAll();

@@ -17,6 +17,7 @@ final readonly class GetMyPostsQuery
     ) {
     }
 
+    /** @return list<MyPostDto> */
     public function execute(PostCollection $postCollection): array
     {
         $posts = $postCollection->ofOwner(Uuid::fromString($this->userId))->match();
