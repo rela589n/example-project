@@ -48,8 +48,8 @@ final readonly class AddPostCommentFrontendApiPoint
         $command = new AddPostCommentCommand(
             $user->getUserIdentifier(),
             $postId,
-            $request->getPayload()->get('text'),
-            $request->getPayload()->get('id') ?? Uuid::v7()->toRfc4122(),
+            $request->getPayload()->getString('text'),
+            $request->getPayload()->getString('id') ?: Uuid::v7()->toRfc4122(),
         );
 
         $envelope = $this->apiBus->dispatch($command, [new PassThroughBusStamp('command.bus')]);

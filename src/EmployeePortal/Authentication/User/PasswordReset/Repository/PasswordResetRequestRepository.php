@@ -10,6 +10,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 
+/** @extends ServiceEntityRepository<PasswordResetRequest> */
 final class PasswordResetRequestRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

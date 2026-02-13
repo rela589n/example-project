@@ -14,6 +14,7 @@ final class Set implements Collection
     // db could have items in between
     // db could have items after
 
+    /** @var array<int|string, mixed> */
     private array $items = [];
 
     public function __construct(

@@ -41,7 +41,7 @@ final readonly class LoginUserFrontendApiPoint
 
         /** @var ?Response $response */
         $response = $handled->getResult();
-        $response ??= $this->authenticationSuccessHandler->handleAuthenticationSuccess($command->getJwtUser(), $command->getJwtToken());
+        $response ??= $this->authenticationSuccessHandler->handleAuthenticationSuccess($command->jwtUser, $command->jwtToken);
 
         return $response;
     }

@@ -4,8 +4,8 @@ playground_routes:
 auth_routes:
     resource: '@AppAuthBundle/Resources/config/routes.yaml'
 
-#accounting_routes:
-#    resource: '@AppAccountingBundle/Resources/config/routes.yaml'
+accounting_routes:
+    resource: '@AppAccountingBundle/Resources/config/routes.yaml'
 
 voucher_routes:
     resource: '@AppVoucherBundle/Resources/config/routes.yaml'

@@ -20,7 +20,7 @@ final readonly class PostSetupListener
     /** @api */
     public function postLoad(Post $post): void
     {
-        (fn (Post $post) => $post->comments = $this->postCommentCollection)->bindTo($this, Post::class)($post);
-        (fn (Post $post) => $post->topComments = $this->postCommentCollection)->bindTo($this, Post::class)($post);
+        (fn (Post $post) => $post->comments = $this->postCommentCollection)->bindTo($this, Post::class)($post); // @phpstan-ignore assign.propertyPrivateSet
+        (fn (Post $post) => $post->topComments = $this->postCommentCollection)->bindTo($this, Post::class)($post); // @phpstan-ignore assign.propertyPrivateSet
     }
 }

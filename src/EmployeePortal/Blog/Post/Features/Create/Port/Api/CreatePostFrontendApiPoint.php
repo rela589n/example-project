@@ -44,12 +44,12 @@ final readonly class CreatePostFrontendApiPoint
         #[CurrentUser]
         UserInterface $user,
     ): Response {
-        $id = $request->getPayload()->get('id');
+        $id = $request->getPayload()->getString('id');
         $title = $request->getPayload()->getString('title');
         $description = $request->getPayload()->getString('description');
 
         $command = new CreatePostCommand(
-            $id ?? Uuid::v7()->toRfc4122(),
+            $id ?: Uuid::v7()->toRfc4122(),
             $user->getUserIdentifier(),
             $title,
             $description,

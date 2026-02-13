@@ -23,4 +23,9 @@ final readonly class VoucherCreatedEvent
     {
         return $this->voucher = new Voucher($this);
     }
+
+    public function getVoucher(): Voucher
+    {
+        return $this->voucher;
+    }
 }

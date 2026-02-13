@@ -19,6 +19,7 @@ use Symfony\Component\Uid\Uuid;
 final readonly class EntityCollection
 {
     public function __construct(
+        /** @var Selectable<array-key,Entity> */
         private Selectable $repository = new ArrayCollection(),
         private Criteria $criteria = new Criteria(),
     ) {
@@ -37,6 +38,7 @@ final readonly class EntityCollection
         return $this->andWhere($expr->eq('id', $id->toRfc4122()));
     }
 
+    /** @return ReadableCollection<array-key,Entity> */
     public function match(): ReadableCollection
     {
         return $this->repository->matching($this->criteria);

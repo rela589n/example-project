@@ -17,6 +17,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use Webmozart\Assert\Assert;
+
 use function Amp\async;
 use function Amp\Future\awaitAll;
 use function Amp\Future\awaitAnyN;
@@ -54,11 +56,13 @@ HELP
 
         /** @var string $connections */
         $connections = $input->getOption('connections');
-        $connections = (int)$connections;
+        $connections = max(1, (int)$connections);
 
         $pool = new PostgresConnectionPool($config, $connections, resetConnections: false);
 
+        /** @var string $sourceTable */
         $sourceTable = $input->getArgument('source-table');
+        /** @var string $targetTable */
         $targetTable = $input->getArgument('target-table');
         /** @var string $startAt */
         $startAt = $input->getOption('start-at');
@@ -81,7 +85,9 @@ HELP
         $it = 0;
         $futures = [];
 
-        foreach ($results as ['sequence_id' => $sequenceId, 'id' => $id]) {
+        /** @var array{sequence_id: string, id: string} $row */
+        foreach ($results as $row) {
+            ['sequence_id' => $sequenceId, 'id' => $id] = $row;
             // Skip the specified number of iterations
             if ($it < $startAt) {
                 ++$it;
@@ -112,10 +118,10 @@ HELP
                     $connectionException = reset($reasons);
 
                     if (!$connectionException instanceof SqlConnectionException) {
-                        throw $connectionException;
+                        throw $e;
                     }
 
-                    throw $connectionException->getPrevious();
+                    throw $connectionException->getPrevious() ?? $connectionException;
                 }
             }
 

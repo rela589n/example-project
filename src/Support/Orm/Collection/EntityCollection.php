@@ -17,7 +17,7 @@ final class EntityCollection implements Collection
 
     public function has(int|string $key): bool
     {
-
+        return false;
     }
 
     public function get(int|string $key): mixed
@@ -31,6 +31,8 @@ final class EntityCollection implements Collection
         $criteria = $this->itemsSet->specification->getCriteria();
 
         // this method should load the entity, save it and return it
+
+        return null;
     }
 
     public function set(int|string $key, mixed $value): void

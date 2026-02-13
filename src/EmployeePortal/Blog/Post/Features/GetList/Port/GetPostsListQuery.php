@@ -12,6 +12,7 @@ use function array_map;
 
 final readonly class GetPostsListQuery
 {
+    /** @return list<PostDto> */
     public function execute(EntityManagerInterface $entityManager): array
     {
         $posts = $entityManager->getRepository(Post::class)->findAll();

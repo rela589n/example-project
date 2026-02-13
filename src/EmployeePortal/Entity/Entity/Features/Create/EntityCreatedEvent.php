@@ -22,4 +22,9 @@ final readonly class EntityCreatedEvent
     {
         return $this->entity = new Entity($this);
     }
+
+    public function getEntity(): Entity
+    {
+        return $this->entity;
+    }
 }

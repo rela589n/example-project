@@ -19,6 +19,7 @@ use Symfony\Component\Uid\Uuid;
 final readonly class PostCollection
 {
     public function __construct(
+        /** @var Selectable<array-key,Post> */
         private Selectable $repository = new ArrayCollection(),
         private Criteria $criteria = new Criteria(),
     ) {
@@ -53,6 +54,7 @@ final readonly class PostCollection
         return !empty($this->whereId($post->id)->match()->first());
     }
 
+    /** @return ReadableCollection<array-key,Post> */
     public function match(): ReadableCollection
     {
         return $this->repository->matching($this->criteria);

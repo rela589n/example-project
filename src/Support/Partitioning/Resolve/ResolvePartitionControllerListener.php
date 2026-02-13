@@ -14,8 +14,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 final readonly class ResolvePartitionControllerListener
 {
     public function __construct(
-        #[AutowireIterator(PartitionIdResolver::class)]
         /** @var iterable<PartitionIdResolver> */
+        #[AutowireIterator(PartitionIdResolver::class)]
         private iterable $partitionIdResolvers,
         private PartitionedEntitiesMiddleware $middleware,
     ) {

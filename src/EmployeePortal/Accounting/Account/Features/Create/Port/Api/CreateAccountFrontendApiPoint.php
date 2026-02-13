@@ -44,10 +44,10 @@ final readonly class CreateAccountFrontendApiPoint
         #[CurrentUser]
         UserInterface $user,
     ): Response {
-        $id = $request->getPayload()->get('id');
+        $id = $request->getPayload()->getString('id');
 
         $command = new CreateAccountCommand(
-            $id ?? Uuid::v7()->toRfc4122(),
+            $id ?: Uuid::v7()->toRfc4122(),
             $user->getUserIdentifier(),
         );
 

@@ -44,6 +44,7 @@ final class TransferPostOwnershipFrontendApiPointTest extends ApiTestCase
         $newOwnerId = 'de13a4f3-b43e-74d4-aca9-7ce087a21b73';
 
         $postBefore = $this->entityManager->find(Post::class, 'a2f6d821-6b23-73f4-bb85-6daf4280b72c');
+        self::assertNotNull($postBefore, 'Post should exist before transfer');
         $initialOwner = $postBefore->owner;
 
         $this->client->request(

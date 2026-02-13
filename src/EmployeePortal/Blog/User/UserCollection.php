@@ -20,7 +20,7 @@ use Symfony\Component\Uid\Uuid;
 final readonly class UserCollection
 {
     public function __construct(
-        /** @var Selectable<User>|ObjectRepository */
+        /** @var Selectable<array-key,User> */
         private Selectable $repository = new ArrayCollection(),
         private Criteria $criteria = new Criteria(),
     ) {
@@ -44,6 +44,7 @@ final readonly class UserCollection
         return $this->whereId($id)->match()->first() ?: throw new EntityNotFoundException($id);
     }
 
+    /** @return ReadableCollection<array-key,User> */
     public function match(): ReadableCollection
     {
         return $this->repository->matching($this->criteria);

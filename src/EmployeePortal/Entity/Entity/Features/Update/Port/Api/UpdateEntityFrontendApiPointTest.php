@@ -59,6 +59,7 @@ final class UpdateEntityFrontendApiPointTest extends ApiTestCase
         self::assertResponseStatusCodeSame(200);
 
         $entity = $this->entityManager->getRepository(Entity::class)->findOneBy(['id' => '3a24fc63-756b-7d28-b6df-a2edb0990e4b']);
+        self::assertNotNull($entity, 'Entity should exist');
 
         self::assertLessThanOrEqual(10, CarbonImmutable::now()->diffInSeconds($entity->updatedAt));
     }

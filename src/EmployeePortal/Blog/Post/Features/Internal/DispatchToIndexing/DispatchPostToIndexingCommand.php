@@ -16,5 +16,6 @@ final readonly class DispatchPostToIndexingCommand
     public function execute(DispatchPostToIndexingService $service): void
     {
         // TODO: send a command to a Chatbot service
+        $this->postId; // @phpstan-ignore expr.resultUnused
     }
 }

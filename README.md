@@ -56,7 +56,7 @@ Api documentation:
 ### Feature
 
 > Example of action:
-> [User\Features\Register](src/EmployeePortal/Authentication/User/Actions/Register)
+> [User\Features\Register](src/EmployeePortal/Authentication/User/Features/Register)
 
 Features are self-sufficient modules that represent some features of the system (like user registration, login).
 Each feature is usually related to some entity, or concept it belongs to.
@@ -79,7 +79,7 @@ EventTest - a class that is responsible for testing the core business logic.
 
 ### Port
 
-> Example of Port: `User\Features\Login\Port`
+> Example of Port: [Login/Port/Api](src/EmployeePortal/Authentication/User/Features/Login/Port/Api)
 
 Port namespace represents classes that make the event happen.
 Usually, at the top level it contains Command and Service that serve for the event by creating it, processing it, and
