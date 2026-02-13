@@ -1,12 +1,12 @@
-FROM spiralscout/roadrunner:2025.1.2 AS roadrunner
-FROM example_project.backend.grpc:v1.1 AS grpc
+FROM spiralscout/roadrunner:2025.1.6 AS roadrunner
+FROM example_project.backend.grpc:v2.0 AS grpc
 FROM mlocati/php-extension-installer AS ext
-FROM composer:2.8 AS composer
-FROM bufbuild/buf:1.56 AS buf
-FROM php:8.4-cli-bookworm
+FROM composer:2.9 AS composer
+FROM bufbuild/buf:1.65 AS buf
+FROM php:8.5-cli-bookworm
 
-ARG RR_VERSION=2025.1.2
-ARG PROTOC_VERSION=31.1
+ARG RR_VERSION=2025.1.6
+ARG PROTOC_VERSION=33.5
 ARG USER_NAME=app
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -21,26 +21,26 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 COPY --from=buf /usr/local/bin/buf /usr/local/bin/buf
 COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
-RUN install-php-extensions pgsql
+RUN install-php-extensions pdo_pgsql
 RUN install-php-extensions redis
 RUN install-php-extensions sockets
 RUN install-php-extensions zip
 RUN install-php-extensions amqp
-RUN install-php-extensions swoole
+# RUN install-php-extensions swoole # - (pecl/swoole requires PHP (version >= 8.1.0, version <= 8.4.99), installed version is 8.5.2)
 RUN install-php-extensions xdebug # dev-only
 
 # Copy grpc-extension binary
 COPY --from=grpc \
-	/usr/local/lib/php/extensions/no-debug-non-zts-20240924/grpc.so \
-	/usr/local/lib/php/extensions/no-debug-non-zts-20240924/grpc.so
+	/usr/local/lib/php/extensions/no-debug-non-zts-20250925/grpc.so \
+	/usr/local/lib/php/extensions/no-debug-non-zts-20250925/grpc.so
 
 # Create docker-php-ext-grpc.ini configuration file
 RUN docker-php-ext-enable grpc
 
 # Copy protobuf-extension binary
 COPY --from=grpc \
-	/usr/local/lib/php/extensions/no-debug-non-zts-20240924/protobuf.so \
-	/usr/local/lib/php/extensions/no-debug-non-zts-20240924/protobuf.so
+	/usr/local/lib/php/extensions/no-debug-non-zts-20250925/protobuf.so \
+	/usr/local/lib/php/extensions/no-debug-non-zts-20250925/protobuf.so
 
 # Create docker-php-ext-protobuf.ini configuration file
 RUN docker-php-ext-enable protobuf

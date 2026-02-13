@@ -5,7 +5,7 @@ include:
 
 services:
     backend:
-        image: example_project.backend:v1.0
+        image: example_project.backend:v2.0
         build:
             context: docker-configs/backend
         working_dir: /app
@@ -35,7 +35,7 @@ services:
             vespa: { condition: service_healthy }
 
     dump_server:
-        image: example_project.backend:v1.0
+        image: example_project.backend:v2.0
         working_dir: /app
         command: [ "vendor/bin/var-dump-server", "--no-ansi", "--host", "0.0.0.0:9912" ]
         volumes: [ .:/app:cached ]
