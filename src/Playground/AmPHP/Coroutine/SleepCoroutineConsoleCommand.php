@@ -51,12 +51,12 @@ final class SleepCoroutineConsoleCommand extends Command
 
         // function is queued for the event loop
         $future3 = async(function () use ($output): never {
-            $output->writeln('||The exception is thrown, yet it doesn\'t mess up the rest of futures||');
+            $output->writeln('||The exception is thrown, yet it doesn\'t mess up the rest of the futures||');
 
             throw new RuntimeException();
         });
 
-        $output->writeln('Start');
+        $output->writeln('Start'); // @phpstan-ignore deadCode.unreachable
 
         // Event Loop gets the control on the first await
         $one = $future1->await();

@@ -13,6 +13,7 @@ final class AppChatbotExtension extends AbstractExtension
 {
     public const ALIAS = 'app_chatbot';
 
+    /** @param array<array-key,mixed> $config */
     #[Override]
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {

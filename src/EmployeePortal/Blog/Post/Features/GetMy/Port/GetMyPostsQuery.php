@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Blog\Post\Features\GetMy\Port;
 
 use App\EmployeePortal\Blog\Post\Features\GetMy\MyPostDto;
+use App\EmployeePortal\Blog\Post\Post;
 use App\EmployeePortal\Blog\Post\PostCollection;
 use Symfony\Component\Uid\Uuid;
 
@@ -22,6 +23,6 @@ final readonly class GetMyPostsQuery
     {
         $posts = $postCollection->ofOwner(Uuid::fromString($this->userId))->match();
 
-        return array_map(MyPostDto::fromEntity(...), $posts->toArray());
+        return array_map(MyPostDto::fromEntity(...), array_values($posts->toArray()));
     }
 }

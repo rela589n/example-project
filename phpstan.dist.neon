@@ -31,7 +31,6 @@ parameters:
         constant: 0
     ignoreErrors:
         - identifier: missingType.generics
-        - identifier: catch.neverThrown
         - identifier: property.unusedType
           message: '#Property .+ is never assigned Temporal\\Internal\\Workflow\\Proxy so it can be removed from the property type\.$#'
         - identifier: return.unusedType
@@ -39,8 +38,8 @@ parameters:
         - identifier: method.notFound
           message: '#^Call to an undefined method .+Temporal\\Internal\\Workflow\\Proxy::\w+\(\).$#'
         - identifier: property.uninitializedReadonly
-          message: '#Class App\\(\w+\\)*\w+Command has an uninitialized readonly property \$\w+\. Assign it in the constructor\.#'
+          message: '#Class App\\(\w+\\)*\w+(Command|Event) has an uninitialized readonly property \$\w+\. Assign it in the constructor\.#'
         - identifier: property.readOnlyAssignNotInConstructor
-          message: '#Readonly property App\\(\w+\\)*\w+Command::\$\w+ is assigned outside of the constructor\.#'
+          message: '#Readonly property App\\(\w+\\)*\w+(Command|Event)::\$\w+ is assigned outside of the constructor\.#'
     phpat:
         ignore_built_in_classes: true

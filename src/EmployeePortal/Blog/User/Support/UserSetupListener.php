@@ -22,7 +22,7 @@ final readonly class UserSetupListener
     /** @api */
     public function postLoad(User $user): void
     {
-        (fn (User $user) => $user->posts = $this->postCollection)->bindTo($this, User::class)($user);
-        (fn (User $user) => $user->comments = $this->postCommentCollection)->bindTo($this, User::class)($user);
+        (fn (User $user) => $user->posts = $this->postCollection)->bindTo($this, User::class)($user); // @phpstan-ignore assign.propertyPrivateSet
+        (fn (User $user) => $user->comments = $this->postCommentCollection)->bindTo($this, User::class)($user); // @phpstan-ignore assign.propertyPrivateSet
     }
 }

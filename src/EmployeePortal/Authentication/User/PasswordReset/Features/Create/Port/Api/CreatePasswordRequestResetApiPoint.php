@@ -39,8 +39,7 @@ final readonly class CreatePasswordRequestResetApiPoint
 
         /** @var ?Response $response */
         $response = $handled->getResult();
-        $response ??= $this->authenticationSuccessHandler->handleAuthenticationSuccess($command->jwtUser, $command->jwtToken);
 
-        return $response;
+        return $response ?? new Response(status: Response::HTTP_OK);
     }
 }

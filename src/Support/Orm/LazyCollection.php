@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\EntityManagerInterface;
 use Traversable;
+use Webmozart\Assert\Assert;
 
 final class LazyCollection implements Collection, Selectable
 {
@@ -21,17 +22,19 @@ final class LazyCollection implements Collection, Selectable
 
     public function __construct(
         private EntityManagerInterface $entityManager,
+        /** @var class-string */
         private string $className,
         (Collection&Selectable)|null $collection = null,
     ) {
         $this->collection = $collection ?? $entityManager->getRepository(User::class)->matching(Criteria::create());
     }
 
-    public function add(mixed $element): bool
+    public function add(mixed $element): void
     {
-        $this->entityManager->persist($element);
+        Assert::object($element);
 
-        return $this->collection->add($element);
+        $this->entityManager->persist($element);
+        $this->collection->add($element);
     }
 
     public function clear(): void

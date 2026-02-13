@@ -6,13 +6,15 @@ namespace App\EmployeePortal\Blog\Support\Specification;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
+use Doctrine\Common\Collections\Expr\Expression;
+use Webmozart\Assert\Assert;
 
 use function array_map;
 
 final readonly class Specification
 {
     public function __construct(
-        /** @var Criteria[] */
+        /** @var list<Criteria> */
         private array $criteria,
     ) {
     }
@@ -25,7 +27,7 @@ final readonly class Specification
     public function getCriteria(): Criteria
     {
         $expressions = array_map(
-            static fn (Criteria $criteria) => $criteria->getWhereExpression(),
+            static fn (Criteria $criteria): Expression => $criteria->getWhereExpression(), // @phpstan-ignore return.type
             $this->criteria,
         );
 

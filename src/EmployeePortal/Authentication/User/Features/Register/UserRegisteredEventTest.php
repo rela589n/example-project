@@ -61,7 +61,7 @@ final class UserRegisteredEventTest extends TestCase
 
         $events = $user->getEvents();
         self::assertCount(1, $events);
-        $registeredEvent = $events[0];
+        $registeredEvent = $events->first();
         self::assertInstanceOf(UserRegisteredEvent::class, $registeredEvent);
 
         self::assertSame($user, $registeredEvent->getUser());

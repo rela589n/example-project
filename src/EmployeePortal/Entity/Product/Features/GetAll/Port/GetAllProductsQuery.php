@@ -16,6 +16,7 @@ final class GetAllProductsQuery
     /** @var array|TitleFilter[] */
     private array $filters = [];
 
+    /** @param array<string,string> $filters */
     public function __construct(
         array $filters,
     ) {
@@ -46,6 +47,7 @@ final class GetAllProductsQuery
         ], $products);
     }
 
+    /** @return array<string, mixed> */
     public function getProducts(): array
     {
         return $this->products;

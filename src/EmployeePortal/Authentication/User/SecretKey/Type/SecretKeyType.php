@@ -28,7 +28,7 @@ final class SecretKeyType extends Type
     }
 
     #[Override]
-    public function convertToDatabaseValue(#[SensitiveParameter] $value, AbstractPlatform $platform): ?string
+    public function convertToDatabaseValue(#[SensitiveParameter] mixed $value, AbstractPlatform $platform): ?string
     {
         if (null === $value) {
             return null;
@@ -40,7 +40,7 @@ final class SecretKeyType extends Type
     }
 
     #[Override]
-    public function convertToPHPValue(#[SensitiveParameter] $value, AbstractPlatform $platform): ?SecretKey
+    public function convertToPHPValue(#[SensitiveParameter] mixed $value, AbstractPlatform $platform): ?SecretKey
     {
         if (null === $value) {
             return null;
