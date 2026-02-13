@@ -14,6 +14,9 @@ parameters:
         - src
         - tests
         - migrations
+    excludePaths:
+        - src/Playground/ProxyManager/Autoloader/EntityProxy.php
+        - src/Support/Contracts/gen
 #    stubFiles:
 #        - vendor-bin/linters/stub/ServiceEntityRepository.stub
     symfony:
@@ -39,7 +42,5 @@ parameters:
           message: '#Class App\\(\w+\\)*\w+Command has an uninitialized readonly property \$\w+\. Assign it in the constructor\.#'
         - identifier: property.readOnlyAssignNotInConstructor
           message: '#Readonly property App\\(\w+\\)*\w+Command::\$\w+ is assigned outside of the constructor\.#'
-    excludePaths:
-        - '%rootDir%/../../../src/EmployeeOffice/Inventory/Domain/Employee/Scenarios/GetFixedAssetList/Doctrine/Type/*'
     phpat:
         ignore_built_in_classes: true
