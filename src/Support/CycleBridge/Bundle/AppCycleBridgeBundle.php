@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 final class AppCycleBridgeBundle extends Bundle
 {
     #[Override]
-    protected function createContainerExtension(): ?AppCycleBridgeExtension
+    protected function createContainerExtension(): AppCycleBridgeExtension
     {
         return new AppCycleBridgeExtension();
     }
