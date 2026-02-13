@@ -28,4 +28,9 @@ final readonly class ProductCreatedEvent
     {
         return $this->product = new Product($this);
     }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
 }
