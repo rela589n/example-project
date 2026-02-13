@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace App\Infra\WebSocket\Support;
 
 use Fresh\CentrifugoBundle\Exception\CentrifugoException;
+use Fresh\CentrifugoBundle\Model\CommandInterface;
 use Fresh\CentrifugoBundle\Model\Disconnect;
 use Fresh\CentrifugoBundle\Model\Override;
 use Fresh\CentrifugoBundle\Model\StreamPosition;
@@ -47,7 +48,12 @@ final readonly class CentrifugoErrorResponseLoggerDecorator implements Centrifug
         }
     }
 
-    /** @throws CentrifugoException */
+    /**
+     * @param array<string, mixed> $info
+     * @param array<string, mixed> $data
+     *
+     * @throws CentrifugoException
+     */
     public function subscribe(
         string $user,
         string $channel,
@@ -81,7 +87,11 @@ final readonly class CentrifugoErrorResponseLoggerDecorator implements Centrifug
         }
     }
 
-    /** @throws CentrifugoException */
+    /**
+     * @param string[] $whitelist
+     *
+     * @throws CentrifugoException
+     */
     public function disconnect(
         string $user,
         array $whitelist = [],
@@ -110,10 +120,15 @@ final readonly class CentrifugoErrorResponseLoggerDecorator implements Centrifug
         }
     }
 
-    /** @throws CentrifugoException */
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws CentrifugoException
+     */
     public function presence(string $channel): array
     {
         try {
+            /** @var array<string, mixed> */
             return $this->centrifugo->presence($channel);
         } catch (CentrifugoException $exception) {
             $this->logCentrifugoException($exception);
@@ -122,10 +137,15 @@ final readonly class CentrifugoErrorResponseLoggerDecorator implements Centrifug
         }
     }
 
-    /** @throws CentrifugoException */
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws CentrifugoException
+     */
     public function presenceStats(string $channel): array
     {
         try {
+            /** @var array<string, mixed> */
             return $this->centrifugo->presenceStats($channel);
         } catch (CentrifugoException $exception) {
             $this->logCentrifugoException($exception);
@@ -134,10 +154,15 @@ final readonly class CentrifugoErrorResponseLoggerDecorator implements Centrifug
         }
     }
 
-    /** @throws CentrifugoException */
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws CentrifugoException
+     */
     public function history(string $channel, bool $reverse = false, ?int $limit = null, ?StreamPosition $streamPosition = null): array
     {
         try {
+            /** @var array<string, mixed> */
             return $this->centrifugo->history($channel, $reverse, $limit, $streamPosition);
         } catch (CentrifugoException $exception) {
             $this->logCentrifugoException($exception);
@@ -158,10 +183,15 @@ final readonly class CentrifugoErrorResponseLoggerDecorator implements Centrifug
         }
     }
 
-    /** @throws CentrifugoException */
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws CentrifugoException
+     */
     public function channels(?string $pattern = null): array
     {
         try {
+            /** @var array<string, mixed> */
             return $this->centrifugo->channels($pattern);
         } catch (CentrifugoException $exception) {
             $this->logCentrifugoException($exception);
@@ -170,10 +200,15 @@ final readonly class CentrifugoErrorResponseLoggerDecorator implements Centrifug
         }
     }
 
-    /** @throws CentrifugoException */
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws CentrifugoException
+     */
     public function info(): array
     {
         try {
+            /** @var array<string, mixed> */
             return $this->centrifugo->info();
         } catch (CentrifugoException $exception) {
             $this->logCentrifugoException($exception);
@@ -182,10 +217,17 @@ final readonly class CentrifugoErrorResponseLoggerDecorator implements Centrifug
         }
     }
 
-    /** @throws CentrifugoException */
+    /**
+     * @param CommandInterface[] $commands
+     *
+     * @return array<string, mixed>
+     *
+     * @throws CentrifugoException
+     */
     public function batchRequest(array $commands): array
     {
         try {
+            /** @var array<string, mixed> */
             return $this->centrifugo->batchRequest($commands);
         } catch (CentrifugoException $exception) {
             $this->logCentrifugoException($exception);
