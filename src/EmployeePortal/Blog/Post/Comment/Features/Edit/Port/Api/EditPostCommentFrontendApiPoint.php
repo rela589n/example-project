@@ -49,7 +49,7 @@ final readonly class EditPostCommentFrontendApiPoint
             $user->getUserIdentifier(),
             $postId,
             $commentId,
-            $request->getPayload()->get('text'),
+            $request->getPayload()->getString('text'),
         );
 
         $envelope = $this->apiBus->dispatch($command, [new PassThroughBusStamp('command.bus')]);
