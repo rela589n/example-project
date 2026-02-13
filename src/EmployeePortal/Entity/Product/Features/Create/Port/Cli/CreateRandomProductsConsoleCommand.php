@@ -37,7 +37,9 @@ final class CreateRandomProductsConsoleCommand extends Command
         $faker = Factory::create();
 
         for ($i = 0; $i < self::CATEGORIES_COUNT; $i++) {
-            $category = new Category($faker->words(2, true), CarbonImmutable::now());
+            /** @var string $categoryName */
+            $categoryName = $faker->words(2, true);
+            $category = new Category($categoryName, CarbonImmutable::now());
 
             $this->entityManager->persist($category);
         }
@@ -49,8 +51,10 @@ final class CreateRandomProductsConsoleCommand extends Command
             /** @var Category $category */
             $category = $items->get(random_int(0, $items->count() - 1));
 
+            /** @var string $productTitle */
+            $productTitle = $faker->words(2, true);
             $command = new CreateProductCommand(
-                $faker->words(2, true),
+                $productTitle,
                 $faker->numberBetween(0, 10_000_00),
                 $category->id,
             );

@@ -47,6 +47,8 @@ final readonly class EncryptionService
     {
         $binaryValue = base64_decode($value, true);
 
+        Assert::string($binaryValue, 'Invalid base64 value');
+
         $initializationVector = substr($binaryValue, 0, self::AES_BLOCK_SIZE);
         $encryptedValue = substr($binaryValue, self::AES_BLOCK_SIZE);
 

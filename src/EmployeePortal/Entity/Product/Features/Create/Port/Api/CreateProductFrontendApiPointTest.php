@@ -63,7 +63,7 @@ final class CreateProductFrontendApiPointTest extends ApiTestCase
         $responseArray = $response->toArray();
         self::assertArrayHasKey('id', $responseArray);
 
-        $id = Uuid::fromString($responseArray['id']);
+        $id = Uuid::fromString((string) $responseArray['id']);
 
         $entity = $this->entityManager->getRepository(Product::class)->findOneBy(['id' => $id]);
 
