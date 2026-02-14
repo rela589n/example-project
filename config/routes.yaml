@@ -13,6 +13,9 @@ voucher_routes:
 entity_routes:
     resource: '@AppEntityBundle/Resources/config/routes.yaml'
 
+shop_routes:
+    resource: '@AppShopBundle/Resources/config/routes.yaml'
+
 blog_routes:
     resource: '@AppBlogBundle/Resources/config/routes.yaml'
 
