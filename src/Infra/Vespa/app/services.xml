@@ -5,8 +5,8 @@
      High query load? → Add container nodes
     -->
     <container id="default" version="1.0">
-        <search/>
-        <document-api/>
+        <search/> <!-- query search api endpoint -->
+        <document-api/> <!-- document feed api endpoint -->
         <nodes>
             <node hostalias="node1"/>
         </nodes>
@@ -19,6 +19,7 @@
         <redundancy>1</redundancy> <!-- 1 copy of data (no replication) -->
         <documents> <!-- Links your schema -->
             <document type="greeting" mode="index"/>
+            <document type="msmarco" mode="index"/>
         </documents>
         <nodes>
             <node hostalias="node1" distribution-key="0"/>

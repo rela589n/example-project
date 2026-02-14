@@ -1,0 +1,62 @@
+schema msmarco {
+	document msmarco {
+		field language type string {
+			indexing: "en" | set_language
+		}
+		field id type string {
+			indexing: attribute | summary
+			match: word
+		}
+		field title type string {
+			indexing: index | summary
+			match: text
+			index: enable-bm25
+		}
+		field body type string {
+			indexing: index | summary
+			match: text
+			index: enable-bm25 # compute term frequency stats
+		}
+		field url type string {
+			indexing: index | summary
+			index: enable-bm25
+		}
+	}
+	fieldset default {
+		fields: title, body, url
+	}
+	document-summary minimal {
+		summary id {}
+	}
+	document-summary debug-tokens {
+		summary url {}
+		summary url-tokens {
+			source: url
+			tokens
+		}
+		from-disk
+	}
+	rank-profile default {
+		first-phase {
+			expression: nativeRank(title, body, url)
+		}
+	}
+	rank-profile bm25 inherits default {
+		first-phase {
+			expression: bm25(title) + bm25(body) * 0.5 + bm25(url) * 0.25
+		}
+	}
+	rank-profile collect_rank_features inherits default {
+		first-phase {
+			expression: bm25(title) + bm25(body) + bm25(url)
+		}
+		second-phase {
+			expression: random
+		}
+		match-features {
+			bm25(title)
+			bm25(body)
+			bm25(url)
+		}
+	}
+}

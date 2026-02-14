@@ -1,10 +1,10 @@
 schema greeting {
 	document greeting {
 		field name type string {
-			indexing: index | summary
+			indexing: index | summary # index - builds an inverted text search index
 		}
 		field message type string {
-			indexing: index | summary
+			indexing: index | summary # summary is absolutely necessary to return the field
 		}
 	}
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Playground\Vespa\HelloWorld;
+namespace App\Infra\Vespa\HelloWorld;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

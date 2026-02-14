@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Playground\Vespa\HelloWorld;
+namespace App\Infra\Vespa\HelloWorld;
 
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;

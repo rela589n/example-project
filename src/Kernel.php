@@ -36,6 +36,8 @@ final class Kernel extends BaseKernel
 
         yield new Infra\WebSocket\Bundle\AppWebSocketBundle();
 
+        yield new Infra\Vespa\Bundle\AppVespaBundle();
+
         yield new Playground\Bundle\AppPlaygroundBundle();
 
         yield new EmployeePortal\Authentication\Bundle\AppAuthBundle();
