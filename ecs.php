@@ -34,12 +34,19 @@ return ECSConfig::configure()
         Symplify\CodingStandard\Fixer\Strict\BlankLineAfterStrictTypesFixer::class,
     ])
     ->withSkip([
+        PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer::class, // using ModifierKeywordsFixer instead
         PhpCsFixer\Fixer\Phpdoc\PhpdocToCommentFixer::class,
         PhpCsFixer\Fixer\Basic\SingleLineEmptyBodyFixer::class,
         PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer::class,
         Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer::class,
         __DIR__.'/src/Support/Contracts/gen',
         __DIR__.'/config/bundles.php',
+    ])
+    ->withConfiguredRule(PhpCsFixer\Fixer\ClassNotation\ModifierKeywordsFixer::class, [
+        'elements' => [
+            'const',
+            'method',
+        ],
     ])
     ->withConfiguredRule(PhpCsFixer\Fixer\FunctionNotation\NativeFunctionInvocationFixer::class, [
         'include' => ['@all'],
