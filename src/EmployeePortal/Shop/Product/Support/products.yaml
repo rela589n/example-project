@@ -1,0 +1,143 @@
+# Products designed for testing vector-optimized semantic search.
+#
+# Organized into 4 semantic clusters (3 products each).
+# Within a cluster: descriptions convey the same meaning using different words.
+# Across clusters: descriptions are semantically distant.
+
+categories:
+    electronics: '3a24fc63-756c-7d28-b6df-a2edb0990e01'
+    books: '3a24fc63-756c-7d28-b6df-a2edb0990e02'
+    clothing: '3a24fc63-756c-7d28-b6df-a2edb0990e03'
+
+# Cluster A — Noise-cancelling headphones
+#   Same idea: over-ear headphones that block ambient sound
+#   for an immersive listening experience.
+
+# Cluster B — Waterproof hiking boots
+#   Same idea: durable footwear for outdoor trails
+#   that keeps feet dry and provides ankle support.
+
+# Cluster C — Programming reference book
+#   Same idea: a comprehensive guide for learning
+#   software design patterns and clean code practices.
+
+# Cluster D — Portable phone charger
+#   Same idea: compact battery pack for charging
+#   mobile devices on the go with fast-charging support.
+
+products:
+    # ── Cluster A — Noise-cancelling headphones ──
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990a01'
+      title: 'SilentWave Pro Headphones'
+      description: >-
+          Over-ear wireless headphones with active noise cancellation that eliminate
+          surrounding distractions, delivering deep bass and crystal-clear highs for
+          a fully immersive audio experience during commutes or focused work sessions.
+      price: 24999
+      category: electronics
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990a02'
+      title: 'QuietZone ANC Headset'
+      description: >-
+          Bluetooth circumaural headset equipped with adaptive sound suppression
+          technology that filters out ambient noise, producing rich lows and detailed
+          treble so you can enjoy music or calls without environmental interference.
+      price: 27999
+      category: electronics
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990a03'
+      title: 'HushAudio Elite Cans'
+      description: >-
+          Full-size ear-covering headphones featuring intelligent background sound
+          reduction that blocks out noisy environments, providing powerful low-end
+          response and crisp high frequencies for uninterrupted listening anywhere.
+      price: 22999
+      category: electronics
+
+    # ── Cluster B — Waterproof hiking boots ──
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990b01'
+      title: 'TrailGuard WP Boots'
+      description: >-
+          Waterproof hiking boots with reinforced ankle support and rugged Vibram
+          outsoles, designed for muddy trails and creek crossings while keeping your
+          feet completely dry throughout long mountain treks.
+      price: 18999
+      category: clothing
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990b02'
+      title: 'SummitShield Trekking Boots'
+      description: >-
+          Water-resistant outdoor footwear built with high-cut ankle stabilization
+          and aggressive tread patterns, engineered for wet terrain and stream fording
+          to ensure dry comfortable feet on extended backcountry hikes.
+      price: 17499
+      category: clothing
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990b03'
+      title: 'PeakDry Explorer Shoes'
+      description: >-
+          Moisture-proof trail footwear featuring sturdy ankle bracing and heavy-duty
+          grip soles, crafted to handle soggy paths and shallow water crossings so
+          your feet stay warm and dry during all-day wilderness adventures.
+      price: 16999
+      category: clothing
+
+    # ── Cluster C — Programming reference book ──
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990c01'
+      title: 'Clean Architecture Handbook'
+      description: >-
+          A comprehensive programming reference covering software design patterns,
+          SOLID principles, and clean code practices with real-world examples that
+          help developers write maintainable and scalable applications.
+      price: 4999
+      category: books
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990c02'
+      title: 'Software Design Mastery'
+      description: >-
+          An in-depth coding guidebook explaining architectural patterns,
+          object-oriented design principles, and best practices for writing readable
+          code, illustrated with practical examples for building robust enterprise systems.
+      price: 5499
+      category: books
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990c03'
+      title: 'The Pragmatic Coder Guide'
+      description: >-
+          A thorough developer reference on structural design patterns, dependency
+          management, and code quality techniques, featuring hands-on case studies
+          to produce well-organized and easily extensible software projects.
+      price: 4499
+      category: books
+
+    # ── Cluster D — Portable phone charger ──
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990d01'
+      title: 'JuiceVault 20K Powerbank'
+      description: >-
+          Compact portable charger with 20000mAh capacity and USB-C fast charging
+          that can fully recharge your smartphone three times over, perfect for travel
+          days and outdoor adventures when wall outlets are unavailable.
+      price: 3999
+      category: electronics
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990d02'
+      title: 'VoltRush Mobile Battery'
+      description: >-
+          Lightweight external battery pack offering 20000mAh storage and rapid USB-C
+          power delivery capable of replenishing your phone multiple times, ideal for
+          long trips and outdoor excursions far from electrical sockets.
+      price: 4299
+      category: electronics
+
+    - id: '3a24fc63-756c-7d28-b6df-a2edb0990d03'
+      title: 'ChargeHopper Go Pack'
+      description: >-
+          Pocket-friendly mobile power supply with 20000mAh reserve and high-speed
+          USB-C charging support that tops up your device several times, great for
+          journeys and wilderness outings where power access is limited.
+      price: 3799
+      category: electronics
