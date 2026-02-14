@@ -51,6 +51,7 @@ final class CreateRandomProductsConsoleCommand extends Command
             $productTitle = $faker->words(2, true);
             $command = new CreateProductCommand(
                 $productTitle,
+                $faker->sentence(10),
                 $faker->numberBetween(0, 10_000_00),
                 $category->id,
             );

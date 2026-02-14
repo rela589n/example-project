@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Shop\Product\Features\Create\Port;
 
+use App\EmployeePortal\Shop\Product\Description\Description;
 use App\EmployeePortal\Shop\Product\Features\Create\ProductCreatedEvent;
 use App\EmployeePortal\Shop\Product\Price\Price;
 use App\EmployeePortal\Shop\Product\Title\Title;
@@ -16,6 +17,7 @@ final readonly class CreateProductCommand
 
     public function __construct(
         private string $title,
+        private string $description,
         private int $priceUnitAmount,
         private Uuid $categoryId,
         #[Ignore] // @phpstan-ignore attribute.target
@@ -29,6 +31,7 @@ final readonly class CreateProductCommand
         $event = new ProductCreatedEvent(
             $this->id,
             new Title($this->title),
+            new Description($this->description),
             new Price($this->priceUnitAmount),
             $service->categoryCollection->get($this->categoryId),
             $service->now(),

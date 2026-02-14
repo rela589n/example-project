@@ -56,6 +56,7 @@ final class CreateProductFrontendApiPointTest extends ApiTestCase
                 ],
                 'json' => [
                     'title' => 'Holy Bible',
+                    'description' => 'The sacred scriptures containing the Old and New Testaments.',
                     'categoryId' => '3a24fc63-756c-7d28-b6df-a2edb0990e02',
                     'priceUnitAmount' => 1200,
                 ],
@@ -74,6 +75,7 @@ final class CreateProductFrontendApiPointTest extends ApiTestCase
         self::assertNotNull($entity, 'Product should be created');
 
         self::assertSame('Holy Bible', $entity->title->title);
+        self::assertSame('The sacred scriptures containing the Old and New Testaments.', $entity->description->description);
         self::assertSame('3a24fc63-756c-7d28-b6df-a2edb0990e02', $entity->category->id->toRfc4122());
         self::assertSame(1200, $entity->price->unitAmount);
 

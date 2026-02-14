@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Shop\Product\Features\Create;
 
 use App\EmployeePortal\Shop\Category\Category;
+use App\EmployeePortal\Shop\Product\Description\Description;
 use App\EmployeePortal\Shop\Product\Price\Price;
 use App\EmployeePortal\Shop\Product\Product;
 use App\EmployeePortal\Shop\Product\Title\Title;
@@ -18,6 +19,7 @@ final readonly class ProductCreatedEvent
     public function __construct(
         private(set) Uuid $id,
         private(set) Title $title,
+        private(set) Description $description,
         private(set) Price $price,
         private(set) Category $category,
         private(set) CarbonImmutable $timestamp,

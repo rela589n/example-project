@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Shop\Product;
 
 use App\EmployeePortal\Shop\Category\Category;
+use App\EmployeePortal\Shop\Product\Description\Description;
 use App\EmployeePortal\Shop\Product\Features\Create\ProductCreatedEvent;
 use App\EmployeePortal\Shop\Product\Price\Price;
 use App\EmployeePortal\Shop\Product\Title\Title;
@@ -23,6 +24,9 @@ class Product
     #[ORM\Embedded(columnPrefix: false)]
     private(set) Title $title;
 
+    #[ORM\Embedded(columnPrefix: false)]
+    private(set) Description $description;
+
     #[ORM\Embedded]
     private(set) Price $price;
 
@@ -40,6 +44,7 @@ class Product
     {
         $this->id = $event->id;
         $this->title = $event->title;
+        $this->description = $event->description;
         $this->price = $event->price;
         $this->category = $event->category;
         $this->createdAt = $event->timestamp;
