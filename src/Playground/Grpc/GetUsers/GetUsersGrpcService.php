@@ -16,7 +16,7 @@ final class GetUsersGrpcService implements GetUsersGrpcServiceInterface
 {
     public function GetUsers(GRPC\ContextInterface $ctx, GetUsersRequest $in): GetUsersResponse
     {
-        $users = $this->users($in->getUsn(), $in->getLimit());
+        $users = $this->users((int) $in->getUsn(), $in->getLimit());
 
         return new GetUsersResponse()
             ->setUsers(iterator_to_array($users));
@@ -31,7 +31,7 @@ final class GetUsersGrpcService implements GetUsersGrpcServiceInterface
         for ($i = 0; $i < $usn + $limit; ++$i) {
             $user = new User()
                 ->setId($faker->uuid)
-                ->setUsn($i)
+                ->setUsn((string) $i)
                 ->setEmail($faker->email)
                 ->setName(
                     new FullName()

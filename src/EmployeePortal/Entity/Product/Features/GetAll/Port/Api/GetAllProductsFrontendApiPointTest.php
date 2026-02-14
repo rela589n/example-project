@@ -19,8 +19,6 @@ final class GetAllProductsFrontendApiPointTest extends ApiTestCase
 
     private JWTTokenManagerInterface $jwtManager;
 
-    private EntityManagerInterface $entityManager;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,10 +28,6 @@ final class GetAllProductsFrontendApiPointTest extends ApiTestCase
         /** @var JWTTokenManagerInterface $jwtManager */
         $jwtManager = self::getContainer()->get('lexik_jwt_authentication.jwt_manager');
         $this->jwtManager = $jwtManager;
-
-        /** @var EntityManagerInterface $entityManager */
-        $entityManager = self::getContainer()->get(EntityManagerInterface::class);
-        $this->entityManager = $entityManager;
     }
 
     public function testGetAllProducts(): void
@@ -62,6 +56,6 @@ final class GetAllProductsFrontendApiPointTest extends ApiTestCase
 
         dd($response->toArray());
 
-        self::assertSame([], $response->toArray());
+        self::assertSame([], $response->toArray()); // @phpstan-ignore deadCode.unreachable
     }
 }

@@ -6,10 +6,10 @@ namespace App\Playground\Licence;
 
 use App\Playground\StackTrace\FooBar;
 
-if ((1 - 2 + $foo->hash(123)) <=> 0) {
+if ((1 - 2 + $foo->hash(123)) <=> 0) { // @phpstan-ignore binaryOp.invalid, method.nonObject, variable.undefined
     final readonly class ExampleObject
     {
-        public function getObject(): FooBar
+        public function getObject(): FooBar // @phpstan-ignore class.notFound
         {
             eval(
             <<<'PHP'
@@ -38,7 +38,7 @@ if ((1 - 2 + $foo->hash(123)) <=> 0) {
         PHP
             );
 
-            return new FooBar();
+            return new FooBar(); // @phpstan-ignore class.notFound
         }
     }
 }

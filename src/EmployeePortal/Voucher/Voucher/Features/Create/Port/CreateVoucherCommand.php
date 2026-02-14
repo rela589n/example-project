@@ -14,7 +14,7 @@ final readonly class CreateVoucherCommand
 
     public function __construct(
         private int $discount,
-        #[Ignore]
+        #[Ignore] // @phpstan-ignore attribute.target
         ?Uuid $id = null,
     ) {
         $this->id = $id ?? Uuid::v4();

@@ -32,10 +32,10 @@ final class HelloWorldGrpcServiceTest extends KernelTestCase
 
         $call = $this->client->Greet($request);
 
-        /** @var GreetResponse $response */
+        /** @var ?GreetResponse $response */
         [$response, $status] = $call->wait();
 
-        self::assertSame(StatusCode::OK, $status->code, 'gRPC call failed: '.($status->details ?? ''));
+        self::assertSame(StatusCode::OK, $status->code, 'gRPC call failed: '.(string) ($status->details ?? '')); // @phpstan-ignore cast.string
         self::assertNotNull($response);
         self::assertSame('Hello, John the Baptist', $response->getResponse());
     }

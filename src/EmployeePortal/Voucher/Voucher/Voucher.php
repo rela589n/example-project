@@ -55,7 +55,9 @@ class Voucher
      *         [1, 899]
      * 0.9 for each
      *
-     * @param Item[] $items
+     * @param list<Item> $items
+     *
+     * @return list<Item>
      */
     public function prorate(array $items): array
     {
@@ -74,6 +76,8 @@ class Voucher
      *
      * [123, 123] 123
      * [62, 61]
+     *
+     * @return list<Item>
      */
     private function initialProrateSolution(array $items, int $totalSum): array
     {
@@ -99,7 +103,7 @@ class Voucher
                     break;
                 }
 
-                if ($result->price_with_discount === 0) {
+                if (!$result->price_with_discount) {
                     continue;
                 }
 

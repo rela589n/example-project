@@ -33,10 +33,10 @@ final class GetUsersGrpcServiceTest extends KernelTestCase
 
         $call = $this->client->GetUsers($request);
 
-        /** @var GetUsersResponse $response */
+        /** @var ?GetUsersResponse $response */
         [$response, $status] = $call->wait();
 
-        self::assertSame(StatusCode::OK, $status->code, 'gRPC call failed: '.($status->details ?? ''));
+        self::assertSame(StatusCode::OK, $status->code, 'gRPC call failed: '.(string) ($status->details ?? '')); // @phpstan-ignore cast.string
         self::assertNotNull($response);
 
         /** @var User[] $users */
@@ -44,8 +44,9 @@ final class GetUsersGrpcServiceTest extends KernelTestCase
         self::assertCount(1, $users);
 
         self::assertSame('ec3df148-7a0f-33e8-b246-013a1b7db10b', $users[0]->getId());
-        self::assertSame('Mckayla', $users[0]->getName()->getFirstName());
-        self::assertSame('Wolf', $users[0]->getName()->getLastName());
+        self::assertNotNull($name = $users[0]->getName());
+        self::assertSame('Mckayla', $name->getFirstName());
+        self::assertSame('Wolf', $name->getLastName());
         self::assertSame('winona.gulgowski@bergnaum.com', $users[0]->getEmail());
     }
 
@@ -55,19 +56,21 @@ final class GetUsersGrpcServiceTest extends KernelTestCase
 
         $call = $this->client->GetUsers($request);
 
-        /** @var GetUsersResponse $response */
+        /** @var ?GetUsersResponse $response */
         [$response, $status] = $call->wait();
 
-        self::assertSame(StatusCode::OK, $status->code, 'gRPC call failed: '.($status->details ?? ''));
+        self::assertSame(StatusCode::OK, $status->code, 'gRPC call failed: '.(string) ($status->details ?? '')); // @phpstan-ignore cast.string
         self::assertNotNull($response);
 
         /** @var User[] $users */
         $users = iterator_to_array($response->getUsers());
         self::assertCount(1, $users);
 
+        $name = $users[0]->getName();
+        self::assertNotNull($name);
         self::assertSame('c101ae4c-98a7-34c3-853e-0e4f2594bf8d', $users[0]->getId());
-        self::assertSame('Earnestine', $users[0]->getName()->getFirstName());
-        self::assertSame('Swaniawski', $users[0]->getName()->getLastName());
+        self::assertSame('Earnestine', $name->getFirstName());
+        self::assertSame('Swaniawski', $name->getLastName());
         self::assertSame('weber.trisha@hotmail.com', $users[0]->getEmail());
     }
 }

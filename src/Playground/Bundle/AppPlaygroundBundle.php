@@ -30,12 +30,12 @@ final class AppPlaygroundBundle extends Bundle
         parent::boot();
 
         /** @var ProxyManagerConfiguration $config */
-        $config = $this->container->get('app_proxy_manager.config');
+        $config = $this->container->get('app_proxy_manager.config'); // @phpstan-ignore method.nonObject
 
         try {
-            spl_autoload_register($config->getProxyAutoloader());
+            spl_autoload_register($config->getProxyAutoloader()); // @phpstan-ignore argument.type
         } catch (InvalidProxyDirectoryException) {
-            $config->setGeneratorStrategy($this->container->get('app_proxy_manager.generator_strategy.fallback'));
+            $config->setGeneratorStrategy($this->container->get('app_proxy_manager.generator_strategy.fallback')); // @phpstan-ignore method.nonObject
         }
     }
 

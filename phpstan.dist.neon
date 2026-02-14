@@ -8,7 +8,7 @@ includes:
 
 parameters:
     level: max
-    phpVersion: 80407
+    phpVersion: 80502
     editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
     paths:
         - src

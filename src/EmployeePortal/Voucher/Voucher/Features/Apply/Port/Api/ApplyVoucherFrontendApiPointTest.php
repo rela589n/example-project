@@ -14,17 +14,11 @@ final class ApplyVoucherFrontendApiPointTest extends ApiTestCase
 {
     private Client $client;
 
-    private EntityManagerInterface $entityManager;
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->client = self::createClient();
-
-        /** @var EntityManagerInterface $entityManager */
-        $entityManager = self::getContainer()->get(EntityManagerInterface::class);
-        $this->entityManager = $entityManager;
     }
 
     public function testApplyVoucher(): void

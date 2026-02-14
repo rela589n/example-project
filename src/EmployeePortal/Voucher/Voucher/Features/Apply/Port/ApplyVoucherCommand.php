@@ -15,7 +15,7 @@ final readonly class ApplyVoucherCommand
     /** @var array<array-key,Item> */
     private(set) array $itemsWithDiscount;
 
-    /** @param array<array-key,Item> $items */
+    /** @param list<Item> $items */
     public function __construct(
         private string $code,
         private array $items,

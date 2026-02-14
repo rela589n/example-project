@@ -39,7 +39,7 @@ final class SearchTheGreetingConsoleCommand extends Command
 
         $io->success('Search completed');
 
-        $io->writeln(json_encode($result, JSON_PRETTY_PRINT));
+        $io->writeln(json_encode($result, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT));
 
         return Command::SUCCESS;
     }

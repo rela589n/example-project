@@ -6,9 +6,11 @@ namespace App\Playground\ProxyManager\Autoloader;
 
 use Composer\Autoload\ClassLoader;
 use LogicException;
+use Webmozart\Assert\Assert;
 
 final class EntityAutoloader
 {
+    /** @var array<class-string, string> */
     private array $proxyLocations = [
         AnEntity::class => __DIR__.'/EntityProxy.php',
     ];
@@ -74,7 +76,12 @@ final class EntityAutoloader
 
     private function declareOriginalClass(string $className): void
     {
-        $source = file_get_contents($this->composerLoader->findFile($className));
+        $file = $this->composerLoader->findFile($className);
+        Assert::string($file, 'Could not find file for class '.$className);
+
+        $source = file_get_contents($file);
+        Assert::string($source, 'Could not read file contents for '.$file);
+
         $trimmed = substr($source, strlen('<?php'));
         $originalClassCode = preg_replace('/\bclass\s+(\w+)/', 'class ${1}Original', $trimmed, 1);
         eval($originalClassCode);

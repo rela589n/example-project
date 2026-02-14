@@ -13,7 +13,7 @@ final readonly class CreateEntityCommand
     public private(set) Uuid $id;
 
     public function __construct(
-        #[Ignore]
+        #[Ignore] // @phpstan-ignore attribute.target
         ?Uuid $id = null,
     ) {
         $this->id = $id ?? Uuid::v7();

@@ -10,7 +10,7 @@ use App\EmployeePortal\Entity\Product\ProductCollection;
 
 final class GetAllProductsQuery
 {
-    /** @var array<string,mixed> */
+    /** @var list<array<string, mixed>> */
     private array $products;
 
     /** @var array|TitleFilter[] */
@@ -33,9 +33,10 @@ final class GetAllProductsQuery
             $service->productCollection,
         );
 
+        /** @var list<Product> $products */
         $products = $productCollection->match()->toArray();
 
-        $this->products = array_map(static fn (Product $product) => [
+        $this->products = array_map(static fn (Product $product): array => [
             'id' => $product->id->toRfc4122(),
             'title' => $product->title->title,
             'priceUnitAmount' => $product->price->unitAmount,
@@ -47,7 +48,7 @@ final class GetAllProductsQuery
         ], $products);
     }
 
-    /** @return array<string, mixed> */
+    /** @return list<array<string, mixed>> */
     public function getProducts(): array
     {
         return $this->products;
