@@ -68,7 +68,7 @@ final class CreateProductFrontendApiPointTest extends ApiTestCase
         /** @var array{id: string} $responseArray */
         $responseArray = $response->toArray();
 
-        $id = Uuid::fromString($responseArray['id']);
+        $id = Uuid::fromRfc4122($responseArray['id']);
 
         $entity = $this->entityManager->getRepository(Product::class)->findOneBy(['id' => $id]);
 

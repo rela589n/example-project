@@ -51,6 +51,6 @@ final readonly class CreateProductFrontendApiPoint
         /** @var ?Response $response */
         $response = $handled->getResult();
 
-        return $response ?? new JsonResponse(['id' => $command->id->toBase58()], status: Response::HTTP_CREATED);
+        return $response ?? new JsonResponse(['id' => $command->id->toRfc4122()], status: Response::HTTP_CREATED);
     }
 }
