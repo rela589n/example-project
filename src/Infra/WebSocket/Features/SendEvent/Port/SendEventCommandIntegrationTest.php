@@ -25,7 +25,6 @@ final class SendEventCommandIntegrationTest extends KernelTestCase
     {
         parent::setUp();
 
-        /** @var ContainerInterface $container */
         $container = self::getContainer();
         $this->centrifugo = $this->createMock(CentrifugoInterface::class);
 

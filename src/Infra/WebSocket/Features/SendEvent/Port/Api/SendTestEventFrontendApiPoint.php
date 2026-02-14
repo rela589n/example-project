@@ -21,7 +21,7 @@ use function random_int;
 #[AsController]
 final readonly class SendTestEventFrontendApiPoint
 {
-    private const TEST_USERS_WHITELIST = [];
+    private const TEST_USERS_WHITELIST = ['3c2642d7-fe16-7246-81f8-836a8a8ef5f5'];
 
     public function __construct(
         #[Autowire('@ws.event.bus')]

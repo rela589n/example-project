@@ -18,7 +18,7 @@ final readonly class CreateProductCommand
         private string $title,
         private int $priceUnitAmount,
         private Uuid $categoryId,
-        #[Ignore]
+        #[Ignore] // @phpstan-ignore attribute.target
         ?Uuid $id = null,
     ) {
         $this->id = $id ?? Uuid::v7();

@@ -18,6 +18,7 @@ final readonly class SubscriptionWorkflowId
         return new self(Uuid::fromString($userId));
     }
 
+    /** @return non-empty-string */
     public function getId(): string
     {
         return $this->userId.':subscription';

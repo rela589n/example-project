@@ -45,7 +45,7 @@ final class LazyLoadingProxyIntegrationTest extends KernelTestCase
 
         $this->ghostFactory->createProxy(
             ProxiedObject::class,
-            function () {
+            function () { // @phpstan-ignore argument.type
             },
         );
     }
@@ -57,7 +57,7 @@ final class LazyLoadingProxyIntegrationTest extends KernelTestCase
 
         $this->valueHolderFactory->createProxy(
             ProxiedObject::class,
-            function () {
+            function () { // @phpstan-ignore argument.type
             },
         );
     }
@@ -74,7 +74,7 @@ final class LazyLoadingProxyIntegrationTest extends KernelTestCase
         $this->expectExceptionMessage('The real instance class ProxyManagerGeneratedProxy\Generated90b862e9716a786e470e2052e11950ef\__PM__\App\Playground\ProxyManager\Tests\SimpleProxiedObject is not compatible with the proxy class App\Playground\ProxyManager\Tests\SimpleProxiedObject. The proxy must be a instance of the same class as the real instance, or a sub-class with no additional properties, and no overrides of the __destructor or __clone methods.');
 
         /** @noinspection PhpExpressionResultUnusedInspection */
-        $proxy->foo;
+        $proxy->foo; // @phpstan-ignore expr.resultUnused
     }
 
     public function testProxyIsGraduallyInitialized(): void
@@ -91,7 +91,7 @@ final class LazyLoadingProxyIntegrationTest extends KernelTestCase
         $this->expectExceptionMessage('Cannot access protected property');
 
         /** @noinspection PhpExpressionResultUnusedInspection */
-        $proxy->baz;
+        $proxy->baz; // @phpstan-ignore property.protected, expr.resultUnused
     }
 
     public function testNativeProxyOverGhostFollowingGhost(): void
@@ -122,14 +122,14 @@ final class LazyLoadingProxyIntegrationTest extends KernelTestCase
         $this->expectExceptionMessage('The real instance class ProxyManagerGeneratedProxy\Generated90b862e9716a786e470e2052e11950ef\__PM__\App\Playground\ProxyManager\Tests\SimpleProxiedObject is not compatible with the proxy class App\Playground\ProxyManager\Tests\SimpleProxiedObject. The proxy must be a instance of the same class as the real instance, or a sub-class with no additional properties, and no overrides of the __destructor or __clone methods.');
 
         /** @noinspection PhpExpressionResultUnusedInspection */
-        $object->foo;
+        $object->foo; // @phpstan-ignore expr.resultUnused
     }
 
     private function createValueHolderProxy(): SimpleProxiedObject
     {
         return $this->valueHolderFactory->createProxy(
             SimpleProxiedObject::class,
-            function (&$wrappedObject, SimpleProxiedObject&VirtualProxyInterface $proxy, string $method, array $parameters) {
+            function (&$wrappedObject, SimpleProxiedObject&VirtualProxyInterface $proxy, string $method, array $parameters) { // @phpstan-ignore argument.type, typeCoverage.paramTypeCoverage
                 $wrappedObject = $proxy->getWrappedValueHolderValue();
 
                 if (null === $wrappedObject) {
@@ -149,24 +149,24 @@ final class LazyLoadingProxyIntegrationTest extends KernelTestCase
 
             if ('foo' === $parameters['name']) {
 
-                $setFoo = fn () => $proxy->foo = 123;
+                $setFoo = fn () => $proxy->foo = 123; // @phpstan-ignore assign.propertyProtectedSet
                 $setFoo->bindTo($proxy, SimpleProxiedObject::class)();
             }
 
             if ('bar' === $parameters['name']) {
-                $setBar = fn () => $proxy->bar = 'test';
+                $setBar = fn () => $proxy->bar = 'test'; // @phpstan-ignore assign.propertyProtectedSet
                 $setBar->bindTo($proxy, SimpleProxiedObject::class)();
             }
 
             if ('baz' === $parameters['name']) {
-                $setBaz = fn () => $proxy->baz = 'baz';
+                $setBaz = fn () => $proxy->baz = 'baz'; // @phpstan-ignore property.protected
                 $setBaz->bindTo($proxy, SimpleProxiedObject::class)();
             }
         };
 
         $proxy = $this->ghostFactory->createProxy(
             SimpleProxiedObject::class,
-            $initializer,
+            $initializer, // @phpstan-ignore argument.type
         );
 
         // $proxy->setProxyInitializer($initializer->bindTo($proxy, $proxy::class));

@@ -22,8 +22,8 @@ final class EntityAutoloadingUnitTest extends TestCase
     {
         $anEntity = new AnEntity('foo');
 
-        self::assertInstanceOf(EntityProxy::class, $anEntity);
-        self::assertInstanceOf(AnEntity::class, $anEntity);
+        self::assertInstanceOf(EntityProxy::class, $anEntity); // @phpstan-ignore staticMethod.impossibleType
+        self::assertInstanceOf(AnEntity::class, $anEntity); // @phpstan-ignore staticMethod.impossibleType
 
         self::assertSame('foo_bar', $anEntity->foo);
     }

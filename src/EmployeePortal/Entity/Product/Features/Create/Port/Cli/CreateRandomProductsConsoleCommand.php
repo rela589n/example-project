@@ -49,7 +49,7 @@ final class CreateRandomProductsConsoleCommand extends Command
 
         for ($i = 0; $i < self::PRODUCTS_COUNT; $i++) {
             /** @var Category $category */
-            $category = $items->get(random_int(0, $items->count() - 1));
+            $category = $items->get(random_int(0, $items->count() - 1)); // @phpstan-ignore argument.type
 
             /** @var string $productTitle */
             $productTitle = $faker->words(2, true);

@@ -49,8 +49,8 @@ final class CreateVoucherFrontendApiPointTest extends ApiTestCase
 
         self::assertResponseStatusCodeSame(201);
 
+        /** @var array{code: string} $responseArray */
         $responseArray = $response->toArray();
-        self::assertArrayHasKey('code', $responseArray);
 
         $id = Uuid::fromBase58($responseArray['code']);
 

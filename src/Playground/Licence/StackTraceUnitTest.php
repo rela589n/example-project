@@ -15,7 +15,7 @@ class Loader
     ) {
     }
 
-    public function load()
+    public function load(): void
     {
         try {
             $foo = $this;
@@ -31,19 +31,20 @@ class Loader
         return $this->licenceKey ^ $signature;
     }
 
-    public function __call($name, $arguments)
+    /** @param list<mixed> $arguments */
+    public function __call(string $name, array $arguments): int
     {
         [$signature] = $arguments;
 
-        return $this($signature);
+        return $this($signature); // @phpstan-ignore argument.type
     }
 
-    private function encrypt(int $hash): int
+    private function encrypt(int $hash): int // @phpstan-ignore method.unused
     {
         return $this->licenceKey ^ $hash;
     }
 
-    private function decrypt(int $signature): int
+    private function decrypt(int $signature): int // @phpstan-ignore method.unused
     {
         return $this->licenceKey ^ $signature;
     }
@@ -59,13 +60,13 @@ final class StackTraceUnitTest extends TestCase
         $object = new ExampleObject();
         $fooBar = $object->getObject();
 
-        $baz = $fooBar->getBaz();
+        $baz = $fooBar->getBaz(); // @phpstan-ignore class.notFound
         self::assertSame(3, $baz);
-        $trace = $fooBar->getStackTrace()[0];
+        $trace = $fooBar->getStackTrace()[0]; // @phpstan-ignore class.notFound, offsetAccess.nonOffsetAccessible
 
         self::assertSame([
             'file' => '/app/src/Playground/Licence/ExampleObject.php(16) : eval()\'d code',
-            'line' => $trace['line'],
+            'line' => $trace['line'], // @phpstan-ignore offsetAccess.nonOffsetAccessible
             'function' => 'doGetStackTrace',
             'class' => 'App\Playground\StackTrace\FooBar',
             'object' => $fooBar,

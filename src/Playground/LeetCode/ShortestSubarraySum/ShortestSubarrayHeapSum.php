@@ -88,15 +88,22 @@ final class ShortestSubarrayHeapSum implements ShortestSubarraySum
                 $this->shift += $shift;
             }
 
-            public function insert($value): void
+            /** @param object{prefixSum: int, index: int} $value */
+            public function insert(mixed $value): true
             {
                 if (0 !== $this->shift) {
                     $value = ShortestSubarrayHeapSum::pair($value->prefixSum + $this->shift, $value->index);
                 }
 
                 parent::insert($value);
+
+                return true;
             }
 
+            /**
+             * @param object{prefixSum: int, index: int} $value1
+             * @param object{prefixSum: int, index: int} $value2
+             */
             protected function compare(mixed $value1, mixed $value2): int
             {
                 $v1 = $value1->prefixSum;
@@ -152,7 +159,7 @@ final class ShortestSubarrayHeapSum implements ShortestSubarraySum
             $sumShift += $this->nums[$this->l++];
         }
 
-        $this->sumPrefixHeap->addShift($sumShift);
+        $this->sumPrefixHeap->addShift($sumShift); // @phpstan-ignore method.notFound
 
         $this->sum -= $sumShift;
     }
@@ -160,6 +167,7 @@ final class ShortestSubarrayHeapSum implements ShortestSubarraySum
     private function extractShiftIndex(): int
     {
         do {
+            /** @var object{prefixSum: int, index: int} $cutItem */
             $cutItem = $this->sumPrefixHeap->extract();
             // skip values that should've been removed already
         } while ($cutItem->index < $this->l);

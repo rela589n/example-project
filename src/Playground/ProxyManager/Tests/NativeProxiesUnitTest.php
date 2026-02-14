@@ -60,7 +60,7 @@ final class NativeProxiesUnitTest extends TestCase
     public function testProxyInitializerMustNotReturnProxy(): void
     {
         $proxy = $this->reflectionClass->newLazyProxy(function () {
-            return $this->reflectionClass->newLazyProxy(function () {
+            return $this->reflectionClass->newLazyProxy(function () { // @phpstan-ignore argument.type
             });
         });
 
@@ -68,7 +68,7 @@ final class NativeProxiesUnitTest extends TestCase
         $this->expectExceptionMessage('Lazy proxy factory must return a non-lazy object');
 
         /** @noinspection PhpExpressionResultUnusedInspection */
-        $proxy->foo;
+        $proxy->foo; // @phpstan-ignore expr.resultUnused
     }
 
     public function testTwoLazyProxiesCanFollowTheSameObject(): void
@@ -113,6 +113,6 @@ final class NativeProxiesUnitTest extends TestCase
         $this->expectException(TypeError::class);
 
         /** @noinspection PhpExpressionResultUnusedInspection */
-        $object->foo;
+        $object->foo; // @phpstan-ignore expr.resultUnused
     }
 }

@@ -33,7 +33,7 @@ final class EntityClassNameInflectorUnitTest extends TestCase
 
     public function testGeneratesSameClassNameWithSameParameters(): void
     {
-        /** @var class-string $fooBar */
+        /** @var class-string $fooBar */ // @phpstan-ignore varTag.nativeType
         $fooBar = 'Foo\\Bar';
         $inflector = new EntityClassNameInflector(('ProxyNS'));
 
@@ -50,7 +50,7 @@ final class EntityClassNameInflectorUnitTest extends TestCase
 
     public function testGeneratesDifferentClassNameWithDifferentParameters(): void
     {
-        /** @var class-string $fooBar */
+        /** @var class-string $fooBar */ // @phpstan-ignore varTag.nativeType
         $fooBar = 'Foo\\Bar';
         $inflector = new EntityClassNameInflector(('ProxyNS'));
 
@@ -77,9 +77,9 @@ final class EntityClassNameInflectorUnitTest extends TestCase
 
     public function testGeneratesCorrectClassNameWhenGivenLeadingBackslash(): void
     {
-        /** @var class-string $fooBar */
+        /** @var class-string $fooBar */ // @phpstan-ignore varTag.nativeType
         $fooBar = 'Foo\\Bar';
-        /** @var class-string $fooBarPrefixed */
+        /** @var class-string $fooBarPrefixed */ // @phpstan-ignore varTag.nativeType
         $fooBarPrefixed = '\\Foo\\Bar';
         $inflector = new EntityClassNameInflector(('ProxyNS'));
 
@@ -105,6 +105,7 @@ final class EntityClassNameInflectorUnitTest extends TestCase
         );
     }
 
+    /** @return list<array{string, string}> */
     public static function classNamesDataProvider(): array
     {
         return [
@@ -113,6 +114,7 @@ final class EntityClassNameInflectorUnitTest extends TestCase
         ];
     }
 
+    /** @return list<array{string, array<array-key, mixed>}> */
     public static function classParameterCombinationsDataProvider(): array
     {
         return [

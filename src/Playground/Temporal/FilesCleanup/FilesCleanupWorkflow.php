@@ -33,6 +33,6 @@ final readonly class FilesCleanupWorkflow
     #[Workflow\WorkflowMethod]
     public function execute(): Generator
     {
-        yield $this->activity->execute();
+        yield $this->activity->execute(); // @phpstan-ignore method.void
     }
 }

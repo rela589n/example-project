@@ -60,10 +60,10 @@ final class CreateEntityFrontendApiPointTest extends ApiTestCase
 
         self::assertResponseStatusCodeSame(201);
 
+        /** @var array{id: string} $responseArray */
         $responseArray = $response->toArray();
-        self::assertArrayHasKey('id', $responseArray);
 
-        $id = Uuid::fromString((string) $responseArray['id']);
+        $id = Uuid::fromString($responseArray['id']);
 
         $entity = $this->entityManager->getRepository(Entity::class)->findOneBy(['id' => $id]);
 

@@ -102,6 +102,7 @@ final class LazyCollection implements Collection, Selectable
         return $this->collection->count();
     }
 
+    /** @phpstan-ignore conditionalType.alwaysTrue */
     public function contains(mixed $element): bool
     {
         return $this->collection->contains($element);
@@ -172,6 +173,7 @@ final class LazyCollection implements Collection, Selectable
         return $this->collection->forAll($p);
     }
 
+    /** @phpstan-ignore conditionalType.alwaysTrue */
     public function indexOf(mixed $element): int|string|false
     {
         return $this->collection->indexOf($element);

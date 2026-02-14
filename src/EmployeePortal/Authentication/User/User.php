@@ -57,7 +57,9 @@ class User
         $this->password = $event->getPassword();
         $this->createdAt = $event->getTimestamp();
         $this->updatedAt = $event->getTimestamp();
-        $this->events = new ArrayCollection([$event->getId()->toRfc4122() => $event]);
+        /** @var ArrayCollection<string, UserEvent> $events */
+        $events = new ArrayCollection([$event->getId()->toRfc4122() => $event]);
+        $this->events = $events;
     }
 
     public function login(UserLoggedInEvent $event): void

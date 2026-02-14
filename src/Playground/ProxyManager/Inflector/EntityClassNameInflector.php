@@ -6,6 +6,7 @@ namespace App\Playground\ProxyManager\Inflector;
 
 use ProxyManager\Inflector\ClassNameInflectorInterface;
 use ProxyManager\Inflector\Util\ParameterHasher;
+use ProxyManager\Proxy\ProxyInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -40,23 +41,37 @@ final class EntityClassNameInflector implements ClassNameInflectorInterface
         $this->parameterHasher = new ParameterHasher();
     }
 
+    /**
+     * @template RealClassName of object
+     *
+     * @param class-string<RealClassName> $className
+     *
+     * @return class-string<RealClassName>
+     */
     public function getUserClassName(string $className): string
     {
         $className = ltrim($className, '\\');
         $position = strrpos($className, $this->proxyMarker);
 
         if (!is_int($position)) {
-            /** @psalm-suppress LessSpecificReturnStatement */
+            /** @var class-string<RealClassName> */
             return $className;
         }
 
-        /** @psalm-suppress LessSpecificReturnStatement */
+        /** @var class-string<RealClassName> */
         return substr($className, $this->proxyMarkerLength + $position);
     }
 
+    /**
+     * @template RealClassName of object
+     *
+     * @param class-string<RealClassName> $className
+     *
+     * @return class-string<RealClassName&ProxyInterface>
+     */
     public function getProxyClassName(string $className, array $options = []): string
     {
-        /** @psalm-suppress LessSpecificReturnStatement */
+        /** @var class-string<RealClassName&ProxyInterface> */
         return $this->proxyNamespace
             .'\\Generated'.$this->parameterHasher->hashParameters($options)
             .$this->proxyMarker
