@@ -1,0 +1,10 @@
+framework:
+    messenger:
+        transports:
+            shop: 'sync://'
+
+when@test:
+    framework:
+        messenger:
+            transports:
+                shop: 'in-memory://'

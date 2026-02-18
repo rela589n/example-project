@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\Vespa\HelloWorld;
+namespace App\Support\Vespa;
 
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -32,7 +32,8 @@ final readonly class VespaClient
         );
 
         /** @var array<string, mixed> $data */
-        $data = $response->toArray();
+        $data = $response->toArray(false);
+
         return $data;
     }
 

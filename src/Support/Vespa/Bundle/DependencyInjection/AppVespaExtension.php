@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\Vespa\Bundle\DependencyInjection;
+namespace App\Support\Vespa\Bundle\DependencyInjection;
 
 use Override;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -13,9 +13,7 @@ final class AppVespaExtension extends AbstractExtension
 {
     public const ALIAS = 'app_vespa';
 
-    /**
-     * @param array<array-key, mixed> $config
-     */
+    /** @param array<array-key,mixed> $config */
     #[Override]
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
@@ -26,5 +24,11 @@ final class AppVespaExtension extends AbstractExtension
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $container->import(__DIR__.'/../../**/config/packages/*.yaml');
+    }
+
+    #[Override]
+    public function getAlias(): string
+    {
+        return self::ALIAS;
     }
 }

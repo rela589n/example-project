@@ -32,11 +32,11 @@ final class Kernel extends BaseKernel
 
         yield new Support\Temporal\Bundle\AppTemporalBundle();
 
+        yield new Support\Vespa\Bundle\AppVespaBundle();
+
         yield new Support\Partitioning\Bundle\AppPartitioningBundle();
 
         yield new Infra\WebSocket\Bundle\AppWebSocketBundle();
-
-        yield new Infra\Vespa\Bundle\AppVespaBundle();
 
         yield new Playground\Bundle\AppPlaygroundBundle();
 

@@ -1,0 +1,4 @@
+framework:
+    messenger:
+        routing:
+            App\EmployeePortal\Shop\Product\Features\Index\Port\IndexProductCommand: shop

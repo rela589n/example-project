@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\Vespa\HelloWorld;
+namespace App\Playground\Vespa\HelloWorld;
 
+use App\Support\Vespa\VespaClient;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
