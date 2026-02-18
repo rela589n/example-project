@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Shop\Product\Features\GetAll\Filter;
+namespace App\EmployeePortal\Shop\Product\Features\GetList\Filter;
 
 use App\EmployeePortal\Shop\Product\ProductCollection;
 

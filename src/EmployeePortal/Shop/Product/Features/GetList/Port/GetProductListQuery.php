@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Shop\Product\Features\GetAll\Port;
+namespace App\EmployeePortal\Shop\Product\Features\GetList\Port;
 
-use App\EmployeePortal\Shop\Product\Features\GetAll\Filter\TitleFilter;
+use App\EmployeePortal\Shop\Product\Features\GetList\Filter\TitleFilter;
 use App\EmployeePortal\Shop\Product\Product;
 use App\EmployeePortal\Shop\Product\ProductCollection;
 
-final class GetAllProductsQuery
+final class GetProductListQuery
 {
     /** @var list<array<string, mixed>> */
     private array $products;
@@ -25,7 +25,7 @@ final class GetAllProductsQuery
         }
     }
 
-    public function process(GetAllProductsService $service): void
+    public function process(GetProductListService $service): void
     {
         $productCollection = array_reduce(
             $this->filters,

@@ -2,18 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Shop\Product\Features\GetAll\Port\Api;
+namespace App\EmployeePortal\Shop\Product\Features\GetList\Port\Api;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Symfony\Bundle\Test\Client;
-use App\EmployeePortal\Entity\Entity\Entity;
-use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUser;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(GetAllProductsFrontendApiPoint::class)]
-final class GetAllProductsFrontendApiPointTest extends ApiTestCase
+#[CoversClass(GetProductListFrontendApiPoint::class)]
+final class GetProductListFrontendApiPointTest extends ApiTestCase
 {
     private Client $client;
 
@@ -30,7 +28,7 @@ final class GetAllProductsFrontendApiPointTest extends ApiTestCase
         $this->jwtManager = $jwtManager;
     }
 
-    public function testGetAllProducts(): void
+    public function testGetProductList(): void
     {
         $userId = '2a977708-1c69-7d38-9074-b388a7f386dc';
         $user = new JWTUser($userId, ['ROLE_USER']);
