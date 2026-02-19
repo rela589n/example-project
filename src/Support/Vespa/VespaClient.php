@@ -62,13 +62,17 @@ final readonly class VespaClient
     }
 
     /**
+     * @param array<string> $fields
+     *
      * @return array<string, mixed>
      */
     public function search(
         string $query,
         string $docType,
+        array $fields = [],
         string $defaultIndex = 'default',
         string $grammar = 'weakAnd',
+        string $documentSummary = 'default',
         int $limit = 10,
         int $offset = 0,
     ): array {
@@ -78,7 +82,8 @@ final readonly class VespaClient
             [
                 'query' => [
                     'yql' => sprintf(
-                        'select * from %s where {defaultIndex:"%s",grammar:"%s"}userInput(@user-query)',
+                        'select %s from %s where {defaultIndex:"%s",grammar:"%s"}userInput(@user-query)',
+                        implode(',', $fields) ?: '*',
                         $docType,
                         $defaultIndex,
                         $grammar,
@@ -86,6 +91,7 @@ final readonly class VespaClient
                     'hits' => $limit,
                     'offset' => $offset,
                     'user-query' => $query,
+                    'presentation.summary' => $documentSummary,
                 ],
             ],
         );

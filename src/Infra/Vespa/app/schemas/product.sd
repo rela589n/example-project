@@ -1,7 +1,7 @@
 schema product {
 	document product {
 	    field title type string {
-			indexing: index
+			indexing: index | summary
 	    }
 	    field description type string {
 	    	indexing: index
