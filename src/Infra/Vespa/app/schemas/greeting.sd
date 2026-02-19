@@ -7,4 +7,8 @@ schema greeting {
 			indexing: index | summary # summary is absolutely necessary to return the field
 		}
 	}
+	# used when filtering
+	fieldset default {
+	    fields: name, message
+	}
 }

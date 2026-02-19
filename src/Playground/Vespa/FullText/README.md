@@ -54,7 +54,7 @@ vespa query 'yql=select * from msmarco where rank(userInput(@user-query), url co
     'user-query=tdd test driven' 'hits=10' 'language=en' | lnav
 ```
 
-Filter by url (with it not contributing to highlighting and ranking):
+Filter by url (without contributing to highlighting and ranking):
 
 ```shell
 vespa query 'yql=select * from msmarco where userInput(@user-query) and url contains ({filter: true, ranked: false}"wikipedia.org")' \

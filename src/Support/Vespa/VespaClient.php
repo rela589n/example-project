@@ -64,27 +64,35 @@ final readonly class VespaClient
     /**
      * @return array<string, mixed>
      */
-    public function search(string $query, string $docType, int $hits = 10, int $offset = 0): array
-    {
-        // Match all with "*", otherwise search in name and message fields
-        $whereClause = $query === '*'
-            ? 'true'
-            : "name contains \"{$query}\" or message contains \"{$query}\"";
-
+    public function search(
+        string $query,
+        string $docType,
+        string $defaultIndex = 'default',
+        string $grammar = 'weakAnd',
+        int $limit = 10,
+        int $offset = 0,
+    ): array {
         $response = $this->httpClient->request(
             'GET',
             "{$this->baseUrl}/search/",
             [
                 'query' => [
-                    'yql' => "select * from {$docType} where {$whereClause}",
-                    'hits' => $hits,
+                    'yql' => sprintf(
+                        'select * from %s where {defaultIndex:"%s",grammar:"%s"}userInput(@user-query)',
+                        $docType,
+                        $defaultIndex,
+                        $grammar,
+                    ),
+                    'hits' => $limit,
                     'offset' => $offset,
+                    'user-query' => $query,
                 ],
             ],
         );
 
         /** @var array<string, mixed> $data */
-        $data = $response->toArray();
+        $data = $response->toArray(false);
+
         return $data;
     }
 }
