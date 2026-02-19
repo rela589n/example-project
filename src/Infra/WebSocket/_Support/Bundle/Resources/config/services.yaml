@@ -1,0 +1,21 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Infra\WebSocket\:
+        resource: '../../../**/{*ApiPoint.php,*ConsoleCommand.php,*Service.php}'
+
+    app_ws.centrifugo:
+        alias: Fresh\CentrifugoBundle\Service\CentrifugoInterface
+
+    app_ws.centrifugo.logger:
+        class: App\Infra\WebSocket\_Support\CentrifugoErrorResponseLoggerDecorator
+        decorates: app_ws.centrifugo
+        tags: [ { name: monolog.logger, channel: 'web_socket' } ]
+
+when@test:
+    services:
+        app_ws.centrifugo:
+            public: true
+            alias: Fresh\CentrifugoBundle\Service\FakeCentrifugo

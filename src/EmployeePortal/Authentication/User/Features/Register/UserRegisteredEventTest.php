@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Features\Register;
 
+use App\EmployeePortal\Authentication\User\_Support\Repository\UserRepository;
 use App\EmployeePortal\Authentication\User\Email\Email;
 use App\EmployeePortal\Authentication\User\Features\Register\Exception\EmailAlreadyTakenException;
 use App\EmployeePortal\Authentication\User\Password\Password;
-use App\EmployeePortal\Authentication\User\Support\Repository\UserRepository;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use PHPUnit\Framework\Attributes\CoversClass;

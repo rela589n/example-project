@@ -1,0 +1,21 @@
+api_frontend_entity:
+    resource: '../../../../**/{*FrontendApiPoint.php}'
+    type: attribute
+    prefix: /api/example-project/entity
+    host: '%api_host%'
+    schemes: '%api_scheme%'
+
+when@dev:
+    api_doc.example_project_entity.redocly: &api_doc_redocly
+        path: /api/example-project/entity/doc.html
+        methods: GET
+        defaults: { _controller: nelmio_api_doc.controller.redocly, area: example_project_entity }
+
+    api_doc.example_project_entity.swagger: &api_doc_json
+        path: /api/example-project/entity/doc.json
+        methods: GET
+        defaults: { _controller: nelmio_api_doc.controller.swagger, area: example_project_entity }
+
+when@stage:
+    api_doc.example_project_entity.redocly: *api_doc_redocly
+    api_doc.example_project_entity.swagger: *api_doc_json

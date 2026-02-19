@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Features\Register\Port;
 
-use App\EmployeePortal\Authentication\User\Support\Repository\UserRepository;
+use App\EmployeePortal\Authentication\User\_Support\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Psr\Clock\ClockInterface;

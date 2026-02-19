@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\Port;
 
+use App\EmployeePortal\Authentication\User\_Support\Repository\Exception\UserNotFoundException;
 use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\Exception\ExpiredPasswordResetRequestException;
 use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserResetPasswordEvent;
 use App\EmployeePortal\Authentication\User\PasswordReset\PasswordResetRequest;
 use App\EmployeePortal\Authentication\User\PasswordReset\Repository\Exception\PasswordResetRequestNotFoundException;
-use App\EmployeePortal\Authentication\User\Support\Repository\Exception\UserNotFoundException;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use PhPhD\ExceptionalValidation;

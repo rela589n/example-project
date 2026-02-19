@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Features\Login;
 
-use App\EmployeePortal\Authentication\User\Support\Event\UserEvent;
-use App\EmployeePortal\Authentication\User\Support\Event\UserEventVisitor;
+use App\EmployeePortal\Authentication\User\_Support\Event\UserEvent;
+use App\EmployeePortal\Authentication\User\_Support\Event\UserEventVisitor;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;

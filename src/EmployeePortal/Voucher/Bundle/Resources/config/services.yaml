@@ -1,7 +1,0 @@
-services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-
-    App\EmployeePortal\Voucher\:
-        resource: '../../../**/{*ApiPoint.php,*Service.php,*Handler.php,*Fixture.php}'

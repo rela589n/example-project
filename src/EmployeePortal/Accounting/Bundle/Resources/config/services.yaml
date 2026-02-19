@@ -1,7 +1,0 @@
-services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-
-    App\EmployeePortal\Accounting\:
-        resource: '../../../**/{*ApiPoint.php,*Service.php,*Fixture.php,*Resolver.php}'

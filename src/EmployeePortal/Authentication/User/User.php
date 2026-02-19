@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User;
 
+use App\EmployeePortal\Authentication\User\_Support\Event\UserEvent;
 use App\EmployeePortal\Authentication\User\Email\Email;
 use App\EmployeePortal\Authentication\User\Features\Login\UserLoggedInEvent;
 use App\EmployeePortal\Authentication\User\Features\Register\UserRegisteredEvent;
@@ -11,7 +12,6 @@ use App\EmployeePortal\Authentication\User\Password\Password;
 use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserResetPasswordEvent;
 use App\EmployeePortal\Authentication\User\SecretKey\SecretKey;
 use App\EmployeePortal\Authentication\User\SecretKey\Type\SecretKeyType;
-use App\EmployeePortal\Authentication\User\Support\Event\UserEvent;
 use Carbon\CarbonImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

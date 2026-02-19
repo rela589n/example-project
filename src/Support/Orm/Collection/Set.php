@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support\Orm\Collection;
 
-use App\EmployeePortal\Blog\Support\Specification\Specification;
+use App\EmployeePortal\Blog\_Support\Specification\Specification;
 use App\Support\Orm\EntityNotFoundException;
 use Doctrine\Common\Collections\Criteria;
 

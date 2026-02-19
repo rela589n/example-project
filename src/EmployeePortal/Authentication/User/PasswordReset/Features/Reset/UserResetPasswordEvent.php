@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset;
 
+use App\EmployeePortal\Authentication\User\_Support\Event\UserEvent;
+use App\EmployeePortal\Authentication\User\_Support\Event\UserEventVisitor;
+use App\EmployeePortal\Authentication\User\_Support\Exception\AccessDeniedException;
 use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\Exception\ExpiredPasswordResetRequestException;
 use App\EmployeePortal\Authentication\User\PasswordReset\PasswordResetRequest;
-use App\EmployeePortal\Authentication\User\Support\Event\UserEvent;
-use App\EmployeePortal\Authentication\User\Support\Event\UserEventVisitor;
-use App\EmployeePortal\Authentication\User\Support\Exception\AccessDeniedException;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;

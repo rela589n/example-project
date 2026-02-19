@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\Features\Login\Port;
 
+use App\EmployeePortal\Authentication\User\_Support\Repository\Exception\UserNotFoundException;
 use App\EmployeePortal\Authentication\User\Email\Email;
 use App\EmployeePortal\Authentication\User\Email\EmailValidationFailedException;
 use App\EmployeePortal\Authentication\User\Features\Login\UserLoggedInEvent;
 use App\EmployeePortal\Authentication\User\Password\PasswordMismatchException;
-use App\EmployeePortal\Authentication\User\Support\Repository\Exception\UserNotFoundException;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUser;

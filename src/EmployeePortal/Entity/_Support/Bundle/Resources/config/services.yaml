@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\EmployeePortal\Entity\:
+        resource: '../../../../**/{*ApiPoint.php,*Service.php,*Handler.php,*ConsoleCommand.php,*Fixture.php,*Collection.php}'

@@ -1,7 +1,0 @@
-services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-
-    App\EmployeePortal\Shop\:
-        resource: '../../../**/{*ApiPoint.php,*ConsoleCommand.php,*Service.php,*Outbox.php,*Middleware.php,*Provider.php,*EventPublisher.php,*Fixture.php,*Repository.php,*Collection.php}'

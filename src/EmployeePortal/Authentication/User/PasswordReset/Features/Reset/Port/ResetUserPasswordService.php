@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\Port;
 
+use App\EmployeePortal\Authentication\User\_Support\Repository\UserRepository;
 use App\EmployeePortal\Authentication\User\PasswordReset\Repository\PasswordResetRequestRepository;
-use App\EmployeePortal\Authentication\User\Support\Repository\UserRepository;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

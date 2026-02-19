@@ -36,22 +36,22 @@ final class Kernel extends BaseKernel
 
         yield new Support\Partitioning\Bundle\AppPartitioningBundle();
 
-        yield new Infra\WebSocket\Bundle\AppWebSocketBundle();
+        yield new Infra\WebSocket\_Support\Bundle\AppWebSocketBundle();
 
         yield new Playground\Bundle\AppPlaygroundBundle();
 
-        yield new EmployeePortal\Authentication\Bundle\AppAuthBundle();
+        yield new EmployeePortal\Authentication\_Support\Bundle\AppAuthBundle();
 
-        yield new EmployeePortal\Accounting\Bundle\AppAccountingBundle();
+        yield new EmployeePortal\Accounting\_Support\Bundle\AppAccountingBundle();
 
-        yield new EmployeePortal\Blog\Support\Bundle\AppBlogBundle();
+        yield new EmployeePortal\Blog\_Support\Bundle\AppBlogBundle();
 
-        yield new EmployeePortal\Chatbot\Support\Bundle\AppChatbotBundle();
+        yield new EmployeePortal\Chatbot\_Support\Bundle\AppChatbotBundle();
 
-        yield new EmployeePortal\Entity\Bundle\AppEntityBundle();
+        yield new EmployeePortal\Entity\_Support\Bundle\AppEntityBundle();
 
-        yield new EmployeePortal\Shop\Bundle\AppShopBundle();
+        yield new EmployeePortal\Shop\_Support\Bundle\AppShopBundle();
 
-        yield new EmployeePortal\Voucher\Bundle\AppVoucherBundle();
+        yield new EmployeePortal\Voucher\_Support\Bundle\AppVoucherBundle();
     }
 }
