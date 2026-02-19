@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\WebSocket\Features\SendEvent\Port\Console;
+namespace App\Infra\WebSocket\Features\SendEvent\Port\Cli;
 
 use App\Infra\WebSocket\Features\SendEvent\Port\SendEventCommand;
 use Symfony\Component\Console\Attribute\AsCommand;

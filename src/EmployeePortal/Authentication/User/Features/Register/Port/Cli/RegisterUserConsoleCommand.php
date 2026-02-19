@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\EmployeePortal\Authentication\User\Features\Register\Port\Console;
+namespace App\EmployeePortal\Authentication\User\Features\Register\Port\Cli;
 
 use App\EmployeePortal\Authentication\User\Features\Register\Port\RegisterUserCommand;
 use Symfony\Component\Console\Attribute\AsCommand;

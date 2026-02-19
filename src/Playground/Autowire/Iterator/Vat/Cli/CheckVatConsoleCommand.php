@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Playground\Autowire\Iterator\Vat\Console;
+namespace App\Playground\Autowire\Iterator\Vat\Cli;
 
 use App\Playground\Autowire\Iterator\Vat\FopGroup;
 use App\Playground\Autowire\Iterator\Vat\VatCalculatorService;
