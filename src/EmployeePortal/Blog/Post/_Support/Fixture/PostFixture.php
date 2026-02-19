@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\Post\_Support\Fixture;
 
-use App\EmployeePortal\Blog\Post\Features\Create\Port\CreatePostCommand;
+use App\EmployeePortal\Blog\Post\_Features\Create\Port\CreatePostCommand;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;

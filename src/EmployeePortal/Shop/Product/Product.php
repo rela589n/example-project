@@ -6,7 +6,7 @@ namespace App\EmployeePortal\Shop\Product;
 
 use App\EmployeePortal\Shop\Category\Category;
 use App\EmployeePortal\Shop\Product\Description\Description;
-use App\EmployeePortal\Shop\Product\Features\Create\ProductCreatedEvent;
+use App\EmployeePortal\Shop\Product\_Features\Create\ProductCreatedEvent;
 use App\EmployeePortal\Shop\Product\Price\Price;
 use App\EmployeePortal\Shop\Product\Title\Title;
 use Carbon\CarbonImmutable;

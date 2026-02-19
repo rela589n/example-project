@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Shop\Product\_Support;
 
 use App\EmployeePortal\Shop\Category\_Support\CategoryFixture;
-use App\EmployeePortal\Shop\Product\Features\Create\Port\CreateProductCommand;
+use App\EmployeePortal\Shop\Product\_Features\Create\Port\CreateProductCommand;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;

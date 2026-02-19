@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Entity\Entity\_Support;
 
-use App\EmployeePortal\Entity\Entity\Features\Create\Port\CreateEntityCommand;
+use App\EmployeePortal\Entity\Entity\_Features\Create\Port\CreateEntityCommand;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;

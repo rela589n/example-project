@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Accounting\Account;
 
-use App\EmployeePortal\Accounting\Account\Features\Create\AccountCreatedEvent;
+use App\EmployeePortal\Accounting\Account\_Features\Create\AccountCreatedEvent;
 use App\Support\Partitioning\Entity\PartitionedEntityInterface;
 use App\Support\Partitioning\Entity\PartitionId;
 use Carbon\CarbonImmutable;

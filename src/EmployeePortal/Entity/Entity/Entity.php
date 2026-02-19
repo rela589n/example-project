@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Entity\Entity;
 
-use App\EmployeePortal\Entity\Entity\Features\Create\EntityCreatedEvent;
-use App\EmployeePortal\Entity\Entity\Features\Update\EntityUpdatedEvent;
+use App\EmployeePortal\Entity\Entity\_Features\Create\EntityCreatedEvent;
+use App\EmployeePortal\Entity\Entity\_Features\Update\EntityUpdatedEvent;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;

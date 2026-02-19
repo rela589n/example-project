@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\_Support\Fixture;
 
-use App\EmployeePortal\Authentication\User\Features\Register\Port\RegisterUserCommand;
+use App\EmployeePortal\Authentication\User\_Features\Register\Port\RegisterUserCommand;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;

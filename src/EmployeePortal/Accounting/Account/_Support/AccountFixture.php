@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Accounting\Account\_Support;
 
-use App\EmployeePortal\Accounting\Account\Features\Create\Port\CreateAccountCommand;
+use App\EmployeePortal\Accounting\Account\_Features\Create\Port\CreateAccountCommand;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;

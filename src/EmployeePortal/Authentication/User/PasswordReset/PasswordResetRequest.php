@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\PasswordReset;
 
-use App\EmployeePortal\Authentication\User\PasswordReset\Features\Create\UserPasswordResetRequestCreatedEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\_Features\Create\UserPasswordResetRequestCreatedEvent;
 use App\EmployeePortal\Authentication\User\PasswordReset\Repository\PasswordResetRequestRepository;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;

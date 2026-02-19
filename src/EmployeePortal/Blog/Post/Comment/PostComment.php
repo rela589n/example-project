@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\Post\Comment;
 
-use App\EmployeePortal\Blog\Post\Comment\Features\Add\PostCommentAddedEvent;
-use App\EmployeePortal\Blog\Post\Comment\Features\Edit\PostCommentEditedEvent;
+use App\EmployeePortal\Blog\Post\Comment\_Features\Add\PostCommentAddedEvent;
+use App\EmployeePortal\Blog\Post\Comment\_Features\Edit\PostCommentEditedEvent;
 use App\EmployeePortal\Blog\Post\Post;
 use App\EmployeePortal\Blog\User\User;
 use Carbon\CarbonImmutable;

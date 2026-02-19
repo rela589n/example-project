@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Voucher\Voucher\_Support;
 
-use App\EmployeePortal\Voucher\Voucher\Features\Create\Port\CreateVoucherCommand;
+use App\EmployeePortal\Voucher\Voucher\_Features\Create\Port\CreateVoucherCommand;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;

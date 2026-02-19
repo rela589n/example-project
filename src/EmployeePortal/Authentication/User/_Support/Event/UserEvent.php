@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\_Support\Event;
 
-use App\EmployeePortal\Authentication\User\Features\Login\UserLoggedInEvent;
-use App\EmployeePortal\Authentication\User\Features\Register\UserRegisteredEvent;
-use App\EmployeePortal\Authentication\User\PasswordReset\Features\Create\UserPasswordResetRequestCreatedEvent;
-use App\EmployeePortal\Authentication\User\PasswordReset\Features\Reset\UserResetPasswordEvent;
+use App\EmployeePortal\Authentication\User\_Features\Login\UserLoggedInEvent;
+use App\EmployeePortal\Authentication\User\_Features\Register\UserRegisteredEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\_Features\Create\UserPasswordResetRequestCreatedEvent;
+use App\EmployeePortal\Authentication\User\PasswordReset\_Features\Reset\UserResetPasswordEvent;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;

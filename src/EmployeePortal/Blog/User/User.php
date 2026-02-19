@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Blog\User;
 
-use App\EmployeePortal\Blog\Post\Comment\Features\Add\PostCommentAddedEvent;
-use App\EmployeePortal\Blog\Post\Comment\Features\Edit\PostCommentEditedEvent;
+use App\EmployeePortal\Blog\Post\Comment\_Features\Add\PostCommentAddedEvent;
+use App\EmployeePortal\Blog\Post\Comment\_Features\Edit\PostCommentEditedEvent;
 use App\EmployeePortal\Blog\Post\Comment\PostCommentCollection;
-use App\EmployeePortal\Blog\Post\Features\Create\PostCreatedEvent;
-use App\EmployeePortal\Blog\Post\Features\Edit\PostEditedEvent;
-use App\EmployeePortal\Blog\Post\Features\TransferOwnership\PostOwnershipTransferredEvent;
+use App\EmployeePortal\Blog\Post\_Features\Create\PostCreatedEvent;
+use App\EmployeePortal\Blog\Post\_Features\Edit\PostEditedEvent;
+use App\EmployeePortal\Blog\Post\_Features\TransferOwnership\PostOwnershipTransferredEvent;
 use App\EmployeePortal\Blog\Post\PostCollection;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;

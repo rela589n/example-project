@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Shop\Category\_Support;
 
-use App\EmployeePortal\Shop\Category\Features\Create\Port\CreateCategoryCommand;
+use App\EmployeePortal\Shop\Category\_Features\Create\Port\CreateCategoryCommand;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Blog\Post;
 
 use App\EmployeePortal\Blog\Post\Comment\PostCommentCollection;
-use App\EmployeePortal\Blog\Post\Features\Create\PostCreatedEvent;
-use App\EmployeePortal\Blog\Post\Features\Edit\PostEditedEvent;
-use App\EmployeePortal\Blog\Post\Features\TransferOwnership\PostOwnershipTransferredEvent;
+use App\EmployeePortal\Blog\Post\_Features\Create\PostCreatedEvent;
+use App\EmployeePortal\Blog\Post\_Features\Edit\PostEditedEvent;
+use App\EmployeePortal\Blog\Post\_Features\TransferOwnership\PostOwnershipTransferredEvent;
 use App\EmployeePortal\Blog\User\User;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;

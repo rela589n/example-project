@@ -1,0 +1,4 @@
+framework:
+    messenger:
+        routing:
+            App\EmployeePortal\Authentication\User\_Features\Register\Outbox\WelcomeEmail\SendWelcomeEmailCommand: auth

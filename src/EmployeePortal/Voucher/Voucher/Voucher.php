@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Voucher\Voucher;
 
-use App\EmployeePortal\Voucher\Voucher\Features\Apply\Item;
-use App\EmployeePortal\Voucher\Voucher\Features\Create\VoucherCreatedEvent;
+use App\EmployeePortal\Voucher\Voucher\_Features\Apply\Item;
+use App\EmployeePortal\Voucher\Voucher\_Features\Create\VoucherCreatedEvent;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;

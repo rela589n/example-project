@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Shop\Category;
 
-use App\EmployeePortal\Shop\Category\Features\Create\CategoryCreatedEvent;
-use App\EmployeePortal\Shop\Category\Features\Update\CategoryUpdatedEvent;
+use App\EmployeePortal\Shop\Category\_Features\Create\CategoryCreatedEvent;
+use App\EmployeePortal\Shop\Category\_Features\Update\CategoryUpdatedEvent;
 use App\EmployeePortal\Shop\Product\Product;
 use Carbon\CarbonImmutable;
 use Doctrine\Common\Collections\ArrayCollection;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\EmployeePortal\Blog\Post\Comment\_Support\Fixture;
 
 use App\EmployeePortal\Blog\Post\_Support\Fixture\PostFixture;
-use App\EmployeePortal\Blog\Post\Comment\Features\Add\Port\AddPostCommentCommand;
+use App\EmployeePortal\Blog\Post\Comment\_Features\Add\Port\AddPostCommentCommand;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
