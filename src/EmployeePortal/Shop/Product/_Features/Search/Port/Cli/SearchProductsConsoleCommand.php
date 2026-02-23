@@ -32,7 +32,9 @@ final class SearchProductsConsoleCommand extends Command
         $this
             ->addArgument('query', InputArgument::OPTIONAL, 'Search query', '')
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of results to return', '10')
-            ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Number of results to skip', '0');
+            ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Number of results to skip', '0')
+            ->addOption('model-type', null, InputOption::VALUE_REQUIRED, 'Model type', null)
+            ->addOption('grammar', null, InputOption::VALUE_REQUIRED, 'Query grammar', 'weakAnd');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -46,7 +48,13 @@ final class SearchProductsConsoleCommand extends Command
         /** @var numeric-string $offset */
         $offset = $input->getOption('offset');
 
-        $searchQuery = new SearchProductsQuery($query, (int)$offset, (int)$limit);
+        /** @var string|null $modelType */
+        $modelType = $input->getOption('model-type');
+
+        /** @var string $grammar */
+        $grammar = $input->getOption('grammar');
+
+        $searchQuery = new SearchProductsQuery($query, (int)$offset, (int)$limit, $modelType, $grammar);
 
         $this->queryBus->dispatch($searchQuery);
 

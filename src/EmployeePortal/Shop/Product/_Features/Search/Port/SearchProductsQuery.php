@@ -13,6 +13,8 @@ final class SearchProductsQuery
         private readonly string $query,
         private readonly int $offset = 0,
         private readonly int $limit = 10,
+        private readonly ?string $modelType = null,
+        private readonly string $grammar = 'weakAnd',
     ) {
     }
 
@@ -23,6 +25,9 @@ final class SearchProductsQuery
             docType: 'product',
             fields: ['title', 'description'],
             defaultIndex: 'description',
+            grammar: $this->grammar,
+            modelType: $this->modelType,
+            documentSummary: 'main',
             limit: $this->limit,
             offset: $this->offset,
         );

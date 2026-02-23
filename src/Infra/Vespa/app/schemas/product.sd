@@ -13,4 +13,8 @@ schema product {
 
 	    }
 	}
+	document-summary main {
+		summary title {}
+		summary description {}
+	}
 }

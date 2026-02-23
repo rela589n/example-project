@@ -72,6 +72,7 @@ final readonly class VespaClient
         array $fields = [],
         string $defaultIndex = 'default',
         string $grammar = 'weakAnd',
+        ?string $modelType = null,
         string $documentSummary = 'default',
         int $limit = 10,
         int $offset = 0,
@@ -92,7 +93,9 @@ final readonly class VespaClient
                     'offset' => $offset,
                     'user-query' => $query,
                     'presentation.summary' => $documentSummary,
-                ],
+                ] + ($modelType ? [
+                    'model.type'=> $modelType,
+                ] : []),
             ],
         );
 
