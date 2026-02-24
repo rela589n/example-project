@@ -10,6 +10,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Yaml\Yaml;
 
 final class PostFixture extends Fixture implements OrderedFixtureInterface
 {
@@ -26,26 +27,9 @@ final class PostFixture extends Fixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $posts = [
-            [
-                'id' => 'a2f6d821-6b23-73f4-bb85-6daf4280b72c',
-                'authorId' => '2a977708-1c69-7d38-9074-b388a7f386dc', // user@test.com
-                'title' => 'First Sample Post',
-                'description' => 'This is the first sample post created by the fixture.',
-            ],
-            [
-                'id' => 'e013d514-a0a0-7813-b7df-679e40907dba',
-                'authorId' => '2a977708-1c69-7d38-9074-b388a7f386dc', // user@test.com
-                'title' => 'Second Sample Post',
-                'description' => 'This is the second sample post created by the fixture.',
-            ],
-            [
-                'id' => '3d6c586a-eba5-7085-9121-f4888e9fd80f',
-                'authorId' => 'de13a4f3-b43e-74d4-aca9-7ce087a21b73', // user2@test.com
-                'title' => 'Third Sample Post',
-                'description' => 'This is the third sample post created by the fixture, by a different user.',
-            ],
-        ];
+        /** @var array{posts: list<array{id: string, authorId: string, title: string, description: string}>} $data */
+        $data = Yaml::parseFile(__DIR__ . '/posts.yaml');
+        $posts = $data['posts'];
 
         foreach ($posts as $postData) {
             $command = new CreatePostCommand(
