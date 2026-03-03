@@ -117,7 +117,7 @@ final readonly class VespaClient
                 ),
                 'offset' => $offset,
                 'hits' => $limit,
-                'input.query(query_embedding)' => 'embed(@user-query)',
+                'input.query(query_embedding)' => 'embed(colbert, @user-query)',
                 'user-query' => $query,
             ],
         ]);

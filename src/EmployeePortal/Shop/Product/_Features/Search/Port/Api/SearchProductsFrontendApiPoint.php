@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Shop\Product\_Features\Search\Port\Api;
 
+use App\EmployeePortal\Shop\Product\_Features\Search\SearchType;
 use App\EmployeePortal\Shop\Product\_Features\Search\Port\SearchProductsQuery;
 use App\Support\MessageBus\PassThrough\PassThroughBusStamp;
 use OpenApi\Attributes as ApiDoc;
@@ -31,8 +32,10 @@ final readonly class SearchProductsFrontendApiPoint
         name: 'example_project_products_search',
         methods: ['GET'],
     )]
-    public function __invoke(#[MapQueryString] SearchProductsQuery $query): Response
-    {
+    public function __invoke(
+        #[MapQueryString]
+        SearchProductsQuery $query,
+    ): Response {
         $this->apiBus->dispatch($query, [new PassThroughBusStamp('query.bus')]);
 
         return new JsonResponse($query->getResults());

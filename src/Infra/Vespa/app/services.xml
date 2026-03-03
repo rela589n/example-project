@@ -14,7 +14,7 @@
             <tokenizer-model url="https://huggingface.co/colbert-ir/colbertv2.0/raw/main/tokenizer.json"/>
             <transformer-model url="https://huggingface.co/colbert-ir/colbertv2.0/resolve/main/model.onnx"/>
             <max-query-tokens>32</max-query-tokens>
-            <max-document-tokens>512</max-document-tokens>
+            <max-document-tokens>128</max-document-tokens>
         </component>
     </container>
     <!--

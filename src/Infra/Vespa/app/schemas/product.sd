@@ -13,6 +13,9 @@ schema product {
 
 	    }
 	}
+	field embedding type tensor<float>() {
+
+	}
 	document-summary main {
 		summary title {}
 		summary description {}
