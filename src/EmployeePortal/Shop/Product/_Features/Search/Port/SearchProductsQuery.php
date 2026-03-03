@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Shop\Product\_Features\Search\Port;
 
+use function array_map;
+
 final class SearchProductsQuery
 {
     /** @var list<array<string, mixed>> */
@@ -15,12 +17,13 @@ final class SearchProductsQuery
         private readonly int $limit = 10,
         private readonly ?string $modelType = null,
         private readonly string $grammar = 'weakAnd',
+
     ) {
     }
 
     public function process(SearchProductsService $service): void
     {
-        $raw = $service->vespaClient->search(
+        $raw = $service->vespaClient->textSearch(
             query: $this->query,
             docType: 'product',
             fields: ['title', 'description'],

@@ -7,6 +7,9 @@ namespace App\Support\Vespa;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+use function implode;
+use function sprintf;
+
 final readonly class VespaClient
 {
     public function __construct(
@@ -17,6 +20,7 @@ final readonly class VespaClient
 
     /**
      * @param array<string, mixed> $fields
+     *
      * @return array<string, mixed>
      */
     public function feedDocument(string $namespace, string $docType, string $id, array $fields): array
@@ -37,9 +41,7 @@ final readonly class VespaClient
         return $data;
     }
 
-    /**
-     * @return array<string, mixed>|null
-     */
+    /** @return array<string, mixed>|null */
     public function getDocument(string $namespace, string $docType, string $id): ?array
     {
         $response = $this->httpClient->request(
@@ -50,6 +52,7 @@ final readonly class VespaClient
         try {
             /** @var array<string, mixed> $data */
             $data = $response->toArray();
+
             return $data;
         } catch (ClientExceptionInterface $e) {
             if ($response->getStatusCode() === 404) {
@@ -66,7 +69,7 @@ final readonly class VespaClient
      *
      * @return array<string, mixed>
      */
-    public function search(
+    public function textSearch(
         string $query,
         string $docType,
         array $fields = [],
@@ -77,26 +80,60 @@ final readonly class VespaClient
         int $limit = 10,
         int $offset = 0,
     ): array {
+        $options = [
+            'query' => [
+                'yql' => sprintf(
+                    'select %s from %s where {defaultIndex:"%s",grammar:"%s"}userInput(@user-query)',
+                    implode(',', $fields) ?: '*',
+                    $docType,
+                    $defaultIndex,
+                    $grammar,
+                ),
+                'offset' => $offset,
+                'hits' => $limit,
+                'user-query' => $query,
+                'presentation.summary' => $documentSummary,
+            ] + ($modelType ? [
+                'model.type' => $modelType,
+            ] : []),
+        ];
+
+        return $this->search($options);
+    }
+
+    /**
+     * @param array<string> $fields
+     *
+     * @return array<string, mixed>
+     */
+    public function vectorSearch(string $query, string $docType, array $fields, int $offset, int $limit): array
+    {
+        return $this->search([
+            'query' => [
+                'yql' => sprintf(
+                    'select %s from %s where wand(embedding, query_embedding)',
+                    implode(',', $fields) ?: '*',
+                    $docType,
+                ),
+                'offset' => $offset,
+                'hits' => $limit,
+                'input.query(query_embedding)' => 'embed(@user-query)',
+                'user-query' => $query,
+            ],
+        ]);
+    }
+
+    /**
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, mixed>
+     */
+    public function search(array $options): array
+    {
         $response = $this->httpClient->request(
             'GET',
             "{$this->baseUrl}/search/",
-            [
-                'query' => [
-                    'yql' => sprintf(
-                        'select %s from %s where {defaultIndex:"%s",grammar:"%s"}userInput(@user-query)',
-                        implode(',', $fields) ?: '*',
-                        $docType,
-                        $defaultIndex,
-                        $grammar,
-                    ),
-                    'hits' => $limit,
-                    'offset' => $offset,
-                    'user-query' => $query,
-                    'presentation.summary' => $documentSummary,
-                ] + ($modelType ? [
-                    'model.type'=> $modelType,
-                ] : []),
-            ],
+            $options,
         );
 
         /** @var array<string, mixed> $data */
