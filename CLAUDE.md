@@ -123,5 +123,5 @@ Console scripts:
 ## Debugging Temporal
 
 ```bash
-docker compose logs --no-log-prefix -f dump_server | lnav
+docker compose logs --no-log-prefix -f var_dump_server | lnav
 ```

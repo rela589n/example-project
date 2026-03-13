@@ -34,7 +34,7 @@ services:
             temporal: { condition: service_healthy }
             vespa: { condition: service_healthy }
 
-    dump_server:
+    var_dump_server:
         image: example_project.backend:v2.0
         working_dir: /app
         command: [ "vendor/bin/var-dump-server", "--no-ansi", "--host", "0.0.0.0:9912" ]

@@ -114,7 +114,7 @@ Outbox namespace represents set of inner actions that come after the main action
 To debug Temporal Workflows, you can use var-dump-server, and then analyse output with lnav:
 
 ```shell
-docker compose logs --no-log-prefix -f dump_server | lnav
+docker compose logs --no-log-prefix -f var_dump_server | lnav
 ```
 
 ### gRPC
