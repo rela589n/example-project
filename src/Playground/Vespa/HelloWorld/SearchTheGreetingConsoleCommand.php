@@ -8,10 +8,12 @@ use App\Support\Vespa\VespaClient;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+
+use function json_encode;
 
 #[AsCommand(name: 'app:vespa:hello:greeting-search', description: 'Search for Greetings in Vespa')]
 final class SearchTheGreetingConsoleCommand extends Command
@@ -40,7 +42,7 @@ final class SearchTheGreetingConsoleCommand extends Command
         /** @var string $grammar */
         $grammar = $input->getOption('grammar');
 
-        $result = $this->vespaClient->search(
+        $result = $this->vespaClient->textSearch(
             query: $query,
             docType: 'greeting',
             grammar: $grammar,

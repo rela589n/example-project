@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Shop\Product\_Features\Search\Port\Cli;
 
+use App\EmployeePortal\Shop\Product\_Features\Search\SearchType;
 use App\EmployeePortal\Shop\Product\_Features\Search\Port\SearchProductsQuery;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -31,6 +32,7 @@ final class SearchProductsConsoleCommand extends Command
     {
         $this
             ->addArgument('query', InputArgument::OPTIONAL, 'Search query', '')
+            ->addOption('search-type', null, InputOption::VALUE_REQUIRED, 'Search type (text or vector)', 'text')
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of results to return', '10')
             ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Number of results to skip', '0')
             ->addOption('model-type', null, InputOption::VALUE_REQUIRED, 'Model type', null)
@@ -41,6 +43,10 @@ final class SearchProductsConsoleCommand extends Command
     {
         /** @var string $query */
         $query = $input->getArgument('query');
+
+        /** @var string $searchTypeValue */
+        $searchTypeValue = $input->getOption('search-type');
+        $searchType = SearchType::from($searchTypeValue);
 
         /** @var numeric-string $limit */
         $limit = $input->getOption('limit');
@@ -54,7 +60,7 @@ final class SearchProductsConsoleCommand extends Command
         /** @var string $grammar */
         $grammar = $input->getOption('grammar');
 
-        $searchQuery = new SearchProductsQuery($query, (int)$offset, (int)$limit, $modelType, $grammar);
+        $searchQuery = new SearchProductsQuery($query, $searchType, (int)$offset, (int)$limit, $modelType, $grammar);
 
         $this->queryBus->dispatch($searchQuery);
 

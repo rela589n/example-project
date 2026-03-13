@@ -30,6 +30,8 @@ final class CategoryFixture extends Fixture
         $this->commandBus->dispatch(new CreateCategoryCommand('Electronics', Uuid::fromString('3a24fc63-756c-7d28-b6df-a2edb0990e01')));
         $this->commandBus->dispatch(new CreateCategoryCommand('Books', Uuid::fromString('3a24fc63-756c-7d28-b6df-a2edb0990e02')));
         $this->commandBus->dispatch(new CreateCategoryCommand('Clothing', Uuid::fromString('3a24fc63-756c-7d28-b6df-a2edb0990e03')));
+        $this->commandBus->dispatch(new CreateCategoryCommand('Sweets', Uuid::fromString('1b88af30-4183-7d4d-b38d-50a6897b43ce')));
+        $this->commandBus->dispatch(new CreateCategoryCommand('Planets', Uuid::fromString('34310887-f7aa-77b9-b640-88809514b224')));
 
         Clock::set(new NativeClock());
     }

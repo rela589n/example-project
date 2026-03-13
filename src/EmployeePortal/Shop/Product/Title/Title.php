@@ -15,7 +15,7 @@ final readonly class Title
         #[ORM\Column(unique: true)]
         private(set) string $title,
     ) {
-        Assert::minLength($this->title, 5);
+        Assert::minLength($this->title, 4);
         Assert::maxLength($this->title, 255);
     }
 }

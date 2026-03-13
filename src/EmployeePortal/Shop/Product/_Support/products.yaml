@@ -8,6 +8,8 @@ categories:
     electronics: '3a24fc63-756c-7d28-b6df-a2edb0990e01'
     books: '3a24fc63-756c-7d28-b6df-a2edb0990e02'
     clothing: '3a24fc63-756c-7d28-b6df-a2edb0990e03'
+    sweets: '1b88af30-4183-7d4d-b38d-50a6897b43ce'
+    planets: '34310887-f7aa-77b9-b640-88809514b224'
 
 # Cluster A — Noise-cancelling headphones
 #   Same idea: over-ear headphones that block ambient sound
@@ -24,6 +26,10 @@ categories:
 # Cluster D — Portable phone charger
 #   Same idea: compact battery pack for charging
 #   mobile devices on the go with fast-charging support.
+
+# Cluster E — Chocolate candy bars
+#   Same idea: popular chocolate confectionery
+#   with caramel, nougat, and other sweet fillings.
 
 products:
     # ── Cluster A — Noise-cancelling headphones ──
@@ -127,7 +133,7 @@ products:
     - id: '3a24fc63-756c-7d28-b6df-a2edb0990d02'
       title: 'VoltRush Mobile Battery'
       description: >-
-          Lightweight external battery pack offering 20000mAh storage and rapid USB-C
+          Lightweight external battery pack offering 30000mAh storage and rapid USB-C
           power delivery capable of replenishing your phone multiple times, ideal for
           long trips and outdoor excursions far from electrical sockets.
       price: 4299
@@ -136,8 +142,104 @@ products:
     - id: '3a24fc63-756c-7d28-b6df-a2edb0990d03'
       title: 'ChargeHopper Go Pack'
       description: >-
-          Pocket-friendly mobile power supply with 20000mAh reserve and high-speed
+          Pocket-friendly mobile power supply with 50000mAh reserve and high-speed
           USB-C charging support that tops up your device several times, great for
           journeys and wilderness outings where power access is limited.
       price: 3799
       category: electronics
+
+  # ── Cluster E — Chocolate candy bars ──
+
+    - id: '1b88af30-4183-7d4d-b38d-50a6897b4301'
+      title: 'Mars Bar'
+      description: >-
+        Mars is a small classic chocolate candy bar featuring smooth nougat and rich caramel
+        covered in creamy milk chocolate, delivering a satisfying sweet treat
+        perfect for snacking or sharing with friends and family.
+      price: 199
+      category: sweets
+
+    - id: '2b8a2905-9f63-7743-921c-9438ab89d8e7'
+      title: 'Snickers Bar'
+      description: >-
+        Snickers is a popular chocolate confection combining roasted peanuts, soft nougat,
+        and sweet caramel wrapped in delicious milk chocolate, offering a delightful
+        snack experience ideal for enjoying alone or with loved ones.
+      price: 199
+      category: sweets
+
+    - id: '34465e95-26b0-78d8-970b-2dd1e725404e'
+      title: 'Twix Bar'
+      description: >-
+        Twix is a beloved chocolate candy featuring crunchy cookie, smooth caramel layer,
+        and rich milk chocolate coating, providing an enjoyable sweet indulgence
+        great for personal treats or sharing with family and friends.
+      price: 199
+      category: sweets
+
+    - id: '05ca43e7-7e20-76c4-ad36-ebd12426c5c2'
+      title: 'Milky Way Bar'
+      description: >-
+        Milky Way is a classic chocolate bar with fluffy nougat center and creamy caramel filling
+        enrobed in smooth milk chocolate, creating a pleasurable confectionery delight
+        wonderful for snacking moments or sharing with companions.
+      price: 199
+      category: sweets
+
+  # ── Cluster F — Habitable exoplanet ──
+
+    - id: '451844b4-b287-7761-b96b-7c4970a3b927'
+      title: 'Mercury'
+      description: >-
+        Mercury, the smallest and innermost planet in our solar system, has extreme temperature variations.
+        It is the first planet from the Sun and the smallest planet in the Solar System.
+      price: 799999999
+      category: planets
+
+    - id: '0a12439b-8e96-70c1-8b88-0d128eb9da67'
+      title: 'Venus'
+      description: >-
+        Venus, often called Earth's twin because of its similar size and proximity.
+        It is the second planet from the Sun, and the only known planet to support life.
+      price: 999999999
+      category: planets
+
+    - id: '17597b34-ffc8-7079-9ec8-1106787af4e0'
+      title: 'Mars'
+      description: >-
+        Mars, known for its reddish appearance, is often referred to as the Red Planet.
+        It is the fourth planet from the Sun and the second-smallest planet in the Solar System.
+      price: 899999999
+      category: planets
+
+    - id: '3491936e-c093-743d-b392-2540d833b7fc'
+      title: 'Jupiter'
+      description: >-
+        Jupiter, the largest planet in our solar system, has a prominent red spot.
+        It is the fifth planet from the Sun and the largest in the Solar System.
+      price: 949999999
+      category: planets
+
+    - id: '2200c521-96b2-7f99-9ca3-f4322c2639ad'
+      title: 'Saturn'
+      description: >-
+        Saturn, famous for its rings, is sometimes mistaken for the Red Planet.
+        It is the sixth planet from the Sun and the second-largest in the Solar System.
+      price: 949999999
+      category: planets
+
+    - id: '54247a69-61f9-73f7-a26b-c47de7fae4db'
+      title: 'Uranus'
+      description: >-
+        Uranus, an ice giant with a unique sideways rotation, appears blue-green due to methane in its atmosphere.
+        It is the seventh planet from the Sun and the third-largest in the Solar System.
+      price: 899999999
+      category: planets
+
+    - id: '28e155d1-2ca5-7c55-b644-e1853994fb95'
+      title: 'Neptune'
+      description: >-
+        Neptune, the farthest planet from the Sun, is known for its deep blue color and supersonic winds.
+        It is the eighth planet from the Sun and the fourth-largest in the Solar System.
+      price: 899999999
+      category: planets

@@ -10,6 +10,17 @@
         <nodes>
             <node hostalias="node1"/>
         </nodes>
+        <!-- see https://huggingface.co/google/embeddinggemma-300m -->
+        <component id="embed-gemma-300m-q8" type="hugging-face-embedder">
+            <tokenizer-model url="https://huggingface.co/onnx-community/embeddinggemma-300m-ONNX/resolve/main/tokenizer.json"/>
+            <transformer-model url="https://huggingface.co/onnx-community/embeddinggemma-300m-ONNX/resolve/main/onnx/model_quantized.onnx"/>
+            <!-- See https://github.com/vespa-engine/pyvespa/blob/dc1d0c8afa0661f7dbf7104b435cebf54a393dde/vespa/models.py#L814-L825 for configuration -->
+            <max-tokens>2048</max-tokens>
+            <prepend>
+                <query>task: search result | query: </query>
+                <document>title: none | text: </document>
+            </prepend>
+        </component>
     </container>
     <!--
     Content cluster - stateful, stores documents and indexes
