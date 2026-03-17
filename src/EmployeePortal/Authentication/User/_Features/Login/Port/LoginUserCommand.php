@@ -13,24 +13,24 @@ use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUser;
 use OpenApi\Attributes as ApiDoc;
-use PhPhD\ExceptionalValidation;
-use PhPhD\ExceptionalValidation\Capture;
-use PhPhD\ExceptionalValidation\Mapper\Validator\Formatter\Item\ViolationList\ViolationListExceptionFormatter;
-use PhPhD\ExceptionalValidation\Rule\Object\Property\Capture\Condition\Value\ExceptionValueMatchCondition;
+use PhPhD\ExceptionalMatcher\Rule\Object\Property\Catch_;
+use PhPhD\ExceptionalMatcher\Rule\Object\Property\Match\Condition\Value\ExceptionValueMatchCondition;
+use PhPhD\ExceptionalMatcher\Rule\Object\Try_;
+use PhPhD\ExceptionalMatcher\Validator\Formatter\ViolationList\ViolationListExceptionFormatter;
 use SensitiveParameter;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Uid\Uuid;
 
-#[ExceptionalValidation]
+#[Try_]
 final readonly class LoginUserCommand
 {
     #[ApiDoc\Property(example: 'email@test.com')]
-    #[Capture(exception: EmailValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
-    #[Capture(exception: UserNotFoundException::class, condition: ExceptionValueMatchCondition::class)]
+    #[Catch_(EmailValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
+    #[Catch_(UserNotFoundException::class, condition: ExceptionValueMatchCondition::class)]
     private string $email;
 
     #[ApiDoc\Property(example: 'p@$$w0rd')]
-    #[Capture(exception: PasswordMismatchException::class, condition: ExceptionValueMatchCondition::class)]
+    #[Catch_(PasswordMismatchException::class, condition: ExceptionValueMatchCondition::class)]
     private string $password;
 
     private(set) JWTUser $jwtUser;

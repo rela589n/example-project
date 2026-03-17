@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Playground\Temporal\Signature\Workflow\Sign\Exception;
 
-use PhPhD\ExceptionalValidation\Mapper\Validator\Formatter\Item\ExceptionViolationFormatter;
-use PhPhD\ExceptionalValidation\Rule\Exception\CapturedException;
+use PhPhD\ExceptionalMatcher\Rule\Exception\MatchedException;
+use PhPhD\ExceptionalMatcher\Validator\Formatter\ExceptionViolationFormatter;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Validator\ConstraintViolation;
 
@@ -20,12 +20,12 @@ final readonly class ExpiredPrivateKeyCertificateExceptionFormatter implements E
     ) {
     }
 
-    /** @param CapturedException<ExpiredPrivateKeyCertificateException> $capturedException */
-    public function format(CapturedException $capturedException): array
+    /** @param MatchedException<ExpiredPrivateKeyCertificateException> $matchedException */
+    public function format(MatchedException $matchedException): array
     {
-        $exception = $capturedException->getException();
+        $exception = $matchedException->getException();
 
-        [$violation] = $this->formatter->format($capturedException);
+        [$violation] = $this->formatter->format($matchedException);
 
         return [
             new ConstraintViolation(

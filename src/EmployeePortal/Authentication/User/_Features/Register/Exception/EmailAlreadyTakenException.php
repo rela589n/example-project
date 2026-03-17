@@ -6,7 +6,7 @@ namespace App\EmployeePortal\Authentication\User\_Features\Register\Exception;
 
 use App\EmployeePortal\Authentication\User\Email\Email;
 use DomainException;
-use PhPhD\ExceptionalValidation\Rule\Object\Property\Capture\Condition\Value\ValueException;
+use PhPhD\ExceptionalMatcher\Rule\Object\Property\Match\Condition\Value\ValueException;
 
 final class EmailAlreadyTakenException extends DomainException implements ValueException
 {

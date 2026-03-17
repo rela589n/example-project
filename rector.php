@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use PhPhD\ExceptionalValidation\Upgrade\ExceptionalValidationSetList;
+use PhPhD\ExceptionalMatcher\Upgrade\ExceptionalMatcherSetList;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
@@ -13,7 +13,7 @@ return RectorConfig::configure()
         __DIR__.'/tests',
     ])
     ->withImportNames(removeUnusedImports: true)
-    ->withSets(ExceptionalValidationSetList::fromVersion('1.4')->getSetList())
+    ->withSets(ExceptionalMatcherSetList::fromVersion('1.4')->getSetList())
     ->withSkip([__DIR__.'/src/Kernel.php', __DIR__.'/config/bundles.php'])
     // uncomment to reach your current PHP version
     // ->withPhpSets()

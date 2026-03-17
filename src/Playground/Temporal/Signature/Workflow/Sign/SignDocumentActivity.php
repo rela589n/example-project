@@ -7,7 +7,7 @@ namespace App\Playground\Temporal\Signature\Workflow\Sign;
 use Exception;
 use LogicException;
 use Monolog\Attribute\WithMonologChannel;
-use PhPhD\ExceptionalValidation\Mapper\ExceptionMapper;
+use PhPhD\ExceptionalMatcher\ExceptionMatcher;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -31,9 +31,9 @@ final readonly class SignDocumentActivity
 {
     public function __construct(
         private LoggerInterface $logger,
-        /** @var ExceptionMapper<ConstraintViolationListInterface> */
-        #[Autowire(service: ExceptionMapper::class.'<'.ConstraintViolationListInterface::class.'>')]
-        private ExceptionMapper $exceptionMapper,
+        /** @var ExceptionMatcher<ConstraintViolationListInterface> */
+        #[Autowire(service: ExceptionMatcher::class.'<'.ConstraintViolationListInterface::class.'>')]
+        private ExceptionMatcher $exceptionMapper,
     ) {
     }
 
@@ -85,7 +85,7 @@ final readonly class SignDocumentActivity
 
             return $result;
         } catch (Exception $e) {
-            $violationList = $this->exceptionMapper->map($command, $e);
+            $violationList = $this->exceptionMapper->match($e, $command);
 
             if (null === $violationList) {
                 throw $e;

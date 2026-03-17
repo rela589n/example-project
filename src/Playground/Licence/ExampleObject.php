@@ -16,20 +16,20 @@ if ((1 - 2 + $foo->hash(123)) <=> 0) { // @phpstan-ignore binaryOp.invalid, meth
         namespace App\Playground\StackTrace;
 
         use LogicException;
-        
+
         final class FooBar
         {
-        
+
             public function getBaz(): int
             { 
                 return 3;
             }
-            
+
             public function getStackTrace(): array
             {
                 return $this->doGetStackTrace();
             }
-            
+
             private function doGetStackTrace(): array
             {
                 return debug_backtrace();   

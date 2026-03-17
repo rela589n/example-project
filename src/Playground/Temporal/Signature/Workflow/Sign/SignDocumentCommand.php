@@ -9,16 +9,17 @@ use App\Playground\Temporal\Signature\Workflow\Sign\Exception\ExpiredPrivateKeyC
 use App\Playground\Temporal\Signature\Workflow\Sign\Exception\ExpiredPrivateKeyCertificateExceptionFormatter;
 use App\Playground\Temporal\Signature\Workflow\Sign\Exception\MissingPrivateKeyException;
 use Carbon\CarbonImmutable;
-use PhPhD\ExceptionalValidation;
+use PhPhD\ExceptionalMatcher\Rule\Object\Property\Catch_;
+use PhPhD\ExceptionalMatcher\Rule\Object\Try_;
 
-#[ExceptionalValidation]
+#[Try_]
 final readonly class SignDocumentCommand
 {
     public function __construct(
-        #[ExceptionalValidation\Capture(MissingPrivateKeyException::class)]
-        #[ExceptionalValidation\Capture(ExpiredPrivateKeyCertificateException::class, formatter: ExpiredPrivateKeyCertificateExceptionFormatter::class)]
+        #[Catch_(MissingPrivateKeyException::class)]
+        #[Catch_(ExpiredPrivateKeyCertificateException::class, formatter: ExpiredPrivateKeyCertificateExceptionFormatter::class)]
         public string $documentId,
-        #[ExceptionalValidation\Capture(BadCredentialsException::class)]
+        #[Catch_(BadCredentialsException::class)]
         public string $password,
     ) {
     }

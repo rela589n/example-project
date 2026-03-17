@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\_Features\Register\Port;
 
-use App\EmployeePortal\Authentication\User\Email\Email;
-use App\EmployeePortal\Authentication\User\Email\EmailValidationFailedException;
 use App\EmployeePortal\Authentication\User\_Features\Register\Exception\EmailAlreadyTakenException;
 use App\EmployeePortal\Authentication\User\_Features\Register\UserRegisteredEvent;
+use App\EmployeePortal\Authentication\User\Email\Email;
+use App\EmployeePortal\Authentication\User\Email\EmailValidationFailedException;
 use App\EmployeePortal\Authentication\User\Password\Password;
 use App\EmployeePortal\Authentication\User\Password\PasswordValidationFailedException;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use OpenApi\Attributes as ApiDoc;
-use PhPhD\ExceptionalValidation;
-use PhPhD\ExceptionalValidation\Capture;
-use PhPhD\ExceptionalValidation\Mapper\Validator\Formatter\Item\ViolationList\ViolationListExceptionFormatter;
-use PhPhD\ExceptionalValidation\Rule\Object\Property\Capture\Condition\Value\ExceptionValueMatchCondition;
+use PhPhD\ExceptionalMatcher\Rule\Object\Property\Catch_;
+use PhPhD\ExceptionalMatcher\Rule\Object\Property\Match\Condition\Value\ExceptionValueMatchCondition;
+use PhPhD\ExceptionalMatcher\Rule\Object\Try_;
+use PhPhD\ExceptionalMatcher\Validator\Formatter\ViolationList\ViolationListExceptionFormatter;
 use SensitiveParameter;
 use Symfony\Component\Serializer\Attribute as Serializer;
 use Symfony\Component\Uid\Uuid;
@@ -25,7 +25,7 @@ use function Amp\async;
 use function Amp\Future\awaitAnyN;
 
 /** Using commands as a source of execution fully eliminates the problem of stateful services. */
-#[ExceptionalValidation]
+#[Try_]
 final readonly class RegisterUserCommand
 {
     #[Serializer\Ignore]
@@ -33,12 +33,12 @@ final readonly class RegisterUserCommand
     private string $id;
 
     #[ApiDoc\Property(example: 'email@test.com')]
-    #[Capture(exception: EmailValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
-    #[Capture(exception: EmailAlreadyTakenException::class, condition: ExceptionValueMatchCondition::class)]
+    #[Catch_(EmailValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
+    #[Catch_(EmailAlreadyTakenException::class, condition: ExceptionValueMatchCondition::class)]
     private string $email;
 
     #[ApiDoc\Property(example: 'p@$$w0rd')]
-    #[Capture(exception: PasswordValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
+    #[Catch_(PasswordValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
     private string $password;
 
     public function __construct(
