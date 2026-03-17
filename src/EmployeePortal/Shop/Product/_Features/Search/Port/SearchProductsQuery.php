@@ -67,6 +67,8 @@ final class SearchProductsQuery
             ],
             $raw['root']['children'],
         );
+
+        $this->results = $raw;
     }
 
     /** @return array<array-key, mixed> */
