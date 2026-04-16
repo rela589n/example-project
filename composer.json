@@ -33,7 +33,7 @@
         "nelmio/api-doc-bundle": "^5.9.2",
         "nesbot/carbon": "^3.11",
         "phphd/exception-handler": "^1.1",
-        "phphd/exceptional-validation": "^2.0@rc",
+        "phphd/exceptional-validation": "dev-refactor-namespace-exceptional-matcher",
         "revolt/event-loop": "^1.0.8",
         "spiral/goridge": "^4.2.1",
         "spiral/roadrunner": "^2025.1.2",

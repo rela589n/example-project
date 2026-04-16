@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c23b003b629107f544146a7a3c2f4b80",
+    "content-hash": "1a82db3915374922fb962237fa8675be",
     "packages": [
         {
             "name": "amphp/amp",
@@ -4959,62 +4959,67 @@
         },
         {
             "name": "phphd/exceptional-validation",
-            "version": "2.0.0-rc2",
+            "version": "dev-refactor-namespace-exceptional-matcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phphd/exceptional-validation.git",
-                "reference": "7c2c2e2fe859921328e6d41223c185e9053108cb"
+                "reference": "3e742fff7a601acd66dc575f8d7e0a0bee7e66de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phphd/exceptional-validation/zipball/7c2c2e2fe859921328e6d41223c185e9053108cb",
-                "reference": "7c2c2e2fe859921328e6d41223c185e9053108cb",
+                "url": "https://api.github.com/repos/phphd/exceptional-validation/zipball/3e742fff7a601acd66dc575f8d7e0a0bee7e66de",
+                "reference": "3e742fff7a601acd66dc575f8d7e0a0bee7e66de",
                 "shasum": ""
             },
             "require": {
+                "composer-runtime-api": "^2.0",
                 "php": ">=8.1",
-                "phphd/exception-toolkit": "^1.0",
-                "webmozart/assert": "^1.11"
+                "phphd/exception-toolkit": "^1.2",
+                "webmozart/assert": "^1.12.1"
             },
             "conflict": {
-                "rector/rector": "<2.0 || >= 3.0",
-                "symfony/config": "<6.0 || >=8.0",
-                "symfony/dependency-injection": "<6.2 || >=8.0",
-                "symfony/http-kernel": "<6.0 || >=8.0",
-                "symfony/messenger": "<6.4 || >=8.0",
-                "symfony/validator": "<6.0 || >=8.0"
+                "symfony/dependency-injection": "<6.2 || >8.4",
+                "symfony/http-kernel": "<6.0 || >8.4",
+                "symfony/messenger": "<6.4 || >8.4",
+                "symfony/validator": "<6.0 || >8.4"
             },
             "replace": {
                 "phphd/exceptional-validation-bundle": "*"
             },
             "require-dev": {
-                "nyholm/symfony-bundle-test": "^3.0",
-                "phpat/phpat": "^0.11.5",
-                "phphd/coding-standard": "~0.6.1",
-                "phpstan/phpstan": "^2.1.17",
-                "phpstan/phpstan-phpunit": "^2.0.6",
+                "bamarni/composer-bin-plugin": "^1.8",
+                "nyholm/symfony-bundle-test": "^3.1",
+                "phpat/phpat": "^0.11.10",
+                "phpbench/phpbench": "^1.2.6",
+                "phphd/coding-standard": "~0.7.0",
+                "phpstan/phpstan": "^2.1.40",
+                "phpstan/phpstan-phpunit": "^2.0.16",
+                "phpstan/phpstan-strict-rules": "^2.0.10",
                 "phpunit/phpunit": "^10.5.46",
-                "psalm/plugin-phpunit": "^0.19.5",
-                "symfony/config": "^6.0 || ^7.0",
-                "symfony/dependency-injection": "^6.2 || ^7.0",
-                "symfony/http-kernel": "^6.0 || ^7.0",
-                "symfony/messenger": "^6.4 || ^7.0",
-                "symfony/uid": "^6.0 || ^7.0",
-                "symfony/validator": "^6.0 || ^7.0",
-                "symfony/var-dumper": "^6.0 || ^7.0",
-                "tomasvotruba/type-coverage": "^2.0.2",
-                "vimeo/psalm": "^6.11.0"
+                "symfony/dependency-injection": ">=6.2",
+                "symfony/http-kernel": ">=6.0",
+                "symfony/messenger": ">=6.4",
+                "symfony/uid": ">=6.0@dev",
+                "symfony/validator": ">=6.0",
+                "symfony/var-dumper": ">=6.0",
+                "tomasvotruba/type-coverage": "^2.1.0"
             },
             "suggest": {
-                "amphp/amp": "Install AMP package to capture multiple exceptions at once",
-                "symfony/messenger": "Install Messenger component to use exceptional validation middleware",
-                "symfony/validator": "Install Validator component to use constraint violations mapper"
+                "amphp/amp": "Install AMP package to match multiple exceptions at once",
+                "symfony/messenger": "Install Messenger component to match with a middleware",
+                "symfony/validator": "Install Validator component to format matched exceptions into ConstraintViolationList format"
             },
             "type": "symfony-bundle",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": false,
+                    "forward-command": true
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "PhPhD\\": "src",
-                    "PhPhD\\ExceptionalValidation\\Upgrade\\": "upgrade"
+                    "PhPhD\\ExceptionalMatcher\\Upgrade\\": "upgrade"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -5027,12 +5032,12 @@
                     "email": "zsidelnik@gmail.com"
                 }
             ],
-            "description": "Capture domain exceptions and map them to the corresponding properties that caused them",
+            "description": "Match exceptions with the properties that caused them",
             "support": {
                 "issues": "https://github.com/phphd/exceptional-validation/issues",
-                "source": "https://github.com/phphd/exceptional-validation/tree/2.0.0-rc2"
+                "source": "https://github.com/phphd/exceptional-validation/tree/refactor-namespace-exceptional-matcher"
             },
-            "time": "2025-07-24T09:25:36+00:00"
+            "time": "2026-03-17T08:13:23+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
@@ -16421,7 +16426,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phphd/exceptional-validation": 5
+        "phphd/exceptional-validation": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
