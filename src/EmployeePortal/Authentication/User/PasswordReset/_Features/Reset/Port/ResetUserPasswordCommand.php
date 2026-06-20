@@ -29,6 +29,10 @@ final readonly class ResetUserPasswordCommand
     #[Catch_(ExpiredPasswordResetRequestException::class, condition: ExceptionValueMatchCondition::class)]
     private string $passwordResetRequestId;
 
+    private User $user;
+
+    private PasswordResetRequest $passwordResetRequest;
+
     public function __construct(
         string $userId,
         string $passwordResetRequestId,
@@ -62,24 +66,28 @@ final readonly class ResetUserPasswordCommand
          * One more thing about awaitAnyN() is that it actually allows us to benefit from async i/o
          * In case if doctrine will add support for it in the future, the code would become faster
          * without it being changed in any way.
-         *
-         * @var User $user
-         * @var PasswordResetRequest $passwordResetRequest
          */
-        [$user, $passwordResetRequest] = awaitAnyN(2, [
-            async($this->getUser(...), $service),
-            async($this->getPasswordResetRequest(...), $service),
-        ]);
+        [
+            fn () => $this->user = $this->findUser($service),
+            fn () => $this->passwordResetRequest = $this->findPasswordResetRequest($service),
+        ]
+            |> (static fn (array $closures) => array_map(async(...), $closures))
+            |> (static fn (array $futures) => awaitAnyN(2, $futures));
 
-        return new UserResetPasswordEvent(Uuid::v7(), $user, $passwordResetRequest, CarbonImmutable::instance($service->clock->now()));
+        //  [$user, $passwordResetRequest] = [
+        //      fn () => $this->findUser($service),
+        //      fn () => $this->findPasswordResetRequest($service),
+        //  ] |> concurrent(...) |> settle(...);
+
+        return new UserResetPasswordEvent(Uuid::v7(), $this->user, $this->passwordResetRequest, CarbonImmutable::instance($service->clock->now()));
     }
 
-    private function getUser(ResetUserPasswordService $service): User
+    private function findUser(ResetUserPasswordService $service): User
     {
         return $service->userRepository->findById($this->getUserId());
     }
 
-    private function getPasswordResetRequest(ResetUserPasswordService $service): PasswordResetRequest
+    private function findPasswordResetRequest(ResetUserPasswordService $service): PasswordResetRequest
     {
         return $service->passwordResetRequestRepository->findById($this->getPasswordResetRequestId());
     }
