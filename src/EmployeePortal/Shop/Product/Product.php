@@ -24,11 +24,23 @@ class Product
     #[ORM\Embedded(columnPrefix: false)]
     private(set) Title $title;
 
+    // public string $title {
+    //     set => $value |> Validation::createCallable(new NotBlank(), new Length(min: 4, max: 255));
+    // }
+
     #[ORM\Embedded(columnPrefix: false)]
     private(set) Description $description;
 
+    // public string $description {
+    //     set => $value |> Validation::createCallable(new NotBlank(), new Length(min: 10, max: 2000));
+    // }
+
     #[ORM\Embedded]
     private(set) Price $price;
+
+    // public int $price {
+    //     set => $value |> Validation::createCallable(new Positive());
+    // }
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
