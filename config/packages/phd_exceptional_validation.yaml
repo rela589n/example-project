@@ -1,2 +1,2 @@
 parameters:
-    phd_exceptional_validation.translation_domain: 'messages'
+    phd_exceptional_matcher.translation_domain: 'messages'

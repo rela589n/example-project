@@ -13,7 +13,7 @@ return [
     ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['test' => true],
     DAMA\DoctrineTestBundle\DAMADoctrineTestBundle::class => ['test' => true],
     Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle::class => ['all' => true],
-    PhPhD\ExceptionalValidation\Bundle\PhdExceptionalValidationBundle::class => ['all' => true],
+    PhPhD\ExceptionalMatcher\Bundle\PhdExceptionalMatcherBundle::class => ['all' => true],
     PhPhD\ExceptionToolkit\Bundle\PhdExceptionToolkitBundle::class => ['all' => true],
     PhPhD\ExceptionHandler\Bundle\PhdExceptionHandlerBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],

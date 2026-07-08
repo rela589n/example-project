@@ -27,7 +27,7 @@ final readonly class GetCentrifugoTokenFrontendApiPoint
         methods: [Request::METHOD_GET],
     )]
     public function __invoke(
-        #[Autowire('@=service("security.token_storage").getToken().getUser()')]
+        #[Autowire('@=service("security.token_storage").getToken().findUser()')]
         UserInterface $user,
     ): JsonResponse {
         $centrifugoUser = new CentrifugoUser($user);
