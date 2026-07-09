@@ -20,7 +20,7 @@ final readonly class ExceptionContextLogProcessor
     private const array IGNORED_ATTRIBUTES = ['code', 'trace', 'traceAsString'];
 
     public function __construct(
-        #[Autowire('@serializer')]
+        #[Autowire('@serializer', lazy: true)]
         private NormalizerInterface $serializer,
     ) {
     }
@@ -40,7 +40,9 @@ final readonly class ExceptionContextLogProcessor
         }
 
         if (str_contains($exception->getFile(), '/vendor/')) {
-            return $record;
+            $context += ['exceptionClass' => $exception::class, 'exceptionMessage' => $exception->getMessage()];
+
+            return $record->with(context: $context);
         }
 
         $exceptionContext = $this->serializer->normalize($exception, 'json', [
@@ -48,7 +50,7 @@ final readonly class ExceptionContextLogProcessor
             AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
         ]);
 
-        $context += $exceptionContext;
+        $context += ['exception' => $exceptionContext];
 
         return $record->with(context: $context);
     }
