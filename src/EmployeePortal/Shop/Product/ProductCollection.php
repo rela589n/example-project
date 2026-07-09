@@ -43,7 +43,7 @@ final readonly class ProductCollection
         /** @var ExpressionBuilder $expr */
         $expr = Criteria::expr();
 
-        return $this->andWhere($expr->eq('title.title', $title));
+        return $this->andWhere($expr->eq('title', $title));
     }
 
     /** @return ReadableCollection<array-key,Product> */

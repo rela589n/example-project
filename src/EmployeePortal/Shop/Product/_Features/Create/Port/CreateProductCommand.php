@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Shop\Product\_Features\Create\Port;
 
-use App\EmployeePortal\Shop\Product\Description\Description;
 use App\EmployeePortal\Shop\Product\_Features\Create\ProductCreatedEvent;
-use App\EmployeePortal\Shop\Product\Price\Price;
-use App\EmployeePortal\Shop\Product\Title\Title;
 use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Uid\Uuid;
 
@@ -30,9 +27,9 @@ final readonly class CreateProductCommand
     {
         $event = new ProductCreatedEvent(
             $this->id,
-            new Title($this->title),
-            new Description($this->description),
-            new Price($this->priceUnitAmount),
+            $this->title,
+            $this->description,
+            $this->priceUnitAmount,
             $service->categoryCollection->get($this->categoryId),
             $service->now(),
         );

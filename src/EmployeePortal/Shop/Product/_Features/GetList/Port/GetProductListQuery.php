@@ -38,9 +38,9 @@ final class GetProductListQuery
 
         $this->products = array_map(static fn (Product $product): array => [
             'id' => $product->id->toRfc4122(),
-            'title' => $product->title->title,
-            'description' => $product->description->description,
-            'priceUnitAmount' => $product->price->unitAmount,
+            'title' => $product->title,
+            'description' => $product->description,
+            'priceUnitAmount' => $product->priceUnitAmount,
             'category' => [
                 'name' => $product->category->name,
             ],

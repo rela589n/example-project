@@ -22,10 +22,10 @@ final readonly class IndexProductCommand
             'product',
             $product->id->toRfc4122(),
             [
-                'title' => $product->title->title,
-                'description' => $product->description->description,
+                'title' => $product->title,
+                'description' => $product->description,
                 'category' => $product->category->name,
-                'priceUnitAmount' => $product->price->unitAmount,
+                'priceUnitAmount' => $product->priceUnitAmount,
             ],
         );
     }
