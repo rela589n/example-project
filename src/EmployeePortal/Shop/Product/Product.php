@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Shop\Product;
 
+use Amp\CompositeException;
 use App\EmployeePortal\Shop\Category\Category;
 use App\EmployeePortal\Shop\Product\_Features\Create\ProductCreatedEvent;
 use App\EmployeePortal\Shop\Product\Description\Description;
@@ -17,6 +18,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
 use Symfony\Component\Validator\Constraints\Sequentially;
 use Symfony\Component\Validator\Validation;
+
+use function Amp\async;
+use function Amp\Future\awaitAll;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'products')]
@@ -56,12 +60,18 @@ class Product
 
     public function __construct(ProductCreatedEvent $event)
     {
-        $this->id = $event->id;
-        $this->title = $event->title;
-        $this->description = $event->description;
-        $this->priceUnitAmount = $event->priceUnitAmount;
-        $this->category = $event->category;
-        $this->createdAt = $event->timestamp;
-        $this->updatedAt = $event->timestamp;
+        [$errors] = array_map(async(...), [
+            fn () => $this->id = $event->id,
+            fn () => $this->description = $event->description,
+            fn () => $this->priceUnitAmount = $event->priceUnitAmount,
+            fn () => $this->title = $event->title,
+            fn () => $this->category = $event->category,
+            fn () => $this->createdAt = $event->timestamp,
+            fn () => $this->updatedAt = $event->timestamp,
+        ]) |> awaitAll(...);
+
+        if ([] !== $errors) {
+            throw new CompositeException($errors);
+        }
     }
 }

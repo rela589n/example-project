@@ -1,0 +1,10 @@
+schema post {
+    document post {
+    	field title type string {}
+		field description type string { }
+		field descriptions type array<string> { }
+    }
+    field colbert_embedding type tensor<float>(t{},dim[128]) { # use bfloat16 to lower the memory
+    	indexing: input description | embed colbert | attribute
+    }
+}

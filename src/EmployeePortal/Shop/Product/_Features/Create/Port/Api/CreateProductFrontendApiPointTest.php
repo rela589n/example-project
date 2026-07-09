@@ -81,4 +81,51 @@ final class CreateProductFrontendApiPointTest extends ApiTestCase
 
         self::assertLessThanOrEqual(10, CarbonImmutable::now()->diffInSeconds($entity->createdAt));
     }
+
+    public function testValidation(): void
+    {
+        $userId = '2a977708-1c69-7d38-9074-b388a7f386dc';
+        $user = new JWTUser($userId, ['ROLE_USER']);
+        $token = $this->jwtManager->create($user);
+
+        $response = $this->client->request(
+            'POST',
+            '/api/example-project/shop/products',
+            [
+                'auth_bearer' => $token,
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Accept-Language' => 'en',
+                ],
+                'json' => [
+                    'title' => 'st',
+                    'description' => '',
+                    'categoryId' => '3a24fc63-756c-7d28-b6df-a2edb0990e02',
+                    'priceUnitAmount' => -1,
+                ],
+            ],
+        );
+
+        self::assertResponseStatusCodeSame(422);
+
+        self::assertSame([
+            'error' => 'validation_failed',
+            'errorDescription' => 'Validation failed',
+            'violations' => [
+                [
+                    'propertyPath' => 'title',
+                    'title' => 'This value is too short. It should have 4 characters or more.',
+                ],
+                [
+                    'propertyPath' => 'description',
+                    'title' => 'This value should not be blank.',
+                ],
+                [
+                    'propertyPath' => 'priceUnitAmount',
+                    'title' => 'This value should be either positive or zero.',
+                ],
+            ],
+        ], $response->toArray(false));
+    }
 }

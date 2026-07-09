@@ -21,6 +21,12 @@
                 <document>title: none | text: </document>
             </prepend>
         </component>
+        <component id="colbert" type="colbert-embedder">
+            <tokenizer-model url="https://huggingface.co/colbert-ir/colbertv2.0/raw/main/tokenizer.json"/>
+            <transformer-model url="https://huggingface.co/colbert-ir/colbertv2.0/resolve/main/model.onnx"/>
+            <max-query-tokens>32</max-query-tokens>
+            <max-document-tokens>128</max-document-tokens>
+        </component>
     </container>
     <!--
     Content cluster - stateful, stores documents and indexes
