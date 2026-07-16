@@ -4,33 +4,34 @@ declare(strict_types=1);
 
 namespace App\EmployeePortal\Authentication\User\_Features\Login\Port;
 
+use App\EmployeePortal\Authentication\User\_Features\Login\UserLoggedInEvent;
 use App\EmployeePortal\Authentication\User\_Support\Repository\Exception\UserNotFoundException;
 use App\EmployeePortal\Authentication\User\Email\Email;
 use App\EmployeePortal\Authentication\User\Email\EmailValidationFailedException;
-use App\EmployeePortal\Authentication\User\_Features\Login\UserLoggedInEvent;
 use App\EmployeePortal\Authentication\User\Password\PasswordMismatchException;
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUser;
 use OpenApi\Attributes as ApiDoc;
 use PhPhD\ExceptionalMatcher\Rule\Object\Property\Catch_;
-use PhPhD\ExceptionalMatcher\Rule\Object\Property\Match\Condition\Value\ExceptionValueMatchCondition;
 use PhPhD\ExceptionalMatcher\Rule\Object\Try_;
-use PhPhD\ExceptionalMatcher\Validator\Formatter\ViolationList\ViolationListExceptionFormatter;
 use SensitiveParameter;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Uid\Uuid;
+
+use const PhPhD\ExceptionalMatcher\Integration\Validator\Formatter\Embedded\embedded_violations;
+use const PhPhD\ExceptionalMatcher\Rule\Object\Property\Match\Condition\Value\exception_value;
 
 #[Try_]
 final readonly class LoginUserCommand
 {
     #[ApiDoc\Property(example: 'email@test.com')]
-    #[Catch_(EmailValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
-    #[Catch_(UserNotFoundException::class, condition: ExceptionValueMatchCondition::class)]
+    #[Catch_(EmailValidationFailedException::class, match: exception_value, format: embedded_violations)]
+    #[Catch_(UserNotFoundException::class, match: exception_value)]
     private string $email;
 
     #[ApiDoc\Property(example: 'p@$$w0rd')]
-    #[Catch_(PasswordMismatchException::class, condition: ExceptionValueMatchCondition::class)]
+    #[Catch_(PasswordMismatchException::class, match: exception_value)]
     private string $password;
 
     private(set) JWTUser $jwtUser;

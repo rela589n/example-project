@@ -12,7 +12,7 @@ use App\EmployeePortal\Authentication\User\PasswordReset\Repository\Exception\Pa
 use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use PhPhD\ExceptionalMatcher\Rule\Object\Property\Catch_;
-use PhPhD\ExceptionalMatcher\Rule\Object\Property\Match\Condition\Value\ExceptionValueMatchCondition;
+use const PhPhD\ExceptionalMatcher\Rule\Object\Property\Match\Condition\Value\exception_value;
 use PhPhD\ExceptionalMatcher\Rule\Object\Try_;
 use Symfony\Component\Uid\Uuid;
 
@@ -22,11 +22,11 @@ use function Amp\Future\awaitAnyN;
 #[Try_]
 final readonly class ResetUserPasswordCommand
 {
-    #[Catch_(UserNotFoundException::class, condition: ExceptionValueMatchCondition::class)]
+    #[Catch_(UserNotFoundException::class, match: exception_value)]
     private string $userId;
 
-    #[Catch_(PasswordResetRequestNotFoundException::class, condition: ExceptionValueMatchCondition::class)]
-    #[Catch_(ExpiredPasswordResetRequestException::class, condition: ExceptionValueMatchCondition::class)]
+    #[Catch_(PasswordResetRequestNotFoundException::class, match: exception_value)]
+    #[Catch_(ExpiredPasswordResetRequestException::class, match: exception_value)]
     private string $passwordResetRequestId;
 
     private User $user;

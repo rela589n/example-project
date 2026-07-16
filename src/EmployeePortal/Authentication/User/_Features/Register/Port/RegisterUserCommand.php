@@ -14,15 +14,16 @@ use App\EmployeePortal\Authentication\User\User;
 use Carbon\CarbonImmutable;
 use OpenApi\Attributes as ApiDoc;
 use PhPhD\ExceptionalMatcher\Rule\Object\Property\Catch_;
-use PhPhD\ExceptionalMatcher\Rule\Object\Property\Match\Condition\Value\ExceptionValueMatchCondition;
 use PhPhD\ExceptionalMatcher\Rule\Object\Try_;
-use PhPhD\ExceptionalMatcher\Validator\Formatter\ViolationList\ViolationListExceptionFormatter;
 use SensitiveParameter;
 use Symfony\Component\Serializer\Attribute as Serializer;
 use Symfony\Component\Uid\Uuid;
 
 use function Amp\async;
 use function Amp\Future\awaitAnyN;
+
+use const PhPhD\ExceptionalMatcher\Integration\Validator\Formatter\Embedded\embedded_violations;
+use const PhPhD\ExceptionalMatcher\Rule\Object\Property\Match\Condition\Value\exception_value;
 
 /** Using commands as a source of execution fully eliminates the problem of stateful services. */
 #[Try_]
@@ -33,12 +34,12 @@ final readonly class RegisterUserCommand
     private string $id;
 
     #[ApiDoc\Property(example: 'email@test.com')]
-    #[Catch_(EmailValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
-    #[Catch_(EmailAlreadyTakenException::class, condition: ExceptionValueMatchCondition::class)]
+    #[Catch_(EmailValidationFailedException::class, match: exception_value, format: embedded_violations)]
+    #[Catch_(EmailAlreadyTakenException::class, match: exception_value)]
     private string $email;
 
     #[ApiDoc\Property(example: 'p@$$w0rd')]
-    #[Catch_(PasswordValidationFailedException::class, condition: ExceptionValueMatchCondition::class, formatter: ViolationListExceptionFormatter::class)]
+    #[Catch_(PasswordValidationFailedException::class, match: exception_value, format: embedded_violations)]
     private string $password;
 
     public function __construct(

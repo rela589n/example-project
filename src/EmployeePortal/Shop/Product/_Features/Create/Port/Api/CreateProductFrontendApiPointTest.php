@@ -96,7 +96,7 @@ final class CreateProductFrontendApiPointTest extends ApiTestCase
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
-                    'Accept-Language' => 'en',
+                    'Accept-Language' => 'uk',
                 ],
                 'json' => [
                     'title' => 'st',
@@ -111,7 +111,7 @@ final class CreateProductFrontendApiPointTest extends ApiTestCase
 
         self::assertSame([
             'error' => 'validation_failed',
-            'errorDescription' => 'Validation failed',
+            'errorDescription' => 'Введено невалідні дані',
             'violations' => [
                 [
                     'propertyPath' => 'title',

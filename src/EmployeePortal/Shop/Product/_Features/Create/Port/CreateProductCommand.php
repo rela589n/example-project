@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 
-use const PhPhD\ExceptionalMatcher\Validator\Formatter\Validator\validator_violations;
+use const PhPhD\ExceptionalMatcher\Integration\Validator\Formatter\Embedded\embedded_violations;
 
 #[Try_]
 final readonly class CreateProductCommand
@@ -20,11 +20,11 @@ final readonly class CreateProductCommand
     private(set) Uuid $id;
 
     public function __construct(
-        #[Catch_(ValidationFailedException::class, from: [Product::class, '$title::set'], format: validator_violations)]
+        #[Catch_(ValidationFailedException::class, from: [Product::class, '$title::set'], format: embedded_violations)]
         private string $title,
-        #[Catch_(ValidationFailedException::class, from: [Product::class, '$description::set'], format: validator_violations)]
+        #[Catch_(ValidationFailedException::class, from: [Product::class, '$description::set'], format: embedded_violations)]
         private string $description,
-        #[Catch_(ValidationFailedException::class, from: [Product::class, '$priceUnitAmount::set'], format: validator_violations)]
+        #[Catch_(ValidationFailedException::class, from: [Product::class, '$priceUnitAmount::set'], format: embedded_violations)]
         private int $priceUnitAmount,
         private Uuid $categoryId,
         #[Ignore] // @phpstan-ignore attribute.target

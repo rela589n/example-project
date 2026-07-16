@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support\Api\Bundle\Validation;
 
-use PhPhD\ExceptionalMatcher\Validator\Middleware\ExceptionalValidationFailedException;
+use PhPhD\ExceptionalMatcher\Integration\Validator\Middleware\ExceptionalValidationFailedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -24,7 +24,7 @@ final readonly class ExceptionalValidationFailedExceptionApiExceptionHandler
         return new JsonResponse([
             'error' => 'validation_failed',
             'errorDescription' => $this->translator->trans('app_api.error.validation_failed'),
-            'violations' => $this->violationsFormatter->format($exception->getViolationList()),
+            'violations' => $this->violationsFormatter->format($exception->getViolations()),
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

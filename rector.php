@@ -12,9 +12,10 @@ return RectorConfig::configure()
         __DIR__.'/src',
         __DIR__.'/tests',
     ])
-    ->withImportNames(removeUnusedImports: true)
+//    ->withImportNames(removeUnusedImports: true)
     ->withSets(ExceptionalMatcherSetList::fromVersion('1.4')->getSetList())
-    ->withSkip([__DIR__.'/src/Kernel.php', __DIR__.'/config/bundles.php'])
+    ->withSkip([__DIR__.'/src/Kernel.php', __DIR__.'/config/bundles.php']);
+$o
     // uncomment to reach your current PHP version
     // ->withPhpSets()
     ->withTypeCoverageLevel(0)

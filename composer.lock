@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfa588d2778df422abef99e18c6143bf",
+    "content-hash": "93c779d83525cb3ab7f571fc81bf72d0",
     "packages": [
         {
             "name": "amphp/amp",
@@ -4959,16 +4959,16 @@
         },
         {
             "name": "phphd/exceptional-matcher",
-            "version": "2.0.0",
+            "version": "2.0.0-rc3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phphd/exceptional-matcher.git",
-                "reference": "611b8fb9a5f929b893b54c97f0bf04ca940c9f4a"
+                "reference": "8a7779642bc327620839804a217a82f8e6a0fb88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phphd/exceptional-matcher/zipball/611b8fb9a5f929b893b54c97f0bf04ca940c9f4a",
-                "reference": "611b8fb9a5f929b893b54c97f0bf04ca940c9f4a",
+                "url": "https://api.github.com/repos/phphd/exceptional-matcher/zipball/8a7779642bc327620839804a217a82f8e6a0fb88",
+                "reference": "8a7779642bc327620839804a217a82f8e6a0fb88",
                 "shasum": ""
             },
             "require": {
@@ -4990,20 +4990,15 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8",
                 "nyholm/symfony-bundle-test": "^3.1",
-                "phpat/phpat": "^0.11.10",
                 "phpbench/phpbench": "^1.2.6",
                 "phphd/coding-standard": "~1.0.0",
-                "phpstan/phpstan": "^2.1.40",
-                "phpstan/phpstan-phpunit": "^2.0.16",
-                "phpstan/phpstan-strict-rules": "^2.0.10",
                 "phpunit/phpunit": "^10.5.46",
                 "symfony/dependency-injection": ">=6.2",
                 "symfony/http-kernel": ">=6.0",
                 "symfony/messenger": ">=6.4",
-                "symfony/uid": ">=6.0@dev",
+                "symfony/uid": ">=6.0",
                 "symfony/validator": ">=6.0",
-                "symfony/var-dumper": ">=6.0",
-                "tomasvotruba/type-coverage": "^2.1.0"
+                "symfony/var-dumper": ">=6.0"
             },
             "suggest": {
                 "amphp/amp": "Install AMP package to match multiple exceptions at once",
@@ -5039,9 +5034,9 @@
             "description": "Match exceptions to the properties that originated them",
             "support": {
                 "issues": "https://github.com/phphd/exceptional-matcher/issues",
-                "source": "https://github.com/phphd/exceptional-matcher/tree/2.0.0"
+                "source": "https://github.com/phphd/exceptional-matcher/tree/2.0.0-rc3"
             },
-            "time": "2026-05-08T11:48:27+00:00"
+            "time": "2026-07-15T13:42:13+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
@@ -16429,7 +16424,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "phphd/exceptional-matcher": 5
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

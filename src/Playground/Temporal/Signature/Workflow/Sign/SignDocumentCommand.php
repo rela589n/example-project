@@ -17,7 +17,7 @@ final readonly class SignDocumentCommand
 {
     public function __construct(
         #[Catch_(MissingPrivateKeyException::class)]
-        #[Catch_(ExpiredPrivateKeyCertificateException::class, formatter: ExpiredPrivateKeyCertificateExceptionFormatter::class)]
+        #[Catch_(ExpiredPrivateKeyCertificateException::class, format: ExpiredPrivateKeyCertificateExceptionFormatter::class)]
         public string $documentId,
         #[Catch_(BadCredentialsException::class)]
         public string $password,

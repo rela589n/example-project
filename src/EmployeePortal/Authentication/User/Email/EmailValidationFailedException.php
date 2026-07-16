@@ -7,16 +7,16 @@ namespace App\EmployeePortal\Authentication\User\Email;
 use App\EmployeePortal\Authentication\AuthException;
 use DomainException;
 use PhPhD\ExceptionalMatcher\Rule\Object\Property\Match\Condition\Value\ValueException;
-use PhPhD\ExceptionalMatcher\Validator\Formatter\ViolationList\ViolationListException;
+use PhPhD\ExceptionalMatcher\Integration\Validator\Formatter\Embedded\ViolationsEmbeddedException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-final class EmailValidationFailedException extends DomainException implements AuthException, ValueException, ViolationListException
+final class EmailValidationFailedException extends DomainException implements AuthException, ValueException, ViolationsEmbeddedException
 {
     public function __construct(
         private readonly string $email,
-        private readonly ConstraintViolationListInterface $violationList,
+        private readonly ConstraintViolationListInterface $violations,
     ) {
-        parent::__construct((string)$this->violationList);
+        parent::__construct((string)$this->violations);
     }
 
     public function getValue(): string
@@ -24,8 +24,8 @@ final class EmailValidationFailedException extends DomainException implements Au
         return $this->email;
     }
 
-    public function getViolationList(): ConstraintViolationListInterface
+    public function getViolations(): ConstraintViolationListInterface
     {
-        return $this->violationList;
+        return $this->violations;
     }
 }
